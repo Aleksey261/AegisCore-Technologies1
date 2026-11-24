@@ -1,0 +1,524 @@
+@model AegisCore.Models.OrganizationViewModel
+@{
+    ViewData["Title"] = "Доступы сотрудников";
+}
+
+<div class="section-header">
+    <h2 class="section-title">
+        <i class="fas fa-key"></i> Доступы сотрудников
+    </h2>
+</div>
+
+<div class="toolbar">
+    <div class="toolbar-left">
+        <button class="btn btn-primary" onclick="openAccessModal()">
+            <i class="fas fa-plus"></i> Добавить
+        </button>
+        <div class="search-box">
+            <i class="fas fa-search"></i>
+            <input type="text" id="accessSearch" placeholder="Поиск..." value="@Model.Search" oninput="filterAccesses()" />
+        </div>
+    </div>
+</div>
+
+<div class="table-container">
+    <table class="data-table" id="accessTable">
+        <thead>
+            <tr>
+                <th class="th-sortable">
+                    <div class="th-header"><span>ФИО сотрудника</span><i class="fas fa-sort sortable-icon"></i></div>
+                    <div class="th-filter-row"><input type="text" class="filter-inline-input" placeholder="Поиск..." oninput="filterTable('accessTable', 0, this.value)" /></div>
+                </th>
+                <th class="th-sortable">
+                    <div class="th-header"><span>Обработка ПДн в ИСПДн</span><i class="fas fa-sort sortable-icon"></i></div>
+                    <div class="th-filter-row">
+                        <select class="filter-inline-select" onchange="filterTable('accessTable', 1, this.value)">
+                            <option value="">(Все)</option>
+                            <option value="true">Да</option>
+                            <option value="false">Нет</option>
+                        </select>
+                    </div>
+                </th>
+                <th class="th-sortable">
+                    <div class="th-header"><span>Обработка ПДн на бумаге</span><i class="fas fa-sort sortable-icon"></i></div>
+                    <div class="th-filter-row">
+                        <select class="filter-inline-select" onchange="filterTable('accessTable', 2, this.value)">
+                            <option value="">(Все)</option>
+                            <option value="true">Да</option>
+                            <option value="false">Нет</option>
+                        </select>
+                    </div>
+                </th>
+                <th class="th-sortable">
+                    <div class="th-header"><span>Доступ к конф. информации</span><i class="fas fa-sort sortable-icon"></i></div>
+                    <div class="th-filter-row">
+                        <select class="filter-inline-select" onchange="filterTable('accessTable', 3, this.value)">
+                            <option value="">(Все)</option>
+                            <option value="true">Да</option>
+                            <option value="false">Нет</option>
+                        </select>
+                    </div>
+                </th>
+                <th class="th-sortable">
+                    <div class="th-header"><span>Доступ в помещения с СКЗИ</span><i class="fas fa-sort sortable-icon"></i></div>
+                    <div class="th-filter-row">
+                        <select class="filter-inline-select" onchange="filterTable('accessTable', 4, this.value)">
+                            <option value="">(Все)</option>
+                            <option value="true">Да</option>
+                            <option value="false">Нет</option>
+                        </select>
+                    </div>
+                </th>
+                <th class="th-sortable">
+                    <div class="th-header"><span>Работа с СКЗИ</span><i class="fas fa-sort sortable-icon"></i></div>
+                    <div class="th-filter-row">
+                        <select class="filter-inline-select" onchange="filterTable('accessTable', 5, this.value)">
+                            <option value="">(Все)</option>
+                            <option value="true">Да</option>
+                            <option value="false">Нет</option>
+                        </select>
+                    </div>
+                </th>
+                <th style="width: 100px;">Действия</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.Accesses != null && Model.Accesses.Any())
+            {
+                @foreach (var item in Model.Accesses)
+                {
+                    <tr data-id="@item.Id">
+                        <td><strong>@item.EmployeeFio</strong></td>
+                        <td style="text-align: center;">
+                            <input type="checkbox" checked="@item.PdnISPDn" disabled style="accent-color: #4F46E5; width: 18px; height: 18px;" />
+                        </td>
+                        <td style="text-align: center;">
+                            <input type="checkbox" checked="@item.PdnPaper" disabled style="accent-color: #4F46E5; width: 18px; height: 18px;" />
+                        </td>
+                        <td style="text-align: center;">
+                            <input type="checkbox" checked="@item.ConfInfo" disabled style="accent-color: #4F46E5; width: 18px; height: 18px;" />
+                        </td>
+                        <td style="text-align: center;">
+                            <input type="checkbox" checked="@item.SkziRoom" disabled style="accent-color: #4F46E5; width: 18px; height: 18px;" />
+                        </td>
+                        <td style="text-align: center;">
+                            <input type="checkbox" checked="@item.SkziWork" disabled style="accent-color: #4F46E5; width: 18px; height: 18px;" />
+                        </td>
+                        <td class="actions">
+                            <button class="btn-icon edit" onclick="editAccess('@item.Id')" title="Редактировать"><i class="fas fa-edit"></i></button>
+                            <button class="btn-icon delete" onclick="deleteAccess('@item.Id')" title="Удалить"><i class="fas fa-trash"></i></button>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="7" style="text-align: center; padding: 40px; color: #94a3b8;">
+                        <i class="fas fa-key" style="font-size: 48px; margin-bottom: 16px; display: block;"></i>
+                        Доступы не добавлены
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@if (Model.TotalPages > 1)
+{
+    <div class="pagination">
+        <div class="pagination-page-size">
+            <label>Показывать по:</label>
+            <select onchange="changePageSize(this.value)"><option value="10" selected>10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select>
+        </div>
+        <div class="pagination-info">Страница @Model.CurrentPage из @Model.TotalPages (Всего элементов: @Model.TotalItems)</div>
+        <div class="pagination-buttons">
+            @if (Model.CurrentPage > 1) { <a href="/audit/organization?section=access&page=@(Model.CurrentPage - 1)" class="btn-pagination">‹</a> }
+            @for (int i = 1; i <= Model.TotalPages; i++) { <a href="/audit/organization?section=access&page=@i" class="btn-pagination @(i == Model.CurrentPage ? "active" : "")">@i</a> }
+            @if (Model.CurrentPage < Model.TotalPages) { <a href="/audit/organization?section=access&page=@(Model.CurrentPage + 1)" class="btn-pagination">›</a> }
+        </div>
+    </div>
+}
+
+<!-- ============================================================ -->
+<!-- МОДАЛКА ДОБАВЛЕНИЯ/РЕДАКТИРОВАНИЯ ДОСТУПА -->
+<!-- ============================================================ -->
+<div class="modal" id="accessModal">
+    <div class="modal-content" style="max-width: 600px;">
+        <div class="modal-header">
+            <h3 id="accessModalTitle">Добавление доступа</h3>
+            <button class="modal-close" onclick="closeAccessModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <form id="accessForm" onsubmit="saveAccess(event)">
+                <input type="hidden" id="accessId" name="id" />
+                
+                <!-- ФИО сотрудника с кнопками -->
+                <div class="form-group">
+                    <label>ФИО сотрудника <span class="required">*</span></label>
+                    <div class="input-with-buttons">
+                        <select name="employeeFio" id="accessEmployeeFio" class="form-control" required>
+                            <option value="">Выбрать...</option>
+                            @if (Model.Employees != null)
+                            {
+                                @foreach (var e in Model.Employees)
+                                {
+                                    <option value="@e.Fio" data-department="@e.Department">@e.Fio</option>
+                                }
+                            }
+                        </select>
+                        <button type="button" class="btn-icon-ref" title="Поиск сотрудника" onclick="openEmployeeListModal()">
+                            <i class="fas fa-search"></i>
+                        </button>
+                        <button type="button" class="btn-icon-ref" title="Редактировать сотрудника" onclick="editSelectedEmployee()">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button type="button" class="btn-icon-ref add" title="Добавить сотрудника" onclick="openAddEmployeeModal()">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Чекбоксы типов доступа -->
+                <div class="form-group checkbox-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="pdnISPDn" id="accessPdnISPDn">
+                        <span>Обработка ПДн в ИСПДн</span>
+                    </label>
+                </div>
+
+                <div class="form-group checkbox-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="pdnPaper" id="accessPdnPaper">
+                        <span>Обработка ПДн на бумаге</span>
+                    </label>
+                </div>
+
+                <div class="form-group checkbox-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="confInfo" id="accessConfInfo">
+                        <span>Доступ к конф. информации</span>
+                    </label>
+                </div>
+
+                <div class="form-group checkbox-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="skziRoom" id="accessSkziRoom">
+                        <span>Доступ в помещения с СКЗИ</span>
+                    </label>
+                </div>
+
+                <div class="form-group checkbox-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="skziWork" id="accessSkziWork">
+                        <span>Работа с СКЗИ</span>
+                    </label>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeAccessModal()">Отмена</button>
+                    <button type="submit" class="btn btn-primary">Сохранить доступ</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- МОДАЛКА СПИСКА СОТРУДНИКОВ (Рисунок 20) -->
+<!-- ============================================================ -->
+<div class="modal" id="employeeListModal">
+    <div class="modal-content" style="max-width: 900px;">
+        <div class="modal-header">
+            <h3>Список сотрудников</h3>
+            <button class="modal-close" onclick="closeEmployeeListModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div class="search-box" style="margin-bottom: 16px;">
+                <i class="fas fa-search"></i>
+                <input type="text" id="employeeListSearch" placeholder="Поиск по ФИО, должности, отделу..." oninput="filterEmployeeList()" />
+            </div>
+            <div class="table-container" style="max-height: 400px; overflow-y: auto;">
+                <table class="data-table" id="employeeListTable">
+                    <thead>
+                        <tr>
+                            <th>ФИО</th>
+                            <th>Должность</th>
+                            <th>Отдел</th>
+                        </tr>
+                    </thead>
+                    <tbody id="employeeListBody">
+                        @if (Model.Employees != null)
+                        {
+                            @foreach (var emp in Model.Employees)
+                            {
+                                <tr data-fio="@emp.Fio" data-department="@emp.Department" style="cursor: pointer;" onclick="selectEmployeeFromList('@emp.Fio', '@emp.Department')">
+                                    <td>@emp.Fio</td>
+                                    <td>@emp.Position</td>
+                                    <td>@emp.Department</td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div style="margin-top: 12px; font-size: 12px; color: #94a3b8;">
+                * Красным цветом выделены лица, которые уже не работают в организации
+            </div>
+            <div class="form-actions">
+                <button type="button" class="btn btn-secondary" onclick="closeEmployeeListModal()">Отменить</button>
+                <button type="button" class="btn btn-primary" id="btnSelectEmployee" onclick="confirmEmployeeSelection()">Выбрать</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- МОДАЛКА ДОБАВЛЕНИЯ НОВОГО СОТРУДНИКА -->
+<!-- ============================================================ -->
+<div class="modal" id="addEmployeeModal">
+    <div class="modal-content" style="max-width: 600px;">
+        <div class="modal-header">
+            <h3>Добавление сотрудника</h3>
+            <button class="modal-close" onclick="closeAddEmployeeModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <form id="addEmployeeForm" onsubmit="saveNewEmployee(event)">
+                <div class="form-group">
+                    <label>ФИО <span class="required">*</span></label>
+                    <input type="text" id="newEmployeeFio" class="form-control" required placeholder="Иванов Иван Иванович" />
+                </div>
+                <div class="form-group">
+                    <label>Должность <span class="required">*</span></label>
+                    <input type="text" id="newEmployeePosition" class="form-control" required placeholder="Специалист" />
+                </div>
+                <div class="form-group">
+                    <label>Подразделение <span class="required">*</span></label>
+                    <select id="newEmployeeDepartment" class="form-control" required>
+                        <option value="">Выберите подразделение</option>
+                        @if (Model.Departments != null)
+                        {
+                            @foreach (var d in Model.Departments)
+                            {
+                                <option value="@d.Name">@d.Name</option>
+                            }
+                        }
+                    </select>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Дата устройства</label>
+                        <input type="date" id="newEmployeeDateStart" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label>Дата прекращения</label>
+                        <input type="date" id="newEmployeeDateEnd" class="form-control" />
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Телефон</label>
+                        <input type="tel" id="newEmployeePhone" class="form-control" placeholder="+7 (___) ___-__-__" />
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" id="newEmployeeEmail" class="form-control" placeholder="example@company.ru" />
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeAddEmployeeModal()">Отмена</button>
+                    <button type="submit" class="btn btn-primary">Сохранить сотрудника</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    const accessesData = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.Accesses ?? new List<AegisCore.Models.AccessRecord>()));
+    const employeesData = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.Employees ?? new List<AegisCore.Models.Employee>()));
+    
+    let selectedEmployeeFio = null;
+    let selectedEmployeeDepartment = null;
+
+    // ============================================================
+    // МОДАЛКА ДОСТУПА
+    // ============================================================
+    function openAccessModal() {
+        document.getElementById('accessForm').reset();
+        document.getElementById('accessId').value = '';
+        document.getElementById('accessModalTitle').textContent = 'Добавление доступа';
+        document.getElementById('accessModal').classList.add('show');
+    }
+
+    function closeAccessModal() {
+        document.getElementById('accessModal').classList.remove('show');
+    }
+
+    function editAccess(id) {
+        const item = accessesData.find(a => a.id === id);
+        if (!item) return;
+        document.getElementById('accessId').value = item.id;
+        document.getElementById('accessEmployeeFio').value = item.employeeFio || '';
+        document.getElementById('accessPdnISPDn').checked = item.pdnISPDn || false;
+        document.getElementById('accessPdnPaper').checked = item.pdnPaper || false;
+        document.getElementById('accessConfInfo').checked = item.confInfo || false;
+        document.getElementById('accessSkziRoom').checked = item.skziRoom || false;
+        document.getElementById('accessSkziWork').checked = item.skziWork || false;
+        document.getElementById('accessModalTitle').textContent = 'Редактирование доступа';
+        document.getElementById('accessModal').classList.add('show');
+    }
+
+    function deleteAccess(id) {
+        if (!confirm('Удалить доступ?')) return;
+        fetch('/api/audit/organization/access/delete/' + id, { method: 'DELETE' })
+            .then(r => r.json())
+            .then(data => {
+                if (data.success) location.reload();
+                else alert(data.error || 'Ошибка');
+            });
+    }
+
+    function saveAccess(e) {
+        e.preventDefault();
+        const form = e.target;
+        const data = {
+            id: form.id.value || null,
+            employeeFio: form.employeeFio.value,
+            pdnISPDn: document.getElementById('accessPdnISPDn').checked,
+            pdnPaper: document.getElementById('accessPdnPaper').checked,
+            confInfo: document.getElementById('accessConfInfo').checked,
+            skziRoom: document.getElementById('accessSkziRoom').checked,
+            skziWork: document.getElementById('accessSkziWork').checked
+        };
+        fetch('/api/audit/organization/access/save', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        }).then(r => r.json()).then(result => {
+            if (result.success) location.reload();
+            else alert(result.error || 'Ошибка');
+        });
+    }
+
+    // ============================================================
+    // МОДАЛКА СПИСКА СОТРУДНИКОВ
+    // ============================================================
+    function openEmployeeListModal() {
+        selectedEmployeeFio = null;
+        selectedEmployeeDepartment = null;
+        document.getElementById('employeeListSearch').value = '';
+        document.getElementById('employeeListBody').querySelectorAll('tr').forEach(row => {
+            row.style.background = '';
+        });
+        document.getElementById('employeeListModal').classList.add('show');
+    }
+
+    function closeEmployeeListModal() {
+        document.getElementById('employeeListModal').classList.remove('show');
+    }
+
+    function selectEmployeeFromList(fio, department) {
+        selectedEmployeeFio = fio;
+        selectedEmployeeDepartment = department;
+        // Подсветка выбранной строки
+        document.getElementById('employeeListBody').querySelectorAll('tr').forEach(row => {
+            row.style.background = row.dataset.fio === fio ? '#EEF2FF' : '';
+        });
+    }
+
+    function confirmEmployeeSelection() {
+        if (!selectedEmployeeFio) {
+            alert('Выберите сотрудника из списка');
+            return;
+        }
+        document.getElementById('accessEmployeeFio').value = selectedEmployeeFio;
+        closeEmployeeListModal();
+    }
+
+    function filterEmployeeList() {
+        const search = document.getElementById('employeeListSearch').value.toLowerCase();
+        document.getElementById('employeeListBody').querySelectorAll('tr').forEach(row => {
+            const text = row.textContent.toLowerCase();
+            row.style.display = text.includes(search) ? '' : 'none';
+        });
+    }
+
+    // ============================================================
+    // КНОПКИ РЕДАКТИРОВАНИЯ И ДОБАВЛЕНИЯ СОТРУДНИКА
+    // ============================================================
+    function editSelectedEmployee() {
+        const fio = document.getElementById('accessEmployeeFio').value;
+        if (!fio) {
+            alert('Сначала выберите сотрудника');
+            return;
+        }
+        // Открываем модалку редактирования сотрудника (переход на вкладку Сотрудники)
+        if (confirm('Перейти к редактированию сотрудника "' + fio + '" на вкладке "Сотрудники"?')) {
+            window.location.href = '/audit/organization?section=employees';
+        }
+    }
+
+    function openAddEmployeeModal() {
+        document.getElementById('addEmployeeForm').reset();
+        document.getElementById('addEmployeeModal').classList.add('show');
+    }
+
+    function closeAddEmployeeModal() {
+        document.getElementById('addEmployeeModal').classList.remove('show');
+    }
+
+    function saveNewEmployee(e) {
+        e.preventDefault();
+        const data = {
+            fio: document.getElementById('newEmployeeFio').value,
+            position: document.getElementById('newEmployeePosition').value,
+            department: document.getElementById('newEmployeeDepartment').value,
+            dateStart: document.getElementById('newEmployeeDateStart').value || null,
+            dateEnd: document.getElementById('newEmployeeDateEnd').value || null,
+            phone: document.getElementById('newEmployeePhone').value,
+            email: document.getElementById('newEmployeeEmail').value
+        };
+        fetch('/api/audit/organization/employees/save', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        }).then(r => r.json()).then(result => {
+            if (result.success) {
+                closeAddEmployeeModal();
+                // Автоматически выбираем нового сотрудника
+                document.getElementById('accessEmployeeFio').value = data.fio;
+                alert('Сотрудник добавлен и выбран');
+            } else {
+                alert(result.error || 'Ошибка');
+            }
+        });
+    }
+
+    // ============================================================
+    // ФИЛЬТРАЦИЯ И ПАГИНАЦИЯ
+    // ============================================================
+    function filterAccesses() {
+        const search = document.getElementById('accessSearch').value.toLowerCase();
+        document.querySelectorAll('#accessTable tbody tr').forEach(row => {
+            row.style.display = row.textContent.toLowerCase().includes(search) ? '' : 'none';
+        });
+    }
+
+    function filterTable(tableId, colIndex, value) {
+        const table = document.getElementById(tableId);
+        const rows = table.querySelectorAll('tbody tr');
+        rows.forEach(row => {
+            const cell = row.cells[colIndex];
+            if (cell) {
+                row.style.display = cell.textContent.toLowerCase().includes(value.toLowerCase()) ? '' : 'none';
+            }
+        });
+    }
+
+    function changePageSize(size) {
+        const url = new URL(window.location);
+        url.searchParams.set('pageSize', size);
+        window.location.href = url.toString();
+    }
+</script>

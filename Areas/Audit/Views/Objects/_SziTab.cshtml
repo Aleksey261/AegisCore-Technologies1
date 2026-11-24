@@ -1,0 +1,320 @@
+@model AegisCore.Models.ObjectsViewModel
+@{
+    var obj = Model.CurrentObject;
+    var selectedIds = obj?.SziIds ?? new List<string>();
+    var selectedSzi = Model.AvailableSzi.Where(s => selectedIds.Contains(s.Id)).ToList();
+}
+
+@if (obj == null || string.IsNullOrEmpty(obj.Id))
+{
+    <div class="alert alert-info"><i class="fas fa-info-circle"></i> Сначала сохраните основные сведения объекта.</div>
+}
+else
+{
+    <div class="alert alert-warning" style="background: #fef3c7; color: #92400e; border: 1px solid #fcd34d;">
+        <i class="fas fa-exclamation-triangle"></i>
+        <strong>Внимание!</strong> В списке для выбора доступны только те СЗИ, у которых не истёк срок действия сертификата.
+    </div>
+
+    <div class="toolbar">
+        <div class="toolbar-left">
+            <button class="btn btn-primary" onclick="openSelectModal('selectSziModal')">
+                <i class="fas fa-plus"></i> Добавить
+            </button>
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Поиск..." oninput="filterSelectedTable('selectedSziTable', this.value)" />
+            </div>
+        </div>
+    </div>
+
+    <div class="table-container">
+        <table class="data-table" id="selectedSziTable">
+            <thead>
+                <tr>
+                    <th style="width: 40px;"><input type="checkbox" onclick="toggleAllCheckboxes(this, 'selectedSziTable')" /></th>
+                    <th class="th-sortable" onclick="sortTable('selectedSziTable', 1)">
+                        <div class="th-header">
+                            <span>Наименование</span>
+                            <i class="fas fa-sort sortable-icon"></i>
+                        </div>
+                        <div class="th-filter-row">
+                            <input type="text" class="filter-inline-input" placeholder="Поиск..." oninput="filterTable('selectedSziTable', 1, this.value)" />
+                        </div>
+                    </th>
+                    <th class="th-sortable" onclick="sortTable('selectedSziTable', 2)">
+                        <div class="th-header">
+                            <span>Серийный номер</span>
+                            <i class="fas fa-sort sortable-icon"></i>
+                        </div>
+                        <div class="th-filter-row">
+                            <input type="text" class="filter-inline-input" placeholder="Поиск..." oninput="filterTable('selectedSziTable', 2, this.value)" />
+                        </div>
+                    </th>
+                    <th class="th-sortable" onclick="sortTable('selectedSziTable', 3)">
+                        <div class="th-header">
+                            <span>№ сертификата соответствия</span>
+                            <i class="fas fa-sort sortable-icon"></i>
+                        </div>
+                        <div class="th-filter-row">
+                            <input type="text" class="filter-inline-input" placeholder="Поиск..." oninput="filterTable('selectedSziTable', 3, this.value)" />
+                        </div>
+                    </th>
+                    <th class="th-sortable" onclick="sortTable('selectedSziTable', 4)">
+                        <div class="th-header">
+                            <span>Установить до</span>
+                            <i class="fas fa-sort sortable-icon"></i>
+                        </div>
+                        <div class="th-filter-row">
+                            <input type="text" class="filter-inline-input" placeholder="Поиск..." oninput="filterTable('selectedSziTable', 4, this.value)" />
+                        </div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (selectedSzi.Any())
+                {
+                    @foreach (var szi in selectedSzi)
+                    {
+                        <tr data-id="@szi.Id">
+                            <td><input type="checkbox" class="row-checkbox" /></td>
+                            <td><strong>@szi.Name</strong></td>
+                            <td>@(szi.SerialNumber ?? "—")</td>
+                            <td>@(szi.ConformityMark ?? "—")</td>
+                            <td>@(szi.InstallByDate?.ToString("dd.MM.yyyy") ?? "—")</td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr><td colspan="5" style="text-align: center; padding: 40px; color: #94a3b8;">
+                        <i class="fas fa-shield-alt" style="font-size: 48px; margin-bottom: 16px; display: block;"></i>
+                        СЗИ не добавлены
+                    </td></tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <div class="form-actions" style="margin-top: 20px;">
+        <button class="btn btn-secondary" onclick="removeSelected('szi')">
+            <i class="fas fa-trash"></i> Удалить выбранные
+        </button>
+    </div>
+}
+
+<!-- ✅ МОДАЛКА ВЫБОРА СЗИ (Рисунок 109) -->
+<div class="modal" id="selectSziModal">
+    <div class="modal-content" style="max-width: 700px;">
+        <div class="modal-header" style="display: flex; justify-content: space-between; align-items: center; padding: 20px 24px; border-bottom: 1px solid #e2e8f0;">
+            <h3 style="margin: 0; font-size: 20px; font-weight: 700; color: #1e293b;">Список СЗИ</h3>
+            <button class="modal-close" onclick="closeModal('selectSziModal')" style="background: none; border: none; font-size: 24px; cursor: pointer; color: #64748b;">&times;</button>
+        </div>
+        <div class="modal-body" style="padding: 24px;">
+            <!-- Поиск -->
+            <div class="search-box" style="margin-bottom: 16px; position: relative;">
+                <i class="fas fa-search" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: #94a3b8;"></i>
+                <input type="text" id="sziListSearch" placeholder="Поиск..." 
+                       oninput="filterSziList()" 
+                       style="width: 100%; padding: 10px 12px 10px 36px; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 14px;" />
+            </div>
+
+            <!-- Список СЗИ -->
+            <div style="max-height: 400px; overflow-y: auto; border: 1px solid #e2e8f0; border-radius: 8px;">
+                <div id="sziListContainer">
+                    <!-- Чекбокс "Выбрать все" -->
+                    <div style="padding: 12px 16px; border-bottom: 1px solid #f1f5f9; display: flex; align-items: center; gap: 12px; background: #fafbfc;">
+                        <input type="checkbox" id="selectAllSZI" onchange="toggleSelectAllSzi()" 
+                               style="width: 16px; height: 16px; cursor: pointer;" />
+                        <label for="selectAllSZI" style="flex: 1; cursor: pointer; color: #475569; font-size: 14px;">
+                            Выбрать все
+                        </label>
+                    </div>
+                    
+                    @foreach (var szi in Model.AvailableSzi)
+                    {
+                        var isSelected = selectedIds.Contains(szi.Id);
+                        <div class="szi-list-item" data-name="@szi.Name" data-serial="@(szi.SerialNumber ?? "")"
+                             style="padding: 10px 16px; border-bottom: 1px solid #f1f5f9; display: flex; align-items: center; gap: 12px; @(isSelected ? "background: #f8fafc;" : "")">
+                            <input type="checkbox" id="szi_@szi.Id" value="@szi.Id" 
+                                   class="szi-checkbox" @(isSelected ? "checked" : "")
+                                   onchange="toggleSziSelection('@szi.Id')"
+                                   style="width: 16px; height: 16px; cursor: pointer;" />
+                            <label for="szi_@szi.Id" style="flex: 1; cursor: pointer; display: flex; justify-content: space-between; align-items: center; margin: 0;">
+                                <span style="font-weight: 500; color: #1e293b; font-size: 14px;">@szi.Name</span>
+                                <span style="color: #64748b; font-size: 13px;">№ @(szi.ConformityMark ?? "—")</span>
+                            </label>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <!-- Кнопки -->
+            <div class="form-actions" style="margin-top: 20px; justify-content: flex-end; display: flex; gap: 12px;">
+                <button type="button" class="btn btn-secondary" onclick="closeModal('selectSziModal')">Отмена</button>
+                <button type="button" class="btn btn-primary" onclick="confirmSelection('szi')">Сохранить СЗИ</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const objectId = '@(obj?.Id ?? "")';
+    let selectedSziIds = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(selectedIds));
+
+    function openSelectModal(id) { document.getElementById(id).classList.add('show'); }
+    function closeModal(id) { document.getElementById(id).classList.remove('show'); }
+    
+    function toggleAllCheckboxes(source, tableId) {
+        const table = document.getElementById(tableId);
+        if (!table) return;
+        table.querySelectorAll('.row-checkbox').forEach(cb => { cb.checked = source.checked; });
+    }
+    
+    function filterSziList() {
+        const search = document.getElementById('sziListSearch').value.toLowerCase();
+        const items = document.querySelectorAll('#sziListContainer .szi-list-item');
+        items.forEach(item => {
+            const name = (item.dataset.name || '').toLowerCase();
+            const serial = (item.dataset.serial || '').toLowerCase();
+            item.style.display = (name.includes(search) || serial.includes(search)) ? '' : 'none';
+        });
+    }
+    
+    function filterSelectedTable(tableId, value) {
+        const table = document.getElementById(tableId);
+        if (!table) return;
+        const search = value.toLowerCase();
+        table.querySelectorAll('tbody tr').forEach(row => {
+            row.style.display = row.textContent.toLowerCase().includes(search) ? '' : 'none';
+        });
+    }
+    
+    // ✅ Поиск по столбцу
+    function filterTable(tableId, colIndex, value) {
+        const table = document.getElementById(tableId);
+        if (!table) return;
+        const searchValue = value.toLowerCase();
+        table.querySelectorAll('tbody tr').forEach(row => {
+            const cell = row.cells[colIndex];
+            if (cell) {
+                const text = cell.textContent.toLowerCase();
+                row.style.display = text.includes(searchValue) ? '' : 'none';
+            }
+        });
+    }
+    
+    // ✅ Сортировка таблицы
+    function sortTable(tableId, colIndex) {
+        const table = document.getElementById(tableId);
+        if (!table) return;
+        const tbody = table.querySelector('tbody');
+        const rows = Array.from(tbody.querySelectorAll('tr'));
+        
+        const currentDir = table.getAttribute('data-sort-dir') || 'asc';
+        const newDir = currentDir === 'asc' ? 'desc' : 'asc';
+        table.setAttribute('data-sort-dir', newDir);
+        
+        rows.sort((a, b) => {
+            const aText = a.cells[colIndex]?.textContent.trim() || '';
+            const bText = b.cells[colIndex]?.textContent.trim() || '';
+            if (newDir === 'asc') return aText.localeCompare(bText, 'ru');
+            else return bText.localeCompare(aText, 'ru');
+        });
+        
+        rows.forEach(row => tbody.appendChild(row));
+    }
+    
+    function toggleSziSelection(id) {
+        if (selectedSziIds.includes(id)) {
+            selectedSziIds = selectedSziIds.filter(sid => sid !== id);
+        } else {
+            selectedSziIds.push(id);
+        }
+        updateSelectAllSziState();
+    }
+    
+    function toggleSelectAllSzi() {
+        const selectAllCheckbox = document.getElementById('selectAllSZI');
+        const checkboxes = document.querySelectorAll('#sziListContainer .szi-checkbox');
+        const selectAll = selectAllCheckbox.checked;
+        
+        checkboxes.forEach(cb => {
+            cb.checked = selectAll;
+            const id = cb.value;
+            if (selectAll && !selectedSziIds.includes(id)) {
+                selectedSziIds.push(id);
+            } else if (!selectAll) {
+                selectedSziIds = selectedSziIds.filter(sid => sid !== id);
+            }
+        });
+    }
+    
+    function updateSelectAllSziState() {
+        const checkboxes = document.querySelectorAll('#sziListContainer .szi-checkbox');
+        const checkedCheckboxes = document.querySelectorAll('#sziListContainer .szi-checkbox:checked');
+        const selectAllCheckbox = document.getElementById('selectAllSZI');
+        if (selectAllCheckbox) {
+            selectAllCheckbox.checked = checkboxes.length > 0 && checkboxes.length === checkedCheckboxes.length;
+        }
+    }
+    
+    function confirmSelection(type) {
+        if (!objectId) { alert('Сначала сохраните объект информатизации'); return; }
+        
+        fetch('/audit/objects/' + objectId + '/set-szi', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(selectedSziIds)
+        })
+        .then(r => r.json())
+        .then(result => {
+            if (result.success) {
+                closeModal('selectSziModal');
+                location.reload();
+            } else {
+                alert(result.error || 'Ошибка при сохранении');
+            }
+        });
+    }
+    
+    function removeSelected(type) {
+        const table = document.getElementById('selectedSziTable');
+        if (!table) return;
+        const checkboxes = table.querySelectorAll('.row-checkbox:checked');
+        if (checkboxes.length === 0) { alert('Выберите элементы'); return; }
+        if (!confirm('Удалить выбранное СЗИ из объекта?')) return;
+        
+        const promises = [];
+        checkboxes.forEach(cb => {
+            const id = cb.closest('tr').dataset.id;
+            promises.push(fetch('/audit/objects/' + objectId + '/remove-szi', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(id)
+            }));
+        });
+        Promise.all(promises).then(() => location.reload());
+    }
+</script>
+
+<style>
+    .th-sortable { cursor: pointer; user-select: none; }
+    .th-sortable:hover { background: #f1f5f9; }
+    .th-header { display: flex; align-items: center; gap: 6px; margin-bottom: 8px; }
+    .sortable-icon { color: #94a3b8; font-size: 12px; }
+    .th-filter-row { margin-top: 4px; }
+    .filter-inline-input {
+        width: 100%;
+        padding: 6px 10px;
+        border: 1px solid #e2e8f0;
+        border-radius: 6px;
+        font-size: 12px;
+        background: white;
+    }
+    .filter-inline-input:focus {
+        outline: none;
+        border-color: #4F46E5;
+        box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.1);
+    }
+</style>

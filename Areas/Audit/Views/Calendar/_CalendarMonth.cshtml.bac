@@ -1,0 +1,84 @@
+@model List<AegisCore.Models.CalendarEvent>
+@{
+    var viewDate = (DateTime)ViewBag.ViewDate;
+    var firstDay = new DateTime(viewDate.Year, viewDate.Month, 1);
+    var daysInMonth = DateTime.DaysInMonth(viewDate.Year, viewDate.Month);
+    var startDayOfWeek = ((int)firstDay.DayOfWeek + 6) % 7; // Пн=0, Вс=6
+}
+
+<div class="calendar-grid">
+    <!-- Заголовки дней недели -->
+    <div class="calendar-weekdays">
+        @{
+            var weekdays = new[] { "Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс" };
+        }
+        @foreach (var day in weekdays)
+        {
+            var isWeekend = day == "Сб" || day == "Вс";
+            <div class="weekday-header @(isWeekend ? "weekend" : "")">@day</div>
+        }
+    </div>
+
+    <!-- Дни месяца -->
+    <div class="calendar-days">
+        <!-- Предыдущий месяц -->
+        @{
+            var prevMonth = viewDate.AddMonths(-1);
+            var daysInPrevMonth = DateTime.DaysInMonth(prevMonth.Year, prevMonth.Month);
+        }
+        @for (int i = 0; i < startDayOfWeek; i++)
+        {
+            var dayNum = daysInPrevMonth - startDayOfWeek + i + 1;
+            <div class="calendar-day other-month">
+                <span class="day-number">@dayNum</span>
+            </div>
+        }
+
+        <!-- Текущий месяц -->
+        @for (int day = 1; day <= daysInMonth; day++)
+        {
+            var currentDate = new DateTime(viewDate.Year, viewDate.Month, day);
+            var dayOfWeek = ((int)currentDate.DayOfWeek + 6) % 7;
+            var isWeekend = dayOfWeek >= 5;
+            var isToday = currentDate.Date == DateTime.Today;
+            var dayEvents = Model.Where(e => e.StartDate.Date == currentDate.Date).ToList();
+            
+            <div class="calendar-day @(isWeekend ? "weekend" : "") @(isToday ? "today" : "")" 
+                 onclick="openEventModal(null, '@currentDate.ToString("yyyy-MM-dd")')">
+                <span class="day-number">@day</span>
+                
+                @if (dayEvents.Any())
+                {
+                    <div class="day-events">
+                        @foreach (var evt in dayEvents.Take(3))
+                        {
+                            <div class="event-badge event-@evt.Type @(evt.Completed ? "completed" : "")" 
+                                 onclick="event.stopPropagation(); openEventModal('@evt.Id')"
+                                 title="@evt.Title">
+                                <span>@(evt.Title.Length > 20 ? evt.Title.Substring(0, 20) + "..." : evt.Title)</span>
+                                <i class="fas fa-clipboard"></i>
+                            </div>
+                        }
+                        @if (dayEvents.Count > 3)
+                        {
+                            <div class="more-events">+@(dayEvents.Count - 3)</div>
+                        }
+                    </div>
+                }
+            </div>
+        }
+
+        <!-- Следующий месяц -->
+        @{
+            var totalCells = 42;
+            var filledCells = startDayOfWeek + daysInMonth;
+        }
+        @for (int i = filledCells; i < totalCells; i++)
+        {
+            var dayNum = i - filledCells + 1;
+            <div class="calendar-day other-month">
+                <span class="day-number">@dayNum</span>
+            </div>
+        }
+    </div>
+</div>

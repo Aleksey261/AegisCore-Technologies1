@@ -1,0 +1,409 @@
+@model AegisCore.Models.ObjectsViewModel
+@{
+    var obj = Model.CurrentObject;
+    var selectedIds = obj?.TelecomIds ?? new List<string>();
+    var availableTelecom = Model.AvailableTechnicalAssets
+        .Where(t => new[] { "Маршрутизатор", "Коммутатор", "Точка доступа", "Модем", "Сервер связи", "Сетевой экран" }.Contains(t.Type))
+        .ToList();
+    var selectedTelecom = availableTelecom.Where(t => selectedIds.Contains(t.Id)).ToList();
+}
+
+@if (obj == null || string.IsNullOrEmpty(obj.Id))
+{
+    <div class="alert alert-info"><i class="fas fa-info-circle"></i> Сначала сохраните основные сведения объекта.</div>
+}
+else
+{
+    <div class="toolbar">
+        <div class="toolbar-left">
+            <button class="btn btn-primary" onclick="openSelectModal('selectTelecomModal')">
+                <i class="fas fa-plus"></i> Добавить
+            </button>
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Поиск..." oninput="filterSelectedTable('selectedTelecomTable', this.value)" />
+            </div>
+        </div>
+    </div>
+
+    <div class="table-container">
+        <table class="data-table" id="selectedTelecomTable">
+            <thead>
+                <tr>
+                    <th style="width: 40px;"><input type="checkbox" onclick="toggleAllCheckboxes(this, 'selectedTelecomTable')" /></th>
+                    <th class="th-sortable" onclick="sortTable('selectedTelecomTable', 1)">
+                        <div class="th-header">
+                            <span>Тип</span>
+                            <i class="fas fa-sort sortable-icon"></i>
+                        </div>
+                        <div class="th-filter-row">
+                            <input type="text" class="filter-inline-input" placeholder="Поиск..." oninput="filterTable('selectedTelecomTable', 1, this.value)" />
+                        </div>
+                    </th>
+                    <th class="th-sortable" onclick="sortTable('selectedTelecomTable', 2)">
+                        <div class="th-header">
+                            <span>Наименование</span>
+                            <i class="fas fa-sort sortable-icon"></i>
+                        </div>
+                        <div class="th-filter-row">
+                            <input type="text" class="filter-inline-input" placeholder="Поиск..." oninput="filterTable('selectedTelecomTable', 2, this.value)" />
+                        </div>
+                    </th>
+                    <th class="th-sortable" onclick="sortTable('selectedTelecomTable', 3)">
+                        <div class="th-header">
+                            <span>Инв. номер</span>
+                            <i class="fas fa-sort sortable-icon"></i>
+                        </div>
+                        <div class="th-filter-row">
+                            <input type="text" class="filter-inline-input" placeholder="Поиск..." oninput="filterTable('selectedTelecomTable', 3, this.value)" />
+                        </div>
+                    </th>
+                    <th class="th-sortable" onclick="sortTable('selectedTelecomTable', 4)">
+                        <div class="th-header">
+                            <span>Дата приобретения</span>
+                            <i class="fas fa-sort sortable-icon"></i>
+                        </div>
+                        <div class="th-filter-row">
+                            <input type="text" class="filter-inline-input" placeholder="Поиск..." oninput="filterTable('selectedTelecomTable', 4, this.value)" />
+                        </div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (selectedTelecom.Any())
+                {
+                    @foreach (var t in selectedTelecom)
+                    {
+                        <tr data-id="@t.Id">
+                            <td><input type="checkbox" class="row-checkbox" /></td>
+                            <td><span class="badge info">@(t.Type ?? "—")</span></td>
+                            <td><strong>@t.Name</strong></td>
+                            <td>@(t.InventoryNumber ?? "—")</td>
+                            <td>@(t.PurchaseDate?.ToString("dd.MM.yyyy") ?? "—")</td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr><td colspan="5" style="text-align: center; padding: 40px; color: #94a3b8;">
+                        <i class="fas fa-network-wired" style="font-size: 48px; margin-bottom: 16px; display: block;"></i>
+                        Телекоммуникационное оборудование не добавлено
+                    </td></tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <div class="form-actions" style="margin-top: 20px;">
+        <button class="btn btn-secondary" onclick="removeSelected('telecom')">
+            <i class="fas fa-trash"></i> Удалить выбранные
+        </button>
+    </div>
+}
+
+<!-- ✅ МОДАЛКА ВЫБОРА ОБОРУДОВАНИЯ (Рисунок 113) -->
+<div class="modal" id="selectTelecomModal">
+    <div class="modal-content" style="max-width: 700px;">
+        <div class="modal-header" style="display: flex; justify-content: space-between; align-items: center; padding: 20px 24px; border-bottom: 1px solid #e2e8f0;">
+            <h3 style="margin: 0; font-size: 20px; font-weight: 700; color: #1e293b;">Список оборудования</h3>
+            <button class="modal-close" onclick="closeModal('selectTelecomModal')" style="background: none; border: none; font-size: 24px; cursor: pointer; color: #64748b;">&times;</button>
+        </div>
+        <div class="modal-body" style="padding: 24px;">
+            <!-- Кнопка "Добавить оборудование" -->
+            <div style="display: flex; justify-content: flex-end; margin-bottom: 16px;">
+                <button type="button" class="btn btn-primary" onclick="openAddTelecomFromModal()" style="padding: 8px 16px;">
+                    <i class="fas fa-plus"></i> Добавить оборудование
+                </button>
+            </div>
+
+            <!-- Поиск -->
+            <div class="search-box" style="margin-bottom: 16px; position: relative;">
+                <i class="fas fa-search" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: #94a3b8;"></i>
+                <input type="text" id="telecomListSearch" placeholder="Поиск..." 
+                       oninput="filterTelecomList()" 
+                       style="width: 100%; padding: 10px 12px 10px 36px; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 14px;" />
+            </div>
+
+            <!-- Список оборудования -->
+            <div style="max-height: 400px; overflow-y: auto; border: 1px solid #e2e8f0; border-radius: 8px;">
+                <div id="telecomListContainer">
+                    <!-- Чекбокс "Выбрать все" -->
+                    <div style="padding: 12px 16px; border-bottom: 1px solid #f1f5f9; display: flex; align-items: center; gap: 12px; background: #fafbfc;">
+                        <input type="checkbox" id="selectAllTelecom" onchange="toggleSelectAllTelecom()" 
+                               style="width: 16px; height: 16px; cursor: pointer;" />
+                        <label for="selectAllTelecom" style="flex: 1; cursor: pointer; color: #475569; font-size: 14px;">
+                            Выбрать все
+                        </label>
+                    </div>
+                    
+                    @foreach (var t in availableTelecom)
+                    {
+                        var isSelected = selectedIds.Contains(t.Id);
+                        <div class="telecom-list-item" data-name="@t.Name" data-inv="@(t.InventoryNumber ?? "")"
+                             style="padding: 10px 16px; border-bottom: 1px solid #f1f5f9; display: flex; align-items: center; gap: 12px; @(isSelected ? "background: #f8fafc;" : "")">
+                            <input type="checkbox" id="telecom_@t.Id" value="@t.Id" 
+                                   class="telecom-checkbox" @(isSelected ? "checked" : "")
+                                   onchange="toggleTelecomSelection('@t.Id')"
+                                   style="width: 16px; height: 16px; cursor: pointer;" />
+                            <label for="telecom_@t.Id" style="flex: 1; cursor: pointer; display: flex; justify-content: space-between; align-items: center; margin: 0;">
+                                <span style="font-weight: 500; color: #1e293b; font-size: 14px;">@t.Name</span>
+                                <span style="color: #64748b; font-size: 13px;">@(t.InventoryNumber ?? "—")</span>
+                            </label>
+                        </div>
+                    }
+                    
+                    @if (!availableTelecom.Any())
+                    {
+                        <div style="padding: 40px; text-align: center; color: #94a3b8;">
+                            <i class="fas fa-info-circle" style="font-size: 32px; margin-bottom: 12px; display: block;"></i>
+                            Нет доступного телекоммуникационного оборудования
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <!-- Кнопки -->
+            <div class="form-actions" style="margin-top: 20px; justify-content: flex-end; display: flex; gap: 12px;">
+                <button type="button" class="btn btn-secondary" onclick="closeModal('selectTelecomModal')">Отмена</button>
+                <button type="button" class="btn btn-primary" onclick="confirmSelection('telecom')">Сохранить оборудование</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ✅ МОДАЛКА ДОБАВЛЕНИЯ НОВОГО ОБОРУДОВАНИЯ -->
+<div class="modal" id="addTelecomModal">
+    <div class="modal-content" style="max-width: 600px;">
+        <div class="modal-header">
+            <h3>Добавление телекоммуникационного оборудования</h3>
+            <button class="modal-close" onclick="closeModal('addTelecomModal')">&times;</button>
+        </div>
+        <div class="modal-body">
+            <form id="addTelecomForm" onsubmit="saveNewTelecom(event)">
+                <div class="form-group">
+                    <label>Наименование <span class="required">*</span></label>
+                    <input type="text" id="newTelecomName" class="form-control" required placeholder="Введите наименование" />
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Тип</label>
+                        <select id="newTelecomType" class="form-control">
+                            <option value="">Выбрать...</option>
+                            <option value="Маршрутизатор">Маршрутизатор</option>
+                            <option value="Коммутатор">Коммутатор</option>
+                            <option value="Сетевой экран">Сетевой экран</option>
+                            <option value="Точка доступа">Точка доступа</option>
+                            <option value="Модем">Модем</option>
+                            <option value="Сервер связи">Сервер связи</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Инвентарный номер</label>
+                        <input type="text" id="newTelecomInventory" class="form-control" placeholder="Введите инв. номер" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Дата приобретения</label>
+                    <input type="date" id="newTelecomPurchaseDate" class="form-control" />
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal('addTelecomModal')">Отмена</button>
+                    <button type="submit" class="btn btn-primary">Сохранить</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    const objectId = '@(obj?.Id ?? "")';
+    let selectedTelecomIds = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(selectedIds));
+
+    function openSelectModal(id) { document.getElementById(id).classList.add('show'); }
+    function closeModal(id) { document.getElementById(id).classList.remove('show'); }
+    
+    function toggleAllCheckboxes(source, tableId) {
+        const table = document.getElementById(tableId);
+        if (!table) return;
+        table.querySelectorAll('.row-checkbox').forEach(cb => { cb.checked = source.checked; });
+    }
+    
+    function filterTelecomList() {
+        const search = document.getElementById('telecomListSearch').value.toLowerCase();
+        const items = document.querySelectorAll('#telecomListContainer .telecom-list-item');
+        items.forEach(item => {
+            const name = (item.dataset.name || '').toLowerCase();
+            const inv = (item.dataset.inv || '').toLowerCase();
+            item.style.display = (name.includes(search) || inv.includes(search)) ? '' : 'none';
+        });
+    }
+    
+    function filterSelectedTable(tableId, value) {
+        const table = document.getElementById(tableId);
+        if (!table) return;
+        const search = value.toLowerCase();
+        table.querySelectorAll('tbody tr').forEach(row => {
+            row.style.display = row.textContent.toLowerCase().includes(search) ? '' : 'none';
+        });
+    }
+    
+    // ✅ Поиск по столбцу
+    function filterTable(tableId, colIndex, value) {
+        const table = document.getElementById(tableId);
+        if (!table) return;
+        const searchValue = value.toLowerCase();
+        table.querySelectorAll('tbody tr').forEach(row => {
+            const cell = row.cells[colIndex];
+            if (cell) {
+                const text = cell.textContent.toLowerCase();
+                row.style.display = text.includes(searchValue) ? '' : 'none';
+            }
+        });
+    }
+    
+    // ✅ Сортировка таблицы
+    function sortTable(tableId, colIndex) {
+        const table = document.getElementById(tableId);
+        if (!table) return;
+        const tbody = table.querySelector('tbody');
+        const rows = Array.from(tbody.querySelectorAll('tr'));
+        
+        const currentDir = table.getAttribute('data-sort-dir') || 'asc';
+        const newDir = currentDir === 'asc' ? 'desc' : 'asc';
+        table.setAttribute('data-sort-dir', newDir);
+        
+        rows.sort((a, b) => {
+            const aText = a.cells[colIndex]?.textContent.trim() || '';
+            const bText = b.cells[colIndex]?.textContent.trim() || '';
+            if (newDir === 'asc') return aText.localeCompare(bText, 'ru');
+            else return bText.localeCompare(aText, 'ru');
+        });
+        
+        rows.forEach(row => tbody.appendChild(row));
+    }
+    
+    function toggleTelecomSelection(id) {
+        if (selectedTelecomIds.includes(id)) {
+            selectedTelecomIds = selectedTelecomIds.filter(sid => sid !== id);
+        } else {
+            selectedTelecomIds.push(id);
+        }
+        updateSelectAllTelecomState();
+    }
+    
+    function toggleSelectAllTelecom() {
+        const selectAllCheckbox = document.getElementById('selectAllTelecom');
+        const checkboxes = document.querySelectorAll('#telecomListContainer .telecom-checkbox');
+        const selectAll = selectAllCheckbox.checked;
+        
+        checkboxes.forEach(cb => {
+            cb.checked = selectAll;
+            const id = cb.value;
+            if (selectAll && !selectedTelecomIds.includes(id)) {
+                selectedTelecomIds.push(id);
+            } else if (!selectAll) {
+                selectedTelecomIds = selectedTelecomIds.filter(sid => sid !== id);
+            }
+        });
+    }
+    
+    function updateSelectAllTelecomState() {
+        const checkboxes = document.querySelectorAll('#telecomListContainer .telecom-checkbox');
+        const checkedCheckboxes = document.querySelectorAll('#telecomListContainer .telecom-checkbox:checked');
+        const selectAllCheckbox = document.getElementById('selectAllTelecom');
+        if (selectAllCheckbox) {
+            selectAllCheckbox.checked = checkboxes.length > 0 && checkboxes.length === checkedCheckboxes.length;
+        }
+    }
+    
+    function confirmSelection(type) {
+        if (!objectId) { alert('Сначала сохраните объект информатизации'); return; }
+        
+        fetch('/audit/objects/' + objectId + '/set-telecom', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(selectedTelecomIds)
+        })
+        .then(r => r.json())
+        .then(result => {
+            if (result.success) {
+                closeModal('selectTelecomModal');
+                location.reload();
+            } else {
+                alert(result.error || 'Ошибка при сохранении');
+            }
+        });
+    }
+    
+    function removeSelected(type) {
+        const table = document.getElementById('selectedTelecomTable');
+        if (!table) return;
+        const checkboxes = table.querySelectorAll('.row-checkbox:checked');
+        if (checkboxes.length === 0) { alert('Выберите элементы'); return; }
+        if (!confirm('Удалить выбранное оборудование из объекта?')) return;
+        
+        const promises = [];
+        checkboxes.forEach(cb => {
+            const id = cb.closest('tr').dataset.id;
+            promises.push(fetch('/audit/objects/' + objectId + '/remove-telecom', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(id)
+            }));
+        });
+        Promise.all(promises).then(() => location.reload());
+    }
+    
+    function openAddTelecomFromModal() {
+        closeModal('selectTelecomModal');
+        document.getElementById('addTelecomModal').classList.add('show');
+    }
+    
+    function saveNewTelecom(e) {
+        e.preventDefault();
+        const newTelecom = {
+            name: document.getElementById('newTelecomName').value,
+            type: document.getElementById('newTelecomType').value,
+            inventoryNumber: document.getElementById('newTelecomInventory').value,
+            purchaseDate: document.getElementById('newTelecomPurchaseDate').value || null
+        };
+        
+        fetch('/audit/infrastructure/technical-assets/save', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(newTelecom)
+        })
+        .then(r => r.json())
+        .then(result => {
+            if (result.success) {
+                closeModal('addTelecomModal');
+                document.getElementById('addTelecomForm').reset();
+                openSelectModal('selectTelecomModal');
+                setTimeout(() => location.reload(), 500);
+            } else {
+                alert(result.error || 'Ошибка при добавлении оборудования');
+            }
+        });
+    }
+</script>
+
+<style>
+    .th-sortable { cursor: pointer; user-select: none; }
+    .th-sortable:hover { background: #f1f5f9; }
+    .th-header { display: flex; align-items: center; gap: 6px; margin-bottom: 8px; }
+    .sortable-icon { color: #94a3b8; font-size: 12px; }
+    .th-filter-row { margin-top: 4px; }
+    .filter-inline-input {
+        width: 100%;
+        padding: 6px 10px;
+        border: 1px solid #e2e8f0;
+        border-radius: 6px;
+        font-size: 12px;
+        background: white;
+    }
+    .filter-inline-input:focus {
+        outline: none;
+        border-color: #4F46E5;
+        box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.1);
+    }
+</style>

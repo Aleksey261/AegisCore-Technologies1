@@ -1,0 +1,16 @@
+@{ ViewData["Title"] = "Сканер"; }
+<h1>Сканер безопасности</h1>
+<div class="toolbar">
+    <input id="scanTarget" value="127.0.0.1" />
+    <button class="btn" onclick="startScan()">Запустить сканирование</button>
+    <button class="btn secondary" onclick="assessScan()">Проверить по ФСТЭК</button>
+    <a class="btn secondary" href="/scanner/report/pdf">Отчёт PDF</a>
+</div>
+<pre id="scanResult" class="console">Готов к сканированию.</pre>
+<div class="tabs">
+    <button onclick="loadTab('/scanner/scans')">Сканирования</button>
+    <button onclick="loadTab('/scanner/vulnerabilities')">Уязвимости</button>
+    <button onclick="loadTab('/scanner/reports')">Отчёты</button>
+</div>
+<div id="moduleContent"></div>
+@section Scripts { <script src="/js/scanner.js"></script> }

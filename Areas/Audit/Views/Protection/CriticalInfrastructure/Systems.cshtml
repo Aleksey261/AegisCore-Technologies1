@@ -1,0 +1,399 @@
+@model AegisCore.Models.CriticalInfrastructureViewModel
+@{
+    ViewData["Title"] = "Перечень объектов КИИ";
+}
+
+<div class="audit-page">
+    <div class="page-header">
+        <h1>
+            <a href="/audit/protection" style="color: #64748b; text-decoration: none; margin-right: 12px; font-size: 24px;">
+                <i class="fas fa-arrow-left"></i>
+            </a>
+            <i class="fas fa-server"></i> Критическая информационная инфраструктура
+        </h1>
+        <p style="color: #64748b; margin-top: 8px; margin-left: 36px;">
+            Перечень объектов критической информационной инфраструктуры
+        </p>
+    </div>
+
+    <div class="tabs-nav" style="margin-bottom: 24px;">
+        <a href="/audit/protection/critical-infrastructure" class="tab-nav-item">
+            <i class="fas fa-project-diagram"></i> Перечень бизнес-процессов
+        </a>
+        <a href="/audit/protection/critical-infrastructure/systems" class="tab-nav-item active">
+            <i class="fas fa-server"></i> Перечень объектов
+        </a>
+    </div>
+
+    <div class="toolbar">
+        <div class="toolbar-left">
+            <a href="/audit/protection/critical-infrastructure/systems/create" class="btn btn-primary">
+                <i class="fas fa-plus"></i> Добавить
+            </a>
+            
+            <!-- ✅ ДОБАВЛЕНО: Кнопка "Экспорт в файл" -->
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" onclick="toggleDropdown('exportDropdown'); event.stopPropagation();">
+                    <i class="fas fa-download"></i> Экспорт в файл
+                </button>
+                <div class="dropdown-menu" id="exportDropdown">
+                    <a onclick="exportTable('xlsx')"><i class="fas fa-file-excel"></i> Экспорт в XLSX</a>
+                </div>
+            </div>
+            
+            <!-- ✅ ДОБАВЛЕНО: Кнопка "Печать" с выпадающим списком -->
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" onclick="toggleDropdown('printDropdown'); event.stopPropagation();">
+                    <i class="fas fa-print"></i> Печать
+                </button>
+                <div class="dropdown-menu" id="printDropdown">
+                    <a onclick="printDocument('categorization-act')"><i class="fas fa-file-alt"></i> Акт категорирования объекта КИИ</a>
+                    <a onclick="printDocument('objects-categorization-act')"><i class="fas fa-file-alt"></i> Акт категорирования перечня объектов КИИ</a>
+                    <a onclick="printDocument('objects-list')"><i class="fas fa-file-alt"></i> Перечень объектов КИИ подлежащих категорированию</a>
+                    <a onclick="printDocument('passport')"><i class="fas fa-file-alt"></i> Паспорт на объект КИИ</a>
+                    <a onclick="printDocument('report')"><i class="fas fa-file-alt"></i> Отчет КИИ</a>
+                </div>
+            </div>
+            
+            <button class="btn btn-secondary" onclick="openTableSettings()">
+                <i class="fas fa-cog"></i> Настройка таблицы
+            </button>
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" id="objectSearch" placeholder="Поиск по объектам..." value="@Model.Search" oninput="filterObjects()" />
+            </div>
+        </div>
+    </div>
+
+    <div class="table-container">
+        <table class="data-table" id="objectsTable">
+            <thead>
+                <tr>
+                    <th class="th-sortable">
+                        <a href="/audit/protection/critical-infrastructure/systems?sort=name&order=@(Model.Sort == "name" && Model.SortOrder == "asc" ? "desc" : "asc")&search=@Model.Search"
+                           style="color: inherit; text-decoration: none; display: flex; align-items: center; gap: 4px;">
+                            Наименование объекта
+                            @if (Model.Sort == "name") { <i class="fas fa-sort-@(Model.SortOrder == "asc" ? "up" : "down")"></i> }
+                            else { <i class="fas fa-sort" style="color: #94a3b8;"></i> }
+                        </a>
+                        <div class="th-filter-row">
+                            <input type="text" class="filter-inline-input" placeholder="Поиск..." oninput="filterTable('objectsTable', 0, this.value)" />
+                        </div>
+                    </th>
+                    <th class="th-sortable">
+                        <a href="/audit/protection/critical-infrastructure/systems?sort=type&order=@(Model.Sort == "type" && Model.SortOrder == "asc" ? "desc" : "asc")&search=@Model.Search"
+                           style="color: inherit; text-decoration: none; display: flex; align-items: center; gap: 4px;">
+                            Тип объекта
+                            @if (Model.Sort == "type") { <i class="fas fa-sort-@(Model.SortOrder == "asc" ? "up" : "down")"></i> }
+                            else { <i class="fas fa-sort" style="color: #94a3b8;"></i> }
+                        </a>
+                        <div class="th-filter-row">
+                            <input type="text" class="filter-inline-input" placeholder="Поиск..." oninput="filterTable('objectsTable', 1, this.value)" />
+                        </div>
+                    </th>
+                    <th class="th-sortable">
+                        <a href="/audit/protection/critical-infrastructure/systems?sort=address&order=@(Model.Sort == "address" && Model.SortOrder == "asc" ? "desc" : "asc")&search=@Model.Search"
+                           style="color: inherit; text-decoration: none; display: flex; align-items: center; gap: 4px;">
+                            Адрес
+                            @if (Model.Sort == "address") { <i class="fas fa-sort-@(Model.SortOrder == "asc" ? "up" : "down")"></i> }
+                            else { <i class="fas fa-sort" style="color: #94a3b8;"></i> }
+                        </a>
+                        <div class="th-filter-row">
+                            <input type="text" class="filter-inline-input" placeholder="Поиск..." oninput="filterTable('objectsTable', 2, this.value)" />
+                        </div>
+                    </th>
+                    <th class="th-sortable">
+                        <a href="/audit/protection/critical-infrastructure/systems?sort=category&order=@(Model.Sort == "category" && Model.SortOrder == "asc" ? "desc" : "asc")&search=@Model.Search"
+                           style="color: inherit; text-decoration: none; display: flex; align-items: center; gap: 4px;">
+                            Категория значимости
+                            @if (Model.Sort == "category") { <i class="fas fa-sort-@(Model.SortOrder == "asc" ? "up" : "down")"></i> }
+                            else { <i class="fas fa-sort" style="color: #94a3b8;"></i> }
+                        </a>
+                        <div class="th-filter-row">
+                            <input type="text" class="filter-inline-input" placeholder="Поиск..." oninput="filterTable('objectsTable', 3, this.value)" />
+                        </div>
+                    </th>
+                    <th style="width: 180px;">Действия</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Objects != null && Model.Objects.Any())
+                {
+                    @foreach (var obj in Model.Objects)
+                    {
+                        <tr data-id="@obj.Id">
+                            <td>
+                                <a href="/audit/protection/critical-infrastructure/systems/@obj.Id" style="color: #4F46E5; font-weight: 600; text-decoration: none;">
+                                    @obj.Name
+                                </a>
+                            </td>
+                            <td>@obj.Type</td>
+                            <td>@obj.Address</td>
+                            <td>
+                                @if (!string.IsNullOrEmpty(obj.Category) && obj.Category != "Не категорирован")
+                                {
+                                    var categoryClass = obj.Category == "Первая" ? "badge-danger" : 
+                                                       (obj.Category == "Вторая" ? "badge-warning" : "badge-secondary");
+                                    <span class="badge @categoryClass">@obj.Category</span>
+                                }
+                                else
+                                {
+                                    <span class="badge badge-secondary">Не категорирован</span>
+                                }
+                            </td>
+                            <td class="actions">
+                                <a href="/audit/protection/critical-infrastructure/systems/@obj.Id" class="btn-icon edit" title="Открыть">
+                                    <i class="fas fa-folder-open"></i>
+                                </a>
+                                <button class="btn-icon delete" title="Удалить" onclick="deleteObject('@obj.Id')">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="5" style="text-align: center; padding: 40px; color: #94a3b8;">
+                            <i class="fas fa-server" style="font-size: 48px; margin-bottom: 16px; display: block;"></i>
+                            Объекты КИИ не добавлены
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    @if (Model.TotalPages > 1)
+    {
+        <div class="pagination">
+            <div class="pagination-page-size">
+                <label>Показывать по:</label>
+                <select onchange="changePageSize(this.value)">
+                    <option value="10" selected="@(Model.PageSize == 10)">10</option>
+                    <option value="25" selected="@(Model.PageSize == 25)">25</option>
+                    <option value="50" selected="@(Model.PageSize == 50)">50</option>
+                    <option value="100" selected="@(Model.PageSize == 100)">100</option>
+                </select>
+            </div>
+            <div class="pagination-info">
+                Страница @Model.CurrentPage из @Model.TotalPages (Всего: @Model.TotalItems)
+            </div>
+            <div class="pagination-buttons">
+                @if (Model.CurrentPage > 1)
+                {
+                    <a href="/audit/protection/critical-infrastructure/systems?page=@(Model.CurrentPage - 1)&search=@Model.Search&sort=@Model.Sort&order=@Model.SortOrder" class="btn-pagination">‹</a>
+                }
+                @for (int i = 1; i <= Model.TotalPages; i++)
+                {
+                    <a href="/audit/protection/critical-infrastructure/systems?page=@i&search=@Model.Search&sort=@Model.Sort&order=@Model.SortOrder"
+                       class="btn-pagination @(i == Model.CurrentPage ? "active" : "")">@i</a>
+                }
+                @if (Model.CurrentPage < Model.TotalPages)
+                {
+                    <a href="/audit/protection/critical-infrastructure/systems?page=@(Model.CurrentPage + 1)&search=@Model.Search&sort=@Model.Sort&order=@Model.SortOrder" class="btn-pagination">›</a>
+                }
+            </div>
+        </div>
+    }
+</div>
+
+<!-- ✅ МОДАЛЬНОЕ ОКНО НАСТРОЙКИ ТАБЛИЦЫ -->
+<div class="modal" id="tableSettingsModal">
+    <div class="modal-content" style="max-width: 500px;">
+        <div class="modal-header">
+            <h3><i class="fas fa-cog"></i> Настройка таблицы</h3>
+            <button class="modal-close" onclick="closeTableSettings()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label style="margin-bottom: 12px; font-weight: 600;">Отображаемые столбцы:</label>
+                <div style="display: flex; flex-direction: column; gap: 8px;">
+                    <label class="checkbox-label">
+                        <input type="checkbox" data-column="0" checked onchange="toggleColumn(0, this.checked)" />
+                        <span>Наименование объекта</span>
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" data-column="1" checked onchange="toggleColumn(1, this.checked)" />
+                        <span>Тип объекта</span>
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" data-column="2" checked onchange="toggleColumn(2, this.checked)" />
+                        <span>Адрес</span>
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" data-column="3" checked onchange="toggleColumn(3, this.checked)" />
+                        <span>Категория значимости</span>
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" data-column="4" checked onchange="toggleColumn(4, this.checked)" />
+                        <span>Действия</span>
+                    </label>
+                </div>
+            </div>
+            <div class="form-actions" style="margin-top: 24px; display: flex; gap: 12px; justify-content: flex-end;">
+                <button type="button" class="btn btn-secondary" onclick="resetTableSettings()">
+                    <i class="fas fa-undo"></i> Сбросить настройки
+                </button>
+                <button type="button" class="btn btn-primary" onclick="closeTableSettings()">
+                    <i class="fas fa-check"></i> Применить
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .column-hidden { display: none !important; }
+    .th-sortable a { color: inherit; text-decoration: none; }
+    .th-sortable a:hover { color: #4F46E5; }
+    .pagination {
+        display: flex; justify-content: space-between; align-items: center;
+        padding: 16px 0; border-top: 1px solid #e2e8f0; margin-top: 16px;
+    }
+    .pagination-buttons { display: flex; gap: 4px; }
+    .btn-pagination {
+        padding: 6px 12px; border: 1px solid #e2e8f0; background: white;
+        border-radius: 4px; text-decoration: none; color: #475569;
+    }
+    .btn-pagination:hover { background: #f1f5f9; }
+    .btn-pagination.active { background: #4F46E5; color: white; border-color: #4F46E5; }
+    .badge-danger { background: #fee2e2; color: #991b1b; }
+    .badge-warning { background: #fef3c7; color: #92400e; }
+    .badge-secondary { background: #f3f4f6; color: #374151; }
+</style>
+
+<script>
+    // === DROPDOWN МЕНЮ ===
+    function toggleDropdown(dropdownId) {
+        const dropdown = document.getElementById(dropdownId);
+        const isOpen = dropdown.classList.contains('show');
+        closeAllDropdowns();
+        if (!isOpen) dropdown.classList.add('show');
+    }
+    function closeAllDropdowns() {
+        document.querySelectorAll('.dropdown-menu').forEach(d => d.classList.remove('show'));
+    }
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.dropdown')) closeAllDropdowns();
+    });
+
+    // === ЭКСПОРТ ===
+    function exportTable(format) {
+        closeAllDropdowns();
+        const search = document.getElementById('objectSearch')?.value || '';
+        window.location.href = `/audit/protection/critical-infrastructure/systems/export/${format}?search=${encodeURIComponent(search)}`;
+    }
+
+    // === ПЕЧАТЬ ДОКУМЕНТОВ ===
+    function printDocument(docType) {
+        closeAllDropdowns();
+        const docNames = {
+            'categorization-act': 'Акт категорирования объекта КИИ',
+            'objects-categorization-act': 'Акт категорирования перечня объектов КИИ',
+            'objects-list': 'Перечень объектов КИИ подлежащих категорированию',
+            'passport': 'Паспорт на объект КИИ',
+            'report': 'Отчет КИИ'
+        };
+        
+        // Показываем уведомление о формировании документа
+        alert(`Формирование документа: ${docNames[docType]}\n\nВ реальной системе здесь будет скачивание/печать документа.`);
+        
+        // В реальной системе здесь будет redirect на контроллер для генерации документа
+        // window.location.href = `/audit/protection/critical-infrastructure/systems/print/${docType}`;
+    }
+
+    // === НАСТРОЙКА ТАБЛИЦЫ ===
+    function openTableSettings() {
+        document.getElementById('tableSettingsModal').classList.add('show');
+        loadTableSettings();
+    }
+    function closeTableSettings() {
+        document.getElementById('tableSettingsModal').classList.remove('show');
+        saveTableSettings();
+    }
+    function toggleColumn(columnIndex, visible) {
+        const table = document.getElementById('objectsTable');
+        const headers = table.querySelectorAll('thead th');
+        const rows = table.querySelectorAll('tbody tr');
+        
+        if (visible) {
+            headers[columnIndex].classList.remove('column-hidden');
+            rows.forEach(row => { if (row.cells[columnIndex]) row.cells[columnIndex].classList.remove('column-hidden'); });
+        } else {
+            headers[columnIndex].classList.add('column-hidden');
+            rows.forEach(row => { if (row.cells[columnIndex]) row.cells[columnIndex].classList.add('column-hidden'); });
+        }
+        saveTableSettings();
+    }
+    function saveTableSettings() {
+        const settings = {};
+        document.querySelectorAll('#tableSettingsModal input[type="checkbox"]').forEach((cb, index) => {
+            settings[index] = cb.checked;
+        });
+        localStorage.setItem('ciiTableSettings', JSON.stringify(settings));
+    }
+    function loadTableSettings() {
+        const saved = localStorage.getItem('ciiTableSettings');
+        if (saved) {
+            const settings = JSON.parse(saved);
+            document.querySelectorAll('#tableSettingsModal input[type="checkbox"]').forEach((cb, index) => {
+                if (settings.hasOwnProperty(index)) {
+                    cb.checked = settings[index];
+                    toggleColumn(index, cb.checked);
+                }
+            });
+        }
+    }
+    function resetTableSettings() {
+        if (!confirm('Сбросить все настройки таблицы к значениям по умолчанию?')) return;
+        document.querySelectorAll('#tableSettingsModal input[type="checkbox"]').forEach((cb, index) => {
+            cb.checked = true;
+            toggleColumn(index, true);
+        });
+        localStorage.removeItem('ciiTableSettings');
+        alert('Настройки таблицы сброшены');
+    }
+
+    // === ФИЛЬТРАЦИЯ И ПОИСК ===
+    function filterObjects() {
+        const search = document.getElementById('objectSearch').value.toLowerCase();
+        document.querySelectorAll('#objectsTable tbody tr').forEach(row => {
+            row.style.display = row.textContent.toLowerCase().includes(search) ? '' : 'none';
+        });
+    }
+    function filterTable(tableId, colIndex, value) {
+        const table = document.getElementById(tableId);
+        const rows = table.querySelectorAll('tbody tr');
+        rows.forEach(row => {
+            const cell = row.cells[colIndex];
+            if (cell) row.style.display = cell.textContent.toLowerCase().includes(value.toLowerCase()) ? '' : 'none';
+        });
+    }
+
+    // === УДАЛЕНИЕ ===
+    function deleteObject(id) {
+        if (!confirm('Удалить объект КИИ?')) return;
+        fetch('/audit/protection/critical-infrastructure/systems/delete/' + id, { method: 'DELETE' })
+            .then(r => r.json())
+            .then(data => { 
+                if (data.success) location.reload();
+                else alert(data.error || 'Ошибка при удалении');
+            })
+            .catch(() => alert('Ошибка при удалении'));
+    }
+
+    // === ПАГИНАЦИЯ ===
+    function changePageSize(size) {
+        const url = new URL(window.location);
+        url.searchParams.set('pageSize', size);
+        url.searchParams.set('page', 1);
+        window.location.href = url.toString();
+    }
+
+    // === ИНИЦИАЛИЗАЦИЯ ===
+    document.addEventListener('DOMContentLoaded', function() {
+        loadTableSettings();
+    });
+</script>

@@ -1,0 +1,876 @@
+@model List<AegisCore.Models.DictionaryItem>
+@{
+    ViewData["Title"] = ViewBag.Title ?? "Справочник";
+    var type = ViewBag.ActiveDocType as string ?? "";
+    var isRegistry = ViewBag.HasAdditionalFields as bool? ?? false;
+    
+    // Определяем, является ли тип сертификатами (нужны спец. колонки)
+    var isCertificate = type == "szi-certificates" || type == "skzi-certificates";
+    var certificateTitle = type == "szi-certificates" ? "сертификатов СЗИ" : "сертификатов СКЗИ";
+}
+
+<div class="audit-page">
+    <div class="page-header">
+        <h1>
+            <a href="/audit/documents" style="color: #64748b; text-decoration: none; margin-right: 12px; font-size: 24px;">
+                <i class="fas fa-arrow-left"></i>
+            </a>
+            <i class="fas fa-@(isRegistry ? "list" : "book")"></i> @ViewData["Title"]
+        </h1>
+        <p style="color: #64748b; margin-top: 8px; margin-left: 36px;">
+            @(isRegistry ? "Реестр" : "Справочник") - управление записями
+        </p>
+    </div>
+
+    <div class="form-content" style="background: white; border-radius: 8px; padding: 32px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+        
+        <div class="toolbar" style="margin-bottom: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
+            <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+                <button onclick="openAddModal()" class="btn btn-primary" style="display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px; background: #4F46E5; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 500; font-size: 14px;">
+                    <i class="fas fa-plus"></i> Добавить
+                </button>
+                
+                @if (isCertificate)
+                {
+                    <button onclick="updateCertificates()" class="btn btn-secondary" style="display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px; background: #f1f5f9; color: #475569; border: none; border-radius: 6px; cursor: pointer; font-weight: 500; font-size: 14px;">
+                        <i class="fas fa-sync"></i> Обновить данные @certificateTitle
+                    </button>
+                }
+            </div>
+            
+            <div style="position: relative; max-width: 400px; width: 100%;">
+                <i class="fas fa-search" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: #94a3b8; font-size: 14px;"></i>
+                <input type="text" id="searchInput" placeholder="Поиск по таблице..." 
+                       style="width: 100%; padding: 10px 12px 10px 40px; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 14px; box-sizing: border-box;"
+                       oninput="filterTable()" />
+            </div>
+        </div>
+
+        <div style="overflow-x: auto;">
+            <table class="data-table" id="dictionaryTable" style="width: 100%; border-collapse: collapse;">
+                <thead>
+                    <tr style="background: #f8fafc;">
+                        @if (isCertificate)
+                        {
+                            <th style="padding: 12px; text-align: left; border-bottom: 2px solid #e2e8f0; font-weight: 600; color: #475569; cursor: pointer;" onclick="sortTable(0)">
+                                Наименование <i class="fas fa-sort" style="margin-left: 8px; color: #94a3b8;"></i>
+                            </th>
+                            <th style="padding: 12px; text-align: left; border-bottom: 2px solid #e2e8f0; font-weight: 600; color: #475569; cursor: pointer;" onclick="sortTable(1)">
+                                Номер <i class="fas fa-sort" style="margin-left: 8px; color: #94a3b8;"></i>
+                            </th>
+                            <th style="padding: 12px; text-align: left; border-bottom: 2px solid #e2e8f0; font-weight: 600; color: #475569; cursor: pointer;" onclick="sortTable(2)">
+                                Дата сертификата <i class="fas fa-sort" style="margin-left: 8px; color: #94a3b8;"></i>
+                            </th>
+                            <th style="padding: 12px; text-align: left; border-bottom: 2px solid #e2e8f0; font-weight: 600; color: #475569; cursor: pointer;" onclick="sortTable(3)">
+                                Действует до <i class="fas fa-sort" style="margin-left: 8px; color: #94a3b8;"></i>
+                            </th>
+                            <th style="padding: 12px; text-align: left; border-bottom: 2px solid #e2e8f0; font-weight: 600; color: #475569;">Разработчик</th>
+                            <th style="padding: 12px; text-align: left; border-bottom: 2px solid #e2e8f0; font-weight: 600; color: #475569;">Изготовитель</th>
+                            <th style="width: 120px; text-align: center; border-bottom: 2px solid #e2e8f0; font-weight: 600; color: #475569;">Действия</th>
+                        }
+                        else if (type == "legal-acts")
+                        {
+                            <th style="padding: 12px; text-align: left; border-bottom: 2px solid #e2e8f0; font-weight: 600; color: #475569; cursor: pointer;" onclick="sortTable(0)">
+                                Наименование акта <i class="fas fa-sort" style="margin-left: 8px; color: #94a3b8;"></i>
+                            </th>
+                            <th style="padding: 12px; text-align: left; border-bottom: 2px solid #e2e8f0; font-weight: 600; color: #475569; cursor: pointer;" onclick="sortTable(1)">
+                                Дата принятия <i class="fas fa-sort" style="margin-left: 8px; color: #94a3b8;"></i>
+                            </th>
+                            <th style="padding: 12px; text-align: left; border-bottom: 2px solid #e2e8f0; font-weight: 600; color: #475569;">Файл документа</th>
+                            <th style="width: 140px; text-align: center; border-bottom: 2px solid #e2e8f0; font-weight: 600; color: #475569;">Действия</th>
+                        }
+                        else
+                        {
+                            <th style="padding: 12px; text-align: left; border-bottom: 2px solid #e2e8f0; font-weight: 600; color: #475569; cursor: pointer;" onclick="sortTable(0)">
+                                Наименование <i class="fas fa-sort" style="margin-left: 8px; color: #94a3b8;"></i>
+                            </th>
+                            @if (isRegistry && type != "pencils")
+                            {
+                                <th style="padding: 12px; text-align: left; border-bottom: 2px solid #e2e8f0; font-weight: 600; color: #475569; cursor: pointer;" onclick="sortTable(1)">
+                                    Код / Номер <i class="fas fa-sort" style="margin-left: 8px; color: #94a3b8;"></i>
+                                </th>
+                            }
+                            @if (type == "pencils")
+                            {
+                                <th style="padding: 12px; text-align: left; border-bottom: 2px solid #e2e8f0; font-weight: 600; color: #475569;">Номер</th>
+                                <th style="padding: 12px; text-align: left; border-bottom: 2px solid #e2e8f0; font-weight: 600; color: #475569;">Ключ</th>
+                            }
+                            <th style="padding: 12px; text-align: left; border-bottom: 2px solid #e2e8f0; font-weight: 600; color: #475569;">Описание / Доп. сведения</th>
+                            <th style="padding: 12px; text-align: left; border-bottom: 2px solid #e2e8f0; font-weight: 600; color: #475569; cursor: pointer;" onclick="sortTable(@(isRegistry ? (type == "pencils" ? 4 : 3) : 2))">
+                                Дата создания <i class="fas fa-sort" style="margin-left: 8px; color: #94a3b8;"></i>
+                            </th>
+                            <th style="width: 120px; text-align: center; border-bottom: 2px solid #e2e8f0; font-weight: 600; color: #475569;">Действия</th>
+                        }
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                    @if (Model != null && Model.Any())
+                    {
+                        @foreach (var item in Model)
+                        {
+                            if (isCertificate)
+                            {
+                                <tr>
+                                    <td style="padding: 12px; border-bottom: 1px solid #e2e8f0; font-weight: 500;">@item.Name</td>
+                                    <td style="padding: 12px; border-bottom: 1px solid #e2e8f0; color: #64748b;">@(item.Code ?? item.Number ?? "—")</td>
+                                    <td style="padding: 12px; border-bottom: 1px solid #e2e8f0; color: #64748b;">@(item.IssueDate ?? "—")</td>
+                                    <td style="padding: 12px; border-bottom: 1px solid #e2e8f0; color: #64748b;">@(item.ValidUntil ?? "—")</td>
+                                    <td style="padding: 12px; border-bottom: 1px solid #e2e8f0; color: #64748b;">@(item.Description ?? "—")</td>
+                                    <td style="padding: 12px; border-bottom: 1px solid #e2e8f0; color: #64748b;">@(item.Manufacturer ?? "—")</td>
+                                    <td style="padding: 12px; text-align: center; border-bottom: 1px solid #e2e8f0;">
+                                        <button onclick="editItem('@item.Id')" 
+                                                style="width: 32px; height: 32px; border: none; background: #e0f2fe; color: #0284c7; border-radius: 4px; cursor: pointer; margin: 0 2px;"
+                                                title="Редактировать">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button onclick="deleteItem('@item.Id')" 
+                                                style="width: 32px; height: 32px; border: none; background: #fee2e2; color: #dc2626; border-radius: 4px; cursor: pointer; margin: 0 2px;"
+                                                title="Удалить">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            }
+                            else if (type == "legal-acts")
+                            {
+                                <tr>
+                                    <td style="padding: 12px; border-bottom: 1px solid #e2e8f0; font-weight: 500;">@item.Name</td>
+                                    <td style="padding: 12px; border-bottom: 1px solid #e2e8f0; color: #64748b;">@(item.Date ?? "—")</td>
+                                    <td style="padding: 12px; border-bottom: 1px solid #e2e8f0; color: #64748b;">
+                                        @if (!string.IsNullOrEmpty(item.FileOriginalName))
+                                        {
+                                            <a href="/audit/documents/api/download-file/@item.Id" 
+                                               style="color: #4F46E5; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;"
+                                               title="Скачать файл">
+                                                <i class="fas fa-file-pdf"></i> @item.FileOriginalName
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                            <span style="color: #94a3b8;">—</span>
+                                        }
+                                    </td>
+                                    <td style="padding: 12px; text-align: center; border-bottom: 1px solid #e2e8f0;">
+                                        <button onclick="uploadFile('@item.Id')" 
+                                                style="width: 32px; height: 32px; border: none; background: @(string.IsNullOrEmpty(item.FilePath) ? "#dbeafe" : "#fef3c7"); color: @(string.IsNullOrEmpty(item.FilePath) ? "#3b82f6" : "#f59e0b"); border-radius: 4px; cursor: pointer; margin: 0 2px;" 
+                                                title="@(string.IsNullOrEmpty(item.FilePath) ? "Загрузить файл" : "Заменить файл")">
+                                            <i class="fas fa-upload"></i>
+                                        </button>
+                                        <button onclick="editItem('@item.Id')" 
+                                                style="width: 32px; height: 32px; border: none; background: #e0f2fe; color: #0284c7; border-radius: 4px; cursor: pointer; margin: 0 2px;"
+                                                title="Редактировать">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button onclick="deleteItem('@item.Id')" 
+                                                style="width: 32px; height: 32px; border: none; background: #fee2e2; color: #dc2626; border-radius: 4px; cursor: pointer; margin: 0 2px;"
+                                                title="Удалить">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td style="padding: 12px; border-bottom: 1px solid #e2e8f0; font-weight: 500;">@item.Name</td>
+                                    @if (isRegistry && type != "pencils")
+                                    {
+                                        <td style="padding: 12px; border-bottom: 1px solid #e2e8f0; color: #64748b;">@(item.Code ?? item.Number ?? "—")</td>
+                                    }
+                                    @if (type == "pencils")
+                                    {
+                                        <td style="padding: 12px; border-bottom: 1px solid #e2e8f0; color: #64748b;">@(item.Number ?? "—")</td>
+                                        <td style="padding: 12px; border-bottom: 1px solid #e2e8f0; color: #64748b;">@(item.KeyNumber ?? "—")</td>
+                                    }
+                                    <td style="padding: 12px; border-bottom: 1px solid #e2e8f0; color: #64748b;">@(item.Description ?? item.Inn ?? item.Date ?? "—")</td>
+                                    <td style="padding: 12px; border-bottom: 1px solid #e2e8f0; color: #64748b;">@item.CreatedAt.ToString("dd.MM.yyyy")</td>
+                                    <td style="padding: 12px; text-align: center; border-bottom: 1px solid #e2e8f0;">
+                                        <button onclick="editItem('@item.Id')" 
+                                                style="width: 32px; height: 32px; border: none; background: #e0f2fe; color: #0284c7; border-radius: 4px; cursor: pointer; margin: 0 2px;"
+                                                title="Редактировать">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button onclick="deleteItem('@item.Id')" 
+                                                style="width: 32px; height: 32px; border: none; background: #fee2e2; color: #dc2626; border-radius: 4px; cursor: pointer; margin: 0 2px;"
+                                                title="Удалить">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    }
+                    else
+                    {
+                        var colCount = isCertificate ? 7 : (type == "legal-acts" ? 4 : (type == "pencils" ? 6 : (isRegistry ? 5 : 4)));
+                        <tr>
+                            <td colspan="@colCount" style="text-align: center; padding: 40px; color: #64748b;">
+                                <i class="fas fa-inbox" style="font-size: 48px; opacity: 0.3; margin-bottom: 16px; display: block;"></i>
+                                Нет данных. Нажмите "Добавить" для создания записи
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        @if (Model != null && Model.Count > 20)
+        {
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 16px; padding-top: 16px; border-top: 1px solid #e2e8f0;">
+                <div style="color: #64748b; font-size: 13px;">
+                    Показано @Model.Count из @Model.Count записей
+                </div>
+                <div style="display: flex; gap: 4px;">
+                    <button class="btn btn-secondary" style="padding: 6px 12px; font-size: 13px;" disabled>
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <button class="btn btn-primary" style="padding: 6px 12px; font-size: 13px;">1</button>
+                    <button class="btn btn-secondary" style="padding: 6px 12px; font-size: 13px;" disabled>
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+        }
+
+    </div>
+</div>
+
+<!-- Стандартное модальное окно (для большинства типов) -->
+<div id="itemModal" class="modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 2000; align-items: center; justify-content: center;">
+    <div style="background: white; border-radius: 12px; max-width: 600px; width: 90%; max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 40px rgba(0,0,0,0.2);">
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 24px 32px; border-bottom: 1px solid #e2e8f0;">
+            <h3 id="modalTitle" style="margin: 0; color: #1e293b; font-size: 20px;">Добавление записи</h3>
+            <button onclick="closeModal()" style="background: none; border: none; font-size: 28px; cursor: pointer; color: #64748b; padding: 0 4px; line-height: 1;">&times;</button>
+        </div>
+        
+        <form id="itemForm" style="padding: 32px;">
+            <input type="hidden" id="itemId" />
+            <input type="hidden" id="itemType" value="@type" />
+            
+            <div style="margin-bottom: 20px;">
+                <label style="display: block; font-size: 14px; font-weight: 500; color: #1e293b; margin-bottom: 6px;">Наименование <span style="color: #ef4444;">*</span></label>
+                <input type="text" id="itemName" required 
+                       style="width: 100%; padding: 10px 12px; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 14px; box-sizing: border-box;"
+                       placeholder="Введите наименование" />
+            </div>
+
+            @if (isCertificate)
+            {
+                <div style="margin-bottom: 20px;">
+                    <label style="display: block; font-size: 14px; font-weight: 500; color: #1e293b; margin-bottom: 6px;">Номер сертификата <span style="color: #ef4444;">*</span></label>
+                    <input type="text" id="itemCode" required
+                           style="width: 100%; padding: 10px 12px; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 14px; box-sizing: border-box;"
+                           placeholder="Введите номер сертификата" />
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <label style="display: block; font-size: 14px; font-weight: 500; color: #1e293b; margin-bottom: 6px;">Дата сертификата <span style="color: #ef4444;">*</span></label>
+                    <input type="text" id="itemIssueDate" required
+                           style="width: 100%; padding: 10px 12px; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 14px; box-sizing: border-box;"
+                           placeholder="Например: 14.10.2022" />
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <label style="display: block; font-size: 14px; font-weight: 500; color: #1e293b; margin-bottom: 6px;">Действует до <span style="color: #ef4444;">*</span></label>
+                    <input type="text" id="itemValidUntil" required
+                           style="width: 100%; padding: 10px 12px; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 14px; box-sizing: border-box;"
+                           placeholder="Например: 14.10.2027" />
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <label style="display: block; font-size: 14px; font-weight: 500; color: #1e293b; margin-bottom: 6px;">Разработчик</label>
+                    <input type="text" id="itemDescription" 
+                           style="width: 100%; padding: 10px 12px; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 14px; box-sizing: border-box;"
+                           placeholder="Введите разработчика" />
+                </div>
+
+                <div style="margin-bottom: 24px;">
+                    <label style="display: block; font-size: 14px; font-weight: 500; color: #1e293b; margin-bottom: 6px;">Изготовитель</label>
+                    <input type="text" id="itemManufacturer" 
+                           style="width: 100%; padding: 10px 12px; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 14px; box-sizing: border-box;"
+                           placeholder="Введите изготовителя" />
+                </div>
+            }
+            else if (isRegistry && type != "pencils")
+            {
+                <div style="margin-bottom: 20px;">
+                    <label style="display: block; font-size: 14px; font-weight: 500; color: #1e293b; margin-bottom: 6px;">Код / Номер</label>
+                    <input type="text" id="itemCode" 
+                           style="width: 100%; padding: 10px 12px; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 14px; box-sizing: border-box;"
+                           placeholder="Введите код или номер" />
+                </div>
+
+                <div style="margin-bottom: 24px;">
+                    <label style="display: block; font-size: 14px; font-weight: 500; color: #1e293b; margin-bottom: 6px;">Описание / Доп. сведения</label>
+                    <textarea id="itemDescription" rows="4" 
+                              style="width: 100%; padding: 10px 12px; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 14px; box-sizing: border-box; resize: vertical;"
+                              placeholder="Введите описание (необязательно)"></textarea>
+                </div>
+            }
+            else
+            {
+                <div style="margin-bottom: 24px;">
+                    <label style="display: block; font-size: 14px; font-weight: 500; color: #1e293b; margin-bottom: 6px;">Описание / Доп. сведения</label>
+                    <textarea id="itemDescription" rows="4" 
+                              style="width: 100%; padding: 10px 12px; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 14px; box-sizing: border-box; resize: vertical;"
+                              placeholder="Введите описание (необязательно)"></textarea>
+                </div>
+            }
+
+            <div style="display: flex; gap: 12px; justify-content: flex-end; padding-top: 16px; border-top: 1px solid #e2e8f0;">
+                <button type="button" onclick="closeModal()" 
+                        style="padding: 10px 24px; border: none; border-radius: 6px; background: #f1f5f9; color: #475569; cursor: pointer; font-weight: 500; font-size: 14px;">
+                    Отмена
+                </button>
+                <button type="submit" id="submitBtn"
+                        style="padding: 10px 24px; border: none; border-radius: 6px; background: #4F46E5; color: white; cursor: pointer; font-weight: 500; font-size: 14px;">
+                    Сохранить
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Специальное модальное окно для Пеналов -->
+<div id="pencilModal" class="modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 2000; align-items: center; justify-content: center;">
+    <div style="background: white; border-radius: 12px; max-width: 600px; width: 90%; max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 40px rgba(0,0,0,0.2);">
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 24px 32px; border-bottom: 1px solid #e2e8f0;">
+            <h3 id="pencilModalTitle" style="margin: 0; color: #1e293b; font-size: 22px; font-weight: 700;">Добавление пенала</h3>
+            <button onclick="closePencilModal()" style="background: none; border: none; font-size: 28px; cursor: pointer; color: #64748b; padding: 0 4px; line-height: 1;">&times;</button>
+        </div>
+        
+        <form id="pencilForm" style="padding: 32px;">
+            <input type="hidden" id="pencilId" />
+            <input type="hidden" id="pencilType" value="@type" />
+            
+            <div style="margin-bottom: 20px;">
+                <label style="display: block; font-size: 14px; font-weight: 500; color: #1e293b; margin-bottom: 6px;">Наименование <span style="color: #ef4444;">*</span></label>
+                <input type="text" id="pencilName" required 
+                       style="width: 100%; padding: 10px 12px; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 14px; box-sizing: border-box; background: #f8fafc;"
+                       placeholder="Введите наименование" />
+            </div>
+
+            <div style="margin-bottom: 20px;">
+                <label style="display: block; font-size: 14px; font-weight: 500; color: #1e293b; margin-bottom: 6px;">Номер <span style="color: #ef4444;">*</span></label>
+                <input type="text" id="pencilNumber" required
+                       style="width: 100%; padding: 10px 12px; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 14px; box-sizing: border-box; background: #f8fafc;"
+                       placeholder="Введите номер" />
+            </div>
+
+            <div style="margin-bottom: 24px;">
+                <label style="display: block; font-size: 14px; font-weight: 500; color: #1e293b; margin-bottom: 6px;">Ключ <span style="color: #ef4444;">*</span></label>
+                <div style="display: flex; gap: 8px;">
+                    <select id="pencilKey" required
+                            style="flex: 1; padding: 10px 12px; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 14px; box-sizing: border-box; background: #f8fafc; cursor: pointer;">
+                        <option value="">Выбрать...</option>
+                    </select>
+                    <button type="button" onclick="editSelectedKey()" 
+                            style="width: 40px; height: 40px; border: 1px solid #e2e8f0; border-radius: 6px; background: white; color: #4F46E5; cursor: pointer; display: flex; align-items: center; justify-content: center;"
+                            title="Редактировать выбранный ключ">
+                        <i class="fas fa-edit"></i>
+                    </button>
+                    <button type="button" onclick="openAddKeyModal()" 
+                            style="width: 40px; height: 40px; border: 1px solid #e2e8f0; border-radius: 6px; background: white; color: #4F46E5; cursor: pointer; display: flex; align-items: center; justify-content: center;"
+                            title="Добавить новый ключ">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div style="display: flex; gap: 12px; justify-content: flex-end; padding-top: 16px; border-top: 1px solid #e2e8f0;">
+                <button type="button" onclick="closePencilModal()" 
+                        style="padding: 10px 24px; border: 1px solid #e2e8f0; border-radius: 6px; background: white; color: #475569; cursor: pointer; font-weight: 500; font-size: 14px;">
+                    Отмена
+                </button>
+                <button type="submit" id="pencilSubmitBtn"
+                        style="padding: 10px 24px; border: none; border-radius: 6px; background: #4F46E5; color: white; cursor: pointer; font-weight: 500; font-size: 14px;">
+                    Сохранить пенал
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Модальное окно для добавления/редактирования ключа -->
+<div id="addKeyModal" class="modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 2100; align-items: center; justify-content: center;">
+    <div style="background: white; border-radius: 12px; max-width: 500px; width: 90%; box-shadow: 0 20px 40px rgba(0,0,0,0.2);">
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 24px 32px; border-bottom: 1px solid #e2e8f0;">
+            <h3 id="addKeyModalTitle" style="margin: 0; color: #1e293b; font-size: 20px;">Добавление ключа</h3>
+            <button onclick="closeAddKeyModal()" style="background: none; border: none; font-size: 28px; cursor: pointer; color: #64748b; padding: 0 4px; line-height: 1;">&times;</button>
+        </div>
+        
+        <form id="addKeyForm" style="padding: 32px;">
+            <input type="hidden" id="addKeyId" />
+            
+            <div style="margin-bottom: 20px;">
+                <label style="display: block; font-size: 14px; font-weight: 500; color: #1e293b; margin-bottom: 6px;">Наименование <span style="color: #ef4444;">*</span></label>
+                <input type="text" id="addKeyName" required 
+                       style="width: 100%; padding: 10px 12px; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 14px; box-sizing: border-box;"
+                       placeholder="Введите наименование ключа" />
+            </div>
+
+            <div style="margin-bottom: 20px;">
+                <label style="display: block; font-size: 14px; font-weight: 500; color: #1e293b; margin-bottom: 6px;">Номер ключа</label>
+                <input type="text" id="addKeyNumber" 
+                       style="width: 100%; padding: 10px 12px; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 14px; box-sizing: border-box;"
+                       placeholder="Введите номер ключа" />
+            </div>
+
+            <div style="display: flex; gap: 12px; justify-content: flex-end; padding-top: 16px; border-top: 1px solid #e2e8f0;">
+                <button type="button" onclick="closeAddKeyModal()" 
+                        style="padding: 10px 24px; border: 1px solid #e2e8f0; border-radius: 6px; background: white; color: #475569; cursor: pointer; font-weight: 500; font-size: 14px;">
+                    Отмена
+                </button>
+                <button type="submit" 
+                        style="padding: 10px 24px; border: none; border-radius: 6px; background: #4F46E5; color: white; cursor: pointer; font-weight: 500; font-size: 14px;">
+                    Сохранить ключ
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+    .modal.show { display: flex !important; }
+    .data-table tbody tr:hover { background: #f8fafc; transition: background 0.2s; }
+    .data-table th { user-select: none; }
+    .btn:hover { transform: translateY(-1px); box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+    select:focus, input:focus, textarea:focus { outline: none; border-color: #4F46E5; box-shadow: 0 0 0 3px rgba(79,70,229,0.1); }
+</style>
+
+<script>
+    let currentType = '@type';
+    let isRegistry = @(isRegistry.ToString().ToLower());
+    let isCertificate = @(isCertificate.ToString().ToLower());
+    let keysList = [];
+
+    // Словарь заголовков для модальных окон
+    const typeTitleMap = {
+        'pencils': 'пенала',
+        'keys': 'ключа',
+        'seals': 'печати',
+        'organizations': 'организации',
+        'szi-certificates': 'сертификата СЗИ',
+        'skzi-certificates': 'сертификата СКЗИ',
+        'verification-tools': 'средства проверки',
+        'documents': 'документа',
+        'cover-letters': 'сопроводительного письма',
+        'document-types': 'вида документа',
+        'positions': 'должности',
+        'briefings': 'вида инструктажа',
+        'storage': 'условия хранения',
+        'skzi-service': 'обслуживания СКЗИ',
+        'testing': 'вида тестирования',
+        'media-types': 'типа носителя',
+        'program-types': 'типа программы',
+        'electronic-ids': 'электронного идентификатора',
+        'legal-acts': 'нормативно-правового акта'
+    };
+
+    document.addEventListener('DOMContentLoaded', function() {
+        if (currentType === 'pencils') {
+            loadKeysList();
+        }
+    });
+
+    function loadKeysList() {
+        fetch('/audit/documents/api/items/keys')
+            .then(response => response.json())
+            .then(data => {
+                keysList = data || [];
+                updateKeySelect();
+            })
+            .catch(error => {
+                console.error('Error loading keys:', error);
+                keysList = [];
+            });
+    }
+
+    function updateKeySelect() {
+        const select = document.getElementById('pencilKey');
+        if (!select) return;
+        
+        const currentValue = select.value;
+        select.innerHTML = '<option value="">Выбрать...</option>';
+        
+        keysList.forEach(key => {
+            const option = document.createElement('option');
+            option.value = key.id;
+            option.textContent = key.name + (key.code ? ' (' + key.code + ')' : '');
+            select.appendChild(option);
+        });
+        
+        select.value = currentValue;
+    }
+
+    function openAddModal() {
+        if (currentType === 'pencils') {
+            openPencilModal();
+            return;
+        }
+        
+        const title = typeTitleMap[currentType] || 'записи';
+        document.getElementById('modalTitle').textContent = 'Добавление ' + title;
+        document.getElementById('submitBtn').textContent = 'Сохранить ' + title;
+        document.getElementById('itemId').value = '';
+        document.getElementById('itemName').value = '';
+        if (document.getElementById('itemCode')) {
+            document.getElementById('itemCode').value = '';
+        }
+        if (document.getElementById('itemIssueDate')) {
+            document.getElementById('itemIssueDate').value = '';
+        }
+        if (document.getElementById('itemValidUntil')) {
+            document.getElementById('itemValidUntil').value = '';
+        }
+        if (document.getElementById('itemManufacturer')) {
+            document.getElementById('itemManufacturer').value = '';
+        }
+        document.getElementById('itemDescription').value = '';
+        document.getElementById('itemModal').classList.add('show');
+        document.getElementById('itemName').focus();
+    }
+
+    function openPencilModal() {
+        document.getElementById('pencilModalTitle').textContent = 'Добавление пенала';
+        document.getElementById('pencilSubmitBtn').textContent = 'Сохранить пенал';
+        document.getElementById('pencilId').value = '';
+        document.getElementById('pencilName').value = '';
+        document.getElementById('pencilNumber').value = '';
+        document.getElementById('pencilKey').value = '';
+        document.getElementById('pencilModal').classList.add('show');
+        document.getElementById('pencilName').focus();
+    }
+
+    function closePencilModal() {
+        document.getElementById('pencilModal').classList.remove('show');
+    }
+
+    function editItem(id) {
+        if (currentType === 'pencils') {
+            editPencil(id);
+            return;
+        }
+        
+        const title = typeTitleMap[currentType] || 'записи';
+        document.getElementById('modalTitle').textContent = 'Редактирование ' + title;
+        document.getElementById('submitBtn').textContent = 'Сохранить ' + title;
+        document.getElementById('itemId').value = id;
+        
+        fetch(`/audit/documents/api/items/${currentType}`)
+            .then(response => response.json())
+            .then(items => {
+                const item = items.find(i => i.id === id);
+                if (item) {
+                    document.getElementById('itemName').value = item.name || '';
+                    if (document.getElementById('itemCode') && item.code) {
+                        document.getElementById('itemCode').value = item.code;
+                    }
+                    if (document.getElementById('itemIssueDate') && item.issueDate) {
+                        document.getElementById('itemIssueDate').value = item.issueDate;
+                    }
+                    if (document.getElementById('itemValidUntil') && item.validUntil) {
+                        document.getElementById('itemValidUntil').value = item.validUntil;
+                    }
+                    if (document.getElementById('itemManufacturer') && item.manufacturer) {
+                        document.getElementById('itemManufacturer').value = item.manufacturer;
+                    }
+                    document.getElementById('itemDescription').value = item.description || '';
+                }
+            })
+            .catch(error => console.error('Error loading item:', error));
+            
+        document.getElementById('itemModal').classList.add('show');
+    }
+
+    function editPencil(id) {
+        document.getElementById('pencilModalTitle').textContent = 'Редактирование пенала';
+        document.getElementById('pencilSubmitBtn').textContent = 'Сохранить пенал';
+        document.getElementById('pencilId').value = id;
+        
+        fetch(`/audit/documents/api/items/pencils`)
+            .then(response => response.json())
+            .then(items => {
+                const item = items.find(i => i.id === id);
+                if (item) {
+                    document.getElementById('pencilName').value = item.name || '';
+                    document.getElementById('pencilNumber').value = item.number || item.code || '';
+                    document.getElementById('pencilKey').value = item.keyNumber || '';
+                }
+            })
+            .catch(error => console.error('Error loading pencil:', error));
+            
+        document.getElementById('pencilModal').classList.add('show');
+    }
+
+    function openAddKeyModal() {
+        document.getElementById('addKeyModalTitle').textContent = 'Добавление ключа';
+        document.getElementById('addKeyId').value = '';
+        document.getElementById('addKeyName').value = '';
+        document.getElementById('addKeyNumber').value = '';
+        document.getElementById('addKeyModal').classList.add('show');
+        document.getElementById('addKeyName').focus();
+    }
+
+    function closeAddKeyModal() {
+        document.getElementById('addKeyModal').classList.remove('show');
+    }
+
+    function editSelectedKey() {
+        const select = document.getElementById('pencilKey');
+        const keyId = select.value;
+        if (!keyId) {
+            alert('Сначала выберите ключ из списка');
+            return;
+        }
+        
+        const key = keysList.find(k => k.id === keyId);
+        if (!key) return;
+        
+        document.getElementById('addKeyModalTitle').textContent = 'Редактирование ключа';
+        document.getElementById('addKeyId').value = key.id;
+        document.getElementById('addKeyName').value = key.name || '';
+        document.getElementById('addKeyNumber').value = key.code || '';
+        document.getElementById('addKeyModal').classList.add('show');
+    }
+
+    function deleteItem(id) {
+        const typeName = currentType === 'pencils' ? 'пенал' : (isCertificate ? 'сертификат' : (currentType === 'legal-acts' ? 'акт' : 'запись'));
+        if (confirm(`Вы уверены, что хотите удалить ${typeName}?`)) {
+            fetch(`/audit/documents/api/delete/${currentType}/${id}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) location.reload();
+                else alert('Ошибка при удалении');
+            })
+            .catch(error => { console.error('Error:', error); alert('Ошибка при удалении'); });
+        }
+    }
+
+    function closeModal() {
+        document.getElementById('itemModal').classList.remove('show');
+    }
+
+    // Обновление сертификатов (заглушка - в реальности должен быть API вызов)
+    function updateCertificates() {
+        const certTitle = currentType === 'szi-certificates' ? 'сертификатов СЗИ' : 'сертификатов СКЗИ';
+        if (confirm(`Запустить обновление данных ${certTitle}?`)) {
+            fetch('/audit/documents/api/update-certificates?type=' + currentType, {
+                method: 'POST'
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Данные успешно обновлены');
+                    location.reload();
+                } else {
+                    alert('Ошибка при обновлении: ' + (data.error || 'неизвестная ошибка'));
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Ошибка при обновлении данных');
+            });
+        }
+    }
+
+    // Функция загрузки файла для НПА
+    function uploadFile(id) {
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.accept = '.pdf,.doc,.docx,.xls,.xlsx';
+        input.onchange = function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const formData = new FormData();
+                formData.append('file', file);
+                
+                fetch(`/audit/documents/api/upload-file/${id}`, {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('Файл успешно загружен');
+                        location.reload();
+                    } else {
+                        alert('Ошибка при загрузке файла: ' + (data.error || 'Неизвестная ошибка'));
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Ошибка при загрузке файла');
+                });
+            }
+        };
+        input.click();
+    }
+
+    // Обработка формы стандартного модального окна
+    document.getElementById('itemForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const item = {
+            Id: document.getElementById('itemId').value,
+            Type: currentType,
+            Name: document.getElementById('itemName').value,
+            Number: document.getElementById('itemCode') ? document.getElementById('itemCode').value : null,
+            IssueDate: document.getElementById('itemIssueDate') ? document.getElementById('itemIssueDate').value : null,
+            ValidUntil: document.getElementById('itemValidUntil') ? document.getElementById('itemValidUntil').value : null,
+            Manufacturer: document.getElementById('itemManufacturer') ? document.getElementById('itemManufacturer').value : null,
+            Description: document.getElementById('itemDescription').value
+        };
+
+        fetch('/audit/documents/api/save', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(item)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) location.reload();
+            else alert('Ошибка при сохранении');
+        })
+        .catch(error => { console.error('Error:', error); alert('Ошибка при сохранении'); });
+    });
+
+    // Обработка формы пенала
+    document.getElementById('pencilForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const item = {
+            Id: document.getElementById('pencilId').value,
+            Type: 'pencils',
+            Name: document.getElementById('pencilName').value,
+            Number: document.getElementById('pencilNumber').value,
+            KeyNumber: document.getElementById('pencilKey').value,
+            Description: ''
+        };
+
+        fetch('/audit/documents/api/save', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(item)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) location.reload();
+            else alert('Ошибка при сохранении пенала');
+        })
+        .catch(error => { console.error('Error:', error); alert('Ошибка при сохранении'); });
+    });
+
+    // Обработка формы добавления/редактирования ключа
+    document.getElementById('addKeyForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const key = {
+            Id: document.getElementById('addKeyId').value,
+            Type: 'keys',
+            Name: document.getElementById('addKeyName').value,
+            Number: document.getElementById('addKeyNumber').value,
+            Description: ''
+        };
+
+        fetch('/audit/documents/api/save', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(key)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                closeAddKeyModal();
+                loadKeysList();
+            } else {
+                alert('Ошибка при сохранении ключа');
+            }
+        })
+        .catch(error => { console.error('Error:', error); alert('Ошибка при сохранении'); });
+    });
+
+    function filterTable() {
+        const input = document.getElementById('searchInput');
+        const filter = input.value.toLowerCase();
+        const table = document.getElementById('dictionaryTable');
+        const tr = table.getElementsByTagName('tr');
+
+        for (let i = 1; i < tr.length; i++) {
+            let found = false;
+            const tds = tr[i].getElementsByTagName('td');
+            for (let j = 0; j < tds.length - 1; j++) {
+                if (tds[j]) {
+                    const txtValue = tds[j].textContent || tds[j].innerText;
+                    if (txtValue.toLowerCase().indexOf(filter) > -1) { found = true; break; }
+                }
+            }
+            tr[i].style.display = found ? '' : 'none';
+        }
+    }
+
+    function sortTable(columnIndex) {
+        const table = document.getElementById('dictionaryTable');
+        let switching = true;
+        let shouldSwitch;
+        let switchcount = 0;
+        let dir = "asc";
+        
+        while (switching) {
+            switching = false;
+            const rows = table.rows;
+            
+            for (let i = 1; i < (rows.length - 1); i++) {
+                shouldSwitch = false;
+                const x = rows[i].getElementsByTagName("TD")[columnIndex];
+                const y = rows[i + 1].getElementsByTagName("TD")[columnIndex];
+                
+                if (dir === "asc") {
+                    if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                        shouldSwitch = true;
+                        break;
+                    }
+                } else if (dir === "desc") {
+                    if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                        shouldSwitch = true;
+                        break;
+                    }
+                }
+            }
+            
+            if (shouldSwitch) {
+                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                switching = true;
+                switchcount++;
+            } else {
+                if (switchcount === 0 && dir === "asc") {
+                    dir = "desc";
+                    switching = true;
+                }
+            }
+        }
+    }
+
+    document.getElementById('itemModal').addEventListener('click', function(e) {
+        if (e.target === this) closeModal();
+    });
+
+    document.getElementById('pencilModal').addEventListener('click', function(e) {
+        if (e.target === this) closePencilModal();
+    });
+
+    document.getElementById('addKeyModal').addEventListener('click', function(e) {
+        if (e.target === this) closeAddKeyModal();
+    });
+
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            closeModal();
+            closePencilModal();
+            closeAddKeyModal();
+        }
+    });
+</script>

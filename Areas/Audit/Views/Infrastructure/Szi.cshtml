@@ -1,0 +1,542 @@
+@model AegisCore.Models.InfrastructureViewModel
+@{
+    ViewData["Title"] = "СЗИ";
+}
+
+<div class="section-header">
+    <h2 class="section-title">
+        <i class="fas fa-shield-alt"></i> Средства защиты информации
+    </h2>
+</div>
+
+<div class="toolbar">
+    <div class="toolbar-left">
+        <!-- Кнопка Добавить СЛЕВА -->
+        <button class="btn btn-primary" onclick="openSziModal()">
+            <i class="fas fa-plus"></i> Добавить
+        </button>
+
+        <!-- Выпадающее меню "Экспорт в файл" -->
+        <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" onclick="toggleDropdown('exportDropdown')">
+                <i class="fas fa-file-export"></i> Экспорт в файл
+                <i class="fas fa-chevron-down" style="font-size: 10px; margin-left: 4px;"></i>
+            </button>
+            <div id="exportDropdown" class="dropdown-menu">
+                <a href="#" onclick="exportSzi('xls'); return false;"><i class="fas fa-file-excel"></i> Экспорт XLS</a>
+                <a href="#" onclick="exportSzi('pdf'); return false;"><i class="fas fa-file-pdf"></i> Экспорт PDF</a>
+            </div>
+        </div>
+
+        <!-- Выпадающее меню "Настройка" -->
+        <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" onclick="toggleDropdown('settingsDropdown')">
+                <i class="fas fa-cog"></i> Настройка
+                <i class="fas fa-chevron-down" style="font-size: 10px; margin-left: 4px;"></i>
+            </button>
+            <div id="settingsDropdown" class="dropdown-menu">
+                <label class="dropdown-item"><input type="checkbox" checked onchange="toggleColumn('col-name')"><span>Наименование</span></label>
+                <label class="dropdown-item"><input type="checkbox" checked onchange="toggleColumn('col-serial')"><span>Заводской номер</span></label>
+                <label class="dropdown-item"><input type="checkbox" checked onchange="toggleColumn('col-conformity')"><span>Знак соответствия</span></label>
+                <label class="dropdown-item"><input type="checkbox" checked onchange="toggleColumn('col-license')"><span>Номер лицензии</span></label>
+                <label class="dropdown-item"><input type="checkbox" checked onchange="toggleColumn('col-receipt')"><span>Дата получения</span></label>
+                <label class="dropdown-item"><input type="checkbox" checked onchange="toggleColumn('col-install')"><span>Установить до</span></label>
+                <label class="dropdown-item"><input type="checkbox" onchange="toggleColumn('col-modification')"><span>Модификация</span></label>
+                <label class="dropdown-item"><input type="checkbox" onchange="toggleColumn('col-received')"><span>От кого получено</span></label>
+                <hr style="margin: 4px 0;">
+                <a href="#" onclick="resetTableSettings(); return false;"><i class="fas fa-undo"></i> Сбросить настройки</a>
+            </div>
+        </div>
+
+        <div class="search-box">
+            <i class="fas fa-search"></i>
+            <input type="text" id="sziSearch" placeholder="Поиск по СЗИ..." value="@Model.Search" oninput="filterSzi()" />
+        </div>
+    </div>
+</div>
+
+<div class="table-container">
+    <table class="data-table" id="sziTable">
+        <thead>
+            <tr>
+                <th class="th-sortable col-name">
+                    <div class="th-header"><span>Наименование</span><i class="fas fa-sort sortable-icon"></i></div>
+                    <div class="th-filter-row"><input type="text" class="filter-inline-input" placeholder="Поиск..." oninput="filterTable('sziTable', 0, this.value)" /></div>
+                </th>
+                <th class="th-sortable col-serial">
+                    <div class="th-header"><span>Заводской номер</span><i class="fas fa-sort sortable-icon"></i></div>
+                    <div class="th-filter-row"><input type="text" class="filter-inline-input" placeholder="Поиск..." oninput="filterTable('sziTable', 1, this.value)" /></div>
+                </th>
+                <th class="th-sortable col-conformity">
+                    <div class="th-header"><span>Знак соответствия</span><i class="fas fa-sort sortable-icon"></i></div>
+                    <div class="th-filter-row"><input type="text" class="filter-inline-input" placeholder="Поиск..." oninput="filterTable('sziTable', 2, this.value)" /></div>
+                </th>
+                <th class="th-sortable col-license">
+                    <div class="th-header"><span>Номер лицензии</span><i class="fas fa-sort sortable-icon"></i></div>
+                    <div class="th-filter-row"><input type="text" class="filter-inline-input" placeholder="Поиск..." oninput="filterTable('sziTable', 3, this.value)" /></div>
+                </th>
+                <th class="th-sortable col-receipt">
+                    <div class="th-header"><span>Дата получения</span><i class="fas fa-sort sortable-icon"></i></div>
+                    <div class="th-filter-row"><input type="date" class="filter-inline-input" oninput="filterTable('sziTable', 4, this.value)" /></div>
+                </th>
+                <th class="th-sortable col-install">
+                    <div class="th-header"><span>Установить до</span><i class="fas fa-sort sortable-icon"></i></div>
+                    <div class="th-filter-row"><input type="date" class="filter-inline-input" oninput="filterTable('sziTable', 5, this.value)" /></div>
+                </th>
+                <th class="th-sortable col-modification" style="display: none;">
+                    <div class="th-header"><span>Модификация</span><i class="fas fa-sort sortable-icon"></i></div>
+                    <div class="th-filter-row"><input type="text" class="filter-inline-input" placeholder="Поиск..." oninput="filterTable('sziTable', 6, this.value)" /></div>
+                </th>
+                <th class="th-sortable col-received" style="display: none;">
+                    <div class="th-header"><span>От кого получено</span><i class="fas fa-sort sortable-icon"></i></div>
+                    <div class="th-filter-row"><input type="text" class="filter-inline-input" placeholder="Поиск..." oninput="filterTable('sziTable', 7, this.value)" /></div>
+                </th>
+                <th style="width: 120px;"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.Szis != null && Model.Szis.Any())
+            {
+                @foreach (var item in Model.Szis)
+                {
+                    <tr data-id="@item.Id">
+                        <td class="col-name"><strong>@item.Name</strong></td>
+                        <td class="col-serial">@item.SerialNumber</td>
+                        <td class="col-conformity"><span class="badge success">@item.ConformityMark</span></td>
+                        <td class="col-license">@item.LicenseNumber</td>
+                        <td class="col-receipt">@(item.ReceiptDate?.ToString("dd.MM.yyyy") ?? "—")</td>
+                        <td class="col-install">@(item.InstallByDate?.ToString("dd.MM.yyyy") ?? "—")</td>
+                        <td class="col-modification" style="display: none;">@item.Configuration</td>
+                        <td class="col-received" style="display: none;">@item.ReceivedFrom</td>
+                        <td class="actions">
+                            <button class="btn-icon edit" title="Редактировать" onclick="editSzi('@item.Id')"><i class="fas fa-edit"></i></button>
+                            <button class="btn-icon delete" title="Удалить" onclick="deleteSzi('@item.Id')"><i class="fas fa-trash"></i></button>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="9" style="text-align: center; padding: 60px 40px; color: #94a3b8;">
+                        <i class="fas fa-shield-alt" style="font-size: 64px; margin-bottom: 16px; display: block; color: #cbd5e1;"></i>
+                        <div style="font-size: 16px; font-weight: 500;">СЗИ не добавлены</div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@if (Model.TotalPages > 1)
+{
+    <div class="pagination">
+        <div class="pagination-page-size">
+            <label>Показывать по:</label>
+            <select onchange="changePageSize(this.value)">
+                <option value="10" selected>10</option>
+                <option value="25">25</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+            </select>
+        </div>
+        <div class="pagination-info">
+            Страница @Model.CurrentPage из @Model.TotalPages (Всего элементов: @Model.TotalItems)
+        </div>
+        <div class="pagination-buttons">
+            @if (Model.CurrentPage > 1) { <a href="/audit/infrastructure?section=szi&page=@(Model.CurrentPage - 1)" class="btn-pagination">‹</a> }
+            @for (int i = 1; i <= Model.TotalPages; i++) { <a href="/audit/infrastructure?section=szi&page=@i" class="btn-pagination @(i == Model.CurrentPage ? "active" : "")">@i</a> }
+            @if (Model.CurrentPage < Model.TotalPages) { <a href="/audit/infrastructure?section=szi&page=@(Model.CurrentPage + 1)" class="btn-pagination">›</a> }
+        </div>
+    </div>
+}
+
+<!-- ============================================================ -->
+<!-- МОДАЛКА ДОБАВЛЕНИЯ/РЕДАКТИРОВАНИЯ СЗИ -->
+<!-- ============================================================ -->
+<div class="modal" id="sziModal">
+    <div class="modal-content" style="max-width: 650px;">
+        <div class="modal-header">
+            <h3 id="sziModalTitle">Добавление записи</h3>
+            <button class="modal-close" onclick="closeSziModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <form id="sziForm" onsubmit="saveSzi(event)">
+                <input type="hidden" id="sziId" name="id" />
+
+                <!-- 1. Наименование (с поиском) -->
+                <div class="form-group">
+                    <label>Наименование <span class="required">*</span></label>
+                    <div class="input-with-buttons">
+                        <input type="text" name="name" id="sziName" class="form-control" required placeholder="Введите наименование" />
+                        <button type="button" class="btn-icon-ref" title="Поиск" onclick="searchSziName()">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 2. Заводской номер -->
+                <div class="form-group">
+                    <label>Заводской номер <span class="required">*</span></label>
+                    <input type="text" name="serialNumber" id="sziSerialNumber" class="form-control" required />
+                </div>
+
+                <!-- 3. Знак соответствия -->
+                <div class="form-group">
+                    <label>Знак соответствия <span class="required">*</span></label>
+                    <input type="text" name="conformityMark" id="sziConformityMark" class="form-control" required />
+                </div>
+
+                <!-- 4. Номер лицензии -->
+                <div class="form-group">
+                    <label>Номер лицензии <span class="required">*</span></label>
+                    <input type="text" name="licenseNumber" id="sziLicenseNumber" class="form-control" required />
+                </div>
+
+                <!-- 5. Кол-во разрешенных инсталляций -->
+                <div class="form-group">
+                    <label>Кол-во разреш. инсталляций <span class="required">*</span></label>
+                    <input type="number" name="maxInstallations" id="sziMaxInstallations" class="form-control" min="1" required value="1" />
+                </div>
+
+                <!-- 6. Дата получения и 7. Установить до (в одной строке) -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                    <div class="form-group">
+                        <label>Дата получения <span class="required">*</span></label>
+                        <input type="date" name="receiptDate" id="sziReceiptDate" class="form-control" required />
+                    </div>
+                    <div class="form-group">
+                        <label>Установить до <span class="required">*</span></label>
+                        <input type="date" name="installByDate" id="sziInstallByDate" class="form-control" required />
+                    </div>
+                </div>
+
+                <!-- 8. От кого получено (с кнопками) -->
+                <div class="form-group">
+                    <label>От кого получено <span class="required">*</span></label>
+                    <div class="input-with-buttons">
+                        <select name="receivedFrom" id="sziReceivedFrom" class="form-control" required>
+                            <option value="">Выбрать...</option>
+                            @if (Model.Organizations != null)
+                            {
+                                @foreach (var org in Model.Organizations)
+                                {
+                                    <option value="@org.Name">@org.Name</option>
+                                }
+                            }
+                        </select>
+                        <button type="button" class="btn-icon-ref" title="Редактировать" onclick="editReference('organizations')">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button type="button" class="btn-icon-ref add" title="Добавить" onclick="openOrganizationModal()">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 9. Комплектация (с кнопками) -->
+                <div class="form-group">
+                    <label>Комплектация <span class="required">*</span></label>
+                    <div class="input-with-buttons">
+                        <select name="configuration" id="sziConfiguration" class="form-control" required>
+                            <option value="">Выбрать...</option>
+                            @if (Model.Configurations != null)
+                            {
+                                @foreach (var cfg in Model.Configurations)
+                                {
+                                    <option value="@cfg">@cfg</option>
+                                }
+                            }
+                        </select>
+                        <button type="button" class="btn-icon-ref" title="Редактировать" onclick="editReference('configurations')">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button type="button" class="btn-icon-ref add" title="Добавить" onclick="openReferenceModal('configurations')">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 10. Дата уничтожения -->
+                <div class="form-group">
+                    <label>Дата уничтожения</label>
+                    <input type="date" name="destructionDate" id="sziDestructionDate" class="form-control" />
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeSziModal()">Отмена</button>
+                    <button type="submit" class="btn btn-primary">Сохранить</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- МОДАЛКА ДОБАВЛЕНИЯ ОРГАНИЗАЦИИ -->
+<!-- ============================================================ -->
+<div class="modal" id="organizationModal">
+    <div class="modal-content" style="max-width: 600px;">
+        <div class="modal-header">
+            <h3>Добавление организации</h3>
+            <button class="modal-close" onclick="closeOrganizationModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <form id="organizationForm" onsubmit="saveOrganization(event)">
+                <div class="form-group">
+                    <label>Краткое название <span class="required">*</span></label>
+                    <input type="text" id="orgShortName" class="form-control" required />
+                </div>
+                <div class="form-group">
+                    <label>Полное название</label>
+                    <input type="text" id="orgFullName" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label>Адрес</label>
+                    <input type="text" id="orgAddress" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label>ИНН</label>
+                    <div class="input-with-buttons">
+                        <input type="text" id="orgInn" class="form-control" maxlength="12" />
+                        <button type="button" class="btn btn-secondary" onclick="checkEgrul()" style="white-space: nowrap;">Проверить в ЕГРЮЛ</button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Телефон</label>
+                    <input type="tel" id="orgPhone" class="form-control" placeholder="(___) ___-__-__" />
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="orgEmail" class="form-control" />
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeOrganizationModal()">Отменить</button>
+                    <button type="submit" class="btn btn-primary">Сохранить организацию</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- МОДАЛКА СООБЩЕНИЯ ОБ ОШИБКЕ -->
+<!-- ============================================================ -->
+<div class="modal" id="errorModal">
+    <div class="modal-content" style="max-width: 400px;">
+        <div class="modal-header">
+            <h3 style="color: #ef4444;"><i class="fas fa-exclamation-triangle"></i> Ошибка</h3>
+            <button class="modal-close" onclick="closeErrorModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <p id="errorMessage" style="font-size: 14px; color: #475569; margin: 0;">Невозможно удалить. Данная запись используется.</p>
+            <div class="form-actions" style="justify-content: center; border-top: none; padding-top: 16px; margin-top: 16px;">
+                <button type="button" class="btn btn-secondary" onclick="closeErrorModal()">ОК</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const sziData = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.Szis ?? new List<AegisCore.Models.Szi>()));
+
+    function toggleDropdown(id) {
+        const menu = document.getElementById(id);
+        document.querySelectorAll('.dropdown-menu').forEach(m => { if (m.id !== id) m.classList.remove('show'); });
+        menu.classList.toggle('show');
+        event.stopPropagation();
+    }
+
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.dropdown')) {
+            document.querySelectorAll('.dropdown-menu').forEach(m => m.classList.remove('show'));
+        }
+    });
+
+    function toggleColumn(className) {
+        const cells = document.querySelectorAll('.' + className);
+        cells.forEach(cell => {
+            cell.style.display = cell.style.display === 'none' ? '' : 'none';
+        });
+    }
+
+    function resetTableSettings() {
+        const defaultHidden = ['col-modification', 'col-received'];
+        const defaultVisible = ['col-name', 'col-serial', 'col-conformity', 'col-license', 'col-receipt', 'col-install'];
+        defaultHidden.forEach(cls => { document.querySelectorAll('.' + cls).forEach(cell => cell.style.display = 'none'); });
+        defaultVisible.forEach(cls => { document.querySelectorAll('.' + cls).forEach(cell => cell.style.display = ''); });
+        const menu = document.getElementById('settingsDropdown');
+        menu.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+            const label = cb.closest('label');
+            if (label) {
+                const text = label.textContent.toLowerCase();
+                cb.checked = !(text.includes('модификация') || text.includes('от кого получено'));
+            }
+        });
+    }
+
+    function openSziModal() {
+        document.getElementById('sziForm').reset();
+        document.getElementById('sziId').value = '';
+        document.getElementById('sziMaxInstallations').value = '1';
+        document.getElementById('sziModalTitle').textContent = 'Добавление записи';
+        document.getElementById('sziModal').classList.add('show');
+    }
+
+    function closeSziModal() { document.getElementById('sziModal').classList.remove('show'); }
+
+    function editSzi(id) {
+        const item = sziData.find(s => s.id === id);
+        if (!item) return;
+        document.getElementById('sziId').value = item.id;
+        document.getElementById('sziName').value = item.name || '';
+        document.getElementById('sziSerialNumber').value = item.serialNumber || '';
+        document.getElementById('sziConformityMark').value = item.conformityMark || '';
+        document.getElementById('sziLicenseNumber').value = item.licenseNumber || '';
+        document.getElementById('sziMaxInstallations').value = item.maxInstallations || 1;
+        document.getElementById('sziReceiptDate').value = item.receiptDate ? item.receiptDate.split('T')[0] : '';
+        document.getElementById('sziInstallByDate').value = item.installByDate ? item.installByDate.split('T')[0] : '';
+        document.getElementById('sziReceivedFrom').value = item.receivedFrom || '';
+        document.getElementById('sziConfiguration').value = item.configuration || '';
+        document.getElementById('sziDestructionDate').value = item.destructionDate ? item.destructionDate.split('T')[0] : '';
+        document.getElementById('sziModalTitle').textContent = 'Редактирование записи';
+        document.getElementById('sziModal').classList.add('show');
+    }
+
+    function deleteSzi(id) {
+        if (!confirm('Удалить СЗИ?')) return;
+        fetch('/audit/infrastructure/szi/delete/' + id, { method: 'DELETE' })
+            .then(r => r.json())
+            .then(data => {
+                if (data.success) { location.reload(); }
+                else {
+                    document.getElementById('errorMessage').textContent = data.error || 'Невозможно удалить. Данная запись используется.';
+                    document.getElementById('errorModal').classList.add('show');
+                }
+            });
+    }
+
+    function saveSzi(e) {
+        e.preventDefault();
+        const form = e.target;
+        const data = {
+            id: form.id.value || null,
+            name: form.name.value,
+            serialNumber: form.serialNumber.value,
+            conformityMark: form.conformityMark.value,
+            licenseNumber: form.licenseNumber.value,
+            maxInstallations: parseInt(form.maxInstallations.value) || 1,
+            receiptDate: form.receiptDate.value || null,
+            installByDate: form.installByDate.value || null,
+            receivedFrom: form.receivedFrom.value,
+            configuration: form.configuration.value,
+            destructionDate: form.destructionDate.value || null
+        };
+        fetch('/audit/infrastructure/szi/save', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        })
+        .then(r => r.json())
+        .then(result => {
+            if (result.success) { closeSziModal(); location.reload(); }
+            else { alert(result.error || 'Ошибка сохранения'); }
+        });
+    }
+
+    function searchSziName() { alert('Поиск по наименованию СЗИ'); }
+
+    function openOrganizationModal() {
+        document.getElementById('organizationForm').reset();
+        document.getElementById('organizationModal').classList.add('show');
+    }
+    function closeOrganizationModal() { document.getElementById('organizationModal').classList.remove('show'); }
+
+    function saveOrganization(e) {
+        e.preventDefault();
+        const data = {
+            shortName: document.getElementById('orgShortName').value,
+            fullName: document.getElementById('orgFullName').value,
+            address: document.getElementById('orgAddress').value,
+            inn: document.getElementById('orgInn').value,
+            phone: document.getElementById('orgPhone').value,
+            email: document.getElementById('orgEmail').value
+        };
+        fetch('/api/audit/organizations/save', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        })
+        .then(r => r.json())
+        .then(result => {
+            if (result.success) {
+                const select = document.getElementById('sziReceivedFrom');
+                const option = document.createElement('option');
+                option.value = data.shortName;
+                option.textContent = data.shortName;
+                option.selected = true;
+                select.appendChild(option);
+                closeOrganizationModal();
+            } else { alert(result.error || 'Ошибка'); }
+        });
+    }
+
+    function checkEgrul() {
+        const inn = document.getElementById('orgInn').value;
+        if (!inn) { alert('Введите ИНН'); return; }
+        alert('Проверка ИНН ' + inn + ' в ЕГРЮЛ');
+    }
+
+    function openReferenceModal(type) {
+        const name = prompt('Введите новое значение для справочника "' + type + '":');
+        if (name) {
+            const selectId = 'szi' + capitalize(type);
+            const select = document.getElementById(selectId);
+            if (select) {
+                const option = document.createElement('option');
+                option.value = name;
+                option.textContent = name;
+                option.selected = true;
+                select.appendChild(option);
+            }
+        }
+    }
+
+    function editReference(type) {
+        const selectId = type === 'organizations' ? 'sziReceivedFrom' : 'sziConfiguration';
+        const select = document.getElementById(selectId);
+        const selectedValue = select.value;
+        if (!selectedValue) { alert('Сначала выберите значение для редактирования'); return; }
+        const newValue = prompt('Редактировать значение:', selectedValue);
+        if (newValue && newValue !== selectedValue) {
+            const option = select.querySelector('option[value="' + selectedValue + '"]');
+            if (option) { option.value = newValue; option.textContent = newValue; }
+        }
+    }
+
+    function capitalize(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
+
+    function filterSzi() {
+        const search = document.getElementById('sziSearch').value.toLowerCase();
+        document.querySelectorAll('#sziTable tbody tr').forEach(row => {
+            row.style.display = row.textContent.toLowerCase().includes(search) ? '' : 'none';
+        });
+    }
+
+    function filterTable(tableId, colIndex, value) {
+        const table = document.getElementById(tableId);
+        const rows = table.querySelectorAll('tbody tr');
+        rows.forEach(row => {
+            const cell = row.cells[colIndex];
+            if (cell) { row.style.display = cell.textContent.toLowerCase().includes(value.toLowerCase()) ? '' : 'none'; }
+        });
+    }
+
+    function exportSzi(format) { window.location.href = '/audit/infrastructure/szi/export/' + format; }
+    function changePageSize(size) {
+        const url = new URL(window.location);
+        url.searchParams.set('pageSize', size);
+        window.location.href = url.toString();
+    }
+    function closeErrorModal() { document.getElementById('errorModal').classList.remove('show'); }
+</script>

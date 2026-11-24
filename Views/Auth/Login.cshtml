@@ -1,0 +1,99 @@
+@{
+    ViewData["Title"] = "Вход в систему";
+    Layout = "_LandingLayout";
+}
+
+<div class="login-page">
+    <div class="login-container">
+        <div class="login-box">
+            <div class="login-logo">
+                <i class="fas fa-shield-alt"></i>
+                <h1>AegisCore Technologies</h1>
+                <p>Платформа кибербезопасности</p>
+            </div>
+            @if (ViewBag.Error != null)
+            {
+                <div class="alert alert-error">
+                    <i class="fas fa-exclamation-circle"></i> @ViewBag.Error
+                </div>
+            }
+            <form method="post" action="/login">
+                <div class="form-group">
+                    <label><i class="fas fa-user"></i> Логин</label>
+                    <input type="text" name="username" value="admin" required autofocus />
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-lock"></i> Пароль</label>
+                    <input type="password" name="password" value="admin123" required />
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">
+                    <i class="fas fa-sign-in-alt"></i> Войти
+                </button>
+            </form>
+            
+            <!-- Переключатель языка и темы -->
+            <div class="login-footer-controls">
+                <div class="lang-switcher">
+                    <button type="button" class="lang-btn active" data-lang="ru">RU</button>
+                    <button type="button" class="lang-btn" data-lang="en">EN</button>
+                </div>
+                <button type="button" class="theme-toggle" onclick="toggleTheme()" title="Сменить тему">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+            
+            <div class="login-footer">
+                <a href="/" class="back-to-home">
+                    <i class="fas fa-arrow-left"></i> На главную
+                </a>
+                <p>© 2026 AegisCore Technologies</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+<script>
+    // Theme toggle
+    function toggleTheme() {
+        const body = document.body;
+        const icon = document.querySelector('.theme-toggle i');
+        
+        if (body.classList.contains('dark-theme')) {
+            body.classList.remove('dark-theme');
+            body.classList.add('light-theme');
+            icon.classList.remove('fa-sun');
+            icon.classList.add('fa-moon');
+            localStorage.setItem('theme', 'light');
+        } else {
+            body.classList.remove('light-theme');
+            body.classList.add('dark-theme');
+            icon.classList.remove('fa-moon');
+            icon.classList.add('fa-sun');
+            localStorage.setItem('theme', 'dark');
+        }
+    }
+
+    // Load saved theme
+    window.addEventListener('load', function() {
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        if (savedTheme === 'dark') {
+            document.body.classList.add('dark-theme');
+            const icon = document.querySelector('.theme-toggle i');
+            if (icon) {
+                icon.classList.replace('fa-moon', 'fa-sun');
+            }
+        } else {
+            document.body.classList.add('light-theme');
+        }
+    });
+
+    // Language switcher (визуальный)
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+        });
+    });
+</script>
+}

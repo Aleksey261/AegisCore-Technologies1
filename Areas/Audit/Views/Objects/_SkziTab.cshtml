@@ -1,0 +1,320 @@
+@model AegisCore.Models.ObjectsViewModel
+@{
+    var obj = Model.CurrentObject;
+    var selectedIds = obj?.SkziIds ?? new List<string>();
+    var selectedSkzi = Model.AvailableSkzi.Where(s => selectedIds.Contains(s.Id)).ToList();
+}
+
+@if (obj == null || string.IsNullOrEmpty(obj.Id))
+{
+    <div class="alert alert-info"><i class="fas fa-info-circle"></i> Сначала сохраните основные сведения объекта.</div>
+}
+else
+{
+    <div class="alert alert-warning" style="background: #fef3c7; color: #92400e; border: 1px solid #fcd34d;">
+        <i class="fas fa-exclamation-triangle"></i>
+        <strong>Внимание!</strong> В списке для выбора доступны только те СКЗИ, у которых не истёк срок действия сертификата.
+    </div>
+
+    <div class="toolbar">
+        <div class="toolbar-left">
+            <button class="btn btn-primary" onclick="openSelectModal('selectSkziModal')">
+                <i class="fas fa-plus"></i> Добавить
+            </button>
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Поиск..." oninput="filterSelectedTable('selectedSkziTable', this.value)" />
+            </div>
+        </div>
+    </div>
+
+    <div class="table-container">
+        <table class="data-table" id="selectedSkziTable">
+            <thead>
+                <tr>
+                    <th style="width: 40px;"><input type="checkbox" onclick="toggleAllCheckboxes(this, 'selectedSkziTable')" /></th>
+                    <th class="th-sortable" onclick="sortTable('selectedSkziTable', 1)">
+                        <div class="th-header">
+                            <span>Наименование</span>
+                            <i class="fas fa-sort sortable-icon"></i>
+                        </div>
+                        <div class="th-filter-row">
+                            <input type="text" class="filter-inline-input" placeholder="Поиск..." oninput="filterTable('selectedSkziTable', 1, this.value)" />
+                        </div>
+                    </th>
+                    <th class="th-sortable" onclick="sortTable('selectedSkziTable', 2)">
+                        <div class="th-header">
+                            <span>Серийный номер</span>
+                            <i class="fas fa-sort sortable-icon"></i>
+                        </div>
+                        <div class="th-filter-row">
+                            <input type="text" class="filter-inline-input" placeholder="Поиск..." oninput="filterTable('selectedSkziTable', 2, this.value)" />
+                        </div>
+                    </th>
+                    <th class="th-sortable" onclick="sortTable('selectedSkziTable', 3)">
+                        <div class="th-header">
+                            <span>№ сертификата</span>
+                            <i class="fas fa-sort sortable-icon"></i>
+                        </div>
+                        <div class="th-filter-row">
+                            <input type="text" class="filter-inline-input" placeholder="Поиск..." oninput="filterTable('selectedSkziTable', 3, this.value)" />
+                        </div>
+                    </th>
+                    <th class="th-sortable" onclick="sortTable('selectedSkziTable', 4)">
+                        <div class="th-header">
+                            <span>Дата выдачи</span>
+                            <i class="fas fa-sort sortable-icon"></i>
+                        </div>
+                        <div class="th-filter-row">
+                            <input type="text" class="filter-inline-input" placeholder="Поиск..." oninput="filterTable('selectedSkziTable', 4, this.value)" />
+                        </div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (selectedSkzi.Any())
+                {
+                    @foreach (var skzi in selectedSkzi)
+                    {
+                        <tr data-id="@skzi.Id">
+                            <td><input type="checkbox" class="row-checkbox" /></td>
+                            <td><strong>@skzi.Name</strong></td>
+                            <td>@(skzi.SerialNumber ?? "—")</td>
+                            <td>@(skzi.CertificateNumber ?? "—")</td>
+                            <td>@(skzi.IssueDate?.ToString("dd.MM.yyyy") ?? "—")</td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr><td colspan="5" style="text-align: center; padding: 40px; color: #94a3b8;">
+                        <i class="fas fa-key" style="font-size: 48px; margin-bottom: 16px; display: block;"></i>
+                        СКЗИ не добавлены
+                    </td></tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <div class="form-actions" style="margin-top: 20px;">
+        <button class="btn btn-secondary" onclick="removeSelected('skzi')">
+            <i class="fas fa-trash"></i> Удалить выбранные
+        </button>
+    </div>
+}
+
+<!-- ✅ МОДАЛКА ВЫБОРА СКЗИ (Рисунок 111) -->
+<div class="modal" id="selectSkziModal">
+    <div class="modal-content" style="max-width: 700px;">
+        <div class="modal-header" style="display: flex; justify-content: space-between; align-items: center; padding: 20px 24px; border-bottom: 1px solid #e2e8f0;">
+            <h3 style="margin: 0; font-size: 20px; font-weight: 700; color: #1e293b;">Список СКЗИ</h3>
+            <button class="modal-close" onclick="closeModal('selectSkziModal')" style="background: none; border: none; font-size: 24px; cursor: pointer; color: #64748b;">&times;</button>
+        </div>
+        <div class="modal-body" style="padding: 24px;">
+            <!-- Поиск -->
+            <div class="search-box" style="margin-bottom: 16px; position: relative;">
+                <i class="fas fa-search" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: #94a3b8;"></i>
+                <input type="text" id="skziListSearch" placeholder="Поиск..." 
+                       oninput="filterSkziList()" 
+                       style="width: 100%; padding: 10px 12px 10px 36px; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 14px;" />
+            </div>
+
+            <!-- Список СКЗИ -->
+            <div style="max-height: 400px; overflow-y: auto; border: 1px solid #e2e8f0; border-radius: 8px;">
+                <div id="skziListContainer">
+                    <!-- Чекбокс "Выбрать все" -->
+                    <div style="padding: 12px 16px; border-bottom: 1px solid #f1f5f9; display: flex; align-items: center; gap: 12px; background: #fafbfc;">
+                        <input type="checkbox" id="selectAllSKZI" onchange="toggleSelectAllSkzi()" 
+                               style="width: 16px; height: 16px; cursor: pointer;" />
+                        <label for="selectAllSKZI" style="flex: 1; cursor: pointer; color: #475569; font-size: 14px;">
+                            Выбрать все
+                        </label>
+                    </div>
+                    
+                    @foreach (var skzi in Model.AvailableSkzi)
+                    {
+                        var isSelected = selectedIds.Contains(skzi.Id);
+                        <div class="skzi-list-item" data-name="@skzi.Name" data-serial="@(skzi.SerialNumber ?? "")"
+                             style="padding: 10px 16px; border-bottom: 1px solid #f1f5f9; display: flex; align-items: center; gap: 12px; @(isSelected ? "background: #f8fafc;" : "")">
+                            <input type="checkbox" id="skzi_@skzi.Id" value="@skzi.Id" 
+                                   class="skzi-checkbox" @(isSelected ? "checked" : "")
+                                   onchange="toggleSkziSelection('@skzi.Id')"
+                                   style="width: 16px; height: 16px; cursor: pointer;" />
+                            <label for="skzi_@skzi.Id" style="flex: 1; cursor: pointer; display: flex; justify-content: space-between; align-items: center; margin: 0;">
+                                <span style="font-weight: 500; color: #1e293b; font-size: 14px;">@skzi.Name</span>
+                                <span style="color: #64748b; font-size: 13px;">№ @(skzi.CertificateNumber ?? "—")</span>
+                            </label>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <!-- Кнопки -->
+            <div class="form-actions" style="margin-top: 20px; justify-content: flex-end; display: flex; gap: 12px;">
+                <button type="button" class="btn btn-secondary" onclick="closeModal('selectSkziModal')">Отмена</button>
+                <button type="button" class="btn btn-primary" onclick="confirmSelection('skzi')">Сохранить СКЗИ</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const objectId = '@(obj?.Id ?? "")';
+    let selectedSkziIds = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(selectedIds));
+
+    function openSelectModal(id) { document.getElementById(id).classList.add('show'); }
+    function closeModal(id) { document.getElementById(id).classList.remove('show'); }
+    
+    function toggleAllCheckboxes(source, tableId) {
+        const table = document.getElementById(tableId);
+        if (!table) return;
+        table.querySelectorAll('.row-checkbox').forEach(cb => { cb.checked = source.checked; });
+    }
+    
+    function filterSkziList() {
+        const search = document.getElementById('skziListSearch').value.toLowerCase();
+        const items = document.querySelectorAll('#skziListContainer .skzi-list-item');
+        items.forEach(item => {
+            const name = (item.dataset.name || '').toLowerCase();
+            const serial = (item.dataset.serial || '').toLowerCase();
+            item.style.display = (name.includes(search) || serial.includes(search)) ? '' : 'none';
+        });
+    }
+    
+    function filterSelectedTable(tableId, value) {
+        const table = document.getElementById(tableId);
+        if (!table) return;
+        const search = value.toLowerCase();
+        table.querySelectorAll('tbody tr').forEach(row => {
+            row.style.display = row.textContent.toLowerCase().includes(search) ? '' : 'none';
+        });
+    }
+    
+    // ✅ Поиск по столбцу
+    function filterTable(tableId, colIndex, value) {
+        const table = document.getElementById(tableId);
+        if (!table) return;
+        const searchValue = value.toLowerCase();
+        table.querySelectorAll('tbody tr').forEach(row => {
+            const cell = row.cells[colIndex];
+            if (cell) {
+                const text = cell.textContent.toLowerCase();
+                row.style.display = text.includes(searchValue) ? '' : 'none';
+            }
+        });
+    }
+    
+    // ✅ Сортировка таблицы
+    function sortTable(tableId, colIndex) {
+        const table = document.getElementById(tableId);
+        if (!table) return;
+        const tbody = table.querySelector('tbody');
+        const rows = Array.from(tbody.querySelectorAll('tr'));
+        
+        const currentDir = table.getAttribute('data-sort-dir') || 'asc';
+        const newDir = currentDir === 'asc' ? 'desc' : 'asc';
+        table.setAttribute('data-sort-dir', newDir);
+        
+        rows.sort((a, b) => {
+            const aText = a.cells[colIndex]?.textContent.trim() || '';
+            const bText = b.cells[colIndex]?.textContent.trim() || '';
+            if (newDir === 'asc') return aText.localeCompare(bText, 'ru');
+            else return bText.localeCompare(aText, 'ru');
+        });
+        
+        rows.forEach(row => tbody.appendChild(row));
+    }
+    
+    function toggleSkziSelection(id) {
+        if (selectedSkziIds.includes(id)) {
+            selectedSkziIds = selectedSkziIds.filter(sid => sid !== id);
+        } else {
+            selectedSkziIds.push(id);
+        }
+        updateSelectAllSkziState();
+    }
+    
+    function toggleSelectAllSkzi() {
+        const selectAllCheckbox = document.getElementById('selectAllSKZI');
+        const checkboxes = document.querySelectorAll('#skziListContainer .skzi-checkbox');
+        const selectAll = selectAllCheckbox.checked;
+        
+        checkboxes.forEach(cb => {
+            cb.checked = selectAll;
+            const id = cb.value;
+            if (selectAll && !selectedSkziIds.includes(id)) {
+                selectedSkziIds.push(id);
+            } else if (!selectAll) {
+                selectedSkziIds = selectedSkziIds.filter(sid => sid !== id);
+            }
+        });
+    }
+    
+    function updateSelectAllSkziState() {
+        const checkboxes = document.querySelectorAll('#skziListContainer .skzi-checkbox');
+        const checkedCheckboxes = document.querySelectorAll('#skziListContainer .skzi-checkbox:checked');
+        const selectAllCheckbox = document.getElementById('selectAllSKZI');
+        if (selectAllCheckbox) {
+            selectAllCheckbox.checked = checkboxes.length > 0 && checkboxes.length === checkedCheckboxes.length;
+        }
+    }
+    
+    function confirmSelection(type) {
+        if (!objectId) { alert('Сначала сохраните объект информатизации'); return; }
+        
+        fetch('/audit/objects/' + objectId + '/set-skzi', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(selectedSkziIds)
+        })
+        .then(r => r.json())
+        .then(result => {
+            if (result.success) {
+                closeModal('selectSkziModal');
+                location.reload();
+            } else {
+                alert(result.error || 'Ошибка при сохранении');
+            }
+        });
+    }
+    
+    function removeSelected(type) {
+        const table = document.getElementById('selectedSkziTable');
+        if (!table) return;
+        const checkboxes = table.querySelectorAll('.row-checkbox:checked');
+        if (checkboxes.length === 0) { alert('Выберите элементы'); return; }
+        if (!confirm('Удалить выбранное СКЗИ из объекта?')) return;
+        
+        const promises = [];
+        checkboxes.forEach(cb => {
+            const id = cb.closest('tr').dataset.id;
+            promises.push(fetch('/audit/objects/' + objectId + '/remove-skzi', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(id)
+            }));
+        });
+        Promise.all(promises).then(() => location.reload());
+    }
+</script>
+
+<style>
+    .th-sortable { cursor: pointer; user-select: none; }
+    .th-sortable:hover { background: #f1f5f9; }
+    .th-header { display: flex; align-items: center; gap: 6px; margin-bottom: 8px; }
+    .sortable-icon { color: #94a3b8; font-size: 12px; }
+    .th-filter-row { margin-top: 4px; }
+    .filter-inline-input {
+        width: 100%;
+        padding: 6px 10px;
+        border: 1px solid #e2e8f0;
+        border-radius: 6px;
+        font-size: 12px;
+        background: white;
+    }
+    .filter-inline-input:focus {
+        outline: none;
+        border-color: #4F46E5;
+        box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.1);
+    }
+</style>

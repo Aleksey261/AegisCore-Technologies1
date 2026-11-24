@@ -1,0 +1,372 @@
+@model AegisCore.Models.OrganizationViewModel
+@{
+    ViewData["Title"] = "Сотрудники";
+}
+
+<div class="section-header">
+    <h2 class="section-title">
+        <i class="fas fa-users"></i> Сотрудники
+    </h2>
+</div>
+
+<div class="toolbar">
+    <div class="toolbar-left">
+        <button class="btn btn-primary" onclick="openEmployeeModal()">
+            <i class="fas fa-plus"></i> Добавить сотрудника
+        </button>
+        <button class="btn btn-secondary" onclick="openImportModal('employees')">
+            <i class="fas fa-file-import"></i> Загрузить из файла
+        </button>
+        <div class="search-box">
+            <i class="fas fa-search"></i>
+            <input type="text" id="employeeSearch" placeholder="Поиск по сотрудникам..." value="@Model.Search" oninput="filterEmployees()" />
+        </div>
+    </div>
+</div>
+
+<div class="table-container">
+    <table class="data-table" id="employeesTable">
+        <thead>
+            <tr>
+                <th class="th-sortable">
+                    <div class="th-header"><span>ФИО</span><i class="fas fa-sort sortable-icon"></i></div>
+                    <div class="th-filter-row"><input type="text" class="filter-inline-input" placeholder="Поиск..." oninput="filterTable('employeesTable', 0, this.value)" /></div>
+                </th>
+                <th class="th-sortable">
+                    <div class="th-header"><span>Должность</span><i class="fas fa-sort sortable-icon"></i></div>
+                    <div class="th-filter-row"><input type="text" class="filter-inline-input" placeholder="Поиск..." oninput="filterTable('employeesTable', 1, this.value)" /></div>
+                </th>
+                <th class="th-sortable">
+                    <div class="th-header"><span>Подразделение</span><i class="fas fa-sort sortable-icon"></i></div>
+                    <div class="th-filter-row">
+                        <select class="filter-inline-select" onchange="filterTable('employeesTable', 2, this.value)">
+                            <option value="">(Все)</option>
+                            @if (Model.Departments != null) { @foreach (var d in Model.Departments) { <option value="@d.Name">@d.Name</option> } }
+                        </select>
+                    </div>
+                </th>
+                <th class="th-sortable">
+                    <div class="th-header"><span>Дата устройства</span><i class="fas fa-sort sortable-icon"></i></div>
+                    <div class="th-filter-row"><input type="date" class="filter-inline-input" oninput="filterTable('employeesTable', 3, this.value)" /></div>
+                </th>
+                <th class="th-sortable">
+                    <div class="th-header"><span>Дата прекращения</span><i class="fas fa-sort sortable-icon"></i></div>
+                    <div class="th-filter-row"><input type="date" class="filter-inline-input" oninput="filterTable('employeesTable', 4, this.value)" /></div>
+                </th>
+                <th style="width: 100px;"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.Employees != null && Model.Employees.Any())
+            {
+                @foreach (var item in Model.Employees)
+                {
+                    <tr data-id="@item.Id">
+                        <td><strong>@item.Fio</strong></td>
+                        <td>@item.Position</td>
+                        <td>@item.Department</td>
+                        <td>@(item.DateStart?.ToString("dd.MM.yyyy") ?? "—")</td>
+                        <td class="@(item.DateEnd.HasValue ? "text-danger" : "")">@(item.DateEnd?.ToString("dd.MM.yyyy") ?? "—")</td>
+                        <td class="actions">
+                            <button class="btn-icon edit" onclick="editEmployee('@item.Id')"><i class="fas fa-edit"></i></button>
+                            <button class="btn-icon delete" onclick="deleteEmployee('@item.Id')"><i class="fas fa-trash"></i></button>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="6" style="text-align: center; padding: 40px; color: #94a3b8;">
+                        <i class="fas fa-users" style="font-size: 48px; margin-bottom: 16px; display: block;"></i>
+                        Сотрудники не добавлены
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@if (Model.TotalPages > 1)
+{
+    <div class="pagination">
+        <div class="pagination-page-size">
+            <label>Показывать по:</label>
+            <select onchange="changePageSize(this.value)"><option value="10" selected>10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select>
+        </div>
+        <div class="pagination-info">Страница @Model.CurrentPage из @Model.TotalPages (Всего элементов: @Model.TotalItems)</div>
+        <div class="pagination-buttons">
+            @if (Model.CurrentPage > 1) { <a href="/audit/organization?section=employees&page=@(Model.CurrentPage - 1)" class="btn-pagination">‹</a> }
+            @for (int i = 1; i <= Model.TotalPages; i++) { <a href="/audit/organization?section=employees&page=@i" class="btn-pagination @(i == Model.CurrentPage ? "active" : "")">@i</a> }
+            @if (Model.CurrentPage < Model.TotalPages) { <a href="/audit/organization?section=employees&page=@(Model.CurrentPage + 1)" class="btn-pagination">›</a> }
+        </div>
+    </div>
+}
+
+<!-- Модалка добавления/редактирования сотрудника -->
+<div class="modal" id="employeeModal">
+    <div class="modal-content" style="max-width: 700px;">
+        <div class="modal-header">
+            <h3 id="employeeModalTitle">Добавление сотрудника</h3>
+            <button class="modal-close" onclick="closeEmployeeModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <form id="employeeForm" onsubmit="saveEmployee(event)">
+                <input type="hidden" id="employeeId" name="id" />
+                
+                <div class="form-group">
+                    <label>ФИО <span class="required">*</span></label>
+                    <input type="text" name="fio" id="employeeFio" class="form-control" required placeholder="Иванов Иван Иванович" />
+                </div>
+                
+                <div class="form-group">
+                    <label>Должность <span class="required">*</span></label>
+                    <div class="input-with-buttons">
+                        <select name="position" id="employeePosition" class="form-control" required>
+                            <option value="">Выберите должность</option>
+                            <option value="Директор">Директор</option>
+                            <option value="Начальник отдела">Начальник отдела</option>
+                            <option value="Специалист">Специалист</option>
+                            <option value="Инженер">Инженер</option>
+                            <option value="Бухгалтер">Бухгалтер</option>
+                        </select>
+                        <button type="button" class="btn-icon-ref" title="Редактировать должность" onclick="editReference('positions')">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button type="button" class="btn-icon-ref add" title="Добавить должность" onclick="openReferenceModal('positions')">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Подразделение <span class="required">*</span></label>
+                    <div class="input-with-buttons">
+                        <select name="department" id="employeeDepartment" class="form-control" required>
+                            <option value="">Выберите подразделение</option>
+                            @if (Model.Departments != null)
+                            {
+                                @foreach (var d in Model.Departments)
+                                {
+                                    <option value="@d.Name">@d.Name</option>
+                                }
+                            }
+                        </select>
+                        <button type="button" class="btn-icon-ref" title="Редактировать подразделение" onclick="editReference('departments')">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button type="button" class="btn-icon-ref add" title="Добавить подразделение" onclick="openReferenceModal('departments')">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Дата устройства <span class="required">*</span></label>
+                        <input type="date" name="dateStart" id="employeeDateStart" class="form-control" required />
+                    </div>
+                    <div class="form-group">
+                        <label>Дата прекращения</label>
+                        <input type="date" name="dateEnd" id="employeeDateEnd" class="form-control" />
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Телефон</label>
+                        <input type="tel" name="phone" id="employeePhone" class="form-control" placeholder="+7 (___) ___-__-__" />
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" name="email" id="employeeEmail" class="form-control" placeholder="example@@company.ru" />
+                    </div>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeEmployeeModal()">Отмена</button>
+                    <button type="submit" class="btn btn-primary">Сохранить физ.лицо</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Модалка импорта -->
+<div class="modal" id="importModal">
+    <div class="modal-content" style="max-width: 600px;">
+        <div class="modal-header">
+            <h3>Загрузка списка сотрудников</h3>
+            <button class="modal-close" onclick="closeImportModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div class="import-info">
+                <p><i class="fas fa-info-circle"></i> Загрузите файл в формате XLS, XLSX или ODS.</p>
+                <a href="#" onclick="downloadTemplate('employees')"><i class="fas fa-download"></i> Скачать шаблон файла</a>
+            </div>
+            <div class="upload-area" id="uploadArea" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event)">
+                <div class="upload-placeholder">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <p>Перетащите файл сюда или нажмите кнопку ниже</p>
+                    <input type="file" id="importFile" accept=".xls,.xlsx,.ods" style="display: none;" onchange="handleFileSelect(event)" />
+                    <button type="button" class="btn btn-primary" onclick="document.getElementById('importFile').click()"><i class="fas fa-folder-open"></i> Выберите файл</button>
+                </div>
+            </div>
+            <div class="form-actions">
+                <button type="button" class="btn btn-secondary" onclick="closeImportModal()">Отмена</button>
+                <button type="button" class="btn btn-primary" onclick="uploadImportFile()"><i class="fas fa-upload"></i> Загрузить данные в таблицу</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const employeesData = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.Employees ?? new List<AegisCore.Models.Employee>()));
+    
+    function openEmployeeModal() { 
+        document.getElementById('employeeForm').reset(); 
+        document.getElementById('employeeId').value = ''; 
+        document.getElementById('employeeModalTitle').textContent = 'Добавление сотрудника'; 
+        document.getElementById('employeeModal').classList.add('show'); 
+    }
+    
+    function closeEmployeeModal() { 
+        document.getElementById('employeeModal').classList.remove('show'); 
+    }
+    
+    function editEmployee(id) { 
+        const item = employeesData.find(e => e.id === id); 
+        if (!item) return; 
+        document.getElementById('employeeId').value = item.id; 
+        document.getElementById('employeeFio').value = item.fio || ''; 
+        document.getElementById('employeePosition').value = item.position || ''; 
+        document.getElementById('employeeDepartment').value = item.department || ''; 
+        document.getElementById('employeeDateStart').value = item.dateStart ? item.dateStart.split('T')[0] : ''; 
+        document.getElementById('employeeDateEnd').value = item.dateEnd ? item.dateEnd.split('T')[0] : ''; 
+        document.getElementById('employeePhone').value = item.phone || ''; 
+        document.getElementById('employeeEmail').value = item.email || ''; 
+        document.getElementById('employeeModalTitle').textContent = 'Редактирование сотрудника'; 
+        document.getElementById('employeeModal').classList.add('show'); 
+    }
+    
+    function deleteEmployee(id) { 
+        if (!confirm('Удалить сотрудника?')) return; 
+        fetch('/api/audit/organization/employees/delete/' + id, { method: 'DELETE' })
+            .then(r => r.json())
+            .then(data => { 
+                if (data.success) location.reload(); 
+                else alert(data.error || 'Ошибка'); 
+            }); 
+    }
+    
+    function saveEmployee(e) { 
+        e.preventDefault(); 
+        const form = e.target; 
+        const data = { 
+            id: form.id.value || null, 
+            fio: form.fio.value, 
+            position: form.position.value, 
+            department: form.department.value, 
+            dateStart: form.dateStart.value || null, 
+            dateEnd: form.dateEnd.value || null, 
+            phone: form.phone.value, 
+            email: form.email.value 
+        }; 
+        fetch('/api/audit/organization/employees/save', { 
+            method: 'POST', 
+            headers: { 'Content-Type': 'application/json' }, 
+            body: JSON.stringify(data) 
+        })
+        .then(r => r.json())
+        .then(result => { 
+            if (result.success) location.reload(); 
+            else alert(result.error || 'Ошибка'); 
+        }); 
+    }
+    
+    function filterEmployees() { 
+        const search = document.getElementById('employeeSearch').value.toLowerCase(); 
+        document.querySelectorAll('#employeesTable tbody tr').forEach(row => { 
+            row.style.display = row.textContent.toLowerCase().includes(search) ? '' : 'none'; 
+        }); 
+    }
+    
+    function filterTable(tableId, colIndex, value) { 
+        const table = document.getElementById(tableId); 
+        const rows = table.querySelectorAll('tbody tr'); 
+        rows.forEach(row => { 
+            const cell = row.cells[colIndex]; 
+            if (cell) { 
+                row.style.display = cell.textContent.toLowerCase().includes(value.toLowerCase()) ? '' : 'none'; 
+            } 
+        }); 
+    }
+    
+    function openImportModal(type) { 
+        document.getElementById('importModal').classList.add('show'); 
+    }
+    
+    function closeImportModal() { 
+        document.getElementById('importModal').classList.remove('show'); 
+    }
+    
+    function handleDragOver(e) { 
+        e.preventDefault(); 
+        e.currentTarget.classList.add('drag-over'); 
+    }
+    
+    function handleDragLeave(e) { 
+        e.currentTarget.classList.remove('drag-over'); 
+    }
+    
+    function handleDrop(e) { 
+        e.preventDefault(); 
+        e.currentTarget.classList.remove('drag-over'); 
+        const files = e.dataTransfer.files; 
+        if (files.length > 0) { 
+            document.getElementById('importFile').files = files; 
+            showFileInfo(files[0]); 
+        } 
+    }
+    
+    function handleFileSelect(e) { 
+        if (e.target.files.length > 0) { 
+            showFileInfo(e.target.files[0]); 
+        } 
+    }
+    
+    function showFileInfo(file) { 
+        document.getElementById('uploadArea').innerHTML = `<div class="file-info"><div class="file-name"><i class="fas fa-file-excel"></i> ${file.name}</div><div class="file-size">${(file.size / 1024).toFixed(2)} KB</div><div class="file-status"><i class="fas fa-check-circle"></i> Файл готов к загрузке</div></div>`; 
+    }
+    
+    function uploadImportFile() { 
+        alert('Загрузка файла будет реализована'); 
+    }
+    
+    function downloadTemplate(type) { 
+        alert('Скачивание шаблона для: ' + type); 
+    }
+    
+    function openReferenceModal(type) { 
+        alert('Добавление в справочник: ' + type); 
+    }
+    
+    function editReference(type) {
+        const selectId = type === 'positions' ? 'employeePosition' : 'employeeDepartment';
+        const select = document.getElementById(selectId);
+        const selectedValue = select.value;
+        
+        if (!selectedValue) {
+            alert('Сначала выберите значение для редактирования');
+            return;
+        }
+        
+        alert('Редактирование "' + selectedValue + '" в справочнике: ' + type);
+    }
+    
+    function changePageSize(size) { 
+        const url = new URL(window.location); 
+        url.searchParams.set('pageSize', size); 
+        window.location.href = url.toString(); 
+    }
+</script>

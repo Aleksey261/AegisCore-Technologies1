@@ -1,0 +1,4 @@
+@model List<AegisCore.Models.Vulnerability>
+<table><thead><tr><th>BDU</th><th>CVE</th><th>Риск</th><th>Продукт</th><th>Название</th></tr></thead><tbody>
+@foreach (var v in Model) { <tr><td>@v.BduId</td><td>@v.CveId</td><td>@v.Severity</td><td>@v.Product</td><td>@v.Title</td></tr> }
+</tbody></table>

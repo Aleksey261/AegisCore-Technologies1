@@ -1,0 +1,54 @@
+@{
+    ViewData["Title"] = "Защита конфиденциальной информации";
+}
+
+<div class="dashboard-main">
+    <div class="welcome-section">
+        <h1><i class="fas fa-shield-alt"></i> Защита конфиденциальной информации</h1>
+        <p>Комплексная защита конфиденциальной информации в организации</p>
+    </div>
+
+    <div class="modules-grid">
+        <a href="/audit/protection/personal-data" class="module-card">
+            <div class="module-icon audit"><i class="fas fa-user-shield"></i></div>
+            <h3>ПДн</h3>
+            <p>Персональные данные: субъекты, категории, цели и способы обработки, ИСПДн</p>
+            <span class="module-link">Перейти <i class="fas fa-arrow-right"></i></span>
+        </a>
+        
+        <a href="/audit/protection/critical-infrastructure" class="module-card">
+            <div class="module-icon scanner"><i class="fas fa-server"></i></div>
+            <h3>КИИ</h3>
+            <p>Критическая информационная инфраструктура: объекты и системы</p>
+            <span class="module-link">Перейти <i class="fas fa-arrow-right"></i></span>
+        </a>
+        
+        <a href="/audit/protection/other-confidential" class="module-card">
+            <div class="module-icon admin"><i class="fas fa-folder-lock"></i></div>
+            <h3>Прочая КИ</h3>
+            <p>Прочая конфиденциальная информация: коммерческая, служебная тайна</p>
+            <span class="module-link">Перейти <i class="fas fa-arrow-right"></i></span>
+        </a>
+    </div>
+
+    <div style="margin-top: 40px; background: white; padding: 32px; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.08);">
+        <h2 style="margin-bottom: 20px; color: #1e293b; font-size: 20px;">
+            <i class="fas fa-info-circle" style="color: #4F46E5; margin-right: 8px;"></i>
+            О разделе
+        </h2>
+        <p style="color: #64748b; line-height: 1.8; font-size: 15px;">
+            Конфиденциальная информация — это сведения, доступ к которым ограничен законом РФ и которые не являются государственной тайной. 
+            Для предотвращения утечки конфиденциальной информации необходимо предпринимать соответствующие меры защиты.
+        </p>
+    </div>
+</div>
+
+<style>
+    .module-card {
+        transition: all 0.3s ease;
+    }
+    
+    .module-card:hover {
+        transform: translateY(-8px);
+    }
+</style>

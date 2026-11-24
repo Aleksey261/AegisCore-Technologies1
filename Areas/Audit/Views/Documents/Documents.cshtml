@@ -1,0 +1,250 @@
+@{
+    ViewData["Title"] = "Справочники";
+}
+
+<div class="audit-page">
+    <div class="page-header">
+        <h1>
+            <a href="/audit" style="color: #64748b; text-decoration: none; margin-right: 12px; font-size: 24px;">
+                <i class="fas fa-arrow-left"></i>
+            </a>
+            <i class="fas fa-book"></i> Справочники
+        </h1>
+        <p style="color: #64748b; margin-top: 8px; margin-left: 36px;">
+            При желании все справочники можно заполнить сразу, чтобы потом ими можно было воспользоваться при заполнении информации в журналах
+        </p>
+    </div>
+
+    <div class="form-content" style="background: white; border-radius: 8px; padding: 32px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+        
+        <!-- Справочники -->
+        <div class="section" style="margin-bottom: 32px;">
+            <h2 style="font-size: 18px; color: #1e293b; margin-bottom: 16px; font-weight: 600;">Справочники</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px;">
+                
+                <a href="/audit/documents?type=document-types" class="dictionary-card" 
+                   style="padding: 20px; background: #f8fafc; border: 2px solid #e2e8f0; border-radius: 8px; text-decoration: none; transition: all 0.2s; display: block;"
+                   onmouseover="this.style.borderColor='#4F46E5'; this.style.boxShadow='0 4px 12px rgba(79,70,229,0.15)'; this.style.transform='translateY(-2px)'"
+                   onmouseout="this.style.borderColor='#e2e8f0'; this.style.boxShadow='none'; this.style.transform='translateY(0)'">
+                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
+                        <i class="fas fa-file-alt" style="font-size: 24px; color: #4F46E5;"></i>
+                        <h3 style="margin: 0; color: #1e293b; font-size: 16px;">Виды документов</h3>
+                    </div>
+                    <p style="margin: 0; color: #64748b; font-size: 13px; margin-left: 36px;">Справочник видов документов</p>
+                </a>
+
+                <a href="/audit/documents?type=positions" class="dictionary-card" 
+                   style="padding: 20px; background: #f8fafc; border: 2px solid #e2e8f0; border-radius: 8px; text-decoration: none; transition: all 0.2s; display: block;"
+                   onmouseover="this.style.borderColor='#4F46E5'; this.style.boxShadow='0 4px 12px rgba(79,70,229,0.15)'; this.style.transform='translateY(-2px)'"
+                   onmouseout="this.style.borderColor='#e2e8f0'; this.style.boxShadow='none'; this.style.transform='translateY(0)'">
+                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
+                        <i class="fas fa-briefcase" style="font-size: 24px; color: #10b981;"></i>
+                        <h3 style="margin: 0; color: #1e293b; font-size: 16px;">Должности</h3>
+                    </div>
+                    <p style="margin: 0; color: #64748b; font-size: 13px; margin-left: 36px;">Справочник должностей</p>
+                </a>
+
+                <a href="/audit/documents?type=briefings" class="dictionary-card" 
+                   style="padding: 20px; background: #f8fafc; border: 2px solid #e2e8f0; border-radius: 8px; text-decoration: none; transition: all 0.2s; display: block;"
+                   onmouseover="this.style.borderColor='#4F46E5'; this.style.boxShadow='0 4px 12px rgba(79,70,229,0.15)'; this.style.transform='translateY(-2px)'"
+                   onmouseout="this.style.borderColor='#e2e8f0'; this.style.boxShadow='none'; this.style.transform='translateY(0)'">
+                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
+                        <i class="fas fa-chalkboard-teacher" style="font-size: 24px; color: #f59e0b;"></i>
+                        <h3 style="margin: 0; color: #1e293b; font-size: 16px;">Виды инструктажа</h3>
+                    </div>
+                    <p style="margin: 0; color: #64748b; font-size: 13px; margin-left: 36px;">Справочник видов инструктажей</p>
+                </a>
+
+                <a href="/audit/documents?type=storage" class="dictionary-card" 
+                   style="padding: 20px; background: #f8fafc; border: 2px solid #e2e8f0; border-radius: 8px; text-decoration: none; transition: all 0.2s; display: block;"
+                   onmouseover="this.style.borderColor='#4F46E5'; this.style.boxShadow='0 4px 12px rgba(79,70,229,0.15)'; this.style.transform='translateY(-2px)'"
+                   onmouseout="this.style.borderColor='#e2e8f0'; this.style.boxShadow='none'; this.style.transform='translateY(0)'">
+                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
+                        <i class="fas fa-warehouse" style="font-size: 24px; color: #8b5cf6;"></i>
+                        <h3 style="margin: 0; color: #1e293b; font-size: 16px;">Виды хранения</h3>
+                    </div>
+                    <p style="margin: 0; color: #64748b; font-size: 13px; margin-left: 36px;">Справочник условий хранения</p>
+                </a>
+
+                <a href="/audit/documents?type=skzi-service" class="dictionary-card" 
+                   style="padding: 20px; background: #f8fafc; border: 2px solid #e2e8f0; border-radius: 8px; text-decoration: none; transition: all 0.2s; display: block;"
+                   onmouseover="this.style.borderColor='#4F46E5'; this.style.boxShadow='0 4px 12px rgba(79,70,229,0.15)'; this.style.transform='translateY(-2px)'"
+                   onmouseout="this.style.borderColor='#e2e8f0'; this.style.boxShadow='none'; this.style.transform='translateY(0)'">
+                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
+                        <i class="fas fa-tools" style="font-size: 24px; color: #3b82f6;"></i>
+                        <h3 style="margin: 0; color: #1e293b; font-size: 16px;">Обслуживание СКЗИ</h3>
+                    </div>
+                    <p style="margin: 0; color: #64748b; font-size: 13px; margin-left: 36px;">Виды обслуживания средств защиты</p>
+                </a>
+
+                <a href="/audit/documents?type=testing" class="dictionary-card" 
+                   style="padding: 20px; background: #f8fafc; border: 2px solid #e2e8f0; border-radius: 8px; text-decoration: none; transition: all 0.2s; display: block;"
+                   onmouseover="this.style.borderColor='#4F46E5'; this.style.boxShadow='0 4px 12px rgba(79,70,229,0.15)'; this.style.transform='translateY(-2px)'"
+                   onmouseout="this.style.borderColor='#e2e8f0'; this.style.boxShadow='none'; this.style.transform='translateY(0)'">
+                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
+                        <i class="fas fa-vial" style="font-size: 24px; color: #ef4444;"></i>
+                        <h3 style="margin: 0; color: #1e293b; font-size: 16px;">Виды тестирования</h3>
+                    </div>
+                    <p style="margin: 0; color: #64748b; font-size: 13px; margin-left: 36px;">Справочник видов тестирования</p>
+                </a>
+
+                <a href="/audit/documents?type=media-types" class="dictionary-card" 
+                   style="padding: 20px; background: #f8fafc; border: 2px solid #e2e8f0; border-radius: 8px; text-decoration: none; transition: all 0.2s; display: block;"
+                   onmouseover="this.style.borderColor='#4F46E5'; this.style.boxShadow='0 4px 12px rgba(79,70,229,0.15)'; this.style.transform='translateY(-2px)'"
+                   onmouseout="this.style.borderColor='#e2e8f0'; this.style.boxShadow='none'; this.style.transform='translateY(0)'">
+                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
+                        <i class="fas fa-sd-card" style="font-size: 24px; color: #f59e0b;"></i>
+                        <h3 style="margin: 0; color: #1e293b; font-size: 16px;">Типы носителей</h3>
+                    </div>
+                    <p style="margin: 0; color: #64748b; font-size: 13px; margin-left: 36px;">Типы машинных носителей информации</p>
+                </a>
+
+                <a href="/audit/documents?type=program-types" class="dictionary-card" 
+                   style="padding: 20px; background: #f8fafc; border: 2px solid #e2e8f0; border-radius: 8px; text-decoration: none; transition: all 0.2s; display: block;"
+                   onmouseover="this.style.borderColor='#4F46E5'; this.style.boxShadow='0 4px 12px rgba(79,70,229,0.15)'; this.style.transform='translateY(-2px)'"
+                   onmouseout="this.style.borderColor='#e2e8f0'; this.style.boxShadow='none'; this.style.transform='translateY(0)'">
+                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
+                        <i class="fas fa-laptop-code" style="font-size: 24px; color: #10b981;"></i>
+                        <h3 style="margin: 0; color: #1e293b; font-size: 16px;">Типы программ</h3>
+                    </div>
+                    <p style="margin: 0; color: #64748b; font-size: 13px; margin-left: 36px;">Справочник типов программного обеспечения</p>
+                </a>
+
+                <a href="/audit/documents?type=electronic-ids" class="dictionary-card" 
+                   style="padding: 20px; background: #f8fafc; border: 2px solid #e2e8f0; border-radius: 8px; text-decoration: none; transition: all 0.2s; display: block;"
+                   onmouseover="this.style.borderColor='#4F46E5'; this.style.boxShadow='0 4px 12px rgba(79,70,229,0.15)'; this.style.transform='translateY(-2px)'"
+                   onmouseout="this.style.borderColor='#e2e8f0'; this.style.boxShadow='none'; this.style.transform='translateY(0)'">
+                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
+                        <i class="fas fa-id-card" style="font-size: 24px; color: #06b6d4;"></i>
+                        <h3 style="margin: 0; color: #1e293b; font-size: 16px;">Электронные идентификаторы</h3>
+                    </div>
+                    <p style="margin: 0; color: #64748b; font-size: 13px; margin-left: 36px;">Справочник типов электронных идентификаторов</p>
+                </a>
+
+            </div>
+        </div>
+
+        <!-- Реестры -->
+        <div class="section" style="margin-bottom: 32px;">
+            <h2 style="font-size: 18px; color: #1e293b; margin-bottom: 16px; font-weight: 600;">Реестры</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px;">
+                
+                <a href="/audit/documents?type=pencils" class="registry-card" 
+                   style="padding: 20px; background: #eff6ff; border: 2px solid #dbeafe; border-radius: 8px; text-decoration: none; transition: all 0.2s; display: block;"
+                   onmouseover="this.style.borderColor='#3b82f6'; this.style.boxShadow='0 4px 12px rgba(59,130,246,0.15)'; this.style.transform='translateY(-2px)'"
+                   onmouseout="this.style.borderColor='#dbeafe'; this.style.boxShadow='none'; this.style.transform='translateY(0)'">
+                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
+                        <i class="fas fa-box" style="font-size: 24px; color: #3b82f6;"></i>
+                        <h3 style="margin: 0; color: #1e293b; font-size: 16px;">Пеналы</h3>
+                    </div>
+                    <p style="margin: 0; color: #64748b; font-size: 13px; margin-left: 36px;">Реестр пеналов</p>
+                </a>
+
+                <a href="/audit/documents?type=keys" class="registry-card" 
+                   style="padding: 20px; background: #eff6ff; border: 2px solid #dbeafe; border-radius: 8px; text-decoration: none; transition: all 0.2s; display: block;"
+                   onmouseover="this.style.borderColor='#3b82f6'; this.style.boxShadow='0 4px 12px rgba(59,130,246,0.15)'; this.style.transform='translateY(-2px)'"
+                   onmouseout="this.style.borderColor='#dbeafe'; this.style.boxShadow='none'; this.style.transform='translateY(0)'">
+                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
+                        <i class="fas fa-key" style="font-size: 24px; color: #3b82f6;"></i>
+                        <h3 style="margin: 0; color: #1e293b; font-size: 16px;">Ключи</h3>
+                    </div>
+                    <p style="margin: 0; color: #64748b; font-size: 13px; margin-left: 36px;">Реестр ключей</p>
+                </a>
+
+                <a href="/audit/documents?type=seals" class="registry-card" 
+                   style="padding: 20px; background: #eff6ff; border: 2px solid #dbeafe; border-radius: 8px; text-decoration: none; transition: all 0.2s; display: block;"
+                   onmouseover="this.style.borderColor='#3b82f6'; this.style.boxShadow='0 4px 12px rgba(59,130,246,0.15)'; this.style.transform='translateY(-2px)'"
+                   onmouseout="this.style.borderColor='#dbeafe'; this.style.boxShadow='none'; this.style.transform='translateY(0)'">
+                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
+                        <i class="fas fa-stamp" style="font-size: 24px; color: #3b82f6;"></i>
+                        <h3 style="margin: 0; color: #1e293b; font-size: 16px;">Печати</h3>
+                    </div>
+                    <p style="margin: 0; color: #64748b; font-size: 13px; margin-left: 36px;">Реестр печатей</p>
+                </a>
+
+                <a href="/audit/documents?type=organizations" class="registry-card" 
+                   style="padding: 20px; background: #eff6ff; border: 2px solid #dbeafe; border-radius: 8px; text-decoration: none; transition: all 0.2s; display: block;"
+                   onmouseover="this.style.borderColor='#3b82f6'; this.style.boxShadow='0 4px 12px rgba(59,130,246,0.15)'; this.style.transform='translateY(-2px)'"
+                   onmouseout="this.style.borderColor='#dbeafe'; this.style.boxShadow='none'; this.style.transform='translateY(0)'">
+                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
+                        <i class="fas fa-building" style="font-size: 24px; color: #3b82f6;"></i>
+                        <h3 style="margin: 0; color: #1e293b; font-size: 16px;">Организации</h3>
+                    </div>
+                    <p style="margin: 0; color: #64748b; font-size: 13px; margin-left: 36px;">Реестр организаций</p>
+                </a>
+
+                <a href="/audit/documents?type=szi-certificates" class="registry-card" 
+                   style="padding: 20px; background: #eff6ff; border: 2px solid #dbeafe; border-radius: 8px; text-decoration: none; transition: all 0.2s; display: block;"
+                   onmouseover="this.style.borderColor='#3b82f6'; this.style.boxShadow='0 4px 12px rgba(59,130,246,0.15)'; this.style.transform='translateY(-2px)'"
+                   onmouseout="this.style.borderColor='#dbeafe'; this.style.boxShadow='none'; this.style.transform='translateY(0)'">
+                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
+                        <i class="fas fa-certificate" style="font-size: 24px; color: #3b82f6;"></i>
+                        <h3 style="margin: 0; color: #1e293b; font-size: 16px;">Сертификаты СЗИ</h3>
+                    </div>
+                    <p style="margin: 0; color: #64748b; font-size: 13px; margin-left: 36px;">Реестр сертификатов СЗИ</p>
+                </a>
+
+                <a href="/audit/documents?type=skzi-certificates" class="registry-card" 
+                   style="padding: 20px; background: #eff6ff; border: 2px solid #dbeafe; border-radius: 8px; text-decoration: none; transition: all 0.2s; display: block;"
+                   onmouseover="this.style.borderColor='#3b82f6'; this.style.boxShadow='0 4px 12px rgba(59,130,246,0.15)'; this.style.transform='translateY(-2px)'"
+                   onmouseout="this.style.borderColor='#dbeafe'; this.style.boxShadow='none'; this.style.transform='translateY(0)'">
+                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
+                        <i class="fas fa-shield-alt" style="font-size: 24px; color: #3b82f6;"></i>
+                        <h3 style="margin: 0; color: #1e293b; font-size: 16px;">Сертификаты СКЗИ</h3>
+                    </div>
+                    <p style="margin: 0; color: #64748b; font-size: 13px; margin-left: 36px;">Реестр сертификатов СКЗИ</p>
+                </a>
+
+                <a href="/audit/documents?type=verification-tools" class="registry-card" 
+                   style="padding: 20px; background: #eff6ff; border: 2px solid #dbeafe; border-radius: 8px; text-decoration: none; transition: all 0.2s; display: block;"
+                   onmouseover="this.style.borderColor='#3b82f6'; this.style.boxShadow='0 4px 12px rgba(59,130,246,0.15)'; this.style.transform='translateY(-2px)'"
+                   onmouseout="this.style.borderColor='#dbeafe'; this.style.boxShadow='none'; this.style.transform='translateY(0)'">
+                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
+                        <i class="fas fa-search" style="font-size: 24px; color: #3b82f6;"></i>
+                        <h3 style="margin: 0; color: #1e293b; font-size: 16px;">Средства проверки</h3>
+                    </div>
+                    <p style="margin: 0; color: #64748b; font-size: 13px; margin-left: 36px;">Реестр средств проверки</p>
+                </a>
+
+                <a href="/audit/documents?type=documents" class="registry-card" 
+                   style="padding: 20px; background: #eff6ff; border: 2px solid #dbeafe; border-radius: 8px; text-decoration: none; transition: all 0.2s; display: block;"
+                   onmouseover="this.style.borderColor='#3b82f6'; this.style.boxShadow='0 4px 12px rgba(59,130,246,0.15)'; this.style.transform='translateY(-2px)'"
+                   onmouseout="this.style.borderColor='#dbeafe'; this.style.boxShadow='none'; this.style.transform='translateY(0)'">
+                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
+                        <i class="fas fa-file-contract" style="font-size: 24px; color: #3b82f6;"></i>
+                        <h3 style="margin: 0; color: #1e293b; font-size: 16px;">Документы</h3>
+                    </div>
+                    <p style="margin: 0; color: #64748b; font-size: 13px; margin-left: 36px;">Реестр документов</p>
+                </a>
+
+                <a href="/audit/documents?type=cover-letters" class="registry-card" 
+                   style="padding: 20px; background: #eff6ff; border: 2px solid #dbeafe; border-radius: 8px; text-decoration: none; transition: all 0.2s; display: block;"
+                   onmouseover="this.style.borderColor='#3b82f6'; this.style.boxShadow='0 4px 12px rgba(59,130,246,0.15)'; this.style.transform='translateY(-2px)'"
+                   onmouseout="this.style.borderColor='#dbeafe'; this.style.boxShadow='none'; this.style.transform='translateY(0)'">
+                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
+                        <i class="fas fa-envelope-open-text" style="font-size: 24px; color: #3b82f6;"></i>
+                        <h3 style="margin: 0; color: #1e293b; font-size: 16px;">Сопроводительные письма</h3>
+                    </div>
+                    <p style="margin: 0; color: #64748b; font-size: 13px; margin-left: 36px;">Реестр сопроводительных писем</p>
+                </a>
+
+            </div>
+        </div>
+
+        <!-- Перечень нормативно-правовых актов -->
+        <div class="section">
+            <h2 style="font-size: 18px; color: #1e293b; margin-bottom: 16px; font-weight: 600;">Перечень нормативно-правовых актов</h2>
+            <a href="/audit/documents?type=legal-acts" class="npa-card" 
+               style="padding: 20px; background: #fef3c7; border: 2px solid #fde68a; border-radius: 8px; text-decoration: none; transition: all 0.2s; display: block;"
+               onmouseover="this.style.borderColor='#f59e0b'; this.style.boxShadow='0 4px 12px rgba(245,158,11,0.15)'; this.style.transform='translateY(-2px)'"
+               onmouseout="this.style.borderColor='#fde68a'; this.style.boxShadow='none'; this.style.transform='translateY(0)'">
+                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
+                    <i class="fas fa-balance-scale" style="font-size: 24px; color: #f59e0b;"></i>
+                    <h3 style="margin: 0; color: #1e293b; font-size: 16px;">Нормативно-правовые акты</h3>
+                </div>
+                <p style="margin: 0; color: #64748b; font-size: 13px; margin-left: 36px;">НПА в области информационной безопасности</p>
+            </a>
+        </div>
+
+    </div>
+</div>

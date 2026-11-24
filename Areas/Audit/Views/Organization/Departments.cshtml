@@ -1,0 +1,132 @@
+@model AegisCore.Models.OrganizationViewModel
+@{
+    ViewData["Title"] = "Структурные подразделения";
+}
+
+<div class="section-header">
+    <h2 class="section-title">
+        <i class="fas fa-sitemap"></i> Структурные подразделения
+    </h2>
+</div>
+
+<div class="toolbar">
+    <div class="toolbar-left">
+        <button class="btn btn-primary" onclick="openDepartmentModal()">
+            <i class="fas fa-plus"></i> Добавить подразделение
+        </button>
+        <div class="search-box">
+            <i class="fas fa-search"></i>
+            <input type="text" id="departmentSearch" placeholder="Поиск по наименованию..." value="@Model.Search" oninput="filterDepartments()" />
+        </div>
+    </div>
+</div>
+
+<div class="table-container">
+    <table class="data-table" id="departmentsTable">
+        <thead>
+            <tr>
+                <th class="th-sortable">
+                    <div class="th-header">
+                        <span>Наименование</span>
+                        <i class="fas fa-sort sortable-icon"></i>
+                    </div>
+                    <div class="th-filter-row">
+                        <input type="text" class="filter-inline-input" placeholder="Поиск..." oninput="filterTable('departmentsTable', 0, this.value)" />
+                    </div>
+                </th>
+                <th style="width: 100px;"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.Departments != null && Model.Departments.Any())
+            {
+                @foreach (var item in Model.Departments)
+                {
+                    <tr data-id="@item.Id">
+                        <td><strong>@item.Name</strong></td>
+                        <td class="actions">
+                            <button class="btn-icon edit" title="Редактировать" onclick="editDepartment('@item.Id')"><i class="fas fa-edit"></i></button>
+                            <button class="btn-icon delete" title="Удалить" onclick="deleteDepartment('@item.Id')"><i class="fas fa-trash"></i></button>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="2" style="text-align: center; padding: 40px; color: #94a3b8;">
+                        <i class="fas fa-sitemap" style="font-size: 48px; margin-bottom: 16px; display: block;"></i>
+                        Подразделения не добавлены
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@if (Model.TotalPages > 1)
+{
+    <div class="pagination">
+        <div class="pagination-page-size">
+            <label>Показывать по:</label>
+            <select onchange="changePageSize(this.value)">
+                <option value="10" selected>10</option>
+                <option value="25">25</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+            </select>
+        </div>
+        <div class="pagination-info">
+            Страница @Model.CurrentPage из @Model.TotalPages (Всего элементов: @Model.TotalItems)
+        </div>
+        <div class="pagination-buttons">
+            @if (Model.CurrentPage > 1)
+            {
+                <a href="/audit/organization?section=departments&page=@(Model.CurrentPage - 1)" class="btn-pagination">‹</a>
+            }
+            @for (int i = 1; i <= Model.TotalPages; i++)
+            {
+                <a href="/audit/organization?section=departments&page=@i" class="btn-pagination @(i == Model.CurrentPage ? "active" : "")">@i</a>
+            }
+            @if (Model.CurrentPage < Model.TotalPages)
+            {
+                <a href="/audit/organization?section=departments&page=@(Model.CurrentPage + 1)" class="btn-pagination">›</a>
+            }
+        </div>
+    </div>
+}
+
+<!-- Модалка -->
+<div class="modal" id="departmentModal">
+    <div class="modal-content" style="max-width: 500px;">
+        <div class="modal-header">
+            <h3 id="departmentModalTitle">Добавление подразделения</h3>
+            <button class="modal-close" onclick="closeDepartmentModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <form id="departmentForm" onsubmit="saveDepartment(event)">
+                <input type="hidden" id="departmentId" name="id" />
+                <div class="form-group">
+                    <label>Наименование <span class="required">*</span></label>
+                    <input type="text" name="name" id="departmentName" class="form-control" required placeholder="Введите наименование подразделения" />
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeDepartmentModal()">Отмена</button>
+                    <button type="submit" class="btn btn-primary">Сохранить подразделение</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    const departmentsData = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.Departments ?? new List<AegisCore.Models.Department>()));
+    function openDepartmentModal() { document.getElementById('departmentForm').reset(); document.getElementById('departmentId').value = ''; document.getElementById('departmentModalTitle').textContent = 'Добавление подразделения'; document.getElementById('departmentModal').classList.add('show'); }
+    function closeDepartmentModal() { document.getElementById('departmentModal').classList.remove('show'); }
+    function editDepartment(id) { const item = departmentsData.find(d => d.id === id); if (!item) return; document.getElementById('departmentId').value = item.id; document.getElementById('departmentName').value = item.name || ''; document.getElementById('departmentModalTitle').textContent = 'Редактирование подразделения'; document.getElementById('departmentModal').classList.add('show'); }
+    function deleteDepartment(id) { if (!confirm('Удалить подразделение?')) return; fetch('/api/audit/organization/departments/delete/' + id, { method: 'DELETE' }).then(r => r.json()).then(data => { if (data.success) location.reload(); else alert(data.error || 'Ошибка'); }); }
+    function saveDepartment(e) { e.preventDefault(); const form = e.target; const data = { id: form.id.value || null, name: form.name.value }; fetch('/api/audit/organization/departments/save', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) }).then(r => r.json()).then(result => { if (result.success) location.reload(); else alert(result.error || 'Ошибка'); }); }
+    function filterDepartments() { const search = document.getElementById('departmentSearch').value.toLowerCase(); document.querySelectorAll('#departmentsTable tbody tr').forEach(row => { row.style.display = row.textContent.toLowerCase().includes(search) ? '' : 'none'; }); }
+    function filterTable(tableId, colIndex, value) { const table = document.getElementById(tableId); const rows = table.querySelectorAll('tbody tr'); rows.forEach(row => { const cell = row.cells[colIndex]; if (cell) { row.style.display = cell.textContent.toLowerCase().includes(value.toLowerCase()) ? '' : 'none'; } }); }
+    function changePageSize(size) { const url = new URL(window.location); url.searchParams.set('pageSize', size); window.location.href = url.toString(); }
+</script>

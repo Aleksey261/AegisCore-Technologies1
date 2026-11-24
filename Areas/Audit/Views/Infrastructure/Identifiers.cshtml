@@ -1,0 +1,530 @@
+@model AegisCore.Models.InfrastructureViewModel
+@{
+    ViewData["Title"] = "Электронные идентификаторы";
+}
+
+<div class="section-header">
+    <h2 class="section-title">
+        <i class="fas fa-id-card"></i> Электронные идентификаторы
+    </h2>
+    <div class="header-info">
+        <i class="fas fa-info-circle" title="Учёт идентификаторов"></i>
+        <span style="color: #64748b; font-size: 14px;">Идентификатор представляет собой некоторое устройство или признак, по которому определяется объект. Данный подраздел предназначен для внесения информации об электронных идентификаторах.</span>
+    </div>
+</div>
+
+<div class="toolbar">
+    <div class="toolbar-left">
+        <!-- Кнопка Добавить СЛЕВА -->
+        <button class="btn btn-primary" onclick="openIdentifierModal()">
+            <i class="fas fa-plus"></i> Добавить
+        </button>
+
+        <button class="btn btn-secondary" onclick="openImportModal('identifiers')">
+            <i class="fas fa-file-import"></i> Загрузить из файла
+        </button>
+
+        <div class="search-box">
+            <i class="fas fa-search"></i>
+            <input type="text" id="identifierSearch" placeholder="Поиск по идентификаторам..." value="@Model.Search" oninput="filterIdentifiers()" />
+        </div>
+    </div>
+</div>
+
+<div class="table-container">
+    <table class="data-table" id="identifiersTable">
+        <thead>
+            <tr>
+                <th class="th-sortable">
+                    <div class="th-header"><span>Вид</span><i class="fas fa-sort sortable-icon"></i></div>
+                    <div class="th-filter-row">
+                        <select class="filter-inline-select" onchange="filterTable('identifiersTable', 0, this.value)">
+                            <option value="">(Все)</option>
+                            <option value="iButton">iButton</option>
+                            <option value="RuToken">RuToken</option>
+                            <option value="eToken">eToken</option>
+                            <option value="Смарт-карта">Смарт-карта</option>
+                            <option value="Ключ ЭЦП">Ключ ЭЦП</option>
+                        </select>
+                    </div>
+                </th>
+                <th class="th-sortable">
+                    <div class="th-header"><span>Наименование</span><i class="fas fa-sort sortable-icon"></i></div>
+                    <div class="th-filter-row"><input type="text" class="filter-inline-input" placeholder="Поиск..." oninput="filterTable('identifiersTable', 1, this.value)" /></div>
+                </th>
+                <th class="th-sortable">
+                    <div class="th-header"><span>Серийный номер</span><i class="fas fa-sort sortable-icon"></i></div>
+                    <div class="th-filter-row"><input type="text" class="filter-inline-input" placeholder="Поиск..." oninput="filterTable('identifiersTable', 2, this.value)" /></div>
+                </th>
+                <th class="th-sortable">
+                    <div class="th-header"><span>Дата приобретения</span><i class="fas fa-sort sortable-icon"></i></div>
+                    <div class="th-filter-row"><input type="date" class="filter-inline-input" oninput="filterTable('identifiersTable', 3, this.value)" /></div>
+                </th>
+                <th class="th-sortable">
+                    <div class="th-header"><span>Гарантия</span><i class="fas fa-sort sortable-icon"></i></div>
+                    <div class="th-filter-row"><input type="number" class="filter-inline-input" placeholder="Лет" oninput="filterTable('identifiersTable', 4, this.value)" /></div>
+                </th>
+                <th class="th-sortable">
+                    <div class="th-header"><span>Дата списания</span><i class="fas fa-sort sortable-icon"></i></div>
+                    <div class="th-filter-row"><input type="date" class="filter-inline-input" oninput="filterTable('identifiersTable', 5, this.value)" /></div>
+                </th>
+                <th style="width: 100px;">Действия</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.Identifiers != null && Model.Identifiers.Any())
+            {
+                @foreach (var item in Model.Identifiers)
+                {
+                    <tr data-id="@item.Id">
+                        <td><span class="badge info">@item.Type</span></td>
+                        <td><strong>@item.Name</strong></td>
+                        <td>@item.SerialNumber</td>
+                        <td>@(item.PurchaseDate?.ToString("dd.MM.yyyy") ?? "—")</td>
+                        <td>@(item.WarrantyYears > 0 ? item.WarrantyYears + " лет" : "—")</td>
+                        <td class="@(item.WriteOffDate.HasValue ? "text-danger" : "")">@(item.WriteOffDate?.ToString("dd.MM.yyyy") ?? "—")</td>
+                        <td class="actions">
+                            <button class="btn-icon edit" title="Редактировать" onclick="editIdentifier('@item.Id')"><i class="fas fa-edit"></i></button>
+                            <button class="btn-icon delete" title="Удалить" onclick="deleteIdentifier('@item.Id')"><i class="fas fa-trash"></i></button>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="7" style="text-align: center; padding: 60px 40px; color: #94a3b8;">
+                        <i class="fas fa-id-card" style="font-size: 64px; margin-bottom: 16px; display: block; color: #cbd5e1;"></i>
+                        <div style="font-size: 16px; font-weight: 500;">Электронные идентификаторы не добавлены</div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@if (Model.TotalPages > 1)
+{
+    <div class="pagination">
+        <div class="pagination-page-size">
+            <label>Показывать по:</label>
+            <select onchange="changePageSize(this.value)"><option value="10" selected>10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select>
+        </div>
+        <div class="pagination-info">Страница @Model.CurrentPage из @Model.TotalPages (Всего элементов: @Model.TotalItems)</div>
+        <div class="pagination-buttons">
+            @if (Model.CurrentPage > 1) { <a href="/audit/infrastructure?section=identifiers&page=@(Model.CurrentPage - 1)" class="btn-pagination">‹</a> }
+            @for (int i = 1; i <= Model.TotalPages; i++) { <a href="/audit/infrastructure?section=identifiers&page=@i" class="btn-pagination @(i == Model.CurrentPage ? "active" : "")">@i</a> }
+            @if (Model.CurrentPage < Model.TotalPages) { <a href="/audit/infrastructure?section=identifiers&page=@(Model.CurrentPage + 1)" class="btn-pagination">›</a> }
+        </div>
+    </div>
+}
+
+<!-- ============================================================ -->
+<!-- МОДАЛКА ДОБАВЛЕНИЯ/РЕДАКТИРОВАНИЯ ИДЕНТИФИКАТОРА (Рисунок 46) -->
+<!-- ============================================================ -->
+<div class="modal" id="identifierModal">
+    <div class="modal-content" style="max-width: 650px;">
+        <div class="modal-header">
+            <h3 id="identifierModalTitle">Добавление идентификатора</h3>
+            <button class="modal-close" onclick="closeIdentifierModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <form id="identifierForm" onsubmit="saveIdentifier(event)">
+                <input type="hidden" id="identifierId" name="id" />
+                
+                <div class="form-group">
+                    <label>Вид <span class="required">*</span></label>
+                    <div class="input-with-buttons">
+                        <select name="type" id="identifierType" class="form-control" required>
+                            <option value="">Выбрать...</option>
+                            <option value="iButton">iButton</option>
+                            <option value="RuToken">RuToken</option>
+                            <option value="eToken">eToken</option>
+                            <option value="Смарт-карта">Смарт-карта</option>
+                            <option value="Ключ ЭЦП">Ключ ЭЦП</option>
+                        </select>
+                    </div>
+                    <!-- Ссылка "+ Новый вид" под полем (Рисунок 46) -->
+                    <button type="button" class="btn-link-add" onclick="openAddTypeModal()" title="Добавить новый вид">
+                        <i class="fas fa-plus"></i> Новый вид
+                    </button>
+                </div>
+                
+                <div class="form-group">
+                    <label>Наименование <span class="required">*</span></label>
+                    <input type="text" name="name" id="identifierName" class="form-control" required placeholder="Введите наименование" />
+                </div>
+                
+                <div class="form-group">
+                    <label>Номер <span class="required">*</span></label>
+                    <input type="text" name="serialNumber" id="identifierSerialNumber" class="form-control" required placeholder="Введите серийный номер" />
+                </div>
+                
+                <div class="form-group">
+                    <label>Дата приобретения <span class="required">*</span></label>
+                    <input type="date" name="purchaseDate" id="identifierPurchaseDate" class="form-control" required />
+                </div>
+                
+                <div class="form-group">
+                    <label>Гарантия(лет) <span class="required">*</span></label>
+                    <input type="number" name="warrantyYears" id="identifierWarrantyYears" class="form-control" min="0" max="99" required placeholder="0" />
+                </div>
+                
+                <div class="form-group">
+                    <label>Дата списания</label>
+                    <input type="date" name="writeOffDate" id="identifierWriteOffDate" class="form-control" />
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeIdentifierModal()">Отмена</button>
+                    <button type="submit" class="btn btn-primary">Сохранить идентификатор</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- МОДАЛКА ДОБАВЛЕНИЯ НОВОГО ВИДА ИДЕНТИФИКАТОРА (Рисунок 47) -->
+<!-- ============================================================ -->
+<div class="modal" id="addTypeModal">
+    <div class="modal-content" style="max-width: 500px;">
+        <div class="modal-header">
+            <h3>Добавление вида идентификатора</h3>
+            <button class="modal-close" onclick="closeAddTypeModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <form id="addTypeForm" onsubmit="saveNewType(event)">
+                <div class="form-group">
+                    <label>Наименование <span class="required">*</span></label>
+                    <input type="text" id="newTypeName" class="form-control" required placeholder="Введите наименование вида" />
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeAddTypeModal()">Отменить</button>
+                    <button type="submit" class="btn btn-primary">Сохранить вид</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- МОДАЛКА ИМПОРТА (Рисунок 48) -->
+<!-- ============================================================ -->
+<div class="modal" id="importModal">
+    <div class="modal-content" style="max-width: 650px;">
+        <div class="modal-header">
+            <h3>Загрузка списка электронных идентификаторов</h3>
+            <button class="modal-close" onclick="closeImportModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div class="import-info" style="background: #f8fafc; padding: 16px; border-radius: 8px; margin-bottom: 20px;">
+                <p style="margin: 0 0 12px 0;"><i class="fas fa-info-circle" style="color: #3b82f6;"></i> Вы можете загрузить файл в формате *.xls, *.xlsx, *.ods. Размер файла не должен превышать 20МВ. Формат файла можно посмотреть <a href="#" style="color: #4F46E5; text-decoration: underline;">здесь</a></p>
+            </div>
+            
+            <div class="upload-area" id="uploadArea" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event)" style="border: 2px dashed #cbd5e1; border-radius: 8px; padding: 40px; text-align: center; background: #f8fafc; cursor: pointer; transition: all 0.2s;">
+                <div class="upload-placeholder">
+                    <i class="fas fa-cloud-upload-alt" style="font-size: 48px; color: #94a3b8; margin-bottom: 16px;"></i>
+                    <p style="color: #64748b; margin-bottom: 16px;">Выберите файл или перетащите его в эту область</p>
+                    <input type="file" id="importFile" accept=".xls,.xlsx,.ods" style="display: none;" onchange="handleFileSelect(event)" />
+                    <button type="button" class="btn btn-primary" onclick="document.getElementById('importFile').click()">
+                        <i class="fas fa-folder-open"></i> Выберите файл
+                    </button>
+                </div>
+            </div>
+            
+            <div class="form-actions" style="margin-top: 20px;">
+                <button type="button" class="btn btn-secondary" onclick="closeImportModal()">Отмена</button>
+                <button type="button" class="btn btn-primary" onclick="uploadImportFile()">
+                    <i class="fas fa-upload"></i> Загрузить данные в таблицу
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- МОДАЛКА УСПЕШНОЙ ЗАГРУЗКИ (Рисунок 49) -->
+<!-- ============================================================ -->
+<div class="modal" id="successImportModal">
+    <div class="modal-content" style="max-width: 400px;">
+        <div class="modal-header">
+            <h3 style="color: #10b981;"><i class="fas fa-check-circle"></i> Успешно</h3>
+            <button class="modal-close" onclick="closeSuccessImportModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <p id="importSuccessMessage" style="font-size: 14px; color: #475569; margin: 0;">Файл Эл.ods обработан. Загружено строк: 2</p>
+            <div class="form-actions" style="justify-content: center; border-top: none; padding-top: 16px; margin-top: 16px;">
+                <button type="button" class="btn btn-secondary" onclick="closeSuccessImportModal()">ОК</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- МОДАЛКА ОШИБКИ ПРИ УДАЛЕНИИ (Рисунок 50) -->
+<!-- ============================================================ -->
+<div class="modal" id="errorModal">
+    <div class="modal-content" style="max-width: 400px;">
+        <div class="modal-header">
+            <h3 style="color: #ef4444;"><i class="fas fa-exclamation-triangle"></i> Ошибка</h3>
+            <button class="modal-close" onclick="closeErrorModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <p id="errorMessage" style="font-size: 14px; color: #475569; margin: 0;">Невозможно удалить. Данная запись используется.</p>
+            <div class="form-actions" style="justify-content: center; border-top: none; padding-top: 16px; margin-top: 16px;">
+                <button type="button" class="btn btn-secondary" onclick="closeErrorModal()">ОК</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .btn-link-add {
+        background: none;
+        border: none;
+        color: #4F46E5;
+        cursor: pointer;
+        font-size: 13px;
+        padding: 4px 8px;
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        transition: all 0.2s;
+        margin-top: 4px;
+    }
+    .btn-link-add:hover {
+        color: #4338CA;
+        text-decoration: underline;
+    }
+    .upload-area.drag-over {
+        border-color: #4F46E5;
+        background: #eef2ff;
+    }
+    .file-info {
+        background: white;
+        padding: 16px;
+        border-radius: 8px;
+        border: 1px solid #e2e8f0;
+    }
+    .file-name {
+        font-weight: 600;
+        color: #1e293b;
+        margin-bottom: 8px;
+    }
+    .file-size {
+        color: #64748b;
+        font-size: 13px;
+        margin-bottom: 8px;
+    }
+    .file-status {
+        color: #10b981;
+        font-size: 13px;
+    }
+</style>
+
+<script>
+    const identifiersData = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.Identifiers ?? new List<AegisCore.Models.Identifier>()));
+
+    // ============================================================
+    // МОДАЛКА ИДЕНТИФИКАТОРА
+    // ============================================================
+    function openIdentifierModal() {
+        document.getElementById('identifierForm').reset();
+        document.getElementById('identifierId').value = '';
+        document.getElementById('identifierModalTitle').textContent = 'Добавление идентификатора';
+        document.getElementById('identifierModal').classList.add('show');
+    }
+
+    function closeIdentifierModal() {
+        document.getElementById('identifierModal').classList.remove('show');
+    }
+
+    function editIdentifier(id) {
+        const item = identifiersData.find(i => i.id === id);
+        if (!item) return;
+        document.getElementById('identifierId').value = item.id;
+        document.getElementById('identifierType').value = item.type || '';
+        document.getElementById('identifierName').value = item.name || '';
+        document.getElementById('identifierSerialNumber').value = item.serialNumber || '';
+        document.getElementById('identifierPurchaseDate').value = item.purchaseDate ? item.purchaseDate.split('T')[0] : '';
+        document.getElementById('identifierWarrantyYears').value = item.warrantyYears || '';
+        document.getElementById('identifierWriteOffDate').value = item.writeOffDate ? item.writeOffDate.split('T')[0] : '';
+        document.getElementById('identifierModalTitle').textContent = 'Редактирование идентификатора';
+        document.getElementById('identifierModal').classList.add('show');
+    }
+
+    function deleteIdentifier(id) {
+        if (!confirm('Удалить запись?')) return;
+        fetch('/audit/infrastructure/identifiers/delete/' + id, { method: 'DELETE' })
+            .then(r => r.json())
+            .then(data => {
+                if (data.success) {
+                    location.reload();
+                } else {
+                    // Показываем модалку ошибки (Рисунок 50)
+                    document.getElementById('errorMessage').textContent = data.error || 'Невозможно удалить. Данная запись используется.';
+                    document.getElementById('errorModal').classList.add('show');
+                }
+            });
+    }
+
+    function saveIdentifier(e) {
+        e.preventDefault();
+        const form = e.target;
+        const data = {
+            id: form.id.value || null,
+            type: form.type.value,
+            name: form.name.value,
+            serialNumber: form.serialNumber.value,
+            purchaseDate: form.purchaseDate.value || null,
+            warrantyYears: parseInt(form.warrantyYears.value) || 0,
+            writeOffDate: form.writeOffDate.value || null
+        };
+        fetch('/audit/infrastructure/identifiers/save', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        })
+        .then(r => r.json())
+        .then(result => {
+            if (result.success) {
+                closeIdentifierModal();
+                location.reload();
+            } else {
+                alert(result.error || 'Ошибка при сохранении');
+            }
+        });
+    }
+
+    // ============================================================
+    // МОДАЛКА ДОБАВЛЕНИЯ НОВОГО ВИДА (Рисунок 47)
+    // ============================================================
+    function openAddTypeModal() {
+        document.getElementById('addTypeForm').reset();
+        document.getElementById('addTypeModal').classList.add('show');
+    }
+
+    function closeAddTypeModal() {
+        document.getElementById('addTypeModal').classList.remove('show');
+    }
+
+    function saveNewType(e) {
+        e.preventDefault();
+        const newType = document.getElementById('newTypeName').value;
+        const select = document.getElementById('identifierType');
+        const option = document.createElement('option');
+        option.value = newType;
+        option.textContent = newType;
+        option.selected = true;
+        select.appendChild(option);
+        closeAddTypeModal();
+        closeIdentifierModal();
+        openIdentifierModal(); // Reopen to show new type selected
+    }
+
+    // ============================================================
+    // ИМПОРТ ИЗ ФАЙЛА (Рисунок 48)
+    // ============================================================
+    function openImportModal(type) {
+        document.getElementById('uploadArea').innerHTML = `
+            <div class="upload-placeholder">
+                <i class="fas fa-cloud-upload-alt" style="font-size: 48px; color: #94a3b8; margin-bottom: 16px;"></i>
+                <p style="color: #64748b; margin-bottom: 16px;">Выберите файл или перетащите его в эту область</p>
+                <input type="file" id="importFile" accept=".xls,.xlsx,.ods" style="display: none;" onchange="handleFileSelect(event)" />
+                <button type="button" class="btn btn-primary" onclick="document.getElementById('importFile').click()">
+                    <i class="fas fa-folder-open"></i> Выберите файл
+                </button>
+            </div>
+        `;
+        document.getElementById('importModal').classList.add('show');
+    }
+
+    function closeImportModal() {
+        document.getElementById('importModal').classList.remove('show');
+    }
+
+    function handleDragOver(e) {
+        e.preventDefault();
+        e.currentTarget.classList.add('drag-over');
+    }
+
+    function handleDragLeave(e) {
+        e.currentTarget.classList.remove('drag-over');
+    }
+
+    function handleDrop(e) {
+        e.preventDefault();
+        e.currentTarget.classList.remove('drag-over');
+        const files = e.dataTransfer.files;
+        if (files.length > 0) {
+            document.getElementById('importFile').files = files;
+            showFileInfo(files[0]);
+        }
+    }
+
+    function handleFileSelect(e) {
+        if (e.target.files.length > 0) {
+            showFileInfo(e.target.files[0]);
+        }
+    }
+
+    function showFileInfo(file) {
+        const uploadArea = document.getElementById('uploadArea');
+        uploadArea.innerHTML = `
+            <div class="file-info">
+                <div class="file-name"><i class="fas fa-file-excel"></i> ${file.name}</div>
+                <div class="file-size">${(file.size / 1024).toFixed(2)} KB</div>
+                <div class="file-status"><i class="fas fa-check-circle"></i> Файл готов к загрузке</div>
+            </div>
+        `;
+    }
+
+    function uploadImportFile() {
+        // Имитация успешной загрузки (Рисунок 49)
+        document.getElementById('importSuccessMessage').textContent = 'Файл Эл.ods обработан. Загружено строк: 2';
+        closeImportModal();
+        document.getElementById('successImportModal').classList.add('show');
+    }
+
+    function closeSuccessImportModal() {
+        document.getElementById('successImportModal').classList.remove('show');
+        location.reload();
+    }
+
+    function downloadTemplate(type) {
+        alert('Скачивание шаблона для: ' + type);
+    }
+
+    // ============================================================
+    // ФИЛЬТРАЦИЯ
+    // ============================================================
+    function filterIdentifiers() {
+        const search = document.getElementById('identifierSearch').value.toLowerCase();
+        document.querySelectorAll('#identifiersTable tbody tr').forEach(row => {
+            row.style.display = row.textContent.toLowerCase().includes(search) ? '' : 'none';
+        });
+    }
+
+    function filterTable(tableId, colIndex, value) {
+        const table = document.getElementById(tableId);
+        const rows = table.querySelectorAll('tbody tr');
+        rows.forEach(row => {
+            const cell = row.cells[colIndex];
+            if (cell) {
+                const text = cell.textContent.toLowerCase();
+                row.style.display = text.includes(value.toLowerCase()) ? '' : 'none';
+            }
+        });
+    }
+
+    function changePageSize(size) {
+        const url = new URL(window.location);
+        url.searchParams.set('pageSize', size);
+        window.location.href = url.toString();
+    }
+
+    function closeErrorModal() {
+        document.getElementById('errorModal').classList.remove('show');
+    }
+</script>

@@ -1,0 +1,730 @@
+@{
+    ViewData["Title"] = "Ситуации";
+}
+
+<div class="audit-page">
+    <div class="page-header">
+        <h1>
+            <a href="/audit" style="color: #64748b; text-decoration: none; margin-right: 12px; font-size: 24px;">
+                <i class="fas fa-arrow-left"></i>
+            </a>
+            <i class="fas fa-magic"></i> Ситуации
+        </h1>
+        <p style="color: #64748b; margin-top: 8px; margin-left: 36px;">
+            Пошаговый мастер действий по обеспечению безопасности информации
+        </p>
+    </div>
+
+    <!-- Вкладки навигации верхнего уровня -->
+    <div class="tabs-nav" style="margin-bottom: 24px;">
+        <a href="/audit/activity/responsible" class="tab-nav-item">Ответственные лица</a>
+        <a href="/audit/activity/commissions" class="tab-nav-item">Комиссии</a>
+        <a href="/audit/activity/documents" class="tab-nav-item">Документы</a>
+        <a href="/audit/activity/warranty" class="tab-nav-item">Гарантия</a>
+        <a href="/audit/activity/notifications" class="tab-nav-item">Уведомления</a>
+        <a href="/audit/activity/situations" class="tab-nav-item active">Ситуации</a>
+        <a href="/audit/activity/monitoring" class="tab-nav-item">Мониторинг</a>
+    </div>
+
+    <div class="form-content" style="background: white; border-radius: 8px; padding: 32px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+        
+        <!-- Вкладки внутри подраздела -->
+        <div class="sub-tabs" style="display: flex; gap: 4px; margin-bottom: 24px; background: #f1f5f9; padding: 4px; border-radius: 8px; width: fit-content;">
+            <button class="sub-tab active" onclick="switchSituationTab('choose', this)">Выбрать ситуацию</button>
+            <button class="sub-tab" onclick="switchSituationTab('history', this)">История</button>
+        </div>
+
+        <!-- Вкладка: Выбрать ситуацию -->
+        <div id="situation-choose" class="situation-tab active">
+            <div class="info-panel" style="margin-bottom: 24px; padding: 16px; background: #eef2ff; border-radius: 8px; border-left: 4px solid #4F46E5; display: flex; align-items: center; gap: 12px;">
+                <i class="fas fa-lightbulb" style="color: #4F46E5; font-size: 20px;"></i>
+                <p style="margin: 0; color: #1e293b; font-size: 14px;">
+                    Выберите ситуацию для начала работы. Мастер поможет вам шаг за шагом выполнить необходимые действия.
+                </p>
+            </div>
+
+            <div class="situations-grid">
+                <div class="situation-card" onclick="startSituation('update-szi')">
+                    <div class="situation-icon" style="background: #e0f2fe; color: #0284c7;">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h4>Обновление СЗИ</h4>
+                    <p>Обновление средств защиты информации до новой версии</p>
+                    <span class="situation-steps">3 шага</span>
+                </div>
+
+                <div class="situation-card" onclick="startSituation('new-premise')">
+                    <div class="situation-icon" style="background: #d1fae5; color: #059669;">
+                        <i class="fas fa-door-open"></i>
+                    </div>
+                    <h4>Ввод нового помещения</h4>
+                    <p>Добавление нового помещения для обработки ПДн</p>
+                    <span class="situation-steps">5 шагов</span>
+                </div>
+
+                <div class="situation-card" onclick="startSituation('assign-responsible')">
+                    <div class="situation-icon" style="background: #fef3c7; color: #d97706;">
+                        <i class="fas fa-user-shield"></i>
+                    </div>
+                    <h4>Назначение ответственного</h4>
+                    <p>Назначение лица, ответственного за обработку ПДн</p>
+                    <span class="situation-steps">4 шага</span>
+                </div>
+
+                <div class="situation-card" onclick="startSituation('new-employee')">
+                    <div class="situation-icon" style="background: #fce4ec; color: #dc2626;">
+                        <i class="fas fa-user-plus"></i>
+                    </div>
+                    <h4>Прием нового сотрудника</h4>
+                    <p>Оформление доступа и инструктаж нового сотрудника</p>
+                    <span class="situation-steps">6 шагов</span>
+                </div>
+
+                <div class="situation-card" onclick="startSituation('employee-dismissal')">
+                    <div class="situation-icon" style="background: #f3e8ff; color: #7c3aed;">
+                        <i class="fas fa-user-minus"></i>
+                    </div>
+                    <h4>Увольнение сотрудника</h4>
+                    <p>Отзыв прав доступа и изъятие носителей</p>
+                    <span class="situation-steps">4 шага</span>
+                </div>
+
+                <div class="situation-card" onclick="startSituation('buy-computer')">
+                    <div class="situation-icon" style="background: #ecfdf5; color: #059669;">
+                        <i class="fas fa-laptop"></i>
+                    </div>
+                    <h4>Покупка компьютера</h4>
+                    <p>Ввод нового технического средства в эксплуатацию</p>
+                    <span class="situation-steps">5 шагов</span>
+                </div>
+
+                <div class="situation-card" onclick="startSituation('update-skzi')">
+                    <div class="situation-icon" style="background: #ffedd5; color: #ea580c;">
+                        <i class="fas fa-key"></i>
+                    </div>
+                    <h4>Обновление СКЗИ</h4>
+                    <p>Обновление средств криптографической защиты информации</p>
+                    <span class="situation-steps">4 шага</span>
+                </div>
+
+                <div class="situation-card" onclick="startSituation('incident-response')">
+                    <div class="situation-icon" style="background: #fef2f2; color: #dc2626;">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <h4>Реагирование на инцидент</h4>
+                    <p>Обработка инцидента информационной безопасности</p>
+                    <span class="situation-steps">7 шагов</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Вкладка: История -->
+        <div id="situation-history" class="situation-tab" style="display: none;">
+            <div class="toolbar" style="margin-bottom: 24px; display: flex; justify-content: space-between; align-items: center;">
+                <div style="display: flex; gap: 8px;">
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" onclick="toggleDropdown('exportHistorySituations'); event.stopPropagation();">
+                            <i class="fas fa-file-export"></i> Экспорт в файл
+                        </button>
+                        <div class="dropdown-menu" id="exportHistorySituations">
+                            <a onclick="exportTable('historySituationsTable', 'xlsx')"><i class="fas fa-file-excel"></i> Экспорт в XLSX</a>
+                            <a onclick="exportTable('historySituationsTable', 'pdf')"><i class="fas fa-file-pdf"></i> Экспорт в PDF</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="search-box" style="max-width: 300px;">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="historySituationsSearch" class="form-control" placeholder="Поиск..." oninput="filterTable('historySituationsTable', 'historySituationsSearch')" />
+                </div>
+            </div>
+
+            <div class="table-container" style="overflow-x: auto;">
+                <table id="historySituationsTable" class="data-table" style="width: 100%; border-collapse: collapse;">
+                    <thead>
+                        <tr style="background: #f8fafc;">
+                            <th class="th-sortable">
+                                <div class="th-header"><span>Наименование ситуации</span><i class="fas fa-sort sortable-icon"></i></div>
+                                <div class="th-filter-row"><input type="text" class="filter-inline-input" placeholder="Поиск..." oninput="filterTable('historySituationsTable', 0, this.value)" /></div>
+                            </th>
+                            <th class="th-sortable">
+                                <div class="th-header"><span>Объект</span><i class="fas fa-sort sortable-icon"></i></div>
+                                <div class="th-filter-row"><input type="text" class="filter-inline-input" placeholder="Поиск..." oninput="filterTable('historySituationsTable', 1, this.value)" /></div>
+                            </th>
+                            <th class="th-sortable">
+                                <div class="th-header"><span>Дата последнего изменения</span><i class="fas fa-sort sortable-icon"></i></div>
+                                <div class="th-filter-row"><input type="date" class="filter-inline-input" oninput="filterTable('historySituationsTable', 2, this.value)" /></div>
+                            </th>
+                            <th class="th-sortable">
+                                <div class="th-header"><span>Статус</span><i class="fas fa-sort sortable-icon"></i></div>
+                                <div class="th-filter-row">
+                                    <select class="filter-inline-select" onchange="filterTable('historySituationsTable', 3, this.value)">
+                                        <option value="">(Все)</option>
+                                        <option value="В работе">В работе</option>
+                                        <option value="Завершено">Завершено</option>
+                                        <option value="Приостановлено">Приостановлено</option>
+                                    </select>
+                                </div>
+                            </th>
+                            <th style="width: 140px; text-align: center;">Действия</th>
+                        </tr>
+                    </thead>
+                    <tbody id="historySituationsTableBody">
+                        <!-- Данные заполняются через JS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- МОДАЛЬНОЕ ОКНО: Мастер ситуаций -->
+<!-- ============================================================ -->
+<div class="modal" id="situationWizard">
+    <div class="modal-content" style="max-width: 750px;">
+        <div class="modal-header" style="margin-bottom: 24px; display: flex; justify-content: space-between; align-items: center;">
+            <h3 id="wizardTitle" style="margin: 0; color: #1e293b; display: flex; align-items: center; gap: 8px;">Мастер ситуаций</h3>
+            <button type="button" class="btn-close" onclick="closeWizard()" style="background: none; border: none; font-size: 24px; cursor: pointer; color: #64748b;">&times;</button>
+        </div>
+        <div class="modal-body" style="padding: 0 32px 32px 32px;">
+            <!-- Информация о ситуации -->
+            <div style="padding: 16px; background: #f8fafc; border-radius: 8px; margin-bottom: 24px; display: flex; align-items: center; gap: 16px;">
+                <div style="font-size: 28px;" id="wizardIcon">📋</div>
+                <div>
+                    <div style="font-weight: 600; color: #1e293b; font-size: 16px;" id="wizardSituationName">Обновление СЗИ</div>
+                    <div style="font-size: 14px; color: #64748b;" id="wizardSituationDesc">Добавьте информацию о новой версии СЗИ</div>
+                </div>
+            </div>
+
+            <!-- Шаги мастера -->
+            <div class="wizard-steps" style="display: flex; gap: 8px; margin-bottom: 24px;">
+                <div class="wizard-step active" data-step="1"><span class="step-number">1</span> Шаг 1</div>
+                <div class="wizard-step" data-step="2"><span class="step-number">2</span> Шаг 2</div>
+                <div class="wizard-step" data-step="3"><span class="step-number">3</span> Шаг 3</div>
+                <div class="wizard-step" data-step="4"><span class="step-number">4</span> Шаг 4</div>
+            </div>
+
+            <div id="wizardContent">
+                <!-- Шаг 1: Информация о СЗИ/СКЗИ -->
+                <div class="wizard-page active" data-page="1">
+                    <h4 style="margin-top: 0; margin-bottom: 16px; color: #1e293b;">Информация о СЗИ</h4>
+                    <div class="form-group">
+                        <label>Наименование СЗИ / ПО <span class="required" style="color: #ef4444;">*</span></label>
+                        <select id="wizardSziName" class="form-control">
+                            <option value="">Выбрать...</option>
+                            <option value="Маршрутизаторы Huawei серия AR1200">Маршрутизаторы Huawei серия AR1200</option>
+                            <option value="Маршрутизаторы Huawei серия AR1200-МР 2302">Маршрутизаторы Huawei серия AR1200-МР 2302</option>
+                            <option value="СПО (ПДС-УТТ) версия 2.0+">СПО (ПДС-УТТ) версия 2.0+</option>
+                            <option value="ПАК 'Детект-СЕ'">ПАК 'Детект-СЕ'</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Новая версия</label>
+                        <input type="text" id="wizardNewVersion" class="form-control" placeholder="Введите новую версию" />
+                    </div>
+                    <div class="form-group">
+                        <label>Дата обновления</label>
+                        <input type="date" id="wizardUpdateDate" class="form-control" />
+                    </div>
+                </div>
+
+                <!-- Шаг 2: Журнал установок/изъятия СЗИ -->
+                <div class="wizard-page" data-page="2">
+                    <h4 style="margin-top: 0; margin-bottom: 16px; color: #1e293b;">Журнал установок/изъятия СЗИ</h4>
+                    <div class="info-panel" style="padding: 12px; background: #fef3c7; border-radius: 8px; border-left: 4px solid #d97706; margin-bottom: 16px; display: flex; gap: 12px; align-items: flex-start;">
+                        <i class="fas fa-info-circle" style="color: #d97706; margin-top: 2px;"></i>
+                        <p style="margin: 0; color: #92400e; font-size: 14px;">
+                            Добавьте запись в журнал, если была произведена установка или изъятие СЗИ
+                        </p>
+                    </div>
+                    <div style="display: flex; gap: 12px;">
+                        <button class="btn btn-primary" onclick="openLicenseModal()">
+                            <i class="fas fa-plus"></i> Добавить запись
+                        </button>
+                        <button class="btn btn-secondary" onclick="nextWizardStep()">
+                            Пропустить этот шаг
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Шаг 3: Переформирование технических паспортов -->
+                <div class="wizard-page" data-page="3">
+                    <h4 style="margin-top: 0; margin-bottom: 16px; color: #1e293b;">Переформирование технических паспортов</h4>
+                    <div class="info-panel" style="padding: 12px; background: #eef2ff; border-radius: 8px; border-left: 4px solid #4F46E5; margin-bottom: 16px; display: flex; gap: 12px; align-items: flex-start;">
+                        <i class="fas fa-info-circle" style="color: #4F46E5; margin-top: 2px;"></i>
+                        <p style="margin: 0; color: #1e293b; font-size: 14px;">
+                            В связи с новой информацией требуется переформировать технические паспорта объектов информатизации, на которых были установлены СЗИ.
+                        </p>
+                    </div>
+                    <button class="btn btn-primary" onclick="alert('Процесс переформирования технических паспортов запущен')">
+                        <i class="fas fa-sync"></i> Переформировать паспорта
+                    </button>
+                </div>
+
+                <!-- Шаг 4: Общие рекомендации и завершение -->
+                <div class="wizard-page" data-page="4">
+                    <h4 style="margin-top: 0; margin-bottom: 16px; color: #1e293b;">Общие рекомендации</h4>
+                    <div class="info-panel" style="padding: 16px; background: #f0fdf4; border-radius: 8px; border-left: 4px solid #22c55e; margin-bottom: 16px; display: flex; gap: 12px; align-items: flex-start;">
+                        <i class="fas fa-check-circle" style="color: #22c55e; font-size: 18px; margin-top: 2px;"></i>
+                        <p style="margin: 0; color: #166534; font-size: 14px;">
+                            Ситуация будет завершена. Будут сформированы новые документы или внесены изменения в существующие.
+                        </p>
+                    </div>
+                    <div style="padding: 16px; background: #f8fafc; border-radius: 8px; border: 1px solid #e2e8f0;">
+                        <p style="margin: 0 0 8px 0; font-size: 14px; color: #1e293b; font-weight: 600;">Рекомендации:</p>
+                        <ol style="margin: 0; padding-left: 20px; color: #475569; font-size: 14px; line-height: 1.6;">
+                            <li>Пользователи должны быть уведомлены об изменении технических паспортов и обновлении СЗИ.</li>
+                            <li>Новые паспорта должны быть сформированы и заверены ответственными лицами.</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
+            <div class="wizard-actions" style="display: flex; justify-content: space-between; margin-top: 32px; padding-top: 20px; border-top: 1px solid #e2e8f0;">
+                <button type="button" class="btn btn-secondary" onclick="pauseWizard()">
+                    <i class="fas fa-pause"></i> Продолжить позднее
+                </button>
+                <div style="display: flex; gap: 12px;">
+                    <button type="button" class="btn btn-secondary" onclick="prevWizardStep()" id="wizardPrev" style="display: none;">Назад</button>
+                    <button type="button" class="btn btn-primary" onclick="nextWizardStep()" id="wizardNext">Далее</button>
+                    <button type="button" class="btn btn-primary" onclick="finishWizard()" id="wizardFinish" style="display: none; background: #22c55e; border-color: #22c55e;">
+                        <i class="fas fa-check"></i> Завершить
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- МОДАЛЬНОЕ ОКНО: Распределение лицензий -->
+<!-- ============================================================ -->
+<div class="modal" id="licenseModal">
+    <div class="modal-content" style="max-width: 800px;">
+        <div class="modal-header" style="margin-bottom: 24px; display: flex; justify-content: space-between; align-items: center;">
+            <h3 style="margin: 0; color: #1e293b;">Распределение лицензий</h3>
+            <button type="button" class="btn-close" onclick="closeLicenseModal()" style="background: none; border: none; font-size: 24px; cursor: pointer; color: #64748b;">&times;</button>
+        </div>
+        <div class="modal-body" style="padding: 0 32px 32px 32px;">
+            <div style="padding: 16px; background: #f8fafc; border-radius: 8px; margin-bottom: 20px; border: 1px solid #e2e8f0;">
+                <p style="margin: 0; font-size: 15px; color: #1e293b; font-weight: 600;">
+                    «МатПра КриптоПакет» версия 4.6 (исполнение: 3.5, 7) № 08/11-22
+                </p>
+                <p style="margin: 4px 0 0 0; font-size: 13px; color: #64748b;">
+                    Луканов Владимир Ильич &nbsp;•&nbsp; 16.03.2022
+                </p>
+            </div>
+            
+            <div class="table-container" style="margin-bottom: 16px;">
+                <table class="data-table" style="width: 100%; border-collapse: collapse;">
+                    <thead>
+                        <tr style="background: #f8fafc;">
+                            <th style="padding: 12px; text-align: left; border-bottom: 2px solid #e2e8f0; font-weight: 600; color: #475569;">Номер старой лицензии</th>
+                            <th style="padding: 12px; text-align: left; border-bottom: 2px solid #e2e8f0; font-weight: 600; color: #475569;">ФИО пользователя</th>
+                            <th style="padding: 12px; text-align: left; border-bottom: 2px solid #e2e8f0; font-weight: 600; color: #475569;">Объект информатизации</th>
+                            <th style="padding: 12px; text-align: left; border-bottom: 2px solid #e2e8f0; font-weight: 600; color: #475569;">Номер новой лицензии</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="padding: 12px; border-bottom: 1px solid #e2e8f0;">5Я</td>
+                            <td style="padding: 12px; border-bottom: 1px solid #e2e8f0;">Малышев Александр Михайлович</td>
+                            <td style="padding: 12px; border-bottom: 1px solid #e2e8f0;">АРМ1</td>
+                            <td style="padding: 12px; border-bottom: 1px solid #e2e8f0;">
+                                <input type="text" class="form-control" placeholder="Введите номер" style="max-width: 200px;" />
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div style="padding: 12px; background: #fef3c7; border-radius: 8px; border-left: 4px solid #d97706; display: flex; gap: 12px; align-items: flex-start; margin-bottom: 24px;">
+                <i class="fas fa-info-circle" style="color: #d97706; margin-top: 2px;"></i>
+                <p style="margin: 0; font-size: 14px; color: #92400e;">
+                    Необходимо заполнить номер новой лицензии для всех пользователей
+                </p>
+            </div>
+            
+            <div class="form-actions" style="display: flex; gap: 12px; justify-content: flex-end; padding-top: 16px; border-top: 1px solid #e2e8f0;">
+                <button type="button" class="btn btn-secondary" onclick="closeLicenseModal()">Отмена</button>
+                <button type="button" class="btn btn-primary" onclick="saveLicense()">Сохранить</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Стили для подвкладок */
+    .sub-tab {
+        padding: 8px 20px;
+        border: none;
+        background: transparent;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 500;
+        color: #475569;
+        transition: all 0.2s;
+    }
+    .sub-tab:hover { background: #e2e8f0; }
+    .sub-tab.active { background: white; color: #4F46E5; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+
+    /* Сетка ситуаций */
+    .situations-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+        gap: 16px;
+    }
+    .situation-card {
+        background: white;
+        border: 1px solid #e2e8f0;
+        border-radius: 8px;
+        padding: 24px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-align: center;
+    }
+    .situation-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+        border-color: #4F46E5;
+    }
+    .situation-icon {
+        width: 56px;
+        height: 56px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        margin: 0 auto 16px;
+    }
+    .situation-card h4 { margin: 0 0 8px 0; font-size: 15px; color: #1e293b; font-weight: 600; }
+    .situation-card p { margin: 0 0 16px 0; font-size: 13px; color: #64748b; line-height: 1.5; }
+    .situation-steps {
+        display: inline-block;
+        padding: 4px 12px;
+        background: #f1f5f9;
+        border-radius: 12px;
+        font-size: 12px;
+        color: #475569;
+        font-weight: 500;
+    }
+
+    /* Стили мастера (Wizard) */
+    .wizard-steps { display: flex; gap: 8px; }
+    .wizard-step {
+        flex: 1;
+        padding: 12px;
+        text-align: center;
+        background: #f1f5f9;
+        border-radius: 6px;
+        font-size: 13px;
+        color: #94a3b8;
+        transition: all 0.3s;
+        font-weight: 500;
+    }
+    .wizard-step.active { background: #4F46E5; color: white; }
+    .wizard-step .step-number {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.2);
+        margin-right: 6px;
+        font-weight: 600;
+        font-size: 12px;
+    }
+    .wizard-page { display: none; }
+    .wizard-page.active { display: block; }
+
+    /* Общие стили таблиц и фильтров (согласованы с проектом) */
+    .th-sortable { min-width: 100px; vertical-align: top; }
+    .th-header { display: flex; align-items: center; justify-content: space-between; padding: 10px 12px; cursor: pointer; user-select: none; }
+    .th-header:hover { background: #f1f5f9; }
+    .sortable-icon { color: #94a3b8; font-size: 12px; margin-left: 8px; opacity: 0.5; }
+    .th-sortable:hover .sortable-icon { opacity: 1; }
+    .th-filter-row { padding: 4px 8px 8px 8px; }
+    .filter-inline-input, .filter-inline-select { 
+        width: 100%; padding: 6px 10px; border: 1px solid #e2e8f0; border-radius: 4px; font-size: 13px; background: white; box-sizing: border-box; 
+    }
+    .filter-inline-input:focus, .filter-inline-select:focus { outline: none; border-color: #4F46E5; }
+    
+    .btn-close { background: none; border: none; font-size: 24px; cursor: pointer; color: #64748b; padding: 0 4px; line-height: 1; }
+    .btn-close:hover { color: #1e293b; }
+</style>
+
+<script>
+    let situationHistory = [];
+    let currentSituation = null;
+    let currentStep = 1;
+    const totalSteps = 4;
+
+    document.addEventListener('DOMContentLoaded', function() {
+        // Инициализация демо-данных (в реальном проекте заменить на загрузку из Model/API)
+        try {
+            const saved = localStorage.getItem('situationHistory');
+            if (saved) {
+                situationHistory = JSON.parse(saved);
+            } else {
+                situationHistory = [
+                    { id: 1, name: 'Обновление СЗИ', object: 'Маршрутизаторы Huawei серия AR1200', date: '2023-09-16', status: 'Завершено' },
+                    { id: 2, name: 'Обновление СЗИ', object: 'СПО (ПДС-УТТ) версия 2.0+', date: '2023-09-16', status: 'Завершено' },
+                    { id: 3, name: 'Прием нового сотрудника', object: 'Петров Петр Петрович', date: '2023-09-16', status: 'В работе' },
+                    { id: 4, name: 'Приобретение нового СЗИ', object: 'Greeno MultiPro', date: '2023-09-16', status: 'Завершено' }
+                ];
+                localStorage.setItem('situationHistory', JSON.stringify(situationHistory));
+            }
+        } catch(e) {
+            situationHistory = [];
+        }
+        renderHistorySituations();
+    });
+
+    function switchSituationTab(tab, btn) {
+        document.querySelectorAll('.situation-tab').forEach(el => el.style.display = 'none');
+        document.querySelectorAll('.sub-tab').forEach(el => el.classList.remove('active'));
+        document.getElementById('situation-' + tab).style.display = 'block';
+        if (btn) btn.classList.add('active');
+    }
+
+    function renderHistorySituations() {
+        const tbody = document.getElementById('historySituationsTableBody');
+        tbody.innerHTML = '';
+        if (situationHistory.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; padding: 60px 40px; color: #94a3b8;">История ситуаций пуста</td></tr>';
+            return;
+        }
+        situationHistory.forEach(item => {
+            let statusClass = 'badge-secondary';
+            if (item.status === 'Завершено') statusClass = 'badge-success';
+            else if (item.status === 'В работе') statusClass = 'badge-warning';
+
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td style="padding: 12px; border-bottom: 1px solid #e2e8f0;"><strong>${item.name}</strong></td>
+                <td style="padding: 12px; border-bottom: 1px solid #e2e8f0;">${item.object}</td>
+                <td style="padding: 12px; border-bottom: 1px solid #e2e8f0;">${item.date}</td>
+                <td style="padding: 12px; border-bottom: 1px solid #e2e8f0;">
+                    <span class="badge ${statusClass}" style="padding: 4px 12px; border-radius: 12px; font-size: 12px; display: inline-block;">${item.status}</span>
+                </td>
+                <td style="padding: 12px; text-align: center; border-bottom: 1px solid #e2e8f0;">
+                    ${item.status === 'В работе' ? `<button class="btn-icon edit" onclick="continueSituation(${item.id})" title="Продолжить" style="background: #e0f2fe; color: #0284c7; border: none; width: 32px; height: 32px; border-radius: 4px; cursor: pointer;"><i class="fas fa-play"></i></button>` : ''}
+                    <button class="btn-icon delete" onclick="deleteSituation(${item.id})" title="Удалить" style="background: #fee2e2; color: #dc2626; border: none; width: 32px; height: 32px; border-radius: 4px; cursor: pointer; margin-left: 4px;"><i class="fas fa-trash"></i></button>
+                </td>
+            `;
+            tbody.appendChild(tr);
+        });
+    }
+
+    function startSituation(type) {
+        const titles = {
+            'update-szi': { name: 'Обновление СЗИ', desc: 'Добавьте информацию о новой версии СЗИ', icon: '🔒' },
+            'new-premise': { name: 'Ввод нового помещения', desc: 'Добавление нового помещения для обработки ПДн', icon: '🚪' },
+            'assign-responsible': { name: 'Назначение ответственного', desc: 'Назначение лица, ответственного за обработку ПДн', icon: '👤' },
+            'new-employee': { name: 'Прием нового сотрудника', desc: 'Оформление доступа и инструктаж нового сотрудника', icon: '👤' },
+            'employee-dismissal': { name: 'Увольнение сотрудника', desc: 'Отзыв прав доступа и изъятие носителей', icon: '👤' },
+            'buy-computer': { name: 'Покупка компьютера', desc: 'Ввод нового технического средства в эксплуатацию', icon: '💻' },
+            'update-skzi': { name: 'Обновление СКЗИ', desc: 'Обновление средств криптографической защиты информации', icon: '🔑' },
+            'incident-response': { name: 'Реагирование на инцидент', desc: 'Обработка инцидента информационной безопасности', icon: '⚠️' }
+        };
+        currentSituation = type;
+        currentStep = 1;
+        
+        const info = titles[type] || { name: type, desc: 'Мастер ситуаций', icon: '📋' };
+        document.getElementById('wizardTitle').textContent = info.name;
+        document.getElementById('wizardSituationName').textContent = info.name;
+        document.getElementById('wizardSituationDesc').textContent = info.desc;
+        document.getElementById('wizardIcon').textContent = info.icon;
+        
+        resetWizard();
+        document.getElementById('situationWizard').classList.add('show');
+    }
+
+    function resetWizard() {
+        document.querySelectorAll('.wizard-step').forEach(el => el.classList.remove('active'));
+        document.querySelectorAll('.wizard-page').forEach(el => el.classList.remove('active'));
+        document.querySelector('.wizard-step[data-step="1"]').classList.add('active');
+        document.querySelector('.wizard-page[data-page="1"]').classList.add('active');
+        document.getElementById('wizardPrev').style.display = 'none';
+        document.getElementById('wizardNext').style.display = 'inline-flex';
+        document.getElementById('wizardFinish').style.display = 'none';
+        currentStep = 1;
+        document.getElementById('wizardUpdateDate').value = new Date().toISOString().split('T')[0];
+    }
+
+    function nextWizardStep() {
+        if (currentStep < totalSteps) {
+            if (currentStep === 1) {
+                const sziName = document.getElementById('wizardSziName').value;
+                if (!sziName) {
+                    alert('Пожалуйста, выберите наименование СЗИ');
+                    return;
+                }
+            }
+            currentStep++;
+            updateWizardUI();
+        }
+    }
+
+    function prevWizardStep() {
+        if (currentStep > 1) {
+            currentStep--;
+            updateWizardUI();
+        }
+    }
+
+    function updateWizardUI() {
+        document.querySelectorAll('.wizard-step').forEach(el => {
+            el.classList.toggle('active', parseInt(el.dataset.step) === currentStep);
+        });
+        document.querySelectorAll('.wizard-page').forEach(el => {
+            el.classList.toggle('active', parseInt(el.dataset.page) === currentStep);
+        });
+        document.getElementById('wizardPrev').style.display = currentStep > 1 ? 'inline-flex' : 'none';
+        document.getElementById('wizardNext').style.display = currentStep < totalSteps ? 'inline-flex' : 'none';
+        document.getElementById('wizardFinish').style.display = currentStep === totalSteps ? 'inline-flex' : 'none';
+    }
+
+    function finishWizard() {
+        const sziName = document.getElementById('wizardSziName').value || 'Не указано';
+        const newVersion = document.getElementById('wizardNewVersion').value;
+        const updateDate = document.getElementById('wizardUpdateDate').value || new Date().toISOString().split('T')[0];
+        
+        const newSituation = {
+            id: Date.now(),
+            name: document.getElementById('wizardSituationName').textContent,
+            object: sziName + (newVersion ? ` (новая версия: ${newVersion})` : ''),
+            date: updateDate,
+            status: 'Завершено'
+        };
+        situationHistory.push(newSituation);
+        localStorage.setItem('situationHistory', JSON.stringify(situationHistory));
+        renderHistorySituations();
+        closeWizard();
+        alert('Ситуация успешно завершена!');
+    }
+
+    function pauseWizard() {
+        if (currentStep > 1 && currentStep < totalSteps) {
+            const sziName = document.getElementById('wizardSziName').value || 'Не указано';
+            const newSituation = {
+                id: Date.now(),
+                name: document.getElementById('wizardSituationName').textContent,
+                object: sziName,
+                date: new Date().toISOString().split('T')[0],
+                status: 'В работе'
+            };
+            situationHistory.push(newSituation);
+            localStorage.setItem('situationHistory', JSON.stringify(situationHistory));
+            renderHistorySituations();
+            closeWizard();
+            alert('Работа с мастером приостановлена. Ситуация добавлена в "Историю" со статусом "В работе".');
+        } else {
+            closeWizard();
+        }
+    }
+
+    function closeWizard() {
+        document.getElementById('situationWizard').classList.remove('show');
+    }
+
+    function continueSituation(id) {
+        const item = situationHistory.find(s => s.id === id);
+        if (!item) return;
+        
+        currentSituation = item.name;
+        currentStep = 2;
+        
+        document.getElementById('wizardTitle').textContent = item.name;
+        document.getElementById('wizardSituationName').textContent = item.name;
+        document.getElementById('wizardSituationDesc').textContent = 'Продолжение работы с ситуацией';
+        document.getElementById('wizardIcon').textContent = '📋';
+        
+        resetWizard();
+        currentStep = 2;
+        updateWizardUI();
+        document.getElementById('situationWizard').classList.add('show');
+    }
+
+    function deleteSituation(id) {
+        if (confirm('Вы уверены, что хотите удалить эту запись из истории?')) {
+            situationHistory = situationHistory.filter(s => s.id !== id);
+            localStorage.setItem('situationHistory', JSON.stringify(situationHistory));
+            renderHistorySituations();
+        }
+    }
+
+    // Модальное окно распределения лицензий
+    function openLicenseModal() {
+        document.getElementById('licenseModal').classList.add('show');
+    }
+
+    function closeLicenseModal() {
+        document.getElementById('licenseModal').classList.remove('show');
+    }
+
+    function saveLicense() {
+        alert('Лицензии успешно сохранены!');
+        closeLicenseModal();
+        nextWizardStep(); // Автоматический переход на следующий шаг после сохранения
+    }
+
+    // Управление выпадающими списками
+    function toggleDropdown(dropdownId) {
+        const dropdown = document.getElementById(dropdownId);
+        const isOpen = dropdown.classList.contains('show');
+        closeAllDropdowns();
+        if (!isOpen) dropdown.classList.add('show');
+    }
+
+    function closeAllDropdowns() {
+        document.querySelectorAll('.dropdown-menu').forEach(d => d.classList.remove('show'));
+    }
+
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.dropdown')) closeAllDropdowns();
+    });
+
+    // Фильтрация таблиц
+    function filterTable(tableId, searchIdOrCol, value) {
+        const table = document.getElementById(tableId);
+        if (!table) return;
+        const tbody = table.querySelector('tbody');
+        if (!tbody) return;
+        const rows = tbody.querySelectorAll('tr');
+        
+        if (typeof searchIdOrCol === 'string') {
+            const searchTerm = document.getElementById(searchIdOrCol)?.value?.toLowerCase() || '';
+            rows.forEach(row => {
+                row.style.display = row.textContent.toLowerCase().includes(searchTerm) ? '' : 'none';
+            });
+            return;
+        }
+        
+        const colIndex = typeof searchIdOrCol === 'number' ? searchIdOrCol : parseInt(searchIdOrCol);
+        const searchVal = (value || '').toLowerCase();
+        rows.forEach(row => {
+            const cell = row.cells[colIndex];
+            if (cell) {
+                row.style.display = cell.textContent.toLowerCase().includes(searchVal) ? '' : 'none';
+            }
+        });
+    }
+
+    function exportTable(tableId, format) {
+        closeAllDropdowns();
+        alert(`Экспорт в формате ${format.toUpperCase()} будет реализован`);
+    }
+
+    // Закрытие модальных окон при клике вне их области
+    document.querySelectorAll('.modal').forEach(modal => {
+        modal.addEventListener('click', function(e) {
+            if (e.target === this) {
+                this.classList.remove('show');
+            }
+        });
+    });
+</script>

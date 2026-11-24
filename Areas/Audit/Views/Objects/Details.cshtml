@@ -1,0 +1,151 @@
+@model AegisCore.Models.ObjectsViewModel
+@{
+    ViewData["Title"] = Model.CurrentObject?.Name ?? "Новый объект";
+    var isNew = Model.CurrentObject == null || string.IsNullOrEmpty(Model.CurrentObject.Id);
+    var obj = Model.CurrentObject ?? new AegisCore.Models.InformatizationObject();
+    var isObjectSaved = !isNew && !string.IsNullOrEmpty(obj.Id);
+}
+
+<div class="audit-page">
+    <div class="page-header">
+        <h1>
+            <a href="/audit/objects" style="color: #64748b; text-decoration: none; margin-right: 12px;">
+                <i class="fas fa-arrow-left"></i>
+            </a>
+            <i class="fas fa-desktop"></i>
+            @(isNew ? "Добавление объекта информатизации" : obj.Name)
+        </h1>
+    </div>
+
+    @if (!isObjectSaved && Model.ActiveTab != "main")
+    {
+        <div class="alert alert-warning" style="margin-bottom: 20px;">
+            <i class="fas fa-exclamation-triangle"></i>
+            <strong>Внимание!</strong> Сначала сохраните основные сведения объекта, затем сможете заполнить остальные разделы.
+            <a href="/audit/objects/details/new?tab=main" class="btn btn-primary btn-sm" style="margin-left: 16px;">
+                Перейти к основным сведениям
+            </a>
+        </div>
+    }
+
+    <div class="tabs-nav">
+        <a href="/audit/objects/details/@(obj.Id ?? "new")?tab=main" 
+           class="tab-nav-item @(Model.ActiveTab == "main" ? "active" : "")">
+            <i class="fas fa-info-circle"></i> Основные сведения
+        </a>
+        
+        @if (isObjectSaved)
+        {
+            <a href="/audit/objects/details/@obj.Id?tab=technical-assets" 
+               class="tab-nav-item @(Model.ActiveTab == "technical-assets" ? "active" : "")">
+                <i class="fas fa-microchip"></i> Программно-технические средства
+            </a>
+            <a href="/audit/objects/details/@obj.Id?tab=software" 
+               class="tab-nav-item @(Model.ActiveTab == "software" ? "active" : "")">
+                <i class="fas fa-laptop-code"></i> Общесистемное и прикладное ПО
+            </a>
+            <a href="/audit/objects/details/@obj.Id?tab=szi" 
+               class="tab-nav-item @(Model.ActiveTab == "szi" ? "active" : "")">
+                <i class="fas fa-shield-alt"></i> СЗИ
+            </a>
+            <a href="/audit/objects/details/@obj.Id?tab=skzi" 
+               class="tab-nav-item @(Model.ActiveTab == "skzi" ? "active" : "")">
+                <i class="fas fa-key"></i> СКЗИ
+            </a>
+            <a href="/audit/objects/details/@obj.Id?tab=telecom" 
+               class="tab-nav-item @(Model.ActiveTab == "telecom" ? "active" : "")">
+                <i class="fas fa-network-wired"></i> Телекоммуникационное оборудование
+            </a>
+            <a href="/audit/objects/details/@obj.Id?tab=info-systems" 
+               class="tab-nav-item @(Model.ActiveTab == "info-systems" ? "active" : "")">
+                <i class="fas fa-desktop"></i> Информационные системы
+            </a>
+            <a href="/audit/objects/details/@obj.Id?tab=history" 
+               class="tab-nav-item @(Model.ActiveTab == "history" ? "active" : "")">
+                <i class="fas fa-history"></i> История изменений
+            </a>
+            <a href="/audit/objects/details/@obj.Id?tab=documents" 
+               class="tab-nav-item @(Model.ActiveTab == "documents" ? "active" : "")">
+                <i class="fas fa-file-alt"></i> Документы
+            </a>
+        }
+        else
+        {
+            <span class="tab-nav-item disabled" style="opacity: 0.5; cursor: not-allowed;">
+                <i class="fas fa-microchip"></i> Программно-технические средства
+            </span>
+            <span class="tab-nav-item disabled" style="opacity: 0.5; cursor: not-allowed;">
+                <i class="fas fa-laptop-code"></i> Общесистемное и прикладное ПО
+            </span>
+            <span class="tab-nav-item disabled" style="opacity: 0.5; cursor: not-allowed;">
+                <i class="fas fa-shield-alt"></i> СЗИ
+            </span>
+            <span class="tab-nav-item disabled" style="opacity: 0.5; cursor: not-allowed;">
+                <i class="fas fa-key"></i> СКЗИ
+            </span>
+            <span class="tab-nav-item disabled" style="opacity: 0.5; cursor: not-allowed;">
+                <i class="fas fa-network-wired"></i> Телекоммуникационное оборудование
+            </span>
+            <span class="tab-nav-item disabled" style="opacity: 0.5; cursor: not-allowed;">
+                <i class="fas fa-desktop"></i> Информационные системы
+            </span>
+            <span class="tab-nav-item disabled" style="opacity: 0.5; cursor: not-allowed;">
+                <i class="fas fa-history"></i> История изменений
+            </span>
+            <span class="tab-nav-item disabled" style="opacity: 0.5; cursor: not-allowed;">
+                <i class="fas fa-file-alt"></i> Документы
+            </span>
+        }
+    </div>
+
+    <div class="tab-content">
+        @if (!isObjectSaved && Model.ActiveTab != "main")
+        {
+            <div style="text-align: center; padding: 60px 20px; color: #94a3b8;">
+                <i class="fas fa-lock" style="font-size: 64px; margin-bottom: 20px; display: block;"></i>
+                <h3 style="color: #64748b; margin-bottom: 12px;">Раздел недоступен</h3>
+                <p style="font-size: 16px;">Сохраните основные сведения объекта, чтобы получить доступ к этому разделу.</p>
+            </div>
+        }
+        else
+        {
+            @switch (Model.ActiveTab)
+            {
+                case "main":
+                    @await Html.PartialAsync("_MainTab", Model)
+                    break;
+                case "technical-assets":
+                    @await Html.PartialAsync("_TechnicalAssetsTab", Model)
+                    break;
+                case "software":
+                    @await Html.PartialAsync("_SoftwareTab", Model)
+                    break;
+                case "szi":
+                    @await Html.PartialAsync("_SziTab", Model)
+                    break;
+                case "skzi":
+                    @await Html.PartialAsync("_SkziTab", Model)
+                    break;
+                case "telecom":
+                    @await Html.PartialAsync("_TelecomTab", Model)
+                    break;
+                case "info-systems":
+                    @await Html.PartialAsync("_InfoSystemsTab", Model)
+                    break;
+                case "history":
+                    @await Html.PartialAsync("_HistoryTab", Model)
+                    break;
+                case "documents":
+                    @await Html.PartialAsync("_DocumentsTab", Model)
+                    break;
+            }
+        }
+    </div>
+</div>
+
+<style>
+    .tab-nav-item.disabled {
+        pointer-events: none;
+        opacity: 0.5;
+    }
+</style>

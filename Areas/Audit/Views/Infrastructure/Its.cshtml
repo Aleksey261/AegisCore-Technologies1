@@ -1,0 +1,127 @@
+@model AegisCore.Models.InfrastructureViewModel
+@{
+    ViewData["Title"] = "ИТС";
+}
+
+<div class="section-header">
+    <h2 class="section-title">
+        <i class="fas fa-network-wired"></i> Информационно-телекоммуникационная сеть
+    </h2>
+    <div class="header-info">
+        <i class="fas fa-info-circle" title="Учёт ИТС"></i>
+        <span style="color: #64748b; font-size: 14px;">В данном подразделе указывается информация об информационно-телекоммуникационных сетях.</span>
+    </div>
+</div>
+
+<div class="toolbar">
+    <div class="toolbar-left">
+        <button class="btn btn-primary" onclick="openItsModal()">
+            <i class="fas fa-plus"></i> Добавить
+        </button>
+        <div class="search-box">
+            <i class="fas fa-search"></i>
+            <input type="text" id="itsSearch" placeholder="Поиск по ИТС..." value="@Model.Search" oninput="filterIts()" />
+        </div>
+    </div>
+</div>
+
+<div class="table-container">
+    <table class="data-table" id="itsTable">
+        <thead>
+            <tr>
+                <th class="th-sortable">
+                    <div class="th-header"><span>Наименование</span><i class="fas fa-sort sortable-icon"></i></div>
+                    <div class="th-filter-row"><input type="text" class="filter-inline-input" placeholder="Поиск..." oninput="filterTable('itsTable', 0, this.value)" /></div>
+                </th>
+                <th class="th-sortable">
+                    <div class="th-header"><span>Дата ввода в эксплуатацию</span><i class="fas fa-sort sortable-icon"></i></div>
+                    <div class="th-filter-row"><input type="date" class="filter-inline-input" oninput="filterTable('itsTable', 1, this.value)" /></div>
+                </th>
+                <th class="th-sortable">
+                    <div class="th-header"><span>Дата списания</span><i class="fas fa-sort sortable-icon"></i></div>
+                    <div class="th-filter-row"><input type="date" class="filter-inline-input" oninput="filterTable('itsTable', 2, this.value)" /></div>
+                </th>
+                <th style="width: 100px;"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.Its != null && Model.Its.Any())
+            {
+                @foreach (var item in Model.Its)
+                {
+                    <tr data-id="@item.Id">
+                        <td><strong>@item.Name</strong></td>
+                        <td>@(item.EntryDate?.ToString("dd.MM.yyyy") ?? "—")</td>
+                        <td class="@(item.WriteOffDate.HasValue ? "text-danger" : "")">@(item.WriteOffDate?.ToString("dd.MM.yyyy") ?? "—")</td>
+                        <td class="actions">
+                            <button class="btn-icon edit" onclick="editIts('@item.Id')"><i class="fas fa-edit"></i></button>
+                            <button class="btn-icon delete" onclick="deleteIts('@item.Id')"><i class="fas fa-trash"></i></button>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr><td colspan="4" style="text-align: center; padding: 40px; color: #94a3b8;"><i class="fas fa-network-wired" style="font-size: 48px; margin-bottom: 16px; display: block;"></i>ИТС не добавлены</td></tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@if (Model.TotalPages > 1)
+{
+    <div class="pagination">
+        <div class="pagination-page-size">
+            <label>Показывать по:</label>
+            <select onchange="changePageSize(this.value)"><option value="10" selected>10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select>
+        </div>
+        <div class="pagination-info">Страница @Model.CurrentPage из @Model.TotalPages (Всего элементов: @Model.TotalItems)</div>
+        <div class="pagination-buttons">
+            @if (Model.CurrentPage > 1) { <a href="/audit/infrastructure?section=its&page=@(Model.CurrentPage - 1)" class="btn-pagination">‹</a> }
+            @for (int i = 1; i <= Model.TotalPages; i++) { <a href="/audit/infrastructure?section=its&page=@i" class="btn-pagination @(i == Model.CurrentPage ? "active" : "")">@i</a> }
+            @if (Model.CurrentPage < Model.TotalPages) { <a href="/audit/infrastructure?section=its&page=@(Model.CurrentPage + 1)" class="btn-pagination">›</a> }
+        </div>
+    </div>
+}
+
+<div class="modal" id="itsModal">
+    <div class="modal-content" style="max-width: 700px;">
+        <div class="modal-header">
+            <h3 id="itsModalTitle">Добавление ИТС</h3>
+            <button class="modal-close" onclick="closeItsModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <form id="itsForm" onsubmit="saveIts(event)">
+                <input type="hidden" id="itsId" name="id" />
+                <div class="form-group">
+                    <label>Наименование <span class="required">*</span></label>
+                    <input type="text" name="name" id="itsName" class="form-control" required />
+                </div>
+                <div class="form-group">
+                    <label>Дата ввода в эксплуатацию <span class="required">*</span></label>
+                    <input type="date" name="entryDate" id="itsEntryDate" class="form-control" required />
+                </div>
+                <div class="form-group">
+                    <label>Дата списания</label>
+                    <input type="date" name="writeOffDate" id="itsWriteOffDate" class="form-control" />
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeItsModal()">Отмена</button>
+                    <button type="submit" class="btn btn-primary">Сохранить</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    const itsData = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.Its ?? new List<AegisCore.Models.Its>()));
+    function openItsModal() { document.getElementById('itsForm').reset(); document.getElementById('itsId').value = ''; document.getElementById('itsModalTitle').textContent = 'Добавление ИТС'; document.getElementById('itsModal').classList.add('show'); }
+    function closeItsModal() { document.getElementById('itsModal').classList.remove('show'); }
+    function editIts(id) { const item = itsData.find(i => i.id === id); if (!item) return; document.getElementById('itsId').value = item.id; document.getElementById('itsName').value = item.name || ''; document.getElementById('itsEntryDate').value = item.entryDate ? item.entryDate.split('T')[0] : ''; document.getElementById('itsWriteOffDate').value = item.writeOffDate ? item.writeOffDate.split('T')[0] : ''; document.getElementById('itsModalTitle').textContent = 'Редактирование ИТС'; document.getElementById('itsModal').classList.add('show'); }
+    function deleteIts(id) { if (!confirm('Удалить запись?')) return; fetch('/api/audit/infrastructure/its/delete/' + id, { method: 'DELETE' }).then(r => r.json()).then(data => { if (data.success) location.reload(); else alert(data.error || 'Ошибка'); }); }
+    function saveIts(e) { e.preventDefault(); const form = e.target; const data = { id: form.id.value || null, name: form.name.value, entryDate: form.entryDate.value || null, writeOffDate: form.writeOffDate.value || null }; fetch('/api/audit/infrastructure/its/save', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) }).then(r => r.json()).then(result => { if (result.success) location.reload(); else alert(result.error || 'Ошибка'); }); }
+    function filterIts() { const search = document.getElementById('itsSearch').value.toLowerCase(); document.querySelectorAll('#itsTable tbody tr').forEach(row => { row.style.display = row.textContent.toLowerCase().includes(search) ? '' : 'none'; }); }
+    function filterTable(tableId, colIndex, value) { const table = document.getElementById(tableId); const rows = table.querySelectorAll('tbody tr'); rows.forEach(row => { const cell = row.cells[colIndex]; if (cell) { row.style.display = cell.textContent.toLowerCase().includes(value.toLowerCase()) ? '' : 'none'; } }); }
+    function changePageSize(size) { const url = new URL(window.location); url.searchParams.set('pageSize', size); window.location.href = url.toString(); }
+</script>

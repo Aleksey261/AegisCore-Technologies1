@@ -1,0 +1,638 @@
+@model AegisCore.Models.InfrastructureViewModel
+@{
+    ViewData["Title"] = "Электронные подписи";
+}
+
+<div class="section-header">
+    <h2 class="section-title">
+        <i class="fas fa-signature"></i> Ключевые документы (электронная подпись)
+    </h2>
+    <div class="header-info">
+        <i class="fas fa-info-circle" title="Учёт ключевых документов"></i>
+        <span style="color: #64748b; font-size: 14px;">Ключевой документ — это физический носитель определенной структуры, содержащий ключевую информацию.</span>
+    </div>
+</div>
+
+<div class="toolbar">
+    <div class="toolbar-left">
+        <!-- Кнопка Добавить СЛЕВА -->
+        <button class="btn btn-primary" onclick="openSignatureModal()">
+            <i class="fas fa-plus"></i> Добавить
+        </button>
+
+        <!-- Выпадающее меню "Экспорт в файл" -->
+        <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" onclick="toggleDropdown('exportDropdown')">
+                <i class="fas fa-file-export"></i> Экспорт в файл
+                <i class="fas fa-chevron-down" style="font-size: 10px; margin-left: 4px;"></i>
+            </button>
+            <div id="exportDropdown" class="dropdown-menu">
+                <a href="#" onclick="exportSignatures('xls'); return false;"><i class="fas fa-file-excel"></i> Экспорт XLS</a>
+                <a href="#" onclick="exportSignatures('pdf'); return false;"><i class="fas fa-file-pdf"></i> Экспорт PDF</a>
+            </div>
+        </div>
+
+        <!-- Выпадающее меню "Настройка" -->
+        <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" onclick="toggleDropdown('settingsDropdown')">
+                <i class="fas fa-cog"></i> Настройка
+                <i class="fas fa-chevron-down" style="font-size: 10px; margin-left: 4px;"></i>
+            </button>
+            <div id="settingsDropdown" class="dropdown-menu">
+                <label class="dropdown-item"><input type="checkbox" checked onchange="toggleColumn('col-carrier')"><span>Ключевой носитель</span></label>
+                <label class="dropdown-item"><input type="checkbox" checked onchange="toggleColumn('col-keyinfo')"><span>Номер ключ. информации</span></label>
+                <label class="dropdown-item"><input type="checkbox" checked onchange="toggleColumn('col-received')"><span>От кого получено</span></label>
+                <label class="dropdown-item"><input type="checkbox" checked onchange="toggleColumn('col-receipt')"><span>Дата получения</span></label>
+                <label class="dropdown-item"><input type="checkbox" checked onchange="toggleColumn('col-copy')"><span>Номер экземпляра</span></label>
+                <label class="dropdown-item"><input type="checkbox" onchange="toggleColumn('col-cover')"><span>Сопроводительное письмо</span></label>
+                <label class="dropdown-item"><input type="checkbox" onchange="toggleColumn('col-owner')"><span>ФИО владельца</span></label>
+                <label class="dropdown-item"><input type="checkbox" onchange="toggleColumn('col-usedfor')"><span>Используется для</span></label>
+                <label class="dropdown-item"><input type="checkbox" onchange="toggleColumn('col-destruction')"><span>Дата удаления</span></label>
+                <label class="dropdown-item"><input type="checkbox" onchange="toggleColumn('col-destroyedby')"><span>ФИО произведшего удаление</span></label>
+                <hr style="margin: 4px 0;">
+                <a href="#" onclick="resetTableSettings(); return false;"><i class="fas fa-undo"></i> Сбросить настройки</a>
+            </div>
+        </div>
+
+        <div class="search-box">
+            <i class="fas fa-search"></i>
+            <input type="text" id="signatureSearch" placeholder="Поиск..." value="@Model.Search" oninput="filterSignatures()" />
+        </div>
+    </div>
+</div>
+
+<div class="table-container">
+    <table class="data-table" id="signaturesTable">
+        <thead>
+            <tr>
+                <th class="th-sortable col-carrier">
+                    <div class="th-header"><span>Ключевой носитель</span><i class="fas fa-sort sortable-icon"></i></div>
+                    <div class="th-filter-row">
+                        <select class="filter-inline-select" onchange="filterTable('signaturesTable', 0, this.value)">
+                            <option value="">(Все)</option>
+                            <option value="РуТокен ЭЦП 2.0">РуТокен ЭЦП 2.0</option>
+                            <option value="eToken PRO">eToken PRO</option>
+                            <option value="JaCarta">JaCarta</option>
+                        </select>
+                    </div>
+                </th>
+                <th class="th-sortable col-keyinfo">
+                    <div class="th-header"><span>Номер ключ. информации</span><i class="fas fa-sort sortable-icon"></i></div>
+                    <div class="th-filter-row"><input type="text" class="filter-inline-input" placeholder="Поиск..." oninput="filterTable('signaturesTable', 1, this.value)" /></div>
+                </th>
+                <th class="th-sortable col-received">
+                    <div class="th-header"><span>От кого получено</span><i class="fas fa-sort sortable-icon"></i></div>
+                    <div class="th-filter-row"><input type="text" class="filter-inline-input" placeholder="Поиск..." oninput="filterTable('signaturesTable', 2, this.value)" /></div>
+                </th>
+                <th class="th-sortable col-receipt">
+                    <div class="th-header"><span>Дата получения</span><i class="fas fa-sort sortable-icon"></i></div>
+                    <div class="th-filter-row"><input type="date" class="filter-inline-input" oninput="filterTable('signaturesTable', 3, this.value)" /></div>
+                </th>
+                <th class="th-sortable col-copy">
+                    <div class="th-header"><span>Номер экземпляра</span><i class="fas fa-sort sortable-icon"></i></div>
+                    <div class="th-filter-row">
+                        <select class="filter-inline-select" onchange="filterTable('signaturesTable', 4, this.value)">
+                            <option value="">(Все)</option>
+                            @for (int i = 1; i <= 10; i++) { <option value="@i">№ @i</option> }
+                        </select>
+                    </div>
+                </th>
+                <th class="th-sortable col-cover" style="display: none;">
+                    <div class="th-header"><span>Сопроводительное письмо</span><i class="fas fa-sort sortable-icon"></i></div>
+                    <div class="th-filter-row"><input type="text" class="filter-inline-input" placeholder="Поиск..." oninput="filterTable('signaturesTable', 5, this.value)" /></div>
+                </th>
+                <th class="th-sortable col-owner" style="display: none;">
+                    <div class="th-header"><span>ФИО владельца</span><i class="fas fa-sort sortable-icon"></i></div>
+                    <div class="th-filter-row"><input type="text" class="filter-inline-input" placeholder="Поиск..." oninput="filterTable('signaturesTable', 6, this.value)" /></div>
+                </th>
+                <th class="th-sortable col-usedfor" style="display: none;">
+                    <div class="th-header"><span>Используется для</span><i class="fas fa-sort sortable-icon"></i></div>
+                    <div class="th-filter-row"><input type="text" class="filter-inline-input" placeholder="Поиск..." oninput="filterTable('signaturesTable', 7, this.value)" /></div>
+                </th>
+                <th class="th-sortable col-destruction" style="display: none;">
+                    <div class="th-header"><span>Дата удаления</span><i class="fas fa-sort sortable-icon"></i></div>
+                    <div class="th-filter-row"><input type="date" class="filter-inline-input" oninput="filterTable('signaturesTable', 8, this.value)" /></div>
+                </th>
+                <th class="th-sortable col-destroyedby" style="display: none;">
+                    <div class="th-header"><span>ФИО произведшего удаление</span><i class="fas fa-sort sortable-icon"></i></div>
+                    <div class="th-filter-row"><input type="text" class="filter-inline-input" placeholder="Поиск..." oninput="filterTable('signaturesTable', 9, this.value)" /></div>
+                </th>
+                <th style="width: 140px;">Действия</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.Signatures != null && Model.Signatures.Any())
+            {
+                @foreach (var item in Model.Signatures)
+                {
+                    <tr data-id="@item.Id">
+                        <td class="col-carrier"><span class="badge info">@item.KeyCarrier</span></td>
+                        <td class="col-keyinfo">@item.KeyInfoNumber</td>
+                        <td class="col-received">@item.Owner</td>
+                        <td class="col-receipt">@(item.ReceiptDate?.ToString("dd.MM.yyyy") ?? "—")</td>
+                        <td class="col-copy">@item.CopyNumber</td>
+                        <td class="col-cover" style="display: none;">@item.CoverLetter</td>
+                        <td class="col-owner" style="display: none;">@item.OwnerFIO</td>
+                        <td class="col-usedfor" style="display: none;">@item.UsedFor</td>
+                        <td class="col-destruction" style="display: none;">@(item.DestructionDate?.ToString("dd.MM.yyyy") ?? "—")</td>
+                        <td class="col-destroyedby" style="display: none;">@item.DestroyedByFIO</td>
+                        <td class="actions">
+                            <button class="btn-icon edit" title="Редактировать" onclick="editSignature('@item.Id')"><i class="fas fa-edit"></i></button>
+                            <button class="btn-icon delete" title="Удалить" onclick="deleteSignature('@item.Id')"><i class="fas fa-trash"></i></button>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="11" style="text-align: center; padding: 60px 40px; color: #94a3b8;">
+                        <i class="fas fa-signature" style="font-size: 64px; margin-bottom: 16px; display: block; color: #cbd5e1;"></i>
+                        <div style="font-size: 16px; font-weight: 500;">Ключевые документы не добавлены</div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@if (Model.TotalPages > 1)
+{
+    <div class="pagination">
+        <div class="pagination-page-size">
+            <label>Показывать по:</label>
+            <select onchange="changePageSize(this.value)"><option value="10" selected>10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select>
+        </div>
+        <div class="pagination-info">Страница @Model.CurrentPage из @Model.TotalPages (Всего элементов: @Model.TotalItems)</div>
+        <div class="pagination-buttons">
+            @if (Model.CurrentPage > 1) { <a href="/audit/infrastructure?section=signatures&page=@(Model.CurrentPage - 1)" class="btn-pagination">‹</a> }
+            @for (int i = 1; i <= Model.TotalPages; i++) { <a href="/audit/infrastructure?section=signatures&page=@i" class="btn-pagination @(i == Model.CurrentPage ? "active" : "")">@i</a> }
+            @if (Model.CurrentPage < Model.TotalPages) { <a href="/audit/infrastructure?section=signatures&page=@(Model.CurrentPage + 1)" class="btn-pagination">›</a> }
+        </div>
+    </div>
+}
+
+<!-- ============================================================ -->
+<!-- МОДАЛКА ДОБАВЛЕНИЯ/РЕДАКТИРОВАНИЯ (Рисунок 52) -->
+<!-- ============================================================ -->
+<div class="modal" id="signatureModal">
+    <div class="modal-content" style="max-width: 650px;">
+        <div class="modal-header">
+            <h3 id="signatureModalTitle">Добавление</h3>
+            <button class="modal-close" onclick="closeSignatureModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <form id="signatureForm" onsubmit="saveSignature(event)">
+                <input type="hidden" id="signatureId" name="id" />
+
+                <div class="form-group">
+                    <label>Ключевой носитель <span class="required">*</span></label>
+                    <select name="keyCarrier" id="signatureKeyCarrier" class="form-control" required>
+                        <option value="">Выбрать...</option>
+                        <option value="РуТокен ЭЦП 2.0">РуТокен ЭЦП 2.0</option>
+                        <option value="eToken PRO">eToken PRO</option>
+                        <option value="JaCarta">JaCarta</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Номер ключ. информации <span class="required">*</span></label>
+                    <select name="keyInfoNumber" id="signatureKeyInfoNumber" class="form-control" required>
+                        <option value="">Выбрать...</option>
+                        @if (Model.KeyInfoNumbers != null)
+                        {
+                            @foreach (var num in Model.KeyInfoNumbers) { <option value="@num">@num</option> }
+                        }
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>СКЗИ <span class="required">*</span></label>
+                    <select name="skzi" id="signatureSkzi" class="form-control" required>
+                        <option value="">Выбрать...</option>
+                        @if (Model.Skzis != null)
+                        {
+                            @foreach (var skzi in Model.Skzis) { <option value="@skzi.Id">@skzi.Name</option> }
+                        }
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Номер экземпляра <span class="required">*</span></label>
+                    <select name="copyNumber" id="signatureCopyNumber" class="form-control" required>
+                        <option value="">Выбрать...</option>
+                        @for (int i = 1; i <= 10; i++) { <option value="@i">№ @i</option> }
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Сопроводительное письмо</label>
+                    <div class="input-with-buttons">
+                        <select name="coverLetter" id="signatureCoverLetter" class="form-control">
+                            <option value="">Выбрать...</option>
+                            @if (Model.CoverLetters != null)
+                            {
+                                @foreach (var cl in Model.CoverLetters) { <option value="@cl">@cl</option> }
+                            }
+                        </select>
+                        <button type="button" class="btn-icon-ref" title="Редактировать" onclick="editReference('coverLetters')"><i class="fas fa-edit"></i></button>
+                        <button type="button" class="btn-icon-ref add" title="Добавить письмо" onclick="openCoverLetterModal()"><i class="fas fa-plus"></i></button>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Тип (от кого получено) <span class="required">*</span></label>
+                    <select name="receivedFromType" id="signatureReceivedFromType" class="form-control" required>
+                        <option value="">Выбрать...</option>
+                        <option value="Производитель">Производитель</option>
+                        <option value="Дистрибьютор">Дистрибьютор</option>
+                        <option value="Партнер">Партнер</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>ФИО/Организация <span class="required">*</span></label>
+                    <div class="input-with-buttons">
+                        <select name="owner" id="signatureOwner" class="form-control" required>
+                            <option value="">Выбрать...</option>
+                            @if (Model.Organizations != null)
+                            {
+                                @foreach (var org in Model.Organizations) { <option value="@org.Name">@org.Name</option> }
+                            }
+                        </select>
+                        <button type="button" class="btn-icon-ref" title="Редактировать" onclick="editReference('organizations')"><i class="fas fa-edit"></i></button>
+                        <button type="button" class="btn-icon-ref add" title="Добавить" onclick="openOrganizationModal()"><i class="fas fa-plus"></i></button>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Дата получения <span class="required">*</span></label>
+                    <input type="date" name="receiptDate" id="signatureReceiptDate" class="form-control" required />
+                </div>
+
+                <div class="form-group">
+                    <label>ФИО владельца <span class="required">*</span></label>
+                    <div class="input-with-buttons">
+                        <input type="text" name="ownerFIO" id="signatureOwnerFIO" class="form-control" required placeholder="Введите ФИО владельца" />
+                        <button type="button" class="btn-icon-ref" title="Поиск сотрудника" onclick="openEmployeeSearchModal('ownerFIO')"><i class="fas fa-search"></i></button>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Используется для</label>
+                    <input type="text" name="usedFor" id="signatureUsedFor" class="form-control" placeholder="Введите назначение использования" />
+                </div>
+
+                <div class="form-group">
+                    <label>Дата удаления</label>
+                    <input type="date" name="destructionDate" id="signatureDestructionDate" class="form-control" />
+                </div>
+
+                <div class="form-group">
+                    <label>ФИО произведшего удаление</label>
+                    <div class="input-with-buttons">
+                        <input type="text" name="destroyedByFIO" id="signatureDestroyedByFIO" class="form-control" placeholder="Введите ФИО" />
+                        <button type="button" class="btn-icon-ref" title="Поиск сотрудника" onclick="openEmployeeSearchModal('destroyedByFIO')"><i class="fas fa-search"></i></button>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeSignatureModal()">Отмена</button>
+                    <button type="submit" class="btn btn-primary">Сохранить</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- МОДАЛКА ДОБАВЛЕНИЯ СОПРОВОДИТЕЛЬНОГО ПИСЬМА (Рисунок 53) -->
+<!-- ============================================================ -->
+<div class="modal" id="coverLetterModal">
+    <div class="modal-content" style="max-width: 500px;">
+        <div class="modal-header">
+            <h3>Добавление письма</h3>
+            <button class="modal-close" onclick="closeCoverLetterModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <form id="coverLetterForm" onsubmit="saveCoverLetter(event)">
+                <div class="form-group">
+                    <label>Номер письма <span class="required">*</span></label>
+                    <input type="text" id="letterNumber" class="form-control" required placeholder="Например: № 123 от 01.01.2024" />
+                </div>
+                <div class="form-group">
+                    <label>Дата письма <span class="required">*</span></label>
+                    <input type="date" id="letterDate" class="form-control" required />
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeCoverLetterModal()">Отменить</button>
+                    <button type="submit" class="btn btn-primary">Сохранить сопр. письмо</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- МОДАЛКА ДОБАВЛЕНИЯ ОРГАНИЗАЦИИ -->
+<!-- ============================================================ -->
+<div class="modal" id="organizationModal">
+    <div class="modal-content" style="max-width: 600px;">
+        <div class="modal-header">
+            <h3>Добавление организации</h3>
+            <button class="modal-close" onclick="closeOrganizationModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <form id="organizationForm" onsubmit="saveOrganization(event)">
+                <div class="form-group">
+                    <label>Краткое название <span class="required">*</span></label>
+                    <input type="text" id="orgShortName" class="form-control" required />
+                </div>
+                <div class="form-group">
+                    <label>Полное название</label>
+                    <input type="text" id="orgFullName" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label>Адрес</label>
+                    <input type="text" id="orgAddress" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label>ИНН</label>
+                    <input type="text" id="orgInn" class="form-control" maxlength="12" />
+                </div>
+                <div class="form-group">
+                    <label>Телефон</label>
+                    <input type="tel" id="orgPhone" class="form-control" placeholder="(___) ___-__-__" />
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="orgEmail" class="form-control" />
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeOrganizationModal()">Отменить</button>
+                    <button type="submit" class="btn btn-primary">Сохранить организацию</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- МОДАЛКА ОШИБКИ ПРИ УДАЛЕНИИ (Рисунок 54) -->
+<!-- ============================================================ -->
+<div class="modal" id="errorModal">
+    <div class="modal-content" style="max-width: 400px;">
+        <div class="modal-header">
+            <h3 style="color: #ef4444;"><i class="fas fa-exclamation-triangle"></i> Ошибка</h3>
+            <button class="modal-close" onclick="closeErrorModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <p id="errorMessage" style="font-size: 14px; color: #475569; margin: 0;">Невозможно удалить. Данная запись используется.</p>
+            <div class="form-actions" style="justify-content: center; border-top: none; padding-top: 16px; margin-top: 16px;">
+                <button type="button" class="btn btn-secondary" onclick="closeErrorModal()">ОК</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .dropdown { position: relative; display: inline-block; }
+    .dropdown-toggle { display: inline-flex; align-items: center; cursor: pointer; }
+    .dropdown-menu {
+        display: none; position: absolute; top: 100%; left: 0;
+        background: white; border: 1px solid #e2e8f0; border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1); min-width: 240px;
+        z-index: 100; margin-top: 4px; padding: 4px 0;
+    }
+    .dropdown-menu.show { display: block; }
+    .dropdown-menu a {
+        display: flex; align-items: center; gap: 8px; padding: 10px 16px;
+        color: #475569; text-decoration: none; font-size: 14px; transition: background 0.2s; cursor: pointer;
+    }
+    .dropdown-menu a:hover { background: #f1f5f9; }
+    .dropdown-menu label.dropdown-item {
+        display: flex; align-items: center; gap: 10px; padding: 8px 16px;
+        color: #475569; font-size: 14px; cursor: pointer; transition: background 0.2s;
+        user-select: none; margin: 0;
+    }
+    .dropdown-menu label.dropdown-item:hover { background: #f1f5f9; }
+    .dropdown-menu label.dropdown-item input[type="checkbox"] {
+        width: 16px; height: 16px; cursor: pointer; accent-color: #4F46E5;
+        margin: 0; flex-shrink: 0;
+    }
+    .dropdown-menu label.dropdown-item span { flex: 1; }
+    .dropdown-menu hr { border: none; border-top: 1px solid #e2e8f0; margin: 4px 0; }
+    .btn-icon-ref {
+        background: none; border: none; color: #64748b; cursor: pointer;
+        padding: 4px 8px; font-size: 14px; transition: color 0.2s;
+    }
+    .btn-icon-ref:hover { color: #4F46E5; }
+    .btn-icon-ref.add { color: #10b981; }
+    .btn-icon-ref.add:hover { color: #059669; }
+</style>
+
+<script>
+    const signaturesData = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.Signatures ?? new List<AegisCore.Models.Signature>()));
+
+    function toggleDropdown(id) {
+        const menu = document.getElementById(id);
+        document.querySelectorAll('.dropdown-menu').forEach(m => { if (m.id !== id) m.classList.remove('show'); });
+        menu.classList.toggle('show');
+        event.stopPropagation();
+    }
+
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.dropdown')) {
+            document.querySelectorAll('.dropdown-menu').forEach(m => m.classList.remove('show'));
+        }
+    });
+
+    function toggleColumn(className) {
+        const cells = document.querySelectorAll('.' + className);
+        cells.forEach(cell => {
+            cell.style.display = cell.style.display === 'none' ? '' : 'none';
+        });
+    }
+
+    function resetTableSettings() {
+        const defaultHidden = ['col-cover', 'col-owner', 'col-usedfor', 'col-destruction', 'col-destroyedby'];
+        const defaultVisible = ['col-carrier', 'col-keyinfo', 'col-received', 'col-receipt', 'col-copy'];
+        defaultHidden.forEach(cls => { document.querySelectorAll('.' + cls).forEach(cell => cell.style.display = 'none'); });
+        defaultVisible.forEach(cls => { document.querySelectorAll('.' + cls).forEach(cell => cell.style.display = ''); });
+        const menu = document.getElementById('settingsDropdown');
+        menu.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+            const label = cb.closest('label');
+            if (label) {
+                const text = label.textContent.toLowerCase();
+                cb.checked = defaultVisible.some(v => text.includes(v.replace('col-', '')));
+            }
+        });
+    }
+
+    function openSignatureModal() {
+        document.getElementById('signatureForm').reset();
+        document.getElementById('signatureId').value = '';
+        document.getElementById('signatureModalTitle').textContent = 'Добавление';
+        document.getElementById('signatureModal').classList.add('show');
+    }
+
+    function closeSignatureModal() { document.getElementById('signatureModal').classList.remove('show'); }
+
+    function editSignature(id) {
+        const item = signaturesData.find(s => s.id === id);
+        if (!item) return;
+        document.getElementById('signatureId').value = item.id;
+        document.getElementById('signatureKeyCarrier').value = item.keyCarrier || '';
+        document.getElementById('signatureKeyInfoNumber').value = item.keyInfoNumber || '';
+        document.getElementById('signatureSkzi').value = item.skzi || '';
+        document.getElementById('signatureCopyNumber').value = item.copyNumber || '';
+        document.getElementById('signatureCoverLetter').value = item.coverLetter || '';
+        document.getElementById('signatureReceivedFromType').value = item.receivedFromType || '';
+        document.getElementById('signatureOwner').value = item.owner || '';
+        document.getElementById('signatureReceiptDate').value = item.receiptDate ? item.receiptDate.split('T')[0] : '';
+        document.getElementById('signatureOwnerFIO').value = item.ownerFIO || '';
+        document.getElementById('signatureUsedFor').value = item.usedFor || '';
+        document.getElementById('signatureDestructionDate').value = item.destructionDate ? item.destructionDate.split('T')[0] : '';
+        document.getElementById('signatureDestroyedByFIO').value = item.destroyedByFIO || '';
+        document.getElementById('signatureModalTitle').textContent = 'Редактирование';
+        document.getElementById('signatureModal').classList.add('show');
+    }
+
+    function deleteSignature(id) {
+        if (!confirm('Удалить запись?')) return;
+        fetch('/audit/infrastructure/signatures/delete/' + id, { method: 'DELETE' })
+            .then(r => r.json())
+            .then(data => {
+                if (data.success) { location.reload(); }
+                else {
+                    document.getElementById('errorMessage').textContent = data.error || 'Невозможно удалить. Данная запись используется.';
+                    document.getElementById('errorModal').classList.add('show');
+                }
+            });
+    }
+
+    function saveSignature(e) {
+        e.preventDefault();
+        const form = e.target;
+        const data = {
+            id: form.id.value || null,
+            keyCarrier: form.keyCarrier.value,
+            keyInfoNumber: form.keyInfoNumber.value,
+            skzi: form.skzi.value,
+            copyNumber: form.copyNumber.value,
+            coverLetter: form.coverLetter.value,
+            receivedFromType: form.receivedFromType.value,
+            owner: form.owner.value,
+            receiptDate: form.receiptDate.value || null,
+            ownerFIO: form.ownerFIO.value,
+            usedFor: form.usedFor.value,
+            destructionDate: form.destructionDate.value || null,
+            destroyedByFIO: form.destroyedByFIO.value
+        };
+        fetch('/audit/infrastructure/signatures/save', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        })
+        .then(r => r.json())
+        .then(result => {
+            if (result.success) { closeSignatureModal(); location.reload(); }
+            else { alert(result.error || 'Ошибка сохранения'); }
+        });
+    }
+
+    function openCoverLetterModal() {
+        document.getElementById('coverLetterForm').reset();
+        document.getElementById('coverLetterModal').classList.add('show');
+    }
+    function closeCoverLetterModal() { document.getElementById('coverLetterModal').classList.remove('show'); }
+
+    function saveCoverLetter(e) {
+        e.preventDefault();
+        const number = document.getElementById('letterNumber').value;
+        const date = document.getElementById('letterDate').value;
+        const letterText = `№ ${number} от ${new Date(date).toLocaleDateString('ru-RU')}`;
+        const select = document.getElementById('signatureCoverLetter');
+        const option = document.createElement('option');
+        option.value = letterText;
+        option.textContent = letterText;
+        option.selected = true;
+        select.appendChild(option);
+        closeCoverLetterModal();
+    }
+
+    function openOrganizationModal() {
+        document.getElementById('organizationForm').reset();
+        document.getElementById('organizationModal').classList.add('show');
+    }
+    function closeOrganizationModal() { document.getElementById('organizationModal').classList.remove('show'); }
+
+    function saveOrganization(e) {
+        e.preventDefault();
+        const data = {
+            shortName: document.getElementById('orgShortName').value,
+            fullName: document.getElementById('orgFullName').value,
+            address: document.getElementById('orgAddress').value,
+            inn: document.getElementById('orgInn').value,
+            phone: document.getElementById('orgPhone').value,
+            email: document.getElementById('orgEmail').value
+        };
+        fetch('/api/audit/organizations/save', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        })
+        .then(r => r.json())
+        .then(result => {
+            if (result.success) {
+                const select = document.getElementById('signatureOwner');
+                const option = document.createElement('option');
+                option.value = data.shortName;
+                option.textContent = data.shortName;
+                option.selected = true;
+                select.appendChild(option);
+                closeOrganizationModal();
+            } else { alert(result.error || 'Ошибка'); }
+        });
+    }
+
+    function editReference(type) {
+        const selectId = type === 'organizations' ? 'signatureOwner' : 'signatureCoverLetter';
+        const select = document.getElementById(selectId);
+        const selectedValue = select.value;
+        if (!selectedValue) { alert('Сначала выберите значение для редактирования'); return; }
+        const newValue = prompt('Редактировать значение:', selectedValue);
+        if (newValue && newValue !== selectedValue) {
+            const option = select.querySelector('option[value="' + selectedValue + '"]');
+            if (option) { option.value = newValue; option.textContent = newValue; }
+        }
+    }
+
+    function openEmployeeSearchModal(targetFieldId) {
+        alert('Поиск сотрудника для поля: ' + targetFieldId + '\n(Функция в разработке)');
+    }
+
+    function filterSignatures() {
+        const search = document.getElementById('signatureSearch').value.toLowerCase();
+        document.querySelectorAll('#signaturesTable tbody tr').forEach(row => {
+            row.style.display = row.textContent.toLowerCase().includes(search) ? '' : 'none';
+        });
+    }
+
+    function filterTable(tableId, colIndex, value) {
+        const table = document.getElementById(tableId);
+        const rows = table.querySelectorAll('tbody tr');
+        rows.forEach(row => {
+            const cell = row.cells[colIndex];
+            if (cell) { row.style.display = cell.textContent.toLowerCase().includes(value.toLowerCase()) ? '' : 'none'; }
+        });
+    }
+
+    function exportSignatures(format) { window.location.href = '/audit/infrastructure/signatures/export/' + format; }
+    function changePageSize(size) {
+        const url = new URL(window.location);
+        url.searchParams.set('pageSize', size);
+        window.location.href = url.toString();
+    }
+    function closeErrorModal() { document.getElementById('errorModal').classList.remove('show'); }
+</script>

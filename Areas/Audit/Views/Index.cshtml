@@ -1,0 +1,106 @@
+﻿@model AuditIndexModel
+@{
+    ViewData["Title"] = "Аудит безопасности";
+}
+
+<div class="dashboard-main">
+    <div class="welcome-section">
+        <h1>Аудит безопасности</h1>
+        <p>Комплексная проверка информационной безопасности организации</p>
+    </div>
+
+    <div class="stats-grid">
+        <div class="stat-card info">
+            <div class="stat-icon"><i class="fas fa-sitemap"></i></div>
+            <div class="stat-info">
+                <div class="stat-value">@Model.Stats.Departments</div>
+                <div class="stat-label">Подразделений</div>
+            </div>
+        </div>
+        <div class="stat-card success">
+            <div class="stat-icon"><i class="fas fa-users"></i></div>
+            <div class="stat-info">
+                <div class="stat-value">@Model.Stats.Employees</div>
+                <div class="stat-label">Сотрудников</div>
+            </div>
+        </div>
+        <div class="stat-card warning">
+            <div class="stat-icon"><i class="fas fa-door-closed"></i></div>
+            <div class="stat-info">
+                <div class="stat-value">@Model.Stats.Rooms</div>
+                <div class="stat-label">Помещений</div>
+            </div>
+        </div>
+        <div class="stat-card danger">
+            <div class="stat-icon"><i class="fas fa-book"></i></div>
+            <div class="stat-info">
+                <div class="stat-value">@Model.Stats.Journals</div>
+                <div class="stat-label">Журналов</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modules-grid">
+        <a href="/audit/organization" class="module-card">
+            <div class="module-icon audit"><i class="fas fa-building"></i></div>
+            <h3>Организация</h3>
+            <p>Данные об организации, подразделения, сотрудники, доступы</p>
+            <span class="module-link">Перейти <i class="fas fa-arrow-right"></i></span>
+        </a>
+        <a href="/audit/infrastructure" class="module-card">
+            <div class="module-icon scanner"><i class="fas fa-server"></i></div>
+            <h3>Инфраструктура</h3>
+            <p>Информационные системы, технические средства, СЗИ</p>
+            <span class="module-link">Перейти <i class="fas fa-arrow-right"></i></span>
+        </a>
+        <a href="/audit/journals" class="module-card">
+            <div class="module-icon admin"><i class="fas fa-book"></i></div>
+            <h3>Журналы</h3>
+            <p>Ведение журналов учета и обработки информации</p>
+            <span class="module-link">Перейти <i class="fas fa-arrow-right"></i></span>
+        </a>
+        <a href="/audit/activity" class="module-card">
+            <div class="module-icon audit"><i class="fas fa-tasks"></i></div>
+            <h3>Деятельность</h3>
+            <p>Ответственные лица, комиссии, проверки, гарантии</p>
+            <span class="module-link">Перейти <i class="fas fa-arrow-right"></i></span>
+        </a>
+        <a href="/audit/calendar" class="module-card">
+            <div class="module-icon scanner"><i class="fas fa-calendar"></i></div>
+            <h3>Календарь</h3>
+            <p>Планирование мероприятий и событий</p>
+            <span class="module-link">Перейти <i class="fas fa-arrow-right"></i></span>
+        </a>
+        <a href="/audit/documents" class="module-card">
+            <div class="module-icon admin"><i class="fas fa-folder"></i></div>
+            <h3>Документы</h3>
+            <p>Справочники и нормативно-правовые акты</p>
+            <span class="module-link">Перейти <i class="fas fa-arrow-right"></i></span>
+        </a>
+    </div>
+
+    <div class="activity-section">
+        <h2><i class="fas fa-history"></i> Последняя активность</h2>
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Дата</th>
+                    <th>Событие</th>
+                    <th>Пользователь</th>
+                    <th>Статус</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var activity in Model.Activities)
+                {
+                    <tr>
+                        <td>@activity.Date.ToString("dd.MM.yyyy HH:mm")</td>
+                        <td>@activity.Event</td>
+                        <td>@activity.User</td>
+                        <td><span class="badge success">@activity.Status</span></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

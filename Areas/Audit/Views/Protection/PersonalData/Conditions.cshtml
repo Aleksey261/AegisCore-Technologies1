@@ -1,0 +1,678 @@
+@{
+    ViewData["Title"] = "Условия обработки";
+}
+
+<div class="audit-page">
+    <div class="page-header">
+        <h1>
+            <a href="/audit/protection" style="color: #64748b; text-decoration: none; margin-right: 12px; font-size: 24px;">
+                <i class="fas fa-arrow-left"></i>
+            </a>
+            <i class="fas fa-cog"></i>
+            Условия обработки
+        </h1>
+        <p style="color: #64748b; margin-top: 8px; margin-left: 36px;">
+            Регламентирование доступа должностных лиц к ПДн
+        </p>
+    </div>
+
+    <div class="tabs-nav" style="margin-bottom: 24px;">
+        <a href="/audit/protection/personal-data" class="tab-nav-item">
+            <i class="fas fa-users"></i> Субъекты ПДн
+        </a>
+        <a href="/audit/protection/personal-data/categories" class="tab-nav-item">
+            <i class="fas fa-list"></i> Категории ПДн
+        </a>
+        <a href="/audit/protection/personal-data/legal-basis" class="tab-nav-item">
+            <i class="fas fa-file-contract"></i> Правовые основания
+        </a>
+        <a href="/audit/protection/personal-data/purposes" class="tab-nav-item">
+            <i class="fas fa-bullseye"></i> Цели обработки
+        </a>
+        <a href="/audit/protection/personal-data/conditions" class="tab-nav-item active">
+            <i class="fas fa-cog"></i> Условия обработки
+        </a>
+        <a href="/audit/protection/personal-data/internal" class="tab-nav-item">
+            <i class="fas fa-building"></i> Обработка внутри организации
+        </a>
+        <a href="/audit/protection/personal-data/third-parties" class="tab-nav-item">
+            <i class="fas fa-handshake"></i> Обработка третьими лицами
+        </a>
+        <a href="/audit/protection/personal-data/non-automated" class="tab-nav-item">
+            <i class="fas fa-file-alt"></i> Неавтоматизированная обработка
+        </a>
+        <a href="/audit/protection/personal-data/automated" class="tab-nav-item">
+            <i class="fas fa-database"></i> Обработка ПДн в ИС
+        </a>
+        <a href="/audit/protection/personal-data/transboundary" class="tab-nav-item">
+            <i class="fas fa-globe"></i> Трансграничная передача
+        </a>
+    </div>
+
+    <div class="toolbar">
+        <div class="toolbar-left">
+            <button class="btn btn-primary" onclick="openAddModal()">
+                <i class="fas fa-plus"></i> Добавить
+            </button>
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" onclick="toggleDropdown('exportDropdown'); event.stopPropagation();">
+                    <i class="fas fa-download"></i> Экспорт в файл
+                </button>
+                <div class="dropdown-menu" id="exportDropdown">
+                    <a onclick="exportTable('xlsx')"><i class="fas fa-file-excel"></i> Экспорт в XLSX</a>
+                    <a onclick="exportTable('pdf')"><i class="fas fa-file-pdf"></i> Экспорт в PDF</a>
+                </div>
+            </div>
+            <button class="btn btn-secondary" onclick="toggleTableSettings()">
+                <i class="fas fa-cog"></i> Настройка таблицы
+            </button>
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchInput" placeholder="Поиск..." oninput="filterTable()" />
+            </div>
+        </div>
+    </div>
+
+    <div class="table-container">
+        <table class="data-table" id="dataTable">
+            <thead>
+                <tr>
+                    <th class="th-sortable" onclick="sortTable(0)">
+                        <div class="th-header"><span>Организация</span><i class="fas fa-sort sortable-icon"></i></div>
+                        <div class="th-filter-row"><input type="text" class="filter-inline-input" placeholder="Поиск..." oninput="filterTableColumn(0, this.value)" /></div>
+                    </th>
+                    <th class="th-sortable" onclick="sortTable(1)">
+                        <div class="th-header"><span>Отдел</span><i class="fas fa-sort sortable-icon"></i></div>
+                        <div class="th-filter-row"><input type="text" class="filter-inline-input" placeholder="Поиск..." oninput="filterTableColumn(1, this.value)" /></div>
+                    </th>
+                    <th class="th-sortable" onclick="sortTable(2)">
+                        <div class="th-header"><span>Субъект ПДн</span><i class="fas fa-sort sortable-icon"></i></div>
+                        <div class="th-filter-row"><input type="text" class="filter-inline-input" placeholder="Поиск..." oninput="filterTableColumn(2, this.value)" /></div>
+                    </th>
+                    <th class="th-sortable" onclick="sortTable(3)">
+                        <div class="th-header"><span>Категория ПДн</span><i class="fas fa-sort sortable-icon"></i></div>
+                        <div class="th-filter-row"><input type="text" class="filter-inline-input" placeholder="Поиск..." oninput="filterTableColumn(3, this.value)" /></div>
+                    </th>
+                    <th class="th-sortable" onclick="sortTable(4)">
+                        <div class="th-header"><span>Правовые основания</span><i class="fas fa-sort sortable-icon"></i></div>
+                        <div class="th-filter-row"><input type="text" class="filter-inline-input" placeholder="Поиск..." oninput="filterTableColumn(4, this.value)" /></div>
+                    </th>
+                    <th class="th-sortable" onclick="sortTable(5)">
+                        <div class="th-header"><span>Цели обработки</span><i class="fas fa-sort sortable-icon"></i></div>
+                        <div class="th-filter-row"><input type="text" class="filter-inline-input" placeholder="Поиск..." oninput="filterTableColumn(5, this.value)" /></div>
+                    </th>
+                    <th class="th-sortable" onclick="sortTable(6)" style="width: 150px; text-align: center;">
+                        <div class="th-header" style="justify-content: center;"><span>С использованием ИС</span><i class="fas fa-sort sortable-icon"></i></div>
+                        <div class="th-filter-row">
+                            <select class="filter-inline-select" onchange="filterCheckboxColumn(6, this.value)">
+                                <option value="">(Все)</option>
+                                <option value="Да">Да</option>
+                                <option value="Нет">Нет</option>
+                            </select>
+                        </div>
+                    </th>
+                    <th class="th-sortable" onclick="sortTable(7)" style="width: 100px; text-align: center;">
+                        <div class="th-header" style="justify-content: center;"><span>На бумаге</span><i class="fas fa-sort sortable-icon"></i></div>
+                        <div class="th-filter-row">
+                            <select class="filter-inline-select" onchange="filterCheckboxColumn(7, this.value)">
+                                <option value="">(Все)</option>
+                                <option value="Да">Да</option>
+                                <option value="Нет">Нет</option>
+                            </select>
+                        </div>
+                    </th>
+                    <th style="width: 120px;">Действия</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody">
+                <tr><td colspan="9" style="text-align: center; padding: 40px; color: #94a3b8;"><i class="fas fa-info-circle" style="font-size: 48px; margin-bottom: 16px; display: block;"></i>Условия обработки не добавлены. Нажмите "Добавить" для создания первой записи.</td></tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Модальное окно добавления -->
+<div class="modal" id="addModal">
+    <div class="modal-content" style="max-width: 700px;">
+        <div class="modal-header"><h3><i class="fas fa-plus"></i> Добавление условия обработки</h3><button class="modal-close" onclick="closeModal('addModal')">&times;</button></div>
+        <div class="modal-body">
+            <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                <div class="form-group">
+                    <label>Организация <span class="required">*</span></label>
+                    <div class="input-with-buttons">
+                        <select id="modalOrganization" class="form-control" required>
+                            <option value="">Выбрать...</option>
+                            <option value="ООО Пример">ООО Пример</option>
+                            <option value="АО Компания">АО Компания</option>
+                        </select>
+                        <button type="button" class="btn-icon-ref" onclick="openDictionaryModal('organization')" title="Добавить"><i class="fas fa-plus"></i></button>
+                        <button type="button" class="btn-icon-ref" onclick="editDictionary('organization')" title="Редактировать"><i class="fas fa-edit"></i></button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Отдел <span class="required">*</span></label>
+                    <div class="input-with-buttons">
+                        <select id="modalDepartment" class="form-control" required>
+                            <option value="">Выбрать...</option>
+                            <option value="Бухгалтерия">Бухгалтерия</option>
+                            <option value="Отдел кадров">Отдел кадров</option>
+                            <option value="IT отдел">IT отдел</option>
+                        </select>
+                        <button type="button" class="btn-icon-ref" onclick="openDictionaryModal('department')" title="Добавить"><i class="fas fa-plus"></i></button>
+                        <button type="button" class="btn-icon-ref" onclick="editDictionary('department')" title="Редактировать"><i class="fas fa-edit"></i></button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                <div class="form-group">
+                    <label>Субъект ПДн <span class="required">*</span></label>
+                    <div class="input-with-buttons">
+                        <select id="modalSubject" class="form-control" required>
+                            <option value="">Выбрать...</option>
+                            <option value="Работники">Работники</option>
+                            <option value="Клиенты">Клиенты</option>
+                            <option value="Поставщики">Поставщики</option>
+                        </select>
+                        <button type="button" class="btn-icon-ref" onclick="openDictionaryModal('subject')" title="Добавить"><i class="fas fa-plus"></i></button>
+                        <button type="button" class="btn-icon-ref" onclick="editDictionary('subject')" title="Редактировать"><i class="fas fa-edit"></i></button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Категория ПДн</label>
+                    <div class="input-with-buttons">
+                        <select id="modalCategory" class="form-control">
+                            <option value="">Выбрать...</option>
+                            <option value="Общедоступные">Общедоступные</option>
+                            <option value="Биометрические">Биометрические</option>
+                            <option value="Специальные">Специальные</option>
+                            <option value="Иные">Иные</option>
+                        </select>
+                        <button type="button" class="btn-icon-ref" onclick="openDictionaryModal('category')" title="Добавить"><i class="fas fa-plus"></i></button>
+                        <button type="button" class="btn-icon-ref" onclick="editDictionary('category')" title="Редактировать"><i class="fas fa-edit"></i></button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                <div class="form-group">
+                    <label>Правовые основания</label>
+                    <div class="input-with-buttons">
+                        <select id="modalLegalBasis" class="form-control">
+                            <option value="">Выбрать...</option>
+                            <option value="152-ФЗ">152-ФЗ</option>
+                            <option value="Трудовой кодекс">Трудовой кодекс</option>
+                        </select>
+                        <button type="button" class="btn-icon-ref" onclick="openDictionaryModal('legalBasis')" title="Добавить"><i class="fas fa-plus"></i></button>
+                        <button type="button" class="btn-icon-ref" onclick="editDictionary('legalBasis')" title="Редактировать"><i class="fas fa-edit"></i></button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Цели обработки</label>
+                    <div class="input-with-buttons">
+                        <select id="modalPurpose" class="form-control">
+                            <option value="">Выбрать...</option>
+                            <option value="Ведение кадрового учета">Ведение кадрового учета</option>
+                            <option value="Исполнение договора">Исполнение договора</option>
+                        </select>
+                        <button type="button" class="btn-icon-ref" onclick="openDictionaryModal('purpose')" title="Добавить"><i class="fas fa-plus"></i></button>
+                        <button type="button" class="btn-icon-ref" onclick="editDictionary('purpose')" title="Редактировать"><i class="fas fa-edit"></i></button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-group" style="margin-top: 16px;">
+                <label style="display: flex; align-items: center; gap: 16px; cursor: pointer;">
+                    <input type="checkbox" id="modalWithIS" style="width: 18px; height: 18px;" onchange="checkSubjectUsage()" />
+                    <span>С использованием ИС</span>
+                </label>
+            </div>
+            <div class="form-group">
+                <label style="display: flex; align-items: center; gap: 16px; cursor: pointer;">
+                    <input type="checkbox" id="modalOnPaper" style="width: 18px; height: 18px;" />
+                    <span>На бумаге</span>
+                </label>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" onclick="closeModal('addModal')">Отмена</button>
+            <button type="button" class="btn btn-primary" onclick="saveData()"><i class="fas fa-save"></i> Сохранить</button>
+        </div>
+    </div>
+</div>
+
+<!-- Модальное окно добавления записи в справочник -->
+<div class="modal" id="dictionaryModal">
+    <div class="modal-content" style="max-width: 400px;">
+        <div class="modal-header"><h3><i class="fas fa-plus"></i> Добавление записи в справочник</h3><button class="modal-close" onclick="closeModal('dictionaryModal')">&times;</button></div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label>Наименование <span class="required">*</span></label>
+                <input type="text" id="dictionaryName" class="form-control" required placeholder="Введите наименование" />
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" onclick="closeModal('dictionaryModal')">Отмена</button>
+            <button type="button" class="btn btn-primary" onclick="saveDictionary()"><i class="fas fa-save"></i> Сохранить</button>
+        </div>
+    </div>
+</div>
+
+<!-- Модальное окно настройки таблицы -->
+<div class="modal" id="settingsModal">
+    <div class="modal-content" style="max-width: 500px;">
+        <div class="modal-header"><h3><i class="fas fa-cog"></i> Настройка таблицы</h3><button class="modal-close" onclick="closeModal('settingsModal')">&times;</button></div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label>Отображаемые столбцы:</label>
+                <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 12px;">
+                    <label class="checkbox-label"><input type="checkbox" data-column="0" onchange="toggleColumn(0, this.checked)" /><span>Организация</span></label>
+                    <label class="checkbox-label"><input type="checkbox" data-column="1" checked onchange="toggleColumn(1, this.checked)" /><span>Отдел</span></label>
+                    <label class="checkbox-label"><input type="checkbox" data-column="2" checked onchange="toggleColumn(2, this.checked)" /><span>Субъект ПДн</span></label>
+                    <label class="checkbox-label"><input type="checkbox" data-column="3" checked onchange="toggleColumn(3, this.checked)" /><span>Категория ПДн</span></label>
+                    <label class="checkbox-label"><input type="checkbox" data-column="4" onchange="toggleColumn(4, this.checked)" /><span>Правовые основания</span></label>
+                    <label class="checkbox-label"><input type="checkbox" data-column="5" onchange="toggleColumn(5, this.checked)" /><span>Цели обработки</span></label>
+                    <label class="checkbox-label"><input type="checkbox" data-column="6" checked onchange="toggleColumn(6, this.checked)" /><span>С использованием ИС</span></label>
+                    <label class="checkbox-label"><input type="checkbox" data-column="7" checked onchange="toggleColumn(7, this.checked)" /><span>На бумаге</span></label>
+                    <label class="checkbox-label"><input type="checkbox" data-column="8" checked onchange="toggleColumn(8, this.checked)" /><span>Действия</span></label>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" onclick="resetTableSettings()"><i class="fas fa-undo"></i> Сбросить настройки</button>
+            <button type="button" class="btn btn-primary" onclick="closeModal('settingsModal')"><i class="fas fa-check"></i> Применить</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    let tableData = [];
+    let sortDirection = 0;
+    // ✅ ИЗМЕНЕНО: Настройки по умолчанию согласно Рисунку 1
+    let columnVisibility = [false, true, true, true, false, false, true, true, true];
+    let currentDictionaryType = '';
+    let currentEditId = null;
+
+    // Справочники
+    let dictionaries = {
+        organization: ['ООО Пример', 'АО Компания'],
+        department: ['Бухгалтерия', 'Отдел кадров', 'IT отдел'],
+        subject: ['Работники', 'Клиенты', 'Поставщики'],
+        category: ['Общедоступные', 'Биометрические', 'Специальные', 'Иные'],
+        legalBasis: ['152-ФЗ', 'Трудовой кодекс'],
+        purpose: ['Ведение кадрового учета', 'Исполнение договора']
+    };
+
+    // ✅ НОВОЕ: Применяем настройки видимости при загрузке страницы
+    document.addEventListener('DOMContentLoaded', function() {
+        applyColumnVisibility();
+        syncCheckboxStates();
+    });
+
+    function openAddModal() {
+        document.getElementById('modalOrganization').value = '';
+        document.getElementById('modalDepartment').value = '';
+        document.getElementById('modalSubject').value = '';
+        document.getElementById('modalCategory').value = '';
+        document.getElementById('modalLegalBasis').value = '';
+        document.getElementById('modalPurpose').value = '';
+        document.getElementById('modalWithIS').checked = false;
+        document.getElementById('modalOnPaper').checked = false;
+        document.getElementById('addModal').classList.add('show');
+    }
+    function closeModal(modalId) { document.getElementById(modalId).classList.remove('show'); }
+
+    // Открытие модального окна справочника
+    function openDictionaryModal(type) {
+        currentDictionaryType = type;
+        document.getElementById('dictionaryName').value = '';
+        document.getElementById('dictionaryModal').classList.add('show');
+    }
+
+    // Редактирование справочника
+    function editDictionary(type) {
+        alert('Редактирование справочника "' + type + '" будет реализовано');
+    }
+
+    // Сохранение записи в справочник
+    function saveDictionary() {
+        const name = document.getElementById('dictionaryName').value.trim();
+        if (!name) {
+            alert('Пожалуйста, введите наименование');
+            return;
+        }
+        
+        // Добавляем в справочник
+        if (!dictionaries[currentDictionaryType].includes(name)) {
+            dictionaries[currentDictionaryType].push(name);
+        }
+        
+        // Обновляем select
+        updateSelectOptions(currentDictionaryType);
+        
+        // Выбираем добавленное значение
+        document.getElementById('modal' + capitalizeFirstLetter(currentDictionaryType)).value = name;
+        
+        closeModal('dictionaryModal');
+    }
+
+    // Обновление опций в select
+    function updateSelectOptions(type) {
+        const selectId = 'modal' + capitalizeFirstLetter(type);
+        const select = document.getElementById(selectId);
+        const currentValue = select.value;
+        
+        // Очищаем и заполняем заново
+        select.innerHTML = '<option value="">Выбрать...</option>';
+        dictionaries[type].forEach(item => {
+            const option = document.createElement('option');
+            option.value = item;
+            option.textContent = item;
+            select.appendChild(option);
+        });
+        
+        // Восстанавливаем выбранное значение
+        if (currentValue) select.value = currentValue;
+    }
+
+    function capitalizeFirstLetter(string) {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    }
+
+    // Проверка использования субъекта ПДн
+    function checkSubjectUsage() {
+        const withIS = document.getElementById('modalWithIS').checked;
+        const subject = document.getElementById('modalSubject').value;
+        
+        // Проверяем, используется ли субъект в ИСПДн (имитация)
+        if (!withIS && subject) {
+            // Здесь должна быть проверка на использование в ИСПДн
+            // Для примера показываем сообщение
+            alert('Невозможно изменить. Субъект ПДн используется в разделе ИСПДн.');
+            document.getElementById('modalWithIS').checked = true;
+        }
+    }
+
+    function saveData() {
+        const organization = document.getElementById('modalOrganization').value;
+        const department = document.getElementById('modalDepartment').value;
+        const subject = document.getElementById('modalSubject').value;
+        const category = document.getElementById('modalCategory').value;
+        const legalBasis = document.getElementById('modalLegalBasis').value;
+        const purpose = document.getElementById('modalPurpose').value;
+        const withIS = document.getElementById('modalWithIS').checked;
+        const onPaper = document.getElementById('modalOnPaper').checked;
+
+        if (!organization || !department || !subject) {
+            alert('Пожалуйста, заполните все обязательные поля');
+            return;
+        }
+
+        if (currentEditId !== null) {
+            // Редактирование существующей записи
+            const index = tableData.findIndex(r => r.id === currentEditId);
+            if (index !== -1) {
+                tableData[index] = {
+                    ...tableData[index],
+                    organization,
+                    department,
+                    subject,
+                    category: category || '—',
+                    legalBasis: legalBasis || '—',
+                    purpose: purpose || '—',
+                    withIS,
+                    onPaper
+                };
+            }
+            currentEditId = null;
+        } else {
+            // Добавление новой записи
+            tableData.push({ 
+                id: Date.now(), 
+                organization, 
+                department, 
+                subject, 
+                category: category || '—',
+                legalBasis: legalBasis || '—',
+                purpose: purpose || '—',
+                withIS,
+                onPaper
+            });
+        }
+        
+        renderTable();
+        closeModal('addModal');
+    }
+
+    function filterTable() { renderTable(document.getElementById('searchInput').value.toLowerCase()); }
+
+    // ✅ НОВОЕ: Фильтрация по чекбоксам (столбцы 6 и 7)
+    function filterCheckboxColumn(columnIndex, value) {
+        const tbody = document.getElementById('tableBody');
+        const rows = tbody.querySelectorAll('tr');
+        
+        rows.forEach(row => {
+            const cell = row.cells[columnIndex];
+            if (cell) {
+                if (value === '') {
+                    // Если выбрано "(Все)", показываем все строки
+                    row.style.display = '';
+                } else {
+                    // Иначе фильтруем по тексту в ячейке
+                    const cellText = cell.textContent.trim();
+                    const matches = (value === 'Да' && cellText.includes('fa-check')) || 
+                                   (value === 'Нет' && cellText.includes('fa-times'));
+                    row.style.display = matches ? '' : 'none';
+                }
+            }
+        });
+    }
+
+    function sortTable(columnIndex) {
+        sortDirection = columnIndex === sortDirection ? -sortDirection : 1;
+        sortDirection = sortDirection || 1;
+        const keys = ['organization', 'department', 'subject', 'category', 'legalBasis', 'purpose'];
+        
+        tableData.sort((a, b) => {
+            let aVal, bVal;
+            
+            // ✅ ИЗМЕНЕНО: Добавлена сортировка для столбцов 6 и 7
+            if (columnIndex === 6) {
+                // Сортировка по "С использованием ИС"
+                aVal = a.withIS ? 1 : 0;
+                bVal = b.withIS ? 1 : 0;
+            } else if (columnIndex === 7) {
+                // Сортировка по "На бумаге"
+                aVal = a.onPaper ? 1 : 0;
+                bVal = b.onPaper ? 1 : 0;
+            } else {
+                const key = keys[columnIndex] || '';
+                aVal = a[key].toString().toLowerCase();
+                bVal = b[key].toString().toLowerCase();
+            }
+            
+            return aVal < bVal ? -1 * sortDirection : (aVal > bVal ? 1 * sortDirection : 0);
+        });
+        renderTable();
+    }
+
+    function renderTable(searchTerm = '') {
+        const tbody = document.getElementById('tableBody');
+        tbody.innerHTML = '';
+        const filteredData = tableData.filter(row => {
+            if (!searchTerm) return true;
+            return row.organization.toLowerCase().includes(searchTerm) || 
+                   row.department.toLowerCase().includes(searchTerm) ||
+                   row.subject.toLowerCase().includes(searchTerm) ||
+                   row.category.toLowerCase().includes(searchTerm);
+        });
+
+        if (filteredData.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="9" style="text-align: center; padding: 40px; color: #94a3b8;"><i class="fas fa-info-circle" style="font-size: 48px; margin-bottom: 16px; display: block;"></i>${searchTerm ? 'Ничего не найдено' : 'Условия обработки не добавлены. Нажмите "Добавить" для создания первой записи.'}</td></tr>`;
+            return;
+        }
+
+        filteredData.forEach(row => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `<td><strong>${row.organization}</strong></td><td>${row.department}</td><td><span class="badge info">${row.subject}</span></td>
+                <td>${row.category}</td><td>${row.legalBasis}</td><td>${row.purpose}</td>
+                <td style="text-align: center;">${row.withIS ? '<i class="fas fa-check" style="color: #10b981;"></i>' : '<i class="fas fa-times" style="color: #ef4444;"></i>'}</td>
+                <td style="text-align: center;">${row.onPaper ? '<i class="fas fa-check" style="color: #10b981;"></i>' : '<i class="fas fa-times" style="color: #ef4444;"></i>'}</td>
+                <td class="actions"><button class="btn-icon edit" onclick="editItem(${row.id})" title="Редактировать"><i class="fas fa-edit"></i></button>
+                <button class="btn-icon delete" onclick="deleteItem(${row.id})" title="Удалить"><i class="fas fa-trash"></i></button></td>`;
+            tbody.appendChild(tr);
+        });
+        applyColumnVisibility();
+    }
+
+    function editItem(id) {
+        const item = tableData.find(r => r.id === id);
+        if (!item) return;
+        
+        currentEditId = id;
+        document.getElementById('modalOrganization').value = item.organization;
+        document.getElementById('modalDepartment').value = item.department;
+        document.getElementById('modalSubject').value = item.subject;
+        document.getElementById('modalCategory').value = item.category === '—' ? '' : item.category;
+        document.getElementById('modalLegalBasis').value = item.legalBasis === '—' ? '' : item.legalBasis;
+        document.getElementById('modalPurpose').value = item.purpose === '—' ? '' : item.purpose;
+        document.getElementById('modalWithIS').checked = item.withIS;
+        document.getElementById('modalOnPaper').checked = item.onPaper;
+        document.getElementById('addModal').classList.add('show');
+    }
+
+    function deleteItem(id) {
+        // Проверяем, используется ли запись (имитация)
+        const isUsed = Math.random() > 0.7; // Для демонстрации
+        
+        if (isUsed) {
+            alert('Невозможно удалить. Данная запись используется.');
+            return;
+        }
+        
+        if (!confirm('Вы уверены, что хотите удалить эту запись?')) return;
+        tableData = tableData.filter(r => r.id !== id);
+        renderTable();
+    }
+
+    function exportTable(format) { closeAllDropdowns(); alert(`Экспорт в формате ${format.toUpperCase()} будет реализован`); }
+    function toggleTableSettings() { 
+        syncCheckboxStates(); // ✅ Синхронизируем чекбоксы при открытии
+        document.getElementById('settingsModal').classList.add('show'); 
+    }
+
+    function toggleColumn(columnIndex, visible) {
+        columnVisibility[columnIndex] = visible;
+        const table = document.getElementById('dataTable');
+        const th = table.querySelectorAll('thead th')[columnIndex];
+        if (th) th.style.display = visible ? '' : 'none';
+        const rows = table.querySelectorAll('tbody tr');
+        rows.forEach(row => {
+            const td = row.querySelectorAll('td')[columnIndex];
+            if (td) td.style.display = visible ? '' : 'none';
+        });
+    }
+
+    function applyColumnVisibility() {
+        const table = document.getElementById('dataTable');
+        const ths = table.querySelectorAll('thead th');
+        const rows = table.querySelectorAll('tbody tr');
+        ths.forEach((th, index) => {
+            if (columnVisibility[index] !== undefined) th.style.display = columnVisibility[index] ? '' : 'none';
+        });
+        rows.forEach(row => {
+            const tds = row.querySelectorAll('td');
+            tds.forEach((td, index) => {
+                if (columnVisibility[index] !== undefined) td.style.display = columnVisibility[index] ? '' : 'none';
+            });
+        });
+    }
+
+    // ✅ НОВОЕ: Синхронизация состояния чекбоксов с массивом columnVisibility
+    function syncCheckboxStates() {
+        document.querySelectorAll('#settingsModal input[type="checkbox"]').forEach((cb, index) => {
+            cb.checked = columnVisibility[index];
+        });
+    }
+
+    function resetTableSettings() {
+        if (!confirm('Сбросить все настройки таблицы к значениям по умолчанию?')) return;
+        // ✅ ИЗМЕНЕНО: Сброс к настройкам по умолчанию согласно Рисунку 1
+        columnVisibility = [false, true, true, true, false, false, true, true, true];
+        
+        // Обновляем чекбоксы в модальном окне
+        syncCheckboxStates();
+        
+        applyColumnVisibility();
+        alert('Настройки таблицы сброшены');
+    }
+
+    function toggleDropdown(dropdownId) {
+        const dropdown = document.getElementById(dropdownId);
+        const isOpen = dropdown.classList.contains('show');
+        closeAllDropdowns();
+        if (!isOpen) dropdown.classList.add('show');
+    }
+    function closeAllDropdowns() { document.querySelectorAll('.dropdown-menu').forEach(d => d.classList.remove('show')); }
+    document.addEventListener('click', function(e) { if (!e.target.closest('.dropdown')) closeAllDropdowns(); });
+    window.onclick = function(event) { if (event.target.classList.contains('modal')) event.target.classList.remove('show'); }
+
+    function filterTableColumn(columnIndex, value) {
+        const tbody = document.getElementById('tableBody');
+        const rows = tbody.querySelectorAll('tr');
+        const searchTerm = value.toLowerCase();
+        rows.forEach(row => {
+            const cell = row.cells[columnIndex];
+            if (cell) {
+                const cellText = cell.textContent.toLowerCase();
+                row.style.display = cellText.includes(searchTerm) ? '' : 'none';
+            }
+        });
+    }
+</script>
+
+<style>
+    .th-sortable { cursor: pointer; user-select: none; }
+    .th-sortable:hover { background: #f1f5f9; }
+    .th-header { display: flex; align-items: center; gap: 6px; }
+    .sortable-icon { color: #94a3b8; font-size: 12px; }
+    .actions { display: flex; gap: 4px; justify-content: flex-end; }
+    .th-filter-row { margin-top: 4px; }
+    .filter-inline-input {
+        width: 100%; padding: 6px 10px; border: 1px solid #e2e8f0; border-radius: 6px;
+        font-size: 12px; background: white; font-family: inherit;
+    }
+    .filter-inline-select {
+        width: 100%; padding: 6px 10px; border: 1px solid #e2e8f0; border-radius: 6px;
+        font-size: 12px; background: white; font-family: inherit; cursor: pointer;
+    }
+    .filter-inline-select:focus { outline: none; border-color: #4F46E5; box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.1); }
+    .filter-inline-input:focus { outline: none; border-color: #4F46E5; box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.1); }
+    .dropdown { position: relative; display: inline-block; }
+    .dropdown-toggle { cursor: pointer; }
+    .dropdown-menu {
+        display: none; position: absolute; top: 100%; left: 0; min-width: 180px;
+        background: white; border: 1px solid #e2e8f0; border-radius: 8px;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); z-index: 1000; margin-top: 4px;
+    }
+    .dropdown-menu.show { display: block; }
+    .dropdown-menu a {
+        display: flex; align-items: center; gap: 8px; padding: 10px 16px;
+        color: #1e293b; text-decoration: none; font-size: 14px; cursor: pointer; transition: background 0.2s;
+    }
+    .dropdown-menu a:hover { background: #f1f5f9; }
+    .dropdown-menu a:first-child { border-radius: 8px 8px 0 0; }
+    .dropdown-menu a:last-child { border-radius: 0 0 8px 8px; }
+    .dropdown-menu a i { width: 16px; text-align: center; }
+    .input-with-buttons { display: flex; gap: 8px; align-items: center; }
+    .input-with-buttons .form-control { flex: 1; }
+    .btn-icon-ref {
+        background: none; border: 1px solid #e2e8f0; border-radius: 6px;
+        padding: 8px 12px; cursor: pointer; color: #64748b;
+    }
+    .btn-icon-ref:hover { background: #f8fafc; color: #4F46E5; }
+    .checkbox-label {
+        display: flex; align-items: center; gap: 8px; cursor: pointer; font-size: 14px; color: #475569;
+    }
+    .checkbox-label input[type="checkbox"] { width: 18px; height: 18px; cursor: pointer; }
+</style>

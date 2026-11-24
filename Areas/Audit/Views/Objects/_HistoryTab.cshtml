@@ -1,0 +1,373 @@
+@model AegisCore.Models.ObjectsViewModel
+@{
+    var obj = Model.CurrentObject;
+    var history = obj?.ChangeHistory ?? new List<ChangeHistoryRecord>();
+}
+
+@if (obj == null || string.IsNullOrEmpty(obj.Id))
+{
+    <div class="alert alert-info"><i class="fas fa-info-circle"></i> Сначала сохраните основные сведения объекта.</div>
+}
+else
+{
+    <div class="form-group" style="margin-bottom: 20px;">
+        <label class="checkbox-label" style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+            <input type="checkbox" id="trackChanges" @(obj.TrackChanges ? "checked" : "") onchange="toggleTracking('@obj.Id', this.checked)" />
+            <span style="font-weight: 600; color: #1e293b;">Отслеживать изменения</span>
+        </label>
+        <p style="color: #64748b; font-size: 14px; margin-top: 8px; margin-left: 24px;">
+            При включённой опции система будет автоматически добавлять информацию обо всех изменениях конфигурации объекта
+        </p>
+    </div>
+
+    <div class="toolbar">
+        <div class="toolbar-left">
+            <button class="btn btn-primary" onclick="openAddHistoryModal()">
+                <i class="fas fa-plus"></i> Добавить запись
+            </button>
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Поиск..." oninput="filterHistoryTable(this.value)" />
+            </div>
+        </div>
+    </div>
+
+    <div class="table-container">
+        <table class="data-table" id="historyTable">
+            <thead>
+                <tr>
+                    <th class="th-sortable" onclick="sortTable('historyTable', 0)">
+                        <div class="th-header">
+                            <span>Дата внесения изменения</span>
+                            <i class="fas fa-sort sortable-icon"></i>
+                        </div>
+                        <div class="th-filter-row">
+                            <input type="text" class="filter-inline-input" placeholder="Поиск..." oninput="filterTable('historyTable', 0, this.value)" />
+                        </div>
+                    </th>
+                    <th class="th-sortable" onclick="sortTable('historyTable', 1)">
+                        <div class="th-header">
+                            <span>Тип изменения</span>
+                            <i class="fas fa-sort sortable-icon"></i>
+                        </div>
+                        <div class="th-filter-row">
+                            <input type="text" class="filter-inline-input" placeholder="Поиск..." oninput="filterTable('historyTable', 1, this.value)" />
+                        </div>
+                    </th>
+                    <th class="th-sortable" onclick="sortTable('historyTable', 2)">
+                        <div class="th-header">
+                            <span>Описание</span>
+                            <i class="fas fa-sort sortable-icon"></i>
+                        </div>
+                        <div class="th-filter-row">
+                            <input type="text" class="filter-inline-input" placeholder="Поиск..." oninput="filterTable('historyTable', 2, this.value)" />
+                        </div>
+                    </th>
+                    <th class="th-sortable" onclick="sortTable('historyTable', 3)">
+                        <div class="th-header">
+                            <span>Основание</span>
+                            <i class="fas fa-sort sortable-icon"></i>
+                        </div>
+                        <div class="th-filter-row">
+                            <input type="text" class="filter-inline-input" placeholder="Поиск..." oninput="filterTable('historyTable', 3, this.value)" />
+                        </div>
+                    </th>
+                    <th class="th-sortable" onclick="sortTable('historyTable', 4)">
+                        <div class="th-header">
+                            <span>Кем изменено</span>
+                            <i class="fas fa-sort sortable-icon"></i>
+                        </div>
+                        <div class="th-filter-row">
+                            <input type="text" class="filter-inline-input" placeholder="Поиск..." oninput="filterTable('historyTable', 4, this.value)" />
+                        </div>
+                    </th>
+                    <th style="width: 100px;"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (history.Any())
+                {
+                    @foreach (var record in history.OrderByDescending(h => h.Date))
+                    {
+                        <tr data-id="@record.Id">
+                            <td>@record.Date.ToString("dd.MM.yyyy HH:mm")</td>
+                            <td><span class="badge info">@(record.ChangeType ?? "—")</span></td>
+                            <td>@(record.Description ?? "—")</td>
+                            <td>@(record.Reason ?? "—")</td>
+                            <td>@(record.ChangedBy ?? "—")</td>
+                            <td class="actions">
+                                <button class="btn-icon edit" title="Редактировать" onclick="editHistoryRecord('@record.Id')">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr><td colspan="6" style="text-align: center; padding: 40px; color: #94a3b8;">
+                        <i class="fas fa-history" style="font-size: 48px; margin-bottom: 16px; display: block;"></i>
+                        История изменений пуста
+                    </td></tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+
+<!-- ✅ МОДАЛКА РЕДАКТИРОВАНИЯ ЗАПИСИ (Рисунок 117) -->
+<div class="modal" id="editHistoryModal">
+    <div class="modal-content" style="max-width: 600px;">
+        <div class="modal-header">
+            <h3>Редактирование записи</h3>
+            <button class="modal-close" onclick="closeModal('editHistoryModal')">&times;</button>
+        </div>
+        <div class="modal-body">
+            <form id="editHistoryForm" onsubmit="saveEditedHistoryRecord(event)">
+                <input type="hidden" id="editHistoryRecordId" />
+                
+                <div class="form-group">
+                    <label>Дата внесения изменения</label>
+                    <input type="datetime-local" id="editHistoryDate" class="form-control" readonly />
+                </div>
+                
+                <div class="form-group">
+                    <label>Основание внесения изменения <span class="required">*</span></label>
+                    <textarea id="editHistoryReason" class="form-control" rows="3" required placeholder="Например: Служебная записка №123 от 01.01.2026"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label>Пункт, в который внесены изменения</label>
+                    <select id="editHistoryPoint" class="form-control">
+                        <option value="">Выбрать...</option>
+                        <option value="ТС">Программно-технические средства</option>
+                        <option value="ПО">Общесистемное и прикладное ПО</option>
+                        <option value="СЗИ">СЗИ</option>
+                        <option value="СКЗИ">СКЗИ</option>
+                        <option value="Телеком">Телекоммуникационное оборудование</option>
+                        <option value="ИС">Информационные системы</option>
+                        <option value="Конфигурация">Конфигурация объекта</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>Краткая характеристика изменений</label>
+                    <textarea id="editHistoryDescription" class="form-control" rows="2" readonly></textarea>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal('editHistoryModal')">Отменить</button>
+                    <button type="submit" class="btn btn-primary">Сохранить сведения</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- ✅ МОДАЛКА ДОБАВЛЕНИЯ ЗАПИСИ -->
+<div class="modal" id="addHistoryModal">
+    <div class="modal-content" style="max-width: 600px;">
+        <div class="modal-header">
+            <h3>Добавление записи</h3>
+            <button class="modal-close" onclick="closeModal('addHistoryModal')">&times;</button>
+        </div>
+        <div class="modal-body">
+            <form id="addHistoryForm" onsubmit="saveHistoryRecord(event)">
+                <input type="hidden" id="addHistoryRecordId" />
+                
+                <div class="form-group">
+                    <label>Тип изменения <span class="required">*</span></label>
+                    <select id="addHistoryChangeType" class="form-control" required>
+                        <option value="">Выберите...</option>
+                        <option value="Добавление ТС">Добавление ТС</option>
+                        <option value="Удаление ТС">Удаление ТС</option>
+                        <option value="Добавление ПО">Добавление ПО</option>
+                        <option value="Изменение конфигурации">Изменение конфигурации</option>
+                        <option value="Обновление СЗИ">Обновление СЗИ</option>
+                        <option value="Аттестация">Аттестация</option>
+                        <option value="Другое">Другое</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>Описание <span class="required">*</span></label>
+                    <textarea id="addHistoryDescription" class="form-control" rows="3" required></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label>Основание внесения изменения <span class="required">*</span></label>
+                    <textarea id="addHistoryReason" class="form-control" rows="2" required placeholder="Например: Служебная записка №123 от 01.01.2026"></textarea>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal('addHistoryModal')">Отмена</button>
+                    <button type="submit" class="btn btn-primary">Сохранить сведения</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    const objectId = '@(obj?.Id ?? "")';
+    const historyRecords = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(history));
+    
+    function openAddHistoryModal() {
+        document.getElementById('addHistoryForm').reset();
+        document.getElementById('addHistoryModal').classList.add('show');
+    }
+    
+    function closeModal(id) { 
+        document.getElementById(id).classList.remove('show'); 
+    }
+    
+    function editHistoryRecord(id) {
+        const record = historyRecords.find(r => r.id === id);
+        if (!record) return;
+        
+        document.getElementById('editHistoryRecordId').value = record.id;
+        document.getElementById('editHistoryDate').value = record.date ? new Date(record.date).toISOString().slice(0, 16) : '';
+        document.getElementById('editHistoryReason').value = record.reason || '';
+        document.getElementById('editHistoryDescription').value = record.description || '';
+        
+        // Определяем пункт по типу изменения
+        let point = '';
+        if (record.changeType?.includes('ТС')) point = 'ТС';
+        else if (record.changeType?.includes('ПО')) point = 'ПО';
+        else if (record.changeType?.includes('СЗИ')) point = 'СЗИ';
+        else if (record.changeType?.includes('СКЗИ')) point = 'СКЗИ';
+        else if (record.changeType?.includes('Телеком')) point = 'Телеком';
+        else if (record.changeType?.includes('ИС')) point = 'ИС';
+        else if (record.changeType?.includes('конфигурации')) point = 'Конфигурация';
+        
+        document.getElementById('editHistoryPoint').value = point;
+        
+        document.getElementById('editHistoryModal').classList.add('show');
+    }
+    
+    function saveEditedHistoryRecord(e) {
+        e.preventDefault();
+        const recordId = document.getElementById('editHistoryRecordId').value;
+        const data = {
+            id: recordId,
+            reason: document.getElementById('editHistoryReason').value,
+            description: document.getElementById('editHistoryDescription').value
+        };
+        
+        fetch('/audit/objects/' + objectId + '/update-history', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        })
+        .then(r => r.json())
+        .then(result => {
+            if (result.success) {
+                closeModal('editHistoryModal');
+                location.reload();
+            } else {
+                alert(result.error || 'Ошибка при сохранении');
+            }
+        });
+    }
+    
+    function saveHistoryRecord(e) {
+        e.preventDefault();
+        const data = {
+            changeType: document.getElementById('addHistoryChangeType').value,
+            description: document.getElementById('addHistoryDescription').value,
+            reason: document.getElementById('addHistoryReason').value
+        };
+        
+        fetch('/audit/objects/' + objectId + '/add-history', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        })
+        .then(r => r.json())
+        .then(result => {
+            if (result.success) {
+                closeModal('addHistoryModal');
+                location.reload();
+            } else {
+                alert(result.error || 'Ошибка при сохранении');
+            }
+        });
+    }
+    
+    function toggleTracking(id, track) {
+        fetch('/audit/objects/' + id + '/toggle-tracking', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(track)
+        })
+        .then(r => r.json())
+        .then(result => { 
+            if (!result.success) alert(result.error || 'Ошибка при изменении настройки'); 
+        });
+    }
+    
+    function filterHistoryTable(value) {
+        const table = document.getElementById('historyTable');
+        if (!table) return;
+        const search = value.toLowerCase();
+        table.querySelectorAll('tbody tr').forEach(row => {
+            row.style.display = row.textContent.toLowerCase().includes(search) ? '' : 'none';
+        });
+    }
+    
+    // ✅ Поиск по столбцу
+    function filterTable(tableId, colIndex, value) {
+        const table = document.getElementById(tableId);
+        if (!table) return;
+        const searchValue = value.toLowerCase();
+        table.querySelectorAll('tbody tr').forEach(row => {
+            const cell = row.cells[colIndex];
+            if (cell) {
+                const text = cell.textContent.toLowerCase();
+                row.style.display = text.includes(searchValue) ? '' : 'none';
+            }
+        });
+    }
+    
+    // ✅ Сортировка таблицы
+    function sortTable(tableId, colIndex) {
+        const table = document.getElementById(tableId);
+        if (!table) return;
+        const tbody = table.querySelector('tbody');
+        const rows = Array.from(tbody.querySelectorAll('tr'));
+        
+        const currentDir = table.getAttribute('data-sort-dir') || 'asc';
+        const newDir = currentDir === 'asc' ? 'desc' : 'asc';
+        table.setAttribute('data-sort-dir', newDir);
+        
+        rows.sort((a, b) => {
+            const aText = a.cells[colIndex]?.textContent.trim() || '';
+            const bText = b.cells[colIndex]?.textContent.trim() || '';
+            if (newDir === 'asc') return aText.localeCompare(bText, 'ru');
+            else return bText.localeCompare(aText, 'ru');
+        });
+        
+        rows.forEach(row => tbody.appendChild(row));
+    }
+</script>
+
+<style>
+    .th-sortable { cursor: pointer; user-select: none; }
+    .th-sortable:hover { background: #f1f5f9; }
+    .th-header { display: flex; align-items: center; gap: 6px; margin-bottom: 8px; }
+    .sortable-icon { color: #94a3b8; font-size: 12px; }
+    .th-filter-row { margin-top: 4px; }
+    .filter-inline-input {
+        width: 100%;
+        padding: 6px 10px;
+        border: 1px solid #e2e8f0;
+        border-radius: 6px;
+        font-size: 12px;
+        background: white;
+    }
+    .filter-inline-input:focus {
+        outline: none;
+        border-color: #4F46E5;
+        box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.1);
+    }
+</style>

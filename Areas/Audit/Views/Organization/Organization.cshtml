@@ -1,0 +1,58 @@
+﻿@model AegisCore.Models.OrganizationViewModel
+@{
+    ViewData["Title"] = "Организация";
+}
+
+<div class="audit-page">
+    <div class="page-header">
+        <h1><i class="fas fa-building"></i> Организация</h1>
+    </div>
+
+    <div class="tabs-nav">
+        <a href="/audit/organization?section=general" class="tab-nav-item @(Model.ActiveTab == "general" ? "active" : "")">
+            <i class="fas fa-info-circle"></i> Общие сведения
+        </a>
+        <a href="/audit/organization?section=departments" class="tab-nav-item @(Model.ActiveTab == "departments" ? "active" : "")">
+            <i class="fas fa-sitemap"></i> Структурные подразделения
+        </a>
+        <a href="/audit/organization?section=rooms" class="tab-nav-item @(Model.ActiveTab == "rooms" ? "active" : "")">
+            <i class="fas fa-door-closed"></i> Помещения
+        </a>
+        <a href="/audit/organization?section=employees" class="tab-nav-item @(Model.ActiveTab == "employees" ? "active" : "")">
+            <i class="fas fa-users"></i> Сотрудники
+        </a>
+        <a href="/audit/organization?section=access" class="tab-nav-item @(Model.ActiveTab == "access" ? "active" : "")">
+            <i class="fas fa-key"></i> Доступы
+        </a>
+        <a href="/audit/organization?section=branches" class="tab-nav-item @(Model.ActiveTab == "branches" ? "active" : "")">
+            <i class="fas fa-code-branch"></i> Филиалы
+        </a>
+    </div>
+
+    <div class="tab-content">
+        @switch (Model.ActiveTab)
+        {
+            case "general":
+                @await Html.PartialAsync("~/Areas/Audit/Views/Organization/General.cshtml", Model)
+                break;
+            case "departments":
+                @await Html.PartialAsync("~/Areas/Audit/Views/Organization/Departments.cshtml", Model)
+                break;
+            case "rooms":
+                @await Html.PartialAsync("~/Areas/Audit/Views/Organization/Rooms.cshtml", Model)
+                break;
+            case "employees":
+                @await Html.PartialAsync("~/Areas/Audit/Views/Organization/Employees.cshtml", Model)
+                break;
+            case "access":
+                @await Html.PartialAsync("~/Areas/Audit/Views/Organization/Access.cshtml", Model)
+                break;
+            case "branches":
+                @await Html.PartialAsync("~/Areas/Audit/Views/Organization/Branches.cshtml", Model)
+                break;
+            default:
+                @await Html.PartialAsync("~/Areas/Audit/Views/Organization/General.cshtml", Model)
+                break;
+        }
+    </div>
+</div>

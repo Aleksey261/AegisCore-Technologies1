@@ -1,0 +1,502 @@
+@model AegisCore.Models.BranchMonitoringViewModel
+@{
+    ViewData["Title"] = "Мониторинг филиалов";
+}
+
+<div class="audit-page">
+    <div class="page-header">
+        <h1>
+            <a href="/audit/activity" style="color: #64748b; text-decoration: none; margin-right: 12px; font-size: 24px;">
+                <i class="fas fa-arrow-left"></i>
+            </a>
+            <i class="fas fa-sitemap"></i> Мониторинг филиалов
+        </h1>
+        <p style="color: #64748b; margin-top: 8px; margin-left: 36px;">
+            Оценка основных показателей по работе каждого из филиалов
+        </p>
+    </div>
+
+    <!-- Вкладки навигации -->
+    <div class="tabs-nav" style="margin-bottom: 24px;">
+        <a href="/audit/activity/responsible" class="tab-nav-item">Ответственные лица</a>
+        <a href="/audit/activity/commissions" class="tab-nav-item">Комиссии</a>
+        <a href="/audit/activity/documents" class="tab-nav-item">Документы</a>
+        <a href="/audit/activity/warranty" class="tab-nav-item">Гарантия</a>
+        <a href="/audit/activity/notifications" class="tab-nav-item">Уведомления</a>
+        <a href="/audit/activity/situations" class="tab-nav-item">Ситуации</a>
+        <a href="/audit/activity/monitoring" class="tab-nav-item active">Мониторинг</a>
+    </div>
+
+    <div class="form-content" style="background: white; border-radius: 8px; padding: 32px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+        <!-- Информационное сообщение -->
+        <div class="info-panel" style="margin-bottom: 24px; padding: 16px; background: #eef2ff; border-radius: 8px; border-left: 4px solid #4F46E5; display: flex; align-items: center; gap: 12px;">
+            <i class="fas fa-info-circle" style="color: #4F46E5; font-size: 18px;"></i>
+            <p style="margin: 0; color: #1e293b; font-size: 14px;">
+                Данные формируются автоматически по филиалам, указанным в разделе "Организация"
+            </p>
+        </div>
+
+        @if (Model.Branches != null && Model.Branches.Any())
+        {
+            <!-- Карточки филиалов -->
+            <div class="branches-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 20px;">
+                @foreach (var branch in Model.Branches)
+                {
+                    <div class="branch-card" style="background: white; border: 1px solid #e2e8f0; border-radius: 12px; padding: 24px; cursor: pointer; transition: all 0.3s ease;" onclick="openBranchDetails('@branch.Id')">
+                        <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 16px;">
+                            <div>
+                                <h3 style="margin: 0 0 4px 0; font-size: 16px; font-weight: 600; color: #1e293b;">
+                                    <i class="fas fa-building" style="color: #4F46E5; margin-right: 8px;"></i>
+                                    @branch.Name
+                                </h3>
+                                <p style="margin: 0; font-size: 13px; color: #64748b;">@branch.Address</p>
+                            </div>
+                            <div class="branch-status" style="padding: 4px 12px; border-radius: 12px; font-size: 12px; font-weight: 500; 
+                                @(branch.IsActive ? "background: #22c55e20; color: #22c55e;" : "background: #94a3b820; color: #94a3b8;")">
+                                @(branch.IsActive ? "Активен" : "Неактивен")
+                            </div>
+                        </div>
+                        
+                        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 16px;">
+                            <div style="text-align: center;">
+                                <div style="font-size: 20px; font-weight: 700; color: #1e293b;">@branch.EmployeesCount</div>
+                                <div style="font-size: 12px; color: #94a3b8;">Сотрудников</div>
+                            </div>
+                            <div style="text-align: center;">
+                                <div style="font-size: 20px; font-weight: 700; color: #1e293b;">@branch.PremisesCount</div>
+                                <div style="font-size: 12px; color: #94a3b8;">Помещений</div>
+                            </div>
+                            <div style="text-align: center;">
+                                <div style="font-size: 20px; font-weight: 700; color: @(branch.ReadinessPercent >= 80 ? "#22c55e" : branch.ReadinessPercent >= 50 ? "#eab308" : "#dc2626");">
+                                    @branch.ReadinessPercent%
+                                </div>
+                                <div style="font-size: 12px; color: #94a3b8;">Готовность</div>
+                            </div>
+                            <div style="text-align: center;">
+                                <div style="font-size: 20px; font-weight: 700; color: #1e293b;">@branch.IncidentsCount</div>
+                                <div style="font-size: 12px; color: #94a3b8;">Инцидентов</div>
+                            </div>
+                        </div>
+                        
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 16px; border-top: 1px solid #e2e8f0; font-size: 13px; color: #94a3b8;">
+                            <span>Последняя проверка: @(branch.LastInspectionDate?.ToString("dd.MM.yyyy") ?? "—")</span>
+                            <button class="btn btn-sm btn-primary" style="padding: 6px 16px; font-size: 13px;" onclick="event.stopPropagation(); openBranchDetails('@branch.Id')">
+                                Подробнее
+                            </button>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <div style="background: white; border-radius: 12px; padding: 60px 40px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.08);">
+                <i class="fas fa-sitemap" style="font-size: 64px; color: #cbd5e1; margin-bottom: 16px;"></i>
+                <h3 style="margin: 0 0 8px 0; font-size: 18px; font-weight: 600; color: #1e293b;">Филиалы не найдены</h3>
+                <p style="margin: 0 0 16px 0; color: #64748b; font-size: 14px;">Для начала работы добавьте филиалы в разделе "Организация"</p>
+                <button class="btn btn-primary" onclick="window.location.href='/audit/organization'">
+                    <i class="fas fa-plus"></i> Добавить филиал
+                </button>
+            </div>
+        }
+    </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- МОДАЛЬНОЕ ОКНО: Детали филиала -->
+<!-- ============================================================ -->
+<div class="modal" id="branchDetailsModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 2000; align-items: center; justify-content: center;">
+    <div class="modal-content" style="background: white; border-radius: 12px; max-width: 1200px; width: 95%; max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.3);">
+        <div class="modal-header" style="margin-bottom: 0; display: flex; justify-content: space-between; align-items: center; padding: 24px 32px; border-bottom: 1px solid #e2e8f0;">
+            <div>
+                <h2 id="branchDetailsTitle" style="margin: 0 0 4px 0; color: #1e293b; font-size: 20px;">Детали филиала</h2>
+                <p id="branchDetailsAddress" style="margin: 0; color: #64748b; font-size: 14px;">Адрес филиала</p>
+            </div>
+            <button type="button" class="btn-close" onclick="closeBranchDetails()" style="background: none; border: none; font-size: 28px; cursor: pointer; color: #64748b; padding: 0 4px; line-height: 1;">&times;</button>
+        </div>
+        
+        <div class="modal-body" style="padding: 32px;">
+            <!-- Вкладки внутри деталей филиала -->
+            <div class="sub-tabs" style="display: flex; gap: 4px; margin-bottom: 24px; background: #f1f5f9; padding: 4px; border-radius: 8px;">
+                <button class="sub-tab active" onclick="switchBranchTab('main', this)" style="padding: 8px 20px; border: none; background: transparent; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: 500; color: #475569; transition: all 0.2s;">
+                    Основные показатели
+                </button>
+                <button class="sub-tab" onclick="switchBranchTab('documents', this)" style="padding: 8px 20px; border: none; background: transparent; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: 500; color: #475569; transition: all 0.2s;">
+                    Готовность документов
+                </button>
+                <button class="sub-tab" onclick="switchBranchTab('inspections', this)" style="padding: 8px 20px; border: none; background: transparent; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: 500; color: #475569; transition: all 0.2s;">
+                    Готовность к проверкам
+                </button>
+                <button class="sub-tab" onclick="switchBranchTab('warranty', this)" style="padding: 8px 20px; border: none; background: transparent; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: 500; color: #475569; transition: all 0.2s;">
+                    Сроки гарантий
+                </button>
+                <button class="sub-tab" onclick="switchBranchTab('notifications', this)" style="padding: 8px 20px; border: none; background: transparent; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: 500; color: #475569; transition: all 0.2s;">
+                    Важные уведомления
+                </button>
+            </div>
+
+            <!-- Основные показатели -->
+            <div id="branch-main" class="branch-tab active">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; margin-bottom: 24px;">
+                    <div style="background: #f8fafc; border-radius: 8px; padding: 16px; border: 1px solid #e2e8f0;">
+                        <div style="font-size: 13px; color: #64748b; margin-bottom: 8px;">
+                            <i class="fas fa-users" style="color: #4F46E5; margin-right: 6px;"></i>
+                            Количество сотрудников
+                        </div>
+                        <div id="mainEmployees" style="font-size: 24px; font-weight: 600; color: #1e293b;">0</div>
+                    </div>
+                    
+                    <div style="background: #f8fafc; border-radius: 8px; padding: 16px; border: 1px solid #e2e8f0;">
+                        <div style="font-size: 13px; color: #64748b; margin-bottom: 8px;">
+                            <i class="fas fa-door-open" style="color: #059669; margin-right: 6px;"></i>
+                            Количество помещений
+                        </div>
+                        <div id="mainPremises" style="font-size: 24px; font-weight: 600; color: #1e293b;">0</div>
+                    </div>
+                    
+                    <div style="background: #f8fafc; border-radius: 8px; padding: 16px; border: 1px solid #e2e8f0;">
+                        <div style="font-size: 13px; color: #64748b; margin-bottom: 8px;">
+                            <i class="fas fa-calendar" style="color: #d97706; margin-right: 6px;"></i>
+                            Последний вход
+                        </div>
+                        <div id="mainLastLogin" style="font-size: 14px; font-weight: 500; color: #1e293b;">—</div>
+                    </div>
+                    
+                    <div style="background: #f8fafc; border-radius: 8px; padding: 16px; border: 1px solid #e2e8f0;">
+                        <div style="font-size: 13px; color: #64748b; margin-bottom: 8px;">
+                            <i class="fas fa-edit" style="color: #7c3aed; margin-right: 6px;"></i>
+                            Последние изменения
+                        </div>
+                        <div id="mainLastModified" style="font-size: 14px; font-weight: 500; color: #1e293b;">—</div>
+                    </div>
+                </div>
+
+                <!-- Готовность к проверкам (краткий список) -->
+                <div style="background: white; border-radius: 12px; padding: 24px; border: 1px solid #e2e8f0;">
+                    <h3 style="margin: 0 0 16px 0; font-size: 16px; font-weight: 600; color: #1e293b;">Готовность к проверкам</h3>
+                    <div id="inspectionsList" style="display: grid; gap: 12px;">
+                        <!-- Список регуляторов будет заполнен динамически -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Готовность документов -->
+            <div id="branch-documents" class="branch-tab" style="display: none;">
+                <div class="table-container" style="overflow-x: auto;">
+                    <table class="data-table" style="width: 100%; border-collapse: collapse;">
+                        <thead>
+                            <tr style="background: #f8fafc;">
+                                <th style="padding: 12px; text-align: left; border-bottom: 2px solid #e2e8f0; font-weight: 600; color: #475569;">Наименование документа</th>
+                                <th style="padding: 12px; text-align: left; border-bottom: 2px solid #e2e8f0; font-weight: 600; color: #475569;">Статус</th>
+                                <th style="padding: 12px; text-align: left; border-bottom: 2px solid #e2e8f0; font-weight: 600; color: #475569;">Дата формирования</th>
+                                <th style="padding: 12px; text-align: center; border-bottom: 2px solid #e2e8f0; font-weight: 600; color: #475569; width: 100px;">Действия</th>
+                            </tr>
+                        </thead>
+                        <tbody id="documentsTableBody">
+                            <!-- Данные будут заполнены динамически -->
+                        </tbody>
+                    </table>
+                </div>
+                <div style="margin-top: 16px; padding: 16px; background: #f8fafc; border-radius: 8px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                        <span style="font-size: 14px; color: #475569;">Общая готовность документов:</span>
+                        <strong style="font-size: 16px; color: #1e293b;">92%</strong>
+                    </div>
+                    <div style="width: 100%; height: 8px; background: #e2e8f0; border-radius: 4px;">
+                        <div style="width: 92%; height: 100%; background: #22c55e; border-radius: 4px;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Готовность к проверкам -->
+            <div id="branch-inspections" class="branch-tab" style="display: none;">
+                <div id="regulatorsList" style="display: grid; gap: 16px;">
+                    <!-- Список регуляторов будет заполнен динамически -->
+                </div>
+            </div>
+
+            <!-- Сроки гарантий -->
+            <div id="branch-warranty" class="branch-tab" style="display: none;">
+                <div class="table-container" style="overflow-x: auto;">
+                    <table class="data-table" style="width: 100%; border-collapse: collapse;">
+                        <thead>
+                            <tr style="background: #f8fafc;">
+                                <th style="padding: 12px; text-align: left; border-bottom: 2px solid #e2e8f0; font-weight: 600; color: #475569;">Наименование</th>
+                                <th style="padding: 12px; text-align: left; border-bottom: 2px solid #e2e8f0; font-weight: 600; color: #475569;">Тип</th>
+                                <th style="padding: 12px; text-align: left; border-bottom: 2px solid #e2e8f0; font-weight: 600; color: #475569;">Дата окончания</th>
+                                <th style="padding: 12px; text-align: left; border-bottom: 2px solid #e2e8f0; font-weight: 600; color: #475569;">Осталось дней</th>
+                                <th style="padding: 12px; text-align: center; border-bottom: 2px solid #e2e8f0; font-weight: 600; color: #475569;">Статус</th>
+                            </tr>
+                        </thead>
+                        <tbody id="warrantyTableBody">
+                            <!-- Данные будут заполнены динамически -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Важные уведомления -->
+            <div id="branch-notifications" class="branch-tab" style="display: none;">
+                <div id="notificationsList" style="display: grid; gap: 12px;">
+                    <!-- Список уведомлений будет заполнен динамически -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .branch-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 24px -8px rgba(0,0,0,0.15);
+        border-color: #4F46E5;
+    }
+    
+    .sub-tab {
+        padding: 8px 20px;
+        border: none;
+        background: transparent;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 500;
+        color: #475569;
+        transition: all 0.2s;
+    }
+    
+    .sub-tab:hover {
+        background: #e2e8f0;
+    }
+    
+    .sub-tab.active {
+        background: white;
+        color: #4F46E5;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    }
+    
+    .branch-tab {
+        display: none;
+    }
+    
+    .branch-tab.active {
+        display: block;
+    }
+    
+    .regulator-card {
+        background: #f8fafc;
+        border-radius: 8px;
+        padding: 16px;
+        border: 1px solid #e2e8f0;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+    
+    .regulator-card:hover {
+        background: #f1f5f9;
+        border-color: #cbd5e1;
+    }
+    
+    .notification-item {
+        background: white;
+        border-radius: 8px;
+        padding: 16px;
+        border-left: 4px solid #4F46E5;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    }
+    
+    .notification-item.warning {
+        border-left-color: #d97706;
+    }
+    
+    .notification-item.danger {
+        border-left-color: #dc2626;
+    }
+    
+    .status-badge {
+        padding: 4px 12px;
+        border-radius: 12px;
+        font-size: 12px;
+        font-weight: 500;
+        display: inline-block;
+    }
+    
+    .status-ready { background: #d1fae5; color: #059669; }
+    .status-partial { background: #fef3c7; color: #d97706; }
+    .status-not-ready { background: #fee2e2; color: #dc2626; }
+    
+    .btn-sm {
+        padding: 4px 12px;
+        font-size: 12px;
+    }
+</style>
+
+<script>
+    let currentBranchId = null;
+    let branchData = {};
+
+    function openBranchDetails(branchId) {
+        currentBranchId = branchId;
+        loadBranchData(branchId);
+        document.getElementById('branchDetailsModal').style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeBranchDetails() {
+        document.getElementById('branchDetailsModal').style.display = 'none';
+        document.body.style.overflow = 'auto';
+        currentBranchId = null;
+    }
+
+    function loadBranchData(branchId) {
+        // Имитация загрузки данных с сервера
+        branchData = {
+            id: branchId,
+            name: 'Филиал №' + branchId,
+            address: 'г. Москва, ул. Примерная, д. ' + branchId,
+            employeesCount: Math.floor(Math.random() * 50) + 10,
+            premisesCount: Math.floor(Math.random() * 10) + 1,
+            lastLogin: new Date().toISOString(),
+            lastModified: new Date(Date.now() - 86400000 * 3).toISOString(),
+            documents: {
+                list: [
+                    { name: 'Политика обработки ПДн', status: 'ready', date: '15.01.2024' },
+                    { name: 'Приказ о назначении ответственных', status: 'partial', date: '—' },
+                    { name: 'Перечень сведений КИ', status: 'notReady', date: '—' }
+                ]
+            },
+            inspections: [
+                { regulator: 'Роскомнадзор', readiness: 85, status: 'partial' },
+                { regulator: 'ФСТЭК', readiness: 92, status: 'ready' },
+                { regulator: 'ФСБ', readiness: 67, status: 'partial' }
+            ],
+            warranty: [
+                { name: 'Сервер Dell PowerEdge', type: 'ТС', endDate: '2024-06-15', daysLeft: 45 },
+                { name: 'СЗИ Secret Net', type: 'Техподдержка', endDate: '2024-03-20', daysLeft: -12 },
+                { name: 'Электронная подпись', type: 'ЭП', endDate: '2024-04-10', daysLeft: 9 }
+            ],
+            notifications: [
+                { type: 'warning', message: 'Заканчивается срок гарантии на 3 ТС', date: new Date().toISOString() },
+                { type: 'danger', message: 'Истек срок технической поддержки СЗИ', date: new Date(Date.now() - 86400000).toISOString() },
+                { type: 'info', message: 'Необходимо обновить 2 документа', date: new Date(Date.now() - 86400000 * 2).toISOString() }
+            ]
+        };
+
+        document.getElementById('branchDetailsTitle').textContent = branchData.name;
+        document.getElementById('branchDetailsAddress').textContent = branchData.address;
+        document.getElementById('mainEmployees').textContent = branchData.employeesCount;
+        document.getElementById('mainPremises').textContent = branchData.premisesCount;
+        document.getElementById('mainLastLogin').textContent = new Date(branchData.lastLogin).toLocaleDateString('ru-RU');
+        document.getElementById('mainLastModified').textContent = new Date(branchData.lastModified).toLocaleDateString('ru-RU');
+
+        renderDocumentsTable();
+        renderInspectionsList();
+        renderWarrantyTable();
+        renderNotifications();
+        
+        switchBranchTab('main', document.querySelector('.sub-tab'));
+    }
+
+    function renderDocumentsTable() {
+        const tbody = document.getElementById('documentsTableBody');
+        tbody.innerHTML = '';
+        if (branchData.documents.list && branchData.documents.list.length > 0) {
+            branchData.documents.list.forEach(doc => {
+                const tr = document.createElement('tr');
+                const statusClass = doc.status === 'ready' ? 'status-ready' : doc.status === 'partial' ? 'status-partial' : 'status-not-ready';
+                const statusText = doc.status === 'ready' ? 'Сформировано и утверждено' : doc.status === 'partial' ? 'Необходимо утвердить' : 'Не сформировано';
+                tr.innerHTML = `
+                    <td style="padding: 12px; border-bottom: 1px solid #e2e8f0;">${doc.name}</td>
+                    <td style="padding: 12px; border-bottom: 1px solid #e2e8f0;"><span class="status-badge ${statusClass}">${statusText}</span></td>
+                    <td style="padding: 12px; border-bottom: 1px solid #e2e8f0;">${doc.date}</td>
+                    <td style="padding: 12px; text-align: center; border-bottom: 1px solid #e2e8f0;">
+                        <button class="btn-icon" style="background: #e0f2fe; color: #0284c7; border: none; width: 28px; height: 28px; border-radius: 4px; cursor: pointer;"><i class="fas fa-download"></i></button>
+                    </td>`;
+                tbody.appendChild(tr);
+            });
+        }
+    }
+
+    function renderInspectionsList() {
+        const container = document.getElementById('inspectionsList');
+        container.innerHTML = '';
+        if (branchData.inspections && branchData.inspections.length > 0) {
+            branchData.inspections.forEach(reg => {
+                const div = document.createElement('div');
+                div.className = 'regulator-card';
+                div.onclick = () => openRegulatorDetails(reg.regulator);
+                const statusClass = reg.readiness >= 80 ? 'status-ready' : reg.readiness >= 50 ? 'status-partial' : 'status-not-ready';
+                const statusText = reg.readiness >= 80 ? 'Готов' : reg.readiness >= 50 ? 'Частично готов' : 'Не готов';
+                div.innerHTML = `
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div style="font-weight: 600; color: #1e293b;">${reg.regulator}</div>
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <div style="width: 200px; height: 8px; background: #e2e8f0; border-radius: 4px; overflow: hidden;">
+                                <div style="width: ${reg.readiness}%; height: 100%; background: ${reg.readiness >= 80 ? '#059669' : reg.readiness >= 50 ? '#d97706' : '#dc2626'}; border-radius: 4px;"></div>
+                            </div>
+                            <span class="status-badge ${statusClass}" style="min-width: 100px; text-align: center;">${reg.readiness}% - ${statusText}</span>
+                            <i class="fas fa-chevron-right" style="color: #94a3b8;"></i>
+                        </div>
+                    </div>`;
+                container.appendChild(div);
+            });
+        }
+    }
+
+    function renderWarrantyTable() {
+        const tbody = document.getElementById('warrantyTableBody');
+        tbody.innerHTML = '';
+        if (branchData.warranty && branchData.warranty.length > 0) {
+            branchData.warranty.forEach(item => {
+                const tr = document.createElement('tr');
+                const statusClass = item.daysLeft < 0 ? 'status-not-ready' : item.daysLeft <= 30 ? 'status-partial' : 'status-ready';
+                const statusText = item.daysLeft < 0 ? 'Истек' : item.daysLeft <= 30 ? 'Заканчивается' : 'Действует';
+                tr.innerHTML = `
+                    <td style="padding: 12px; border-bottom: 1px solid #e2e8f0;">${item.name}</td>
+                    <td style="padding: 12px; border-bottom: 1px solid #e2e8f0;">${item.type}</td>
+                    <td style="padding: 12px; border-bottom: 1px solid #e2e8f0;">${new Date(item.endDate).toLocaleDateString('ru-RU')}</td>
+                    <td style="padding: 12px; border-bottom: 1px solid #e2e8f0; color: ${item.daysLeft < 0 ? '#dc2626' : item.daysLeft <= 30 ? '#d97706' : '#059669'}; font-weight: 600;">
+                        ${item.daysLeft < 0 ? '−' + Math.abs(item.daysLeft) : item.daysLeft}
+                    </td>
+                    <td style="padding: 12px; text-align: center; border-bottom: 1px solid #e2e8f0;"><span class="status-badge ${statusClass}">${statusText}</span></td>`;
+                tbody.appendChild(tr);
+            });
+        }
+    }
+
+    function renderNotifications() {
+        const container = document.getElementById('notificationsList');
+        container.innerHTML = '';
+        if (branchData.notifications && branchData.notifications.length > 0) {
+            branchData.notifications.forEach(notif => {
+                const div = document.createElement('div');
+                div.className = `notification-item ${notif.type === 'warning' ? 'warning' : notif.type === 'danger' ? 'danger' : ''}`;
+                const icon = notif.type === 'danger' ? 'fa-exclamation-circle' : notif.type === 'warning' ? 'fa-exclamation-triangle' : 'fa-info-circle';
+                const color = notif.type === 'danger' ? '#dc2626' : notif.type === 'warning' ? '#d97706' : '#4F46E5';
+                div.innerHTML = `
+                    <div style="display: flex; gap: 12px; align-items: start;">
+                        <i class="fas ${icon}" style="color: ${color}; font-size: 20px; margin-top: 2px;"></i>
+                        <div style="flex: 1;">
+                            <div style="color: #1e293b; font-weight: 500; margin-bottom: 4px;">${notif.message}</div>
+                            <div style="font-size: 13px; color: #94a3b8;">${new Date(notif.date).toLocaleString('ru-RU')}</div>
+                        </div>
+                    </div>`;
+                container.appendChild(div);
+            });
+        }
+    }
+
+    function openRegulatorDetails(regulatorName) {
+        alert(`Детальная информация о готовности к проверке ${regulatorName}\n\nЗдесь будет отображен подробный список требований и их статус выполнения.`);
+    }
+
+    function switchBranchTab(tabName, btn) {
+        document.querySelectorAll('.branch-tab').forEach(el => el.classList.remove('active'));
+        document.querySelectorAll('.sub-tab').forEach(el => el.classList.remove('active'));
+        document.getElementById('branch-' + tabName).classList.add('active');
+        if (btn) btn.classList.add('active');
+    }
+
+    document.getElementById('branchDetailsModal').addEventListener('click', function(e) {
+        if (e.target === this) closeBranchDetails();
+    });
+</script>

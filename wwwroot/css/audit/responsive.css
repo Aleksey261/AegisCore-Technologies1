@@ -1,0 +1,512 @@
+﻿/* ============================================================ */
+/* === RESPONSIVE.CSS - Адаптивность === */
+/* ============================================================ */
+
+/* === Планшеты и маленькие ноутбуки (до 1200px) === */
+
+@media (max-width: 1200px) {
+    .tabs-nav {
+        gap: 3px;
+    }
+    
+    .tab-nav-item {
+        padding: 9px 14px;
+        font-size: 13px;
+    }
+    
+    .audit-page {
+        padding: 24px;
+    }
+    
+    .tab-content {
+        padding: 24px;
+    }
+}
+
+/* === Планшеты (до 992px) === */
+
+@media (max-width: 992px) {
+    .tabs-nav {
+        gap: 3px;
+    }
+    
+    .tab-nav-item {
+        padding: 8px 12px;
+        font-size: 13px;
+    }
+    
+    .tab-nav-item i {
+        font-size: 14px;
+    }
+    
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+    
+    .stats-grid {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    }
+    
+    .modules-grid {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    }
+    
+    .sidebar {
+        width: 220px;
+    }
+    
+    .toolbar {
+        gap: 12px;
+    }
+}
+
+/* === Большие мобильные (до 768px) === */
+
+@media (max-width: 768px) {
+    /* Landing */
+    .hero h1 { font-size: 2.5rem; }
+    .hero-subtitle { font-size: 1.1rem; }
+    .hero-icon { font-size: 4rem; }
+    .features-title { font-size: 2rem; }
+    .cta h2 { font-size: 2rem; }
+    .header-container { padding: 1rem; }
+    .logo span { display: none; }
+    
+    /* Topbar */
+    .topbar {
+        flex-wrap: wrap;
+        height: auto;
+        padding: 12px;
+    }
+    .topbar-nav {
+        order: 3;
+        width: 100%;
+        overflow-x: auto;
+    }
+    
+    /* Sidebar */
+    .sidebar { 
+        width: 200px; 
+    }
+    
+    /* Forms */
+    .form-row { 
+        grid-template-columns: 1fr; 
+    }
+    
+    /* Stats */
+    .stats-grid { 
+        grid-template-columns: 1fr; 
+    }
+    
+    /* Modules */
+    .modules-grid { 
+        grid-template-columns: 1fr; 
+    }
+    
+    .hero-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+    .btn-white,
+    .btn-outline {
+        width: 100%;
+        max-width: 300px;
+        text-align: center;
+    }
+    
+    .welcome-section h1 { font-size: 1.75rem; }
+    .topbar-controls { gap: 8px; }
+    .user-name { display: none; }
+    .lang-switcher { display: none; }
+    
+    /* Login */
+    .login-box { padding: 30px 20px; }
+    .login-logo h1 { font-size: 24px; }
+    .login-logo i { font-size: 40px; }
+    
+    /* Footer */
+    .footer-content {
+        flex-direction: column;
+        gap: 8px;
+        text-align: center;
+    }
+    
+    /* Tabs */
+    .tabs-nav {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: thin;
+        padding: 6px;
+    }
+    
+    .tab-nav-item {
+        padding: 8px 12px;
+        font-size: 12px;
+        flex-shrink: 0;
+    }
+    
+    .tab-nav-item i {
+        font-size: 13px;
+    }
+    
+    /* Audit */
+    .audit-page { padding: 16px; }
+    .tab-content { padding: 16px; }
+    
+    /* Toolbar */
+    .toolbar {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+    
+    .toolbar-left {
+        width: 100%;
+        order: 1;
+        flex-wrap: wrap;
+    }
+    
+    .toolbar-right {
+        width: 100%;
+        order: 3;
+        justify-content: flex-end;
+    }
+    
+    .search-box {
+        flex: 1;
+        order: 2;
+        min-width: 0;
+    }
+    
+    .search-box input {
+        width: 100%;
+    }
+    
+    /* Pagination */
+    .pagination {
+        flex-direction: column;
+        gap: 12px;
+    }
+    .pagination-page-size {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    /* Tables */
+    .th-filter,
+    .th-filter-row { 
+        display: none; 
+    }
+    
+    /* Modal */
+    .modal {
+        padding: 10px;
+    }
+    
+    .modal-content {
+        width: 100%;
+        max-height: 95vh;
+    }
+    
+    .modal-body {
+        padding: 16px;
+    }
+    
+    /* Forms */
+    .form-actions {
+        flex-direction: column-reverse;
+    }
+    
+    .form-actions .btn {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .input-with-buttons {
+        flex-wrap: nowrap;
+    }
+    
+    .input-with-buttons .form-control {
+        min-width: 0;
+    }
+    
+    /* Calendar */
+    .calendar-modes {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .calendar-nav {
+        margin-left: 0;
+        padding-left: 0;
+        border-left: none;
+        justify-content: center;
+        padding-top: 12px;
+        border-top: 1px solid #e2e8f0;
+    }
+    
+    .calendar-day {
+        min-height: 80px;
+        padding: 4px;
+    }
+    
+    .day-number {
+        font-size: 12px;
+    }
+    
+    .event-badge {
+        font-size: 9px;
+        padding: 2px 4px;
+    }
+    
+    /* Notifications */
+    .notifications-panel {
+        width: calc(100% - 48px);
+        right: 24px;
+        left: 24px;
+    }
+    
+    .event-item {
+        flex-direction: column;
+    }
+    
+    .event-date {
+        flex-direction: row;
+        gap: 8px;
+        min-width: auto;
+    }
+    
+    .event-day {
+        font-size: 18px;
+    }
+    
+    /* Organization forms */
+    .org-form {
+        padding: 20px;
+    }
+    
+    .org-form-container {
+        padding: 0 8px;
+    }
+}
+
+/* === Маленькие мобильные (до 640px) === */
+
+@media (max-width: 640px) {
+    .toolbar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .toolbar-left {
+        flex-direction: column;
+        width: 100%;
+    }
+    
+    .toolbar-left > * {
+        width: 100%;
+    }
+    
+    .toolbar-right {
+        width: 100%;
+        justify-content: stretch;
+    }
+    
+    .toolbar-right > * {
+        flex: 1;
+    }
+    
+    .search-box {
+        width: 100%;
+    }
+    
+    .btn {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .btn-primary,
+    .btn-secondary {
+        width: 100%;
+    }
+    
+    .tabs-nav {
+        padding: 4px;
+    }
+    
+    .tab-nav-item {
+        padding: 6px 10px;
+        font-size: 11px;
+    }
+    
+    .tab-nav-item i {
+        display: none;
+    }
+}
+
+/* === Очень маленькие мобильные (до 480px) === */
+
+@media (max-width: 480px) {
+    /* Landing */
+    .hero h1 { font-size: 2rem; }
+    .hero-subtitle { font-size: 1rem; }
+    .features-grid { grid-template-columns: 1fr; }
+    .feature-card { padding: 2rem 1.5rem; }
+    .module-card { padding: 24px 20px; }
+    .module-icon {
+        width: 64px;
+        height: 64px;
+        font-size: 1.5rem;
+    }
+    
+    /* Login */
+    .login-footer-controls {
+        flex-direction: column;
+        gap: 12px;
+    }
+    .login-footer-controls .lang-switcher {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    /* Tabs */
+    .tab-nav-item {
+        padding: 8px 10px;
+        font-size: 12px;
+        gap: 6px;
+    }
+    
+    .tab-nav-item i {
+        font-size: 13px;
+    }
+    
+    /* Headers */
+    .page-header h1 {
+        font-size: 20px;
+    }
+    
+    .section-title {
+        font-size: 16px;
+    }
+    
+    /* Tables */
+    .data-table {
+        font-size: 13px;
+    }
+    
+    .data-table th,
+    .data-table td {
+        padding: 10px 8px;
+    }
+    
+    /* Buttons */
+    .btn {
+        padding: 8px 16px;
+        font-size: 13px;
+    }
+    
+    /* Modal */
+    .modal-header {
+        padding: 16px;
+    }
+    
+    .modal-header h3 {
+        font-size: 16px;
+    }
+    
+    /* Calendar */
+    .calendar-day {
+        min-height: 60px;
+    }
+    
+    .day-events {
+        display: none;
+    }
+    
+    .calendar-day.has-events::after {
+        content: '';
+        position: absolute;
+        bottom: 4px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: #4F46E5;
+    }
+    
+    /* Organization */
+    .org-form {
+        padding: 16px;
+    }
+    
+    .form-title {
+        font-size: 18px;
+    }
+}
+
+/* === Очень-очень маленькие экраны (до 360px) === */
+
+@media (max-width: 360px) {
+    .tab-nav-item {
+        padding: 6px 8px;
+        font-size: 11px;
+    }
+    
+    .audit-page {
+        padding: 8px;
+    }
+    
+    .tab-content {
+        padding: 12px;
+    }
+    
+    .toolbar-left,
+    .toolbar-right {
+        flex-direction: column;
+    }
+    
+    .toolbar-left .btn,
+    .toolbar-right .btn {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .hero h1 {
+        font-size: 1.75rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 0.9rem;
+    }
+}
+
+/* === Печать === */
+
+@media print {
+    .topbar,
+    .sidebar,
+    .footer,
+    .toolbar,
+    .pagination,
+    .action-buttons {
+        display: none !important;
+    }
+    
+    .content {
+        margin: 0;
+        padding: 0;
+    }
+    
+    .tab-content {
+        box-shadow: none;
+        border: none;
+    }
+    
+    .org-form {
+        box-shadow: none;
+        padding: 0;
+    }
+}

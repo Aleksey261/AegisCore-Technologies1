@@ -1,0 +1,61 @@
+@model List<AegisCore.Models.CalendarEvent>
+
+<div class="upcoming-events">
+    @if (!Model.Any())
+    {
+        <div style="text-align: center; padding: 48px; color: #64748b;">
+            <i class="fas fa-calendar-check" style="font-size: 48px; margin-bottom: 16px; opacity: 0.3;"></i>
+            <p style="font-size: 16px;">Нет предстоящих событий</p>
+        </div>
+    }
+    else
+    {
+        <div class="events-list" style="display: flex; flex-direction: column; gap: 12px;">
+            @foreach (var evt in Model.OrderBy(e => e.StartDate).Take(20))
+            {
+                var eventType = evt.Type?.ToLower() ?? "default";
+                var isOverdue = evt.StartDate < DateTime.Now && !evt.Completed;
+                
+                <div class="event-card" style="display: flex; align-items: center; gap: 16px; padding: 16px; background: @(isOverdue ? "#fef2f2" : "#f8fafc"); border: @(isOverdue ? "2px solid #fecaca" : "1px solid #e2e8f0"); border-radius: 8px; transition: all 0.2s;"
+                     onmouseover="this.style.boxShadow='0 2px 8px rgba(0,0,0,0.1)'"
+                     onmouseout="this.style.boxShadow='none'">
+                    <div class="event-date" style="min-width: 80px; text-align: center; padding: 12px; background: @(eventType.Contains("планерка") ? "#8b5cf6" : eventType.Contains("сзи") ? "#10b981" : "#ec4899"); color: white; border-radius: 8px;">
+                        <div style="font-size: 20px; font-weight: 700;">@evt.StartDate.Day</div>
+                        <div style="font-size: 12px; opacity: 0.9;">@evt.StartDate.ToString("MMM")</div>
+                    </div>
+                    
+                    <div class="event-info" style="flex: 1;">
+                        <h4 style="margin: 0 0 4px 0; color: #1e293b; font-size: 15px; font-weight: 600;">@evt.Title</h4>
+                        <p style="margin: 0; color: #64748b; font-size: 13px;">
+                            <i class="fas fa-clock" style="margin-right: 4px;"></i>
+                            @evt.StartDate.ToString("HH:mm")
+                            @if (evt.EndDate.HasValue)
+                            {
+                                <span> - @evt.EndDate.Value.ToString("HH:mm")</span>
+                            }
+                        </p>
+                        @if (!string.IsNullOrEmpty(evt.Description))
+                        {
+                            <p style="margin: 4px 0 0 0; color: #475569; font-size: 13px;">@evt.Description</p>
+                        }
+                    </div>
+                    
+                    <div class="event-actions" style="display: flex; gap: 8px;">
+                        <button class="btn-icon edit" onclick="openEventModal('@evt.Id')" 
+                                style="width: 36px; height: 36px; border: none; border-radius: 6px; background: #e0f2fe; color: #0284c7; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; transition: all 0.2s;"
+                                onmouseover="this.style.background='#bae6fd'"
+                                onmouseout="this.style.background='#e0f2fe'">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="btn-icon delete" onclick="deleteEvent('@evt.Id', '@evt.Title', '@evt.StartDate.ToString("dd.MM.yyyy")')" 
+                                style="width: 36px; height: 36px; border: none; border-radius: 6px; background: #fee2e2; color: #dc2626; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; transition: all 0.2s;"
+                                onmouseover="this.style.background='#fecaca'"
+                                onmouseout="this.style.background='#fee2e2'">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>

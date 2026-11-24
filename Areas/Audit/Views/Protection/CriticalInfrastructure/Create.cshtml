@@ -1,0 +1,1451 @@
+@{
+    ViewData["Title"] = "Добавление объекта КИИ";
+}
+
+<div class="audit-page">
+    <div class="page-header">
+        <h1>
+            <a href="/audit/protection/critical-infrastructure/systems" style="color: #64748b; text-decoration: none; margin-right: 12px; font-size: 24px;">
+                <i class="fas fa-arrow-left"></i>
+            </a>
+            <i class="fas fa-plus-circle"></i> Новый объект КИИ
+        </h1>
+        <p style="color: #64748b; margin-top: 8px; margin-left: 36px;">
+            Добавление объекта критической информационной инфраструктуры
+        </p>
+    </div>
+
+    <!-- ВЕРХНИЕ ВКЛАДКИ -->
+    <div class="tabs-nav" style="margin-bottom: 24px;">
+        <a href="javascript:void(0)" class="tab-nav-item active" onclick="showTab('main-info')" id="tab-btn-main-info">
+            <i class="fas fa-info-circle"></i>
+            <span>Основные сведения</span>
+        </a>
+        <a href="javascript:void(0)" class="tab-nav-item" onclick="showTab('network')" id="tab-btn-network">
+            <i class="fas fa-network-wired"></i>
+            <span>Взаимодействие с сетью электросвязи</span>
+        </a>
+        <a href="javascript:void(0)" class="tab-nav-item" onclick="showTab('software')" id="tab-btn-software">
+            <i class="fas fa-microchip"></i>
+            <span>Используемое ПО, СЗИ</span>
+        </a>
+        <a href="javascript:void(0)" class="tab-nav-item" onclick="showTab('threats')" id="tab-btn-threats">
+            <i class="fas fa-exclamation-triangle"></i>
+            <span>Информация об угрозах и нарушителях</span>
+        </a>
+        <a href="javascript:void(0)" class="tab-nav-item" onclick="showTab('incidents')" id="tab-btn-incidents">
+            <i class="fas fa-bug"></i>
+            <span>Типы компьютерных инцидентов</span>
+        </a>
+        <a href="javascript:void(0)" class="tab-nav-item" onclick="showTab('measures')" id="tab-btn-measures">
+            <i class="fas fa-shield-alt"></i>
+            <span>Организационные и технические меры</span>
+        </a>
+        <a href="javascript:void(0)" class="tab-nav-item" onclick="showTab('categorization')" id="tab-btn-categorization">
+            <i class="fas fa-chart-bar"></i>
+            <span>Категорирование</span>
+        </a>
+        <a href="javascript:void(0)" class="tab-nav-item" onclick="showTab('operation')" id="tab-btn-operation">
+            <i class="fas fa-cogs"></i>
+            <span>Сведения об эксплуатации</span>
+        </a>
+    </div>
+
+    <!-- Форма с содержимым вкладок -->
+    <div class="form-content" style="background: white; border-radius: 8px; padding: 32px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+        
+        <!-- Вкладка 1: Основные сведения -->
+        <div id="tab-main-info" class="tab-pane active">
+            <h3 style="margin-bottom: 24px; color: #1e293b;">Основные сведения</h3>
+            <form id="createObjectForm">
+                <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
+                    <div class="form-group">
+                        <label>Тип <span class="required" style="color: #ef4444;">*</span></label>
+                        <select id="objType" class="form-control" required>
+                            <option value="">Выбрать...</option>
+                            <option value="Информационная система">Информационная система</option>
+                            <option value="Информационно-телекоммуникационная сеть">Информационно-телекоммуникационная сеть</option>
+                            <option value="Автоматизированная система управления">Автоматизированная система управления</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Наименование <span class="required" style="color: #ef4444;">*</span></label>
+                        <input type="text" id="objName" class="form-control" required placeholder="Введите наименование" />
+                    </div>
+                </div>
+
+                <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
+                    <div class="form-group">
+                        <label>Адрес <span class="required" style="color: #ef4444;">*</span></label>
+                        <input type="text" id="objAddress" class="form-control" required placeholder="Введите адрес" />
+                    </div>
+                    <div class="form-group">
+                        <label>Назначение <span class="required" style="color: #ef4444;">*</span></label>
+                        <textarea id="objPurpose" class="form-control" rows="2" placeholder="Опишите назначение объекта"></textarea>
+                    </div>
+                </div>
+
+                <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
+                    <div class="form-group">
+                        <label>Сфера <span class="required" style="color: #ef4444;">*</span></label>
+                        <select id="objSphere" class="form-control" required>
+                            <option value="">Выбрать...</option>
+                            <option value="Здравоохранение">Здравоохранение</option>
+                            <option value="Транспорт">Транспорт</option>
+                            <option value="Энергетика">Энергетика</option>
+                            <option value="Финансы">Финансы</option>
+                            <option value="Связь">Связь</option>
+                            <option value="Иная сфера">Иная сфера</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Архитектура</label>
+                        <select id="objArchitecture" class="form-control">
+                            <option value="">Выбрать...</option>
+                            <option value="Локальная">Локальная</option>
+                            <option value="Распределенная">Распределенная</option>
+                            <option value="Облачная">Облачная</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row" style="margin-bottom: 16px;">
+                    <div class="form-group">
+                        <label>Критические процессы</label>
+                        <input type="text" id="objCriticalProcesses" class="form-control" placeholder="Перечислите критические процессы" />
+                    </div>
+                </div>
+
+                <div class="form-actions" style="margin-top: 32px; display: flex; gap: 12px; justify-content: flex-end;">
+                    <button type="button" class="btn btn-secondary" onclick="window.history.back()">
+                        <i class="fas fa-times"></i> Отмена
+                    </button>
+                    <button type="button" class="btn btn-primary" onclick="saveMainInfo()">
+                        <i class="fas fa-save"></i> Сохранить
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Вкладка 2: Взаимодействие с сетью электросвязи -->
+        <div id="tab-network" class="tab-pane">
+            <h3 style="margin-bottom: 24px; color: #1e293b;">Взаимодействие с сетью электросвязи</h3>
+            <form id="networkForm">
+                <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
+                    <div class="form-group">
+                        <label>Категория сети <span class="required" style="color: #ef4444;">*</span></label>
+                        <select id="networkCategory" class="form-control" required>
+                            <option value="">Выбрать...</option>
+                            <option value="Другая сеть связи для передачи информации при помощи электрических или электромагнитных систем">Другая сеть связи для передачи информации при помощи электрических или электромагнитных систем</option>
+                            <option value="Сеть связи общего пользования">Сеть связи общего пользования</option>
+                            <option value="Ведомственная сеть связи">Ведомственная сеть связи</option>
+                            <option value="Технологическая сеть связи">Технологическая сеть связи</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Наименование оператора связи <span class="required" style="color: #ef4444;">*</span></label>
+                        <select id="operatorName" class="form-control" required>
+                            <option value="">Выбрать...</option>
+                            <option value="ПАО «Ростелеком»">ПАО «Ростелеком»</option>
+                            <option value="ПАО «МегаФон»">ПАО «МегаФон»</option>
+                            <option value="ПАО «МТС»">ПАО «МТС»</option>
+                            <option value="ПАО «ВымпелКом»">ПАО «ВымпелКом»</option>
+                            <option value="ООО «Т2 Мобайл»">ООО «Т2 Мобайл»</option>
+                            <option value="Иной оператор">Иной оператор</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
+                    <div class="form-group">
+                        <label>Цель взаимодействия <span class="required" style="color: #ef4444;">*</span></label>
+                        <select id="networkPurpose" class="form-control" required>
+                            <option value="">Выбрать...</option>
+                            <option value="Управление">Управление</option>
+                            <option value="Контроль">Контроль</option>
+                            <option value="Мониторинг">Мониторинг</option>
+                            <option value="Передача данных">Передача данных</option>
+                            <option value="Обеспечение функционирования объекта КИИ">Обеспечение функционирования объекта КИИ</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Способ взаимодействия <span class="required" style="color: #ef4444;">*</span></label>
+                        <select id="interactionMethod" class="form-control" required>
+                            <option value="">Выбрать...</option>
+                            <option value="Беспроводной">Беспроводной</option>
+                            <option value="Проводной">Проводной</option>
+                            <option value="Комбинированный">Комбинированный</option>
+                            <option value="Спутниковый">Спутниковый</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-actions" style="margin-top: 32px; display: flex; gap: 12px; justify-content: flex-end;">
+                    <button type="button" class="btn btn-secondary" onclick="window.history.back()">
+                        <i class="fas fa-times"></i> Отмена
+                    </button>
+                    <button type="button" class="btn btn-primary" onclick="saveNetworkInfo()">
+                        <i class="fas fa-save"></i> Сохранить
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Вкладка 3: Используемое ПО, СЗИ -->
+        <div id="tab-software" class="tab-pane">
+            <h3 style="margin-bottom: 24px; color: #1e293b;">Сведения о программных и программно-аппаратных средствах, используемых на объекте КИИ</h3>
+            <form id="softwareForm">
+                <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
+                    <div class="form-group">
+                        <label>Наименование программно-аппаратных средств и их количество <span class="required" style="color: #ef4444;">*</span></label>
+                        <input type="text" id="paSystems" class="form-control" required placeholder="Например: Серверы - 2 единицы, Коммутатор-Supercom - 09 шт." />
+                    </div>
+                    <div class="form-group">
+                        <label>Наименование общесистемного ПО <span class="required" style="color: #ef4444;">*</span></label>
+                        <input type="text" id="osSoftware" class="form-control" required placeholder="Например: Linux" />
+                    </div>
+                </div>
+
+                <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
+                    <div class="form-group">
+                        <label>Наименование прикладных программ <span class="required" style="color: #ef4444;">*</span></label>
+                        <input type="text" id="appSoftware" class="form-control" required placeholder="Например: Firefox, Null" />
+                    </div>
+                    <div class="form-group">
+                        <label>Применяемые СЗИ или сведения об их отсутствии <span class="required" style="color: #ef4444;">*</span></label>
+                        <input type="text" id="securityTools" class="form-control" required placeholder="Например: Secret Net 7" />
+                    </div>
+                </div>
+
+                <div class="form-actions" style="margin-top: 32px; display: flex; gap: 12px; justify-content: flex-end;">
+                    <button type="button" class="btn btn-secondary" onclick="window.history.back()">
+                        <i class="fas fa-times"></i> Отмена
+                    </button>
+                    <button type="button" class="btn btn-primary" onclick="saveSoftwareInfo()">
+                        <i class="fas fa-save"></i> Сохранить
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Вкладка 4: Информация об угрозах и нарушителях -->
+        <div id="tab-threats" class="tab-pane">
+            <h3 style="margin-bottom: 24px; color: #1e293b;">Сведения об угрозах безопасности информации и категориях нарушителей в отношении объекта КИИ</h3>
+            <form id="threatsForm">
+                <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                    <div class="form-group">
+                        <label style="display: block; font-weight: 600; margin-bottom: 8px;">Категория нарушителя <span class="required" style="color: #ef4444;">*</span></label>
+                        <div id="violatorTags" style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; min-height: 36px; padding: 8px; background: #f8fafc; border-radius: 6px; border: 1px solid #e2e8f0;"></div>
+                        <select id="violatorSelect" class="form-control" onchange="addViolatorTag()">
+                            <option value="">Выбрать...</option>
+                            <option value="external">Внешний нарушитель</option>
+                            <option value="internal">Внутренний нарушитель</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label style="display: block; font-weight: 600; margin-bottom: 8px;">Основные угрозы <span class="required" style="color: #ef4444;">*</span></label>
+                        <div id="threatTags" style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; min-height: 36px; padding: 8px; background: #f8fafc; border-radius: 6px; border: 1px solid #e2e8f0;"></div>
+                        <select id="threatSelect" class="form-control" onchange="addThreatTag()">
+                            <option value="">Выбрать...</option>
+                            <option value="unlawful">Угроза внедрения кода или данных</option>
+                            <option value="auth">Угроза восстановления и/или повторного использования аутентификационной информации</option>
+                            <option value="network">Угроза дезорганизации санкционированного клиента беспроводной сети</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-actions" style="margin-top: 32px; display: flex; gap: 12px; justify-content: flex-end;">
+                    <button type="button" class="btn btn-secondary" onclick="window.history.back()">
+                        <i class="fas fa-times"></i> Отмена
+                    </button>
+                    <button type="button" class="btn btn-primary" onclick="saveThreatsInfo()">
+                        <i class="fas fa-save"></i> Сохранить
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Вкладка 5: Типы компьютерных инцидентов -->
+        <div id="tab-incidents" class="tab-pane">
+            <h3 style="margin-bottom: 24px; color: #1e293b;">Возможные последствия в случае возникновения компьютерных инцидентов</h3>
+            <form id="incidentsForm">
+                <div class="form-row" style="margin-bottom: 16px;">
+                    <div class="form-group">
+                        <label>Компьютерные инциденты <span class="required" style="color: #ef4444;">*</span></label>
+                        <div id="incidentTags" style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; min-height: 36px; padding: 8px; background: #f8fafc; border-radius: 6px; border: 1px solid #e2e8f0;"></div>
+                        <select id="incidentSelect" class="form-control" onchange="addIncidentTag()" style="max-width: 600px;">
+                            <option value="">Выбрать...</option>
+                            <option value="data_modification">Модификация (подмена) данных</option>
+                            <option value="data_destruction">Уничтожение данных</option>
+                            <option value="data_leak">Утечка конфиденциальной информации</option>
+                            <option value="unauthorized_access">Несанкционированный доступ к информации</option>
+                            <option value="access_denial">Блокирование доступа к информационным ресурсам</option>
+                            <option value="data_interception">Перехват данных при передаче</option>
+                            <option value="dos_attack">Отказ в обслуживании (DoS/DDoS атака)</option>
+                            <option value="malware">Внедрение вредоносного программного обеспечения</option>
+                            <option value="phishing">Фишинг и социальная инженерия</option>
+                            <option value="credential_compromise">Компрометация учетных данных</option>
+                            <option value="privilege_escalation">Повышение привилегий</option>
+                            <option value="system_compromise">Компрометация системного ПО</option>
+                            <option value="network_intrusion">Вторжение в сеть</option>
+                            <option value="data_corruption">Порча (искажение) данных</option>
+                            <option value="service_disruption">Нарушение функционирования систем</option>
+                            <option value="information_disclosure">Раскрытие информации</option>
+                            <option value="identity_theft">Кража цифровой идентичности</option>
+                            <option value="ransomware">Шифрование данных (ransomware)</option>
+                            <option value="spyware">Шпионское ПО (spyware)</option>
+                            <option value="botnet">Вовлечение в бот-сеть</option>
+                            <option value="crypto_mining">Несанкционированный майнинг криптовалют</option>
+                            <option value="data_exfiltration">Эксфильтрация данных</option>
+                            <option value="config_change">Несанкционированное изменение конфигурации</option>
+                            <option value="backup_destruction">Уничтожение резервных копий</option>
+                            <option value="log_tampering">Модификация журналов аудита</option>
+                            <option value="session_hijack">Перехват сессии</option>
+                            <option value="sql_injection">SQL-инъекции</option>
+                            <option value="xss_attack">Межсайтовый скриптинг (XSS)</option>
+                            <option value="csrf_attack">Межсайтовая подделка запроса (CSRF)</option>
+                            <option value="zero_day">Использование уязвимостей нулевого дня</option>
+                            <option value="insider_threat">Действия инсайдеров</option>
+                            <option value="physical_breach">Физический несанкционированный доступ</option>
+                            <option value="device_theft">Кража оборудования</option>
+                            <option value="wireless_intrusion">Несанкционированный доступ к беспроводной сети</option>
+                            <option value="man_in_middle">Атака "человек посередине" (MitM)</option>
+                            <option value="dns_spoofing">Подмена DNS</option>
+                            <option value="arp_spoofing">ARP-спуфинг</option>
+                            <option value="brute_force">Атака методом перебора (brute force)</option>
+                            <option value="dictionary_attack">Словарная атака</option>
+                            <option value="password_cracking">Взлом паролей</option>
+                            <option value="keylogging">Перехват нажатий клавиш (keylogging)</option>
+                            <option value="screen_capture">Перехват изображений экрана</option>
+                            <option value="data_remanence">Остаточные данные на носителях</option>
+                            <option value="supply_chain">Компрометация цепочки поставок</option>
+                            <option value="third_party">Инцидент у третьей стороны</option>
+                            <option value="compliance_violation">Нарушение требований нормативных актов</option>
+                            <option value="other">Иной компьютерный инцидент</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-actions" style="margin-top: 32px; display: flex; gap: 12px; justify-content: flex-end;">
+                    <button type="button" class="btn btn-secondary" onclick="window.history.back()">
+                        <i class="fas fa-times"></i> Отмена
+                    </button>
+                    <button type="button" class="btn btn-primary" onclick="saveIncidentsInfo()">
+                        <i class="fas fa-save"></i> Сохранить
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Вкладка 6: Организационные и технические меры -->
+        <div id="tab-measures" class="tab-pane">
+            <h3 style="margin-bottom: 24px; color: #1e293b;">Организационные и технические меры, применяемые для обеспечения безопасности значимого объекта КИИ</h3>
+            <form id="measuresForm">
+                <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
+                    <div class="form-group">
+                        <label>Организационные меры <span class="required" style="color: #ef4444;">*</span></label>
+                        <div id="orgMeasuresTags" style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; min-height: 36px; padding: 8px; background: #f8fafc; border-radius: 6px; border: 1px solid #e2e8f0;"></div>
+                        <select id="orgMeasuresSelect" class="form-control" onchange="addOrgMeasureTag()" style="max-width: 600px;">
+                            <option value="">Выбрать...</option>
+                            <option value="security_policy">Разработка документов по обеспечению безопасности объекта</option>
+                            <option value="responsible_appointment">Назначение ответственных за ИБ</option>
+                            <option value="access_control">Контроль и управление доступом к информации</option>
+                            <option value="staff_training">Обучение и повышение осведомленности персонала</option>
+                            <option value="incident_response">Процедуры реагирования на инциденты</option>
+                            <option value="backup_policy">Политика резервного копирования данных</option>
+                            <option value="audit_control">Аудит и контроль действий пользователей</option>
+                            <option value="risk_management">Управление рисками информационной безопасности</option>
+                            <option value="security_assessment">Оценка защищенности объекта</option>
+                            <option value="change_management">Управление изменениями конфигурации</option>
+                            <option value="physical_security">Обеспечение физической защиты помещений</option>
+                            <option value="workstation_security">Обеспечение безопасности рабочих мест</option>
+                            <option value="media_control">Контроль использования съемных носителей</option>
+                            <option value="password_policy">Политика управления паролями</option>
+                            <option value="security_clearance">Проверка персонала при приеме на работу</option>
+                            <option value="confidentiality_agreement">Подписание соглашений о неразглашении</option>
+                            <option value="security_monitoring">Мониторинг событий безопасности</option>
+                            <option value="vulnerability_management">Управление уязвимостями</option>
+                            <option value="security_testing">Тестирование средств защиты</option>
+                            <option value="business_continuity">Планирование непрерывности бизнеса</option>
+                            <option value="disaster_recovery">Восстановление после сбоев</option>
+                            <option value="third_party_security">Обеспечение безопасности при работе с третьими лицами</option>
+                            <option value="security_documentation">Ведение документации по безопасности</option>
+                            <option value="compliance_control">Контроль соблюдения требований</option>
+                            <option value="other_org">Иные организационные меры</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Технические меры <span class="required" style="color: #ef4444;">*</span></label>
+                        <div id="techMeasuresTags" style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; min-height: 36px; padding: 8px; background: #f8fafc; border-radius: 6px; border: 1px solid #e2e8f0;"></div>
+                        <select id="techMeasuresSelect" class="form-control" onchange="addTechMeasureTag()" style="max-width: 600px;">
+                            <option value="">Выбрать...</option>
+                            <option value="firewall">Межсетевое экранирование (Firewall)</option>
+                            <option value="antivirus">Антивирусная защита</option>
+                            <option value="ids_ips">Системы обнаружения и предотвращения вторжений (IDS/IPS)</option>
+                            <option value="encryption">Шифрование данных</option>
+                            <option value="authentication">Идентификация и аутентификация пользователей</option>
+                            <option value="access_control_tech">Технические средства контроля доступа (СКУД)</option>
+                            <option value="siem">Системы управления событиями безопасности (SIEM)</option>
+                            <option value="backup_tech">Системы резервного копирования</option>
+                            <option value="dlp">Системы предотвращения утечек данных (DLP)</option>
+                            <option value="vpn">Виртуальные частные сети (VPN)</option>
+                            <option value="two_factor">Двухфакторная аутентификация</option>
+                            <option value="biometric">Биометрическая аутентификация</option>
+                            <option value="digital_signature">Электронная подпись</option>
+                            <option value="secure_os">Защищенные операционные системы</option>
+                            <option value="patch_management">Автоматическое обновление ПО</option>
+                            <option value="network_segmentation">Сегментация сети</option>
+                            <option value="traffic_filtering">Фильтрация сетевого трафика</option>
+                            <option value="intrusion_prevention">Предотвращение вторжений</option>
+                            <option value="malware_protection">Защита от вредоносного ПО</option>
+                            <option value="web_filtering">Фильтрация веб-контента</option>
+                            <option value="email_security">Защита электронной почты</option>
+                            <option value="database_security">Защита баз данных</option>
+                            <option value="application_security">Защита прикладного ПО</option>
+                            <option value="endpoint_protection">Защита конечных точек</option>
+                            <option value="sandboxing">Песочницы (sandboxing)</option>
+                            <option value="honey_pot">Системы обнаружения атак (Honeypot)</option>
+                            <option value="log_management">Системы сбора и анализа логов</option>
+                            <option value="vulnerability_scanner">Сканеры уязвимостей</option>
+                            <option value="penetration_testing">Инструменты тестирования на проникновение</option>
+                            <option value="secure_boot">Безопасная загрузка (Secure Boot)</option>
+                            <option value="disk_encryption">Шифрование дисков</option>
+                            <option value="network_monitoring">Мониторинг сетевой активности</option>
+                            <option value="traffic_analysis">Анализ сетевого трафика</option>
+                            <option value="anomaly_detection">Обнаружение аномалий</option>
+                            <option value="threat_intelligence">Системы разведки угроз</option>
+                            <option value="automated_response">Автоматизированное реагирование на инциденты</option>
+                            <option value="zero_trust">Архитектура нулевого доверия (Zero Trust)</option>
+                            <option value="container_security">Защита контейнеризированных сред</option>
+                            <option value="cloud_security">Защита облачных сред</option>
+                            <option value="mobile_security">Защита мобильных устройств</option>
+                            <option value="iot_security">Защита IoT-устройств</option>
+                            <option value="other_tech">Иные технические меры</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-actions" style="margin-top: 32px; display: flex; gap: 12px; justify-content: flex-end;">
+                    <button type="button" class="btn btn-secondary" onclick="window.history.back()">
+                        <i class="fas fa-times"></i> Отмена
+                    </button>
+                    <button type="button" class="btn btn-primary" onclick="saveMeasuresInfo()">
+                        <i class="fas fa-save"></i> Сохранить
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Вкладка 7: Категорирование -->
+        <div id="tab-categorization" class="tab-pane">
+            <h3 style="margin-bottom: 24px; color: #1e293b;">Категорирование КИИ</h3>
+            
+            <div class="toolbar" style="margin-bottom: 24px; display: flex; gap: 12px; align-items: center;">
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" onclick="toggleDropdown('exportDropdown'); event.stopPropagation();">
+                        <i class="fas fa-file-export"></i> Экспорт в файл
+                    </button>
+                    <div class="dropdown-menu" id="exportDropdown">
+                        <a onclick="exportCategorization('xlsx')"><i class="fas fa-file-excel"></i> Экспорт в XLSX</a>
+                        <a onclick="exportCategorization('pdf')"><i class="fas fa-file-pdf"></i> Экспорт в PDF</a>
+                    </div>
+                </div>
+                <div class="search-box" style="flex: 1; max-width: 400px;">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="categorizationSearch" class="form-control" placeholder="Поиск показателя..." oninput="filterCategorization()" style="padding-left: 36px;" />
+                </div>
+            </div>
+
+            <form id="categorizationForm">
+                <div class="form-row" style="margin-bottom: 24px;">
+                    <div class="form-group">
+                        <label>Категория значимости <span class="required" style="color: #ef4444;">*</span></label>
+                        <div style="display: flex; gap: 24px; margin-top: 8px; flex-wrap: wrap;">
+                            <label class="radio-label" style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                                <input type="radio" name="categorizationResult" value="first" />
+                                <span>Первая категория</span>
+                            </label>
+                            <label class="radio-label" style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                                <input type="radio" name="categorizationResult" value="second" />
+                                <span>Вторая категория</span>
+                            </label>
+                            <label class="radio-label" style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                                <input type="radio" name="categorizationResult" value="third" />
+                                <span>Третья категория</span>
+                            </label>
+                            <label class="radio-label" style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                                <input type="radio" name="categorizationResult" value="none" />
+                                <span>Категория не присвоена</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="criteria-table" style="margin-top: 24px;">
+                    <table class="data-table" style="width: 100%; border-collapse: collapse;">
+                        <thead>
+                            <tr style="background: #f1f5f9;">
+                                <th style="padding: 12px; text-align: left; border-bottom: 2px solid #e2e8f0;">Показатель</th>
+                                <th style="padding: 12px; text-align: left; border-bottom: 2px solid #e2e8f0; width: 200px;">Значение показателя</th>
+                                <th style="padding: 12px; text-align: left; border-bottom: 2px solid #e2e8f0; width: 300px;">Обоснование</th>
+                                <th style="padding: 12px; text-align: center; border-bottom: 2px solid #e2e8f0; width: 100px;">Действия</th>
+                            </tr>
+                        </thead>
+                        <tbody id="criteriaBody">
+                            <tr class="criteria-group" data-group="social" style="cursor: pointer; background: #f8fafc;">
+                                <td colspan="4" style="padding: 12px; font-weight: 600; border-bottom: 1px solid #e2e8f0; color: #1e293b;">
+                                    <i class="fas fa-chevron-down" style="margin-right: 8px; transition: transform 0.2s;"></i> I. Социальная значимость
+                                </td>
+                            </tr>
+                            <tr class="criteria-item" data-group="social" data-criteria="1.1">
+                                <td style="padding: 12px; border-bottom: 1px solid #e2e8f0; vertical-align: top; color: #475569;">Прекращение или нарушение функционирования государственного органа в части невыполнения возложенной на него функции (полномочий)</td>
+                                <td style="padding: 12px; border-bottom: 1px solid #e2e8f0; vertical-align: top;"><span class="criteria-value-display" id="display-1.1" style="color: #94a3b8; font-style: italic;">Не заполнено</span></td>
+                                <td style="padding: 12px; border-bottom: 1px solid #e2e8f0; vertical-align: top;"><span class="criteria-justification-display" id="display-just-1.1" style="color: #94a3b8; font-style: italic;">Не заполнено</span></td>
+                                <td style="padding: 12px; text-align: center; border-bottom: 1px solid #e2e8f0; vertical-align: top;">
+                                    <button type="button" class="btn btn-sm btn-primary" onclick="openCriteriaModal('1.1')" title="Заполнить показатель" style="min-width: 36px;"><i class="fas fa-edit"></i></button>
+                                </td>
+                            </tr>
+
+                            <tr class="criteria-group" data-group="political" style="cursor: pointer; background: #f8fafc;">
+                                <td colspan="4" style="padding: 12px; font-weight: 600; border-bottom: 1px solid #e2e8f0; color: #1e293b;">
+                                    <i class="fas fa-chevron-down" style="margin-right: 8px; transition: transform 0.2s;"></i> II. Политическая значимость
+                                </td>
+                            </tr>
+                            <tr class="criteria-item" data-group="political" data-criteria="2.1">
+                                <td style="padding: 12px; border-bottom: 1px solid #e2e8f0; vertical-align: top; color: #475569;">Нарушение условий международного договора Российской Федерации, срока переговоров или подписания планируемого к заключению международного договора Российской Федерации</td>
+                                <td style="padding: 12px; border-bottom: 1px solid #e2e8f0; vertical-align: top;"><span class="criteria-value-display" id="display-2.1" style="color: #94a3b8; font-style: italic;">Не заполнено</span></td>
+                                <td style="padding: 12px; border-bottom: 1px solid #e2e8f0; vertical-align: top;"><span class="criteria-justification-display" id="display-just-2.1" style="color: #94a3b8; font-style: italic;">Не заполнено</span></td>
+                                <td style="padding: 12px; text-align: center; border-bottom: 1px solid #e2e8f0; vertical-align: top;">
+                                    <button type="button" class="btn btn-sm btn-primary" onclick="openCriteriaModal('2.1')" title="Заполнить показатель" style="min-width: 36px;"><i class="fas fa-edit"></i></button>
+                                </td>
+                            </tr>
+
+                            <tr class="criteria-group" data-group="economic" style="cursor: pointer; background: #f8fafc;">
+                                <td colspan="4" style="padding: 12px; font-weight: 600; border-bottom: 1px solid #e2e8f0; color: #1e293b;">
+                                    <i class="fas fa-chevron-down" style="margin-right: 8px; transition: transform 0.2s;"></i> III. Экономическая значимость
+                                </td>
+                            </tr>
+                            <tr class="criteria-item" data-group="economic" data-criteria="3.1">
+                                <td style="padding: 12px; border-bottom: 1px solid #e2e8f0; vertical-align: top; color: #475569;">Ущерб экономике (в том числе финансовым рынкам)</td>
+                                <td style="padding: 12px; border-bottom: 1px solid #e2e8f0; vertical-align: top;"><span class="criteria-value-display" id="display-3.1" style="color: #94a3b8; font-style: italic;">Не заполнено</span></td>
+                                <td style="padding: 12px; border-bottom: 1px solid #e2e8f0; vertical-align: top;"><span class="criteria-justification-display" id="display-just-3.1" style="color: #94a3b8; font-style: italic;">Не заполнено</span></td>
+                                <td style="padding: 12px; text-align: center; border-bottom: 1px solid #e2e8f0; vertical-align: top;">
+                                    <button type="button" class="btn btn-sm btn-primary" onclick="openCriteriaModal('3.1')" title="Заполнить показатель" style="min-width: 36px;"><i class="fas fa-edit"></i></button>
+                                </td>
+                            </tr>
+
+                            <tr class="criteria-group" data-group="ecological" style="cursor: pointer; background: #f8fafc;">
+                                <td colspan="4" style="padding: 12px; font-weight: 600; border-bottom: 1px solid #e2e8f0; color: #1e293b;">
+                                    <i class="fas fa-chevron-down" style="margin-right: 8px; transition: transform 0.2s;"></i> IV. Экологическая значимость
+                                </td>
+                            </tr>
+                            <tr class="criteria-item" data-group="ecological" data-criteria="4.1">
+                                <td style="padding: 12px; border-bottom: 1px solid #e2e8f0; vertical-align: top; color: #475569;">Ущерб окружающей среде</td>
+                                <td style="padding: 12px; border-bottom: 1px solid #e2e8f0; vertical-align: top;"><span class="criteria-value-display" id="display-4.1" style="color: #94a3b8; font-style: italic;">Не заполнено</span></td>
+                                <td style="padding: 12px; border-bottom: 1px solid #e2e8f0; vertical-align: top;"><span class="criteria-justification-display" id="display-just-4.1" style="color: #94a3b8; font-style: italic;">Не заполнено</span></td>
+                                <td style="padding: 12px; text-align: center; border-bottom: 1px solid #e2e8f0; vertical-align: top;">
+                                    <button type="button" class="btn btn-sm btn-primary" onclick="openCriteriaModal('4.1')" title="Заполнить показатель" style="min-width: 36px;"><i class="fas fa-edit"></i></button>
+                                </td>
+                            </tr>
+
+                            <tr class="criteria-group" data-group="defense" style="cursor: pointer; background: #f8fafc;">
+                                <td colspan="4" style="padding: 12px; font-weight: 600; border-bottom: 1px solid #e2e8f0; color: #1e293b;">
+                                    <i class="fas fa-chevron-down" style="margin-right: 8px; transition: transform 0.2s;"></i> V. Значимость для обеспечения обороны страны, безопасности государства и правопорядка
+                                </td>
+                            </tr>
+                            <tr class="criteria-item" data-group="defense" data-criteria="5.1">
+                                <td style="padding: 12px; border-bottom: 1px solid #e2e8f0; vertical-align: top; color: #475569;">Угроза обороноспособности и безопасности государства</td>
+                                <td style="padding: 12px; border-bottom: 1px solid #e2e8f0; vertical-align: top;"><span class="criteria-value-display" id="display-5.1" style="color: #94a3b8; font-style: italic;">Не заполнено</span></td>
+                                <td style="padding: 12px; border-bottom: 1px solid #e2e8f0; vertical-align: top;"><span class="criteria-justification-display" id="display-just-5.1" style="color: #94a3b8; font-style: italic;">Не заполнено</span></td>
+                                <td style="padding: 12px; text-align: center; border-bottom: 1px solid #e2e8f0; vertical-align: top;">
+                                    <button type="button" class="btn btn-sm btn-primary" onclick="openCriteriaModal('5.1')" title="Заполнить показатель" style="min-width: 36px;"><i class="fas fa-edit"></i></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="form-actions" style="margin-top: 32px; display: flex; gap: 12px; justify-content: flex-end;">
+                    <button type="button" class="btn btn-secondary" onclick="window.history.back()">
+                        <i class="fas fa-times"></i> Отмена
+                    </button>
+                    <button type="button" class="btn btn-primary" onclick="saveCategorizationInfo()">
+                        <i class="fas fa-save"></i> Сохранить
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- ✅ Вкладка 8: Сведения об эксплуатации (ИСПРАВЛЕНА) -->
+        <div id="tab-operation" class="tab-pane">
+            <h3 style="margin-bottom: 24px; color: #1e293b;">Сведения об эксплуатации</h3>
+            
+            <!-- Toolbar: Слева экспорт/настройки, Справа поиск/добавить -->
+            <div class="toolbar" style="margin-bottom: 24px; display: flex; justify-content: space-between; align-items: center;">
+                <div style="display: flex; gap: 8px;">
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" onclick="toggleDropdown('exportDropdown'); event.stopPropagation();">
+                            <i class="fas fa-file-export"></i> Экспорт в файл
+                        </button>
+                        <div class="dropdown-menu" id="exportDropdown">
+                            <a onclick="exportOperation('xlsx')"><i class="fas fa-file-excel"></i> Экспорт в XLSX</a>
+                            <a onclick="exportOperation('pdf')"><i class="fas fa-file-pdf"></i> Экспорт в PDF</a>
+                        </div>
+                    </div>
+                    <button class="btn btn-secondary" onclick="openSettingsModal()" title="Настройки">
+                        <i class="fas fa-cog"></i> Настройки
+                    </button>
+                </div>
+                
+                <div style="display: flex; gap: 12px; align-items: center;">
+                    <div class="search-box" style="max-width: 300px; position: relative;">
+                        <i class="fas fa-search" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: #94a3b8;"></i>
+                        <input type="text" id="operationSearch" class="form-control" placeholder="Искать..." oninput="filterOperationTable()" style="padding-left: 36px;" />
+                    </div>
+                    <button class="btn btn-primary" onclick="openOperationModal()" title="Добавить">
+                        <i class="fas fa-plus"></i> Добавить
+                    </button>
+                </div>
+            </div>
+
+            <!-- Таблица субъектов -->
+            <div class="table-container" style="overflow-x: auto;">
+                <table class="data-table" style="width: 100%; border-collapse: collapse;">
+                    <thead>
+                        <tr style="background: #f8fafc;">
+                            <th style="padding: 12px; text-align: left; border-bottom: 2px solid #e2e8f0; font-weight: 600; color: #475569;">Тип субъекта</th>
+                            <th style="padding: 12px; text-align: left; border-bottom: 2px solid #e2e8f0; font-weight: 600; color: #475569;">Наименование субъекта</th>
+                            <th style="padding: 12px; text-align: left; border-bottom: 2px solid #e2e8f0; font-weight: 600; color: #475569;">Элемент</th>
+                            <th style="padding: 12px; text-align: center; border-bottom: 2px solid #e2e8f0; font-weight: 600; color: #475569; width: 100px;">Действия</th>
+                        </tr>
+                    </thead>
+                    <tbody id="operationTableBody">
+                        <!-- Данные будут добавляться динамически -->
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="form-actions" style="margin-top: 32px; display: flex; gap: 12px; justify-content: flex-end;">
+                <button type="button" class="btn btn-secondary" onclick="window.history.back()">
+                    <i class="fas fa-times"></i> Отмена
+                </button>
+                <button type="button" class="btn btn-primary" onclick="saveOperationInfo()">
+                    <i class="fas fa-save"></i> Сохранить
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ✅ МОДАЛЬНОЕ ОКНО ДЛЯ ЗАПОЛНЕНИЯ ПОКАЗАТЕЛЕЙ (Рисунок 163) -->
+<div class="modal" id="criteriaModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 2000; align-items: center; justify-content: center;">
+    <div class="modal-content" style="background: white; border-radius: 8px; padding: 32px; max-width: 600px; width: 90%; max-height: 90vh; overflow-y: auto;">
+        <div class="modal-header" style="margin-bottom: 24px; display: flex; justify-content: space-between; align-items: center;">
+            <h3 id="modalTitle" style="margin: 0; color: #1e293b;">Заполнение показателя</h3>
+            <button type="button" class="btn-close" onclick="closeCriteriaModal()" style="background: none; border: none; font-size: 24px; cursor: pointer; color: #64748b;">&times;</button>
+        </div>
+        
+        <form id="criteriaForm">
+            <div class="form-group" style="margin-bottom: 16px;">
+                <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                    <input type="checkbox" id="notApplicable" onchange="toggleNotApplicableInModal()" />
+                    <span>Неприменимо</span>
+                </label>
+            </div>
+
+            <div id="criteriaFields">
+                <div class="form-group" style="margin-bottom: 16px;">
+                    <label>Значение показателя <span class="required" style="color: #ef4444;">*</span></label>
+                    <select id="criteriaValueSelect" class="form-control">
+                        <option value="">Выбрать...</option>
+                        <option value="high">Высокое</option>
+                        <option value="medium">Среднее</option>
+                        <option value="low">Низкое</option>
+                    </select>
+                </div>
+
+                <div class="form-group" style="margin-bottom: 16px;">
+                    <label>Значение показателя (текст)</label>
+                    <input type="text" id="criteriaValueText" class="form-control" placeholder="Введите значение показателя" />
+                </div>
+
+                <div class="form-group" style="margin-bottom: 16px;">
+                    <label>Обоснование <span class="required" style="color: #ef4444;">*</span></label>
+                    <textarea id="criteriaJustification" class="form-control" rows="4" placeholder="Введите обоснование"></textarea>
+                </div>
+            </div>
+
+            <div class="form-actions" style="margin-top: 32px; display: flex; gap: 12px; justify-content: flex-end;">
+                <button type="button" class="btn btn-secondary" onclick="closeCriteriaModal()">
+                    <i class="fas fa-times"></i> Отмена
+                </button>
+                <button type="button" class="btn btn-primary" onclick="saveCriteriaModal()">
+                    <i class="fas fa-save"></i> Сохранить
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- ✅ МОДАЛЬНОЕ ОКНО ДЛЯ ДОБАВЛЕНИЯ СУБЪЕКТА (Рисунок 165, ИСПРАВЛЕНО) -->
+<div class="modal" id="operationModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 2000; align-items: center; justify-content: center;">
+    <div class="modal-content" style="background: white; border-radius: 8px; padding: 32px; max-width: 600px; width: 90%;">
+        <div class="modal-header" style="margin-bottom: 24px; display: flex; justify-content: space-between; align-items: center;">
+            <h3 id="operationModalTitle" style="margin: 0; color: #1e293b;">Добавление нового субъекта</h3>
+            <button type="button" class="btn-close" onclick="closeOperationModal()" style="background: none; border: none; font-size: 24px; cursor: pointer; color: #64748b;">&times;</button>
+        </div>
+        
+        <form id="operationForm">
+            <div class="form-group" style="margin-bottom: 16px;">
+                <label>Тип субъекта <span class="required" style="color: #ef4444;">*</span></label>
+                <select id="subjectType" class="form-control" required>
+                    <option value="">Выбрать...</option>
+                    <option value="state_authority">Государственный орган</option>
+                    <option value="state_institution">Государственное учреждение</option>
+                    <option value="legal_entity">Юридическое лицо</option>
+                    <option value="individual_entrepreneur">Индивидуальный предприниматель</option>
+                </select>
+            </div>
+
+            <div class="form-group" style="margin-bottom: 16px;">
+                <label>Наименование субъекта <span class="required" style="color: #ef4444;">*</span></label>
+                <input type="text" id="subjectName" class="form-control" placeholder="Введите наименование субъекта" required />
+            </div>
+
+            <div class="form-group" style="margin-bottom: 16px;">
+                <label>Элемент КИИ <span class="required" style="color: #ef4444;">*</span></label>
+                <select id="kiiElement" class="form-control" required>
+                    <option value="">Выбрать...</option>
+                    <option value="is">Информационная система (ИС)</option>
+                    <option value="its">Информационно-телекоммуникационная сеть (ИТС)</option>
+                    <option value="asu">Автоматизированная система управления (АСУ)</option>
+                </select>
+            </div>
+
+            <div class="form-actions" style="margin-top: 32px; display: flex; gap: 12px; justify-content: flex-end;">
+                <button type="button" class="btn btn-secondary" onclick="closeOperationModal()">
+                    <i class="fas fa-times"></i> Отмена
+                </button>
+                <button type="button" class="btn btn-primary" onclick="saveOperationModal()">
+                    <i class="fas fa-save"></i> Сохранить
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+    /* Стили для верхних вкладок */
+    .tabs-nav {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        background: white;
+        padding: 16px;
+        border-radius: 8px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    .tab-nav-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 16px;
+        background: #f1f5f9;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: all 0.2s;
+        color: #475569;
+        text-decoration: none;
+        font-weight: 500;
+        border: none;
+    }
+    .tab-nav-item:hover {
+        background: #e2e8f0;
+        color: #1e293b;
+    }
+    .tab-nav-item.active {
+        background: #4F46E5;
+        color: white;
+    }
+    .tab-nav-item i {
+        font-size: 14px;
+    }
+    .tab-nav-item span {
+        white-space: nowrap;
+    }
+    
+    /* Стили для контента вкладок */
+    .tab-pane {
+        display: none;
+    }
+    .tab-pane.active {
+        display: block;
+    }
+    .form-control {
+        width: 100%;
+        padding: 10px 12px;
+        border: 1px solid #e2e8f0;
+        border-radius: 6px;
+        font-size: 14px;
+        box-sizing: border-box;
+    }
+    .form-control:focus {
+        outline: none;
+        border-color: #4F46E5;
+        box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+    }
+    .form-control[disabled] {
+        background: #f1f5f9;
+        color: #94a3b8;
+        cursor: not-allowed;
+    }
+    label {
+        display: block;
+        margin-bottom: 6px;
+        font-weight: 500;
+        color: #334155;
+    }
+    .form-group {
+        margin-bottom: 16px;
+    }
+    .checkbox-label, .radio-label {
+        cursor: pointer;
+        font-weight: 400;
+    }
+    input[type="checkbox"], input[type="radio"] {
+        width: 18px;
+        height: 18px;
+        cursor: pointer;
+    }
+
+    /* Стили для тегов (chips) */
+    .tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 12px;
+        background: #e0e7ff;
+        border-radius: 6px;
+        font-size: 14px;
+        color: #334155;
+        border: 1px solid #c7d2fe;
+    }
+    .tag-remove {
+        cursor: pointer;
+        color: #64748b;
+        font-size: 16px;
+        line-height: 1;
+        padding: 0 2px;
+        font-weight: bold;
+    }
+    .tag-remove:hover {
+        color: #ef4444;
+    }
+
+    /* Стили для таблицы критериев и эксплуатации */
+    .criteria-item {
+        display: none;
+    }
+    .criteria-item.show {
+        display: table-row;
+    }
+    .criteria-group:hover {
+        background: #e2e8f0 !important;
+    }
+    .btn-sm {
+        padding: 6px 12px;
+        font-size: 12px;
+    }
+    .search-box {
+        position: relative;
+        display: flex;
+        align-items: center;
+    }
+    .search-box i {
+        position: absolute;
+        left: 12px;
+        color: #94a3b8;
+        z-index: 1;
+    }
+    .search-box input {
+        padding-left: 36px;
+        width: 100%;
+    }
+    .dropdown {
+        position: relative;
+        display: inline-block;
+    }
+    .dropdown-menu {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        min-width: 200px;
+        background: white;
+        border: 1px solid #e2e8f0;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        z-index: 1000;
+        margin-top: 4px;
+    }
+    .dropdown-menu.show {
+        display: block;
+    }
+    .dropdown-menu a {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 16px;
+        color: #1e293b;
+        text-decoration: none;
+        font-size: 14px;
+        cursor: pointer;
+        transition: background 0.2s;
+    }
+    .dropdown-menu a:hover {
+        background: #f1f5f9;
+    }
+
+    /* Стили для модальных окон */
+    .modal.show {
+        display: flex !important;
+    }
+
+    /* Стили для кнопок действий в таблице */
+    .data-table tbody tr:hover {
+        background: #f8fafc;
+    }
+    .data-table tbody td {
+        padding: 12px;
+        border-bottom: 1px solid #e2e8f0;
+        vertical-align: middle;
+    }
+    .btn-action {
+        padding: 6px 10px;
+        margin: 0 2px;
+        cursor: pointer;
+        border: none;
+        border-radius: 4px;
+        font-size: 12px;
+    }
+    .btn-edit {
+        background: #3b82f6;
+        color: white;
+    }
+    .btn-delete {
+        background: #ef4444;
+        color: white;
+    }
+    .btn-action:hover {
+        opacity: 0.8;
+    }
+</style>
+
+<script>
+    // Глобальные переменные
+    let currentCriteriaId = null;
+    let criteriaData = {};
+    let operationData = [];
+    let editingOperationId = null;
+
+    function showTab(tabName) {
+        document.querySelectorAll('.tab-pane').forEach(pane => {
+            pane.classList.remove('active');
+        });
+        document.querySelectorAll('.tab-nav-item').forEach(item => {
+            item.classList.remove('active');
+        });
+        
+        document.getElementById('tab-' + tabName).classList.add('active');
+        document.getElementById('tab-btn-' + tabName).classList.add('active');
+    }
+
+    function saveMainInfo() {
+        const type = document.getElementById('objType').value;
+        const name = document.getElementById('objName').value.trim();
+        const address = document.getElementById('objAddress').value.trim();
+        const purpose = document.getElementById('objPurpose').value.trim();
+        const sphere = document.getElementById('objSphere').value;
+
+        if (!type || !name || !address || !purpose || !sphere) {
+            alert('Пожалуйста, заполните все обязательные поля (отмечены звездочкой)');
+            return;
+        }
+        alert('Основные сведения сохранены!\n\nТеперь доступны для заполнения остальные разделы.');
+    }
+
+    function saveNetworkInfo() {
+        const category = document.getElementById('networkCategory').value;
+        const operator = document.getElementById('operatorName').value;
+        const purpose = document.getElementById('networkPurpose').value;
+        const method = document.getElementById('interactionMethod').value;
+
+        if (!category || !operator || !purpose || !method) {
+            alert('Пожалуйста, заполните все обязательные поля (отмечены звездочкой)');
+            return;
+        }
+        alert('Сведения о взаимодействии с сетью электросвязи сохранены!');
+    }
+
+    function saveSoftwareInfo() {
+        const paSystems = document.getElementById('paSystems').value.trim();
+        const osSoftware = document.getElementById('osSoftware').value.trim();
+        const appSoftware = document.getElementById('appSoftware').value.trim();
+        const securityTools = document.getElementById('securityTools').value.trim();
+
+        if (!paSystems || !osSoftware || !appSoftware || !securityTools) {
+            alert('Пожалуйста, заполните все обязательные поля (отмечены звездочкой)');
+            return;
+        }
+        alert('Сведения о программных и программно-аппаратных средствах сохранены!');
+    }
+
+    let selectedViolators = [];
+    let selectedThreats = [];
+    let selectedIncidents = [];
+    let selectedOrgMeasures = [];
+    let selectedTechMeasures = [];
+
+    function addViolatorTag() {
+        const select = document.getElementById('violatorSelect');
+        const value = select.value;
+        const text = select.options[select.selectedIndex].text;
+        if (!value || selectedViolators.includes(value)) { select.value = ''; return; }
+        selectedViolators.push(value);
+        const tag = document.createElement('div');
+        tag.className = 'tag';
+        tag.id = 'violator-tag-' + value;
+        tag.innerHTML = `<span>${text}</span><span class="tag-remove" onclick="removeViolatorTag('${value}')">&times;</span>`;
+        document.getElementById('violatorTags').appendChild(tag);
+        select.value = '';
+    }
+    function removeViolatorTag(value) {
+        selectedViolators = selectedViolators.filter(v => v !== value);
+        const tag = document.getElementById('violator-tag-' + value);
+        if (tag) tag.remove();
+    }
+
+    function addThreatTag() {
+        const select = document.getElementById('threatSelect');
+        const value = select.value;
+        const text = select.options[select.selectedIndex].text;
+        if (!value || selectedThreats.includes(value)) { select.value = ''; return; }
+        selectedThreats.push(value);
+        const tag = document.createElement('div');
+        tag.className = 'tag';
+        tag.id = 'threat-tag-' + value;
+        tag.innerHTML = `<span>${text}</span><span class="tag-remove" onclick="removeThreatTag('${value}')">&times;</span>`;
+        document.getElementById('threatTags').appendChild(tag);
+        select.value = '';
+    }
+    function removeThreatTag(value) {
+        selectedThreats = selectedThreats.filter(t => t !== value);
+        const tag = document.getElementById('threat-tag-' + value);
+        if (tag) tag.remove();
+    }
+
+    function addIncidentTag() {
+        const select = document.getElementById('incidentSelect');
+        const value = select.value;
+        const text = select.options[select.selectedIndex].text;
+        if (!value || selectedIncidents.includes(value)) { select.value = ''; return; }
+        selectedIncidents.push(value);
+        const tag = document.createElement('div');
+        tag.className = 'tag';
+        tag.id = 'incident-tag-' + value;
+        tag.innerHTML = `<span>${text}</span><span class="tag-remove" onclick="removeIncidentTag('${value}')">&times;</span>`;
+        document.getElementById('incidentTags').appendChild(tag);
+        select.value = '';
+    }
+    function removeIncidentTag(value) {
+        selectedIncidents = selectedIncidents.filter(i => i !== value);
+        const tag = document.getElementById('incident-tag-' + value);
+        if (tag) tag.remove();
+    }
+
+    function addOrgMeasureTag() {
+        const select = document.getElementById('orgMeasuresSelect');
+        const value = select.value;
+        const text = select.options[select.selectedIndex].text;
+        if (!value || selectedOrgMeasures.includes(value)) { select.value = ''; return; }
+        selectedOrgMeasures.push(value);
+        const tag = document.createElement('div');
+        tag.className = 'tag';
+        tag.id = 'org-measure-tag-' + value;
+        tag.innerHTML = `<span>${text}</span><span class="tag-remove" onclick="removeOrgMeasureTag('${value}')">&times;</span>`;
+        document.getElementById('orgMeasuresTags').appendChild(tag);
+        select.value = '';
+    }
+    function removeOrgMeasureTag(value) {
+        selectedOrgMeasures = selectedOrgMeasures.filter(m => m !== value);
+        const tag = document.getElementById('org-measure-tag-' + value);
+        if (tag) tag.remove();
+    }
+
+    function addTechMeasureTag() {
+        const select = document.getElementById('techMeasuresSelect');
+        const value = select.value;
+        const text = select.options[select.selectedIndex].text;
+        if (!value || selectedTechMeasures.includes(value)) { select.value = ''; return; }
+        selectedTechMeasures.push(value);
+        const tag = document.createElement('div');
+        tag.className = 'tag';
+        tag.id = 'tech-measure-tag-' + value;
+        tag.innerHTML = `<span>${text}</span><span class="tag-remove" onclick="removeTechMeasureTag('${value}')">&times;</span>`;
+        document.getElementById('techMeasuresTags').appendChild(tag);
+        select.value = '';
+    }
+    function removeTechMeasureTag(value) {
+        selectedTechMeasures = selectedTechMeasures.filter(m => m !== value);
+        const tag = document.getElementById('tech-measure-tag-' + value);
+        if (tag) tag.remove();
+    }
+
+    function saveThreatsInfo() {
+        if (selectedViolators.length === 0) { alert('Пожалуйста, выберите хотя бы одну категорию нарушителей'); return; }
+        if (selectedThreats.length === 0) { alert('Пожалуйста, добавьте хотя бы одну основную угрозу'); return; }
+        alert('Сведения об угрозах безопасности информации и категориях нарушителей сохранены!');
+    }
+
+    function saveIncidentsInfo() {
+        if (selectedIncidents.length === 0) { alert('Пожалуйста, выберите хотя бы один тип компьютерного инцидента'); return; }
+        alert('Типы компьютерных инцидентов сохранены!');
+    }
+
+    function saveMeasuresInfo() {
+        if (selectedOrgMeasures.length === 0) { alert('Пожалуйста, выберите хотя бы одну организационную меру'); return; }
+        if (selectedTechMeasures.length === 0) { alert('Пожалуйста, выберите хотя бы одну техническую меру'); return; }
+        alert('Организационные и технические меры сохранены!');
+    }
+
+    function saveCategorizationInfo() {
+        const result = document.querySelector('input[name="categorizationResult"]:checked');
+        if (!result) { alert('Пожалуйста, выберите категорию значимости'); return; }
+        alert('Категорирование сохранено!');
+    }
+
+    function toggleDropdown(dropdownId) {
+        const dropdown = document.getElementById(dropdownId);
+        const isOpen = dropdown.classList.contains('show');
+        closeAllDropdowns();
+        if (!isOpen) dropdown.classList.add('show');
+    }
+
+    function closeAllDropdowns() {
+        document.querySelectorAll('.dropdown-menu').forEach(d => d.classList.remove('show'));
+    }
+
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.dropdown')) closeAllDropdowns();
+    });
+
+    function exportCategorization(format) {
+        closeAllDropdowns();
+        alert(`Экспорт в формате ${format.toUpperCase()} будет реализован`);
+    }
+
+    function filterCategorization() {
+        const searchTerm = document.getElementById('categorizationSearch').value.toLowerCase();
+        const items = document.querySelectorAll('.criteria-item');
+        
+        items.forEach(item => {
+            const text = item.textContent.toLowerCase();
+            if (text.includes(searchTerm)) {
+                item.classList.add('show');
+                item.style.display = '';
+                const groupName = item.dataset.group;
+                const group = document.querySelector(`.criteria-group[data-group="${groupName}"]`);
+                if (group) {
+                    const icon = group.querySelector('i');
+                    icon.classList.remove('fa-chevron-down');
+                    icon.classList.add('fa-chevron-up');
+                }
+            } else {
+                item.classList.remove('show');
+                item.style.display = 'none';
+            }
+        });
+
+        if (searchTerm === '') {
+            items.forEach(item => {
+                item.classList.remove('show');
+                item.style.display = 'none';
+            });
+            document.querySelectorAll('.criteria-group i').forEach(icon => {
+                icon.classList.remove('fa-chevron-up');
+                icon.classList.add('fa-chevron-down');
+            });
+        }
+    }
+
+    // ✅ ФУНКЦИИ ДЛЯ МОДАЛЬНОГО ОКНА КАТЕГОРИРОВАНИЯ
+    function openCriteriaModal(criteriaId) {
+        currentCriteriaId = criteriaId;
+        const modal = document.getElementById('criteriaModal');
+        const title = document.getElementById('modalTitle');
+        
+        const row = document.querySelector(`tr[data-criteria="${criteriaId}"]`);
+        const indicatorText = row.querySelector('td:first-child').textContent.trim();
+        title.textContent = indicatorText;
+        
+        if (criteriaData[criteriaId]) {
+            const data = criteriaData[criteriaId];
+            document.getElementById('notApplicable').checked = data.notApplicable || false;
+            document.getElementById('criteriaValueSelect').value = data.valueSelect || '';
+            document.getElementById('criteriaValueText').value = data.valueText || '';
+            document.getElementById('criteriaJustification').value = data.justification || '';
+        } else {
+            document.getElementById('notApplicable').checked = false;
+            document.getElementById('criteriaValueSelect').value = '';
+            document.getElementById('criteriaValueText').value = '';
+            document.getElementById('criteriaJustification').value = '';
+        }
+        
+        toggleNotApplicableInModal();
+        modal.classList.add('show');
+    }
+
+    function closeCriteriaModal() {
+        const modal = document.getElementById('criteriaModal');
+        modal.classList.remove('show');
+        currentCriteriaId = null;
+    }
+
+    function toggleNotApplicableInModal() {
+        const isNotApplicable = document.getElementById('notApplicable').checked;
+        const fields = document.getElementById('criteriaFields');
+        
+        if (isNotApplicable) {
+            fields.style.opacity = '0.5';
+            fields.style.pointerEvents = 'none';
+        } else {
+            fields.style.opacity = '1';
+            fields.style.pointerEvents = 'auto';
+        }
+    }
+
+    function saveCriteriaModal() {
+        const isNotApplicable = document.getElementById('notApplicable').checked;
+        const valueSelect = document.getElementById('criteriaValueSelect').value;
+        const valueText = document.getElementById('criteriaValueText').value.trim();
+        const justification = document.getElementById('criteriaJustification').value.trim();
+        
+        if (!isNotApplicable) {
+            if (!valueSelect && !valueText) {
+                alert('Пожалуйста, заполните значение показателя');
+                return;
+            }
+            if (!justification) {
+                alert('Пожалуйста, заполните обоснование');
+                return;
+            }
+        }
+        
+        criteriaData[currentCriteriaId] = {
+            notApplicable: isNotApplicable,
+            valueSelect: valueSelect,
+            valueText: valueText,
+            justification: justification
+        };
+        
+        const valueDisplay = document.getElementById(`display-${currentCriteriaId}`);
+        const justDisplay = document.getElementById(`display-just-${currentCriteriaId}`);
+        
+        if (isNotApplicable) {
+            valueDisplay.textContent = 'неприменимо';
+            valueDisplay.style.color = '#94a3b8';
+            valueDisplay.style.fontStyle = 'italic';
+            justDisplay.textContent = 'неприменимо';
+            justDisplay.style.color = '#94a3b8';
+            justDisplay.style.fontStyle = 'italic';
+        } else {
+            const displayValue = valueText || valueSelect;
+            valueDisplay.textContent = displayValue;
+            valueDisplay.style.color = '#1e293b';
+            valueDisplay.style.fontStyle = 'normal';
+            justDisplay.textContent = justification;
+            justDisplay.style.color = '#1e293b';
+            justDisplay.style.fontStyle = 'normal';
+        }
+        
+        closeCriteriaModal();
+        alert('Показатель сохранен!');
+    }
+
+    // ✅ ФУНКЦИИ ДЛЯ ВКЛАДКИ "СВЕДЕНИЯ ОБ ЭКСПЛУАТАЦИИ" (ОБНОВЛЕНО)
+    function openOperationModal(id = null) {
+        const modal = document.getElementById('operationModal');
+        const title = document.getElementById('operationModalTitle');
+        
+        if (id) {
+            editingOperationId = id;
+            title.textContent = 'Редактирование субъекта';
+            const data = operationData.find(item => item.id === id);
+            if (data) {
+                document.getElementById('subjectType').value = data.subjectType;
+                document.getElementById('subjectName').value = data.subjectName || '';
+                document.getElementById('kiiElement').value = data.kiiElement;
+            }
+        } else {
+            editingOperationId = null;
+            title.textContent = 'Добавление нового субъекта';
+            document.getElementById('subjectType').value = '';
+            document.getElementById('subjectName').value = '';
+            document.getElementById('kiiElement').value = '';
+        }
+        
+        modal.classList.add('show');
+    }
+
+    function closeOperationModal() {
+        const modal = document.getElementById('operationModal');
+        modal.classList.remove('show');
+        editingOperationId = null;
+    }
+
+    function saveOperationModal() {
+        const subjectType = document.getElementById('subjectType').value;
+        const subjectName = document.getElementById('subjectName').value.trim();
+        const kiiElement = document.getElementById('kiiElement').value;
+        
+        if (!subjectType || !subjectName || !kiiElement) {
+            alert('Пожалуйста, заполните все обязательные поля');
+            return;
+        }
+        
+        const subjectTypeText = document.getElementById('subjectType').options[document.getElementById('subjectType').selectedIndex].text;
+        const kiiElementText = document.getElementById('kiiElement').options[document.getElementById('kiiElement').selectedIndex].text;
+        
+        if (editingOperationId) {
+            const index = operationData.findIndex(item => item.id === editingOperationId);
+            if (index !== -1) {
+                operationData[index] = {
+                    id: editingOperationId,
+                    subjectType: subjectType,
+                    subjectTypeText: subjectTypeText,
+                    subjectName: subjectName,
+                    kiiElement: kiiElement,
+                    kiiElementText: kiiElementText
+                };
+            }
+        } else {
+            const newId = Date.now();
+            operationData.push({
+                id: newId,
+                subjectType: subjectType,
+                subjectTypeText: subjectTypeText,
+                subjectName: subjectName,
+                kiiElement: kiiElement,
+                kiiElementText: kiiElementText
+            });
+        }
+        
+        renderOperationTable();
+        closeOperationModal();
+        alert('Субъект сохранен!');
+    }
+
+    function deleteOperation(id) {
+        if (confirm('Вы уверены, что хотите удалить эту запись?')) {
+            operationData = operationData.filter(item => item.id !== id);
+            renderOperationTable();
+        }
+    }
+
+    function renderOperationTable() {
+        const tbody = document.getElementById('operationTableBody');
+        tbody.innerHTML = '';
+        
+        if (operationData.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="4" style="text-align: center; padding: 40px; color: #94a3b8;">Объекты КИИ не добавлены</td></tr>`;
+            return;
+        }
+
+        operationData.forEach(item => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td style="padding: 12px; border-bottom: 1px solid #e2e8f0;">${item.subjectTypeText}</td>
+                <td style="padding: 12px; border-bottom: 1px solid #e2e8f0;">${item.subjectName}</td>
+                <td style="padding: 12px; border-bottom: 1px solid #e2e8f0;">${item.kiiElementText}</td>
+                <td style="padding: 12px; text-align: center; border-bottom: 1px solid #e2e8f0;">
+                    <button type="button" class="btn-action btn-edit" onclick="openOperationModal(${item.id})" title="Редактировать">
+                        <i class="fas fa-edit"></i>
+                    </button>
+                    <button type="button" class="btn-action btn-delete" onclick="deleteOperation(${item.id})" title="Удалить">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </td>
+            `;
+            tbody.appendChild(tr);
+        });
+    }
+
+    function filterOperationTable() {
+        const searchTerm = document.getElementById('operationSearch').value.toLowerCase();
+        const rows = document.querySelectorAll('#operationTableBody tr');
+        
+        rows.forEach(row => {
+            const text = row.textContent.toLowerCase();
+            if (text.includes(searchTerm)) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    }
+
+    function exportOperation(format) {
+        closeAllDropdowns();
+        alert(`Экспорт в формате ${format.toUpperCase()} будет реализован`);
+    }
+
+    function saveOperationInfo() {
+        if (operationData.length === 0) {
+            alert('Добавьте хотя бы одного субъекта');
+            return;
+        }
+        alert('Сведения об эксплуатации сохранены!');
+    }
+
+    // Инициализация при загрузке страницы
+    document.addEventListener('DOMContentLoaded', function() {
+        // Обработка клика по группам критериев (сворачивание/разворачивание)
+        document.querySelectorAll('.criteria-group').forEach(group => {
+            group.addEventListener('click', function() {
+                const groupName = this.dataset.group;
+                const icon = this.querySelector('i');
+                const items = document.querySelectorAll(`.criteria-item[data-group="${groupName}"]`);
+                
+                items.forEach(item => {
+                    item.classList.toggle('show');
+                    if (item.classList.contains('show')) {
+                        item.style.display = '';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+                
+                if (icon.classList.contains('fa-chevron-down')) {
+                    icon.classList.remove('fa-chevron-down');
+                    icon.classList.add('fa-chevron-up');
+                } else {
+                    icon.classList.remove('fa-chevron-up');
+                    icon.classList.add('fa-chevron-down');
+                }
+            });
+        });
+
+        // Рендер пустой таблицы эксплуатации при загрузке
+        renderOperationTable();
+    });
+
+    // Закрытие модальных окон при клике вне их области
+    document.getElementById('criteriaModal').addEventListener('click', function(e) {
+        if (e.target === this) closeCriteriaModal();
+    });
+
+    document.getElementById('operationModal').addEventListener('click', function(e) {
+        if (e.target === this) closeOperationModal();
+    });
+</script>

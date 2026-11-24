@@ -1,0 +1,435 @@
+@model AegisCore.Models.ObjectsViewModel
+@{
+    var obj = Model.CurrentObject;
+    var selectedIds = obj?.TechnicalAssetIds ?? new List<string>();
+    var selectedAssets = Model.AvailableTechnicalAssets.Where(t => selectedIds.Contains(t.Id)).ToList();
+}
+
+@if (obj == null || string.IsNullOrEmpty(obj.Id))
+{
+    <div class="alert alert-info">
+        <i class="fas fa-info-circle"></i>
+        Сначала сохраните основные сведения объекта, чтобы добавить технические средства.
+    </div>
+}
+else
+{
+    <div class="toolbar">
+        <div class="toolbar-left">
+            <button class="btn btn-primary" onclick="openSelectModal('selectTechnicalAssetModal')">
+                <i class="fas fa-plus"></i> Добавить
+            </button>
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Поиск..." oninput="filterSelectedTable('selectedTechnicalAssetsTable', this.value)" />
+            </div>
+        </div>
+    </div>
+
+    <div class="table-container">
+        <table class="data-table" id="selectedTechnicalAssetsTable">
+            <thead>
+                <tr>
+                    <th style="width: 40px;"><input type="checkbox" onclick="toggleAllCheckboxes(this, 'selectedTechnicalAssetsTable')" /></th>
+                    <th class="th-sortable" onclick="sortTable('selectedTechnicalAssetsTable', 1)">
+                        <div class="th-header">
+                            <span>Вид</span>
+                            <i class="fas fa-sort sortable-icon"></i>
+                        </div>
+                        <div class="th-filter-row">
+                            <input type="text" class="filter-inline-input" placeholder="Поиск..." oninput="filterTable('selectedTechnicalAssetsTable', 1, this.value)" />
+                        </div>
+                    </th>
+                    <th class="th-sortable" onclick="sortTable('selectedTechnicalAssetsTable', 2)">
+                        <div class="th-header">
+                            <span>Наименование</span>
+                            <i class="fas fa-sort sortable-icon"></i>
+                        </div>
+                        <div class="th-filter-row">
+                            <input type="text" class="filter-inline-input" placeholder="Поиск..." oninput="filterTable('selectedTechnicalAssetsTable', 2, this.value)" />
+                        </div>
+                    </th>
+                    <th class="th-sortable" onclick="sortTable('selectedTechnicalAssetsTable', 3)">
+                        <div class="th-header">
+                            <span>Серийный номер</span>
+                            <i class="fas fa-sort sortable-icon"></i>
+                        </div>
+                        <div class="th-filter-row">
+                            <input type="text" class="filter-inline-input" placeholder="Поиск..." oninput="filterTable('selectedTechnicalAssetsTable', 3, this.value)" />
+                        </div>
+                    </th>
+                    <th class="th-sortable" onclick="sortTable('selectedTechnicalAssetsTable', 4)">
+                        <div class="th-header">
+                            <span>Дата приобретения</span>
+                            <i class="fas fa-sort sortable-icon"></i>
+                        </div>
+                        <div class="th-filter-row">
+                            <input type="text" class="filter-inline-input" placeholder="Поиск..." oninput="filterTable('selectedTechnicalAssetsTable', 4, this.value)" />
+                        </div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (selectedAssets.Any())
+                {
+                    @foreach (var asset in selectedAssets)
+                    {
+                        <tr data-id="@asset.Id">
+                            <td><input type="checkbox" class="row-checkbox" /></td>
+                            <td><span class="badge info">@(asset.Type ?? "—")</span></td>
+                            <td><strong>@asset.Name</strong></td>
+                            <td>@(asset.SerialNumber ?? "—")</td>
+                            <td>@(asset.PurchaseDate?.ToString("dd.MM.yyyy") ?? "—")</td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="5" style="text-align: center; padding: 40px; color: #94a3b8;">
+                            <i class="fas fa-microchip" style="font-size: 48px; margin-bottom: 16px; display: block;"></i>
+                            Технические средства не добавлены
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <div class="form-actions" style="margin-top: 20px;">
+        <button class="btn btn-secondary" onclick="removeSelected('technical-asset')">
+            <i class="fas fa-trash"></i> Удалить выбранные
+        </button>
+    </div>
+}
+
+<!-- ✅ МОДАЛКА ВЫБОРА ТС — ТОЧНО КАК НА РИСУНКЕ 105 -->
+<div class="modal" id="selectTechnicalAssetModal">
+    <div class="modal-content" style="max-width: 700px;">
+        <div class="modal-header" style="display: flex; justify-content: space-between; align-items: center; padding: 20px 24px; border-bottom: 1px solid #e2e8f0;">
+            <h3 style="margin: 0; font-size: 20px; font-weight: 700; color: #1e293b;">Список ТС</h3>
+            <button class="modal-close" onclick="closeModal('selectTechnicalAssetModal')" style="background: none; border: none; font-size: 24px; cursor: pointer; color: #64748b;">&times;</button>
+        </div>
+        <div class="modal-body" style="padding: 24px;">
+            <!-- Кнопка "Добавить ТС" в правом верхнем углу -->
+            <div style="display: flex; justify-content: flex-end; margin-bottom: 16px;">
+                <button type="button" class="btn btn-primary" onclick="openAddTechnicalAssetFromModal()" style="padding: 8px 16px;">
+                    <i class="fas fa-plus"></i> Добавить ТС
+                </button>
+            </div>
+
+            <!-- Поиск -->
+            <div class="search-box" style="margin-bottom: 16px; position: relative;">
+                <i class="fas fa-search" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: #94a3b8;"></i>
+                <input type="text" id="technicalAssetListSearch" placeholder="Поиск..." 
+                       oninput="filterTechnicalAssetList()" 
+                       style="width: 100%; padding: 10px 12px 10px 36px; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 14px;" />
+            </div>
+
+            <!-- Список ТС с прокруткой -->
+            <div style="max-height: 400px; overflow-y: auto; border: 1px solid #e2e8f0; border-radius: 8px;">
+                <div id="technicalAssetListContainer">
+                    <!-- Чекбокс "Выбрать все" -->
+                    <div style="padding: 12px 16px; border-bottom: 1px solid #f1f5f9; display: flex; align-items: center; gap: 12px; background: #fafbfc;">
+                        <input type="checkbox" id="selectAllTA" onchange="toggleSelectAllTechnicalAssets()" 
+                               style="width: 16px; height: 16px; cursor: pointer;" />
+                        <label for="selectAllTA" style="flex: 1; cursor: pointer; color: #475569; font-size: 14px;">
+                            Выбрать все
+                        </label>
+                    </div>
+                    
+                    @foreach (var asset in Model.AvailableTechnicalAssets)
+                    {
+                        var isSelected = selectedIds.Contains(asset.Id);
+                        <div class="ta-list-item" data-name="@asset.Name" data-number="@(asset.InventoryNumber ?? "")"
+                             style="padding: 10px 16px; border-bottom: 1px solid #f1f5f9; display: flex; align-items: center; gap: 12px; @(isSelected ? "background: #f8fafc;" : "")">
+                            <input type="checkbox" id="ta_@asset.Id" value="@asset.Id" 
+                                   class="ta-checkbox" @(isSelected ? "checked" : "")
+                                   onchange="toggleTechnicalAssetSelection('@asset.Id')"
+                                   style="width: 16px; height: 16px; cursor: pointer;" />
+                            <label for="ta_@asset.Id" style="flex: 1; cursor: pointer; display: flex; justify-content: space-between; align-items: center; margin: 0;">
+                                <span style="font-weight: 500; color: #1e293b; font-size: 14px;">@asset.Name</span>
+                                <span style="color: #64748b; font-size: 13px;">@(asset.InventoryNumber ?? "—")</span>
+                            </label>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <!-- Кнопки внизу -->
+            <div class="form-actions" style="margin-top: 20px; justify-content: flex-end; display: flex; gap: 12px;">
+                <button type="button" class="btn btn-secondary" onclick="closeModal('selectTechnicalAssetModal')">Отмена</button>
+                <button type="button" class="btn btn-primary" onclick="confirmSelection('technical-asset')">Сохранить ТС</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ✅ МОДАЛКА ДОБАВЛЕНИЯ НОВОГО ТС -->
+<div class="modal" id="addTechnicalAssetModal">
+    <div class="modal-content" style="max-width: 600px;">
+        <div class="modal-header">
+            <h3>Добавление технического средства</h3>
+            <button class="modal-close" onclick="closeModal('addTechnicalAssetModal')">&times;</button>
+        </div>
+        <div class="modal-body">
+            <form id="addTechnicalAssetForm" onsubmit="saveNewTechnicalAsset(event)">
+                <div class="form-group">
+                    <label>Наименование <span class="required">*</span></label>
+                    <input type="text" id="newTAName" class="form-control" required placeholder="Введите наименование ТС" />
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Вид (тип)</label>
+                        <select id="newTAType" class="form-control">
+                            <option value="">Выбрать...</option>
+                            <option value="Сервер">Сервер</option>
+                            <option value="Рабочая станция">Рабочая станция</option>
+                            <option value="Ноутбук">Ноутбук</option>
+                            <option value="Принтер">Принтер</option>
+                            <option value="МФУ">МФУ</option>
+                            <option value="Маршрутизатор">Маршрутизатор</option>
+                            <option value="Коммутатор">Коммутатор</option>
+                            <option value="Сетевой экран">Сетевой экран</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Инвентарный номер</label>
+                        <input type="text" id="newTAInventory" class="form-control" placeholder="Введите инв. номер" />
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Серийный номер</label>
+                        <input type="text" id="newTASerial" class="form-control" placeholder="Введите серийный номер" />
+                    </div>
+                    <div class="form-group">
+                        <label>Дата приобретения</label>
+                        <input type="date" id="newTAPurchaseDate" class="form-control" />
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal('addTechnicalAssetModal')">Отмена</button>
+                    <button type="submit" class="btn btn-primary">Сохранить</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    const objectId = '@(obj?.Id ?? "")';
+    let selectedTechnicalAssetIds = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(selectedIds));
+
+    function openSelectModal(id) { 
+        document.getElementById(id).classList.add('show'); 
+    }
+    
+    function closeModal(id) { 
+        document.getElementById(id).classList.remove('show'); 
+    }
+    
+    function toggleAllCheckboxes(source, tableId) {
+        const table = document.getElementById(tableId);
+        if (!table) return;
+        table.querySelectorAll('.row-checkbox').forEach(cb => {
+            cb.checked = source.checked;
+        });
+    }
+    
+    // Фильтрация списка ТС в модалке
+    function filterTechnicalAssetList() {
+        const search = document.getElementById('technicalAssetListSearch').value.toLowerCase();
+        const items = document.querySelectorAll('#technicalAssetListContainer .ta-list-item');
+        items.forEach(item => {
+            const name = (item.dataset.name || '').toLowerCase();
+            const number = (item.dataset.number || '').toLowerCase();
+            item.style.display = (name.includes(search) || number.includes(search)) ? '' : 'none';
+        });
+    }
+    
+    function filterSelectedTable(tableId, value) {
+        const table = document.getElementById(tableId);
+        if (!table) return;
+        const search = value.toLowerCase();
+        table.querySelectorAll('tbody tr').forEach(row => {
+            row.style.display = row.textContent.toLowerCase().includes(search) ? '' : 'none';
+        });
+    }
+    
+    // ✅ Поиск по столбцу
+    function filterTable(tableId, colIndex, value) {
+        const table = document.getElementById(tableId);
+        if (!table) return;
+        const searchValue = value.toLowerCase();
+        table.querySelectorAll('tbody tr').forEach(row => {
+            const cell = row.cells[colIndex];
+            if (cell) {
+                const text = cell.textContent.toLowerCase();
+                row.style.display = text.includes(searchValue) ? '' : 'none';
+            }
+        });
+    }
+    
+    // ✅ Сортировка таблицы
+    function sortTable(tableId, colIndex) {
+        const table = document.getElementById(tableId);
+        if (!table) return;
+        const tbody = table.querySelector('tbody');
+        const rows = Array.from(tbody.querySelectorAll('tr'));
+        
+        const currentDir = table.getAttribute('data-sort-dir') || 'asc';
+        const newDir = currentDir === 'asc' ? 'desc' : 'asc';
+        table.setAttribute('data-sort-dir', newDir);
+        
+        rows.sort((a, b) => {
+            const aText = a.cells[colIndex]?.textContent.trim() || '';
+            const bText = b.cells[colIndex]?.textContent.trim() || '';
+            if (newDir === 'asc') return aText.localeCompare(bText, 'ru');
+            else return bText.localeCompare(aText, 'ru');
+        });
+        
+        rows.forEach(row => tbody.appendChild(row));
+    }
+    
+    // Выбор/снятие одного ТС
+    function toggleTechnicalAssetSelection(id) {
+        if (selectedTechnicalAssetIds.includes(id)) {
+            selectedTechnicalAssetIds = selectedTechnicalAssetIds.filter(sid => sid !== id);
+        } else {
+            selectedTechnicalAssetIds.push(id);
+        }
+        updateSelectAllState();
+    }
+    
+    // Выбрать все
+    function toggleSelectAllTechnicalAssets() {
+        const selectAllCheckbox = document.getElementById('selectAllTA');
+        const checkboxes = document.querySelectorAll('#technicalAssetListContainer .ta-checkbox');
+        const selectAll = selectAllCheckbox.checked;
+        
+        checkboxes.forEach(cb => {
+            cb.checked = selectAll;
+            const id = cb.value;
+            if (selectAll && !selectedTechnicalAssetIds.includes(id)) {
+                selectedTechnicalAssetIds.push(id);
+            } else if (!selectAll) {
+                selectedTechnicalAssetIds = selectedTechnicalAssetIds.filter(sid => sid !== id);
+            }
+        });
+    }
+    
+    // Обновление состояния "Выбрать все"
+    function updateSelectAllState() {
+        const checkboxes = document.querySelectorAll('#technicalAssetListContainer .ta-checkbox');
+        const checkedCheckboxes = document.querySelectorAll('#technicalAssetListContainer .ta-checkbox:checked');
+        const selectAllCheckbox = document.getElementById('selectAllTA');
+        
+        if (selectAllCheckbox) {
+            selectAllCheckbox.checked = checkboxes.length > 0 && checkboxes.length === checkedCheckboxes.length;
+        }
+    }
+    
+    // Сохранить выбранные ТС
+    function confirmSelection(type) {
+        if (!objectId) {
+            alert('Сначала сохраните объект информатизации');
+            return;
+        }
+        
+        fetch('/audit/objects/' + objectId + '/set-technical-assets', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(selectedTechnicalAssetIds)
+        })
+        .then(r => r.json())
+        .then(result => {
+            if (result.success) {
+                closeModal('selectTechnicalAssetModal');
+                location.reload();
+            } else {
+                alert(result.error || 'Ошибка при сохранении');
+            }
+        });
+    }
+    
+    // Удалить выбранные из таблицы
+    function removeSelected(type) {
+        const table = document.getElementById('selectedTechnicalAssetsTable');
+        if (!table) return;
+        const checkboxes = table.querySelectorAll('.row-checkbox:checked');
+        if (checkboxes.length === 0) { 
+            alert('Выберите элементы для удаления'); 
+            return; 
+        }
+        if (!confirm('Удалить выбранные технические средства из объекта?')) return;
+        
+        const promises = [];
+        checkboxes.forEach(cb => {
+            const id = cb.closest('tr').dataset.id;
+            promises.push(fetch('/audit/objects/' + objectId + '/remove-' + type, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(id)
+            }));
+        });
+        
+        Promise.all(promises).then(() => location.reload());
+    }
+    
+    // Открыть модалку добавления нового ТС
+    function openAddTechnicalAssetFromModal() {
+        closeModal('selectTechnicalAssetModal');
+        document.getElementById('addTechnicalAssetModal').classList.add('show');
+    }
+    
+    // Сохранить новое ТС
+    function saveNewTechnicalAsset(e) {
+        e.preventDefault();
+        const newAsset = {
+            name: document.getElementById('newTAName').value,
+            type: document.getElementById('newTAType').value,
+            inventoryNumber: document.getElementById('newTAInventory').value,
+            serialNumber: document.getElementById('newTASerial').value,
+            purchaseDate: document.getElementById('newTAPurchaseDate').value || null
+        };
+        
+        fetch('/audit/infrastructure/technical-assets/save', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(newAsset)
+        })
+        .then(r => r.json())
+        .then(result => {
+            if (result.success) {
+                closeModal('addTechnicalAssetModal');
+                document.getElementById('addTechnicalAssetForm').reset();
+                openSelectModal('selectTechnicalAssetModal');
+                setTimeout(() => location.reload(), 500);
+            } else {
+                alert(result.error || 'Ошибка при добавлении ТС');
+            }
+        });
+    }
+</script>
+
+<style>
+    .th-sortable { cursor: pointer; user-select: none; }
+    .th-sortable:hover { background: #f1f5f9; }
+    .th-header { display: flex; align-items: center; gap: 6px; margin-bottom: 8px; }
+    .sortable-icon { color: #94a3b8; font-size: 12px; }
+    .th-filter-row { margin-top: 4px; }
+    .filter-inline-input {
+        width: 100%;
+        padding: 6px 10px;
+        border: 1px solid #e2e8f0;
+        border-radius: 6px;
+        font-size: 12px;
+        background: white;
+    }
+    .filter-inline-input:focus {
+        outline: none;
+        border-color: #4F46E5;
+        box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.1);
+    }
+</style>

@@ -1,0 +1,335 @@
+@{
+    ViewData["Title"] = "Гарантия";
+}
+
+<div class="page-header">
+    <h1>
+        <a href="/audit/activity" style="color: #64748b; text-decoration: none; margin-right: 12px; font-size: 24px;">
+            <i class="fas fa-arrow-left"></i>
+        </a>
+        <i class="fas fa-shield-alt"></i> Гарантия
+    </h1>
+    <p style="color: #64748b; margin-top: 8px; margin-left: 36px;">Автоматическое формирование сведений об организации гарантийных сроков на ТС, ЗВ, ИНН, сроки технической поддержки на СЗИ и СКЗИ</p>
+</div>
+
+<!-- Вкладки навигации -->
+<div class="tabs-nav">
+    <a href="/audit/activity/responsible" class="tab-nav-item">Ответственные лица</a>
+    <a href="/audit/activity/commissions" class="tab-nav-item">Комиссии</a>
+    <a href="/audit/activity/documents" class="tab-nav-item">Документы</a>
+    <a href="/audit/activity/warranty" class="tab-nav-item active">Гарантия</a>
+    <a href="/audit/activity/notifications" class="tab-nav-item">Уведомления</a>
+    <a href="/audit/activity/situations" class="tab-nav-item">Ситуации</a>
+    <a href="/audit/activity/monitoring" class="tab-nav-item">Мониторинг</a>
+</div>
+
+<div class="form-content">
+    <!-- Информационное сообщение -->
+    <div class="info-panel" style="margin-bottom: 20px; padding: 16px; background: #fef3c7; border-radius: 8px; border-left: 4px solid #d97706;">
+        <p style="margin: 0; color: #92400e; font-size: 14px;">
+            <i class="fas fa-info-circle"></i>
+            В таблице выводится информация о сроках гарантии/технической поддержки, которые уже истекли, либо закончатся в ближайшие 2 месяца. 
+            <span style="color: #dc2626;">Красный</span> - срок заканчивается в ближайший месяц; 
+            <span style="color: #ea580c;">Оранжевый</span> - от 1 месяца до 2.
+        </p>
+    </div>
+
+    <div class="toolbar">
+        <div class="toolbar-left">
+            <button class="btn btn-primary" onclick="addWarranty()">
+                <i class="fas fa-plus"></i> Добавить
+            </button>
+            <button class="btn btn-secondary" onclick="exportWarranty()">
+                <i class="fas fa-file-excel"></i> Экспортировать данные в XLSX
+            </button>
+        </div>
+        <div class="search-box">
+            <i class="fas fa-search"></i>
+            <input type="text" id="warrantySearch" placeholder="Поиск..." oninput="filterTable('warrantyTable', 'warrantySearch')" />
+        </div>
+    </div>
+
+    <div class="table-container">
+        <table id="warrantyTable" class="data-table">
+            <thead>
+                <tr>
+                    <th class="th-sortable">
+                        <div class="th-header"><span>Наименование</span><i class="fas fa-sort sortable-icon"></i></div>
+                        <div class="th-filter-row"><input type="text" class="filter-inline-input" placeholder="Поиск..." oninput="filterTable('warrantyTable', 0, this.value)" /></div>
+                    </th>
+                    <th class="th-sortable">
+                        <div class="th-header"><span>Тип</span><i class="fas fa-sort sortable-icon"></i></div>
+                        <div class="th-filter-row">
+                            <select class="filter-inline-select" onchange="filterTable('warrantyTable', 1, this.value)">
+                                <option value="">(Все)</option>
+                                <option value="ТС">ТС</option>
+                                <option value="СЗИ">СЗИ</option>
+                                <option value="СКЗИ">СКЗИ</option>
+                                <option value="ИНН">ИНН</option>
+                            </select>
+                        </div>
+                    </th>
+                    <th class="th-sortable">
+                        <div class="th-header"><span>Дата начала</span><i class="fas fa-sort sortable-icon"></i></div>
+                        <div class="th-filter-row"><input type="date" class="filter-inline-input" oninput="filterTable('warrantyTable', 2, this.value)" /></div>
+                    </th>
+                    <th class="th-sortable">
+                        <div class="th-header"><span>Дата окончания</span><i class="fas fa-sort sortable-icon"></i></div>
+                        <div class="th-filter-row"><input type="date" class="filter-inline-input" oninput="filterTable('warrantyTable', 3, this.value)" /></div>
+                    </th>
+                    <th class="th-sortable">
+                        <div class="th-header"><span>Статус</span><i class="fas fa-sort sortable-icon"></i></div>
+                        <div class="th-filter-row">
+                            <select class="filter-inline-select" onchange="filterTable('warrantyTable', 4, this.value)">
+                                <option value="">(Все)</option>
+                                <option value="Активна">Активна</option>
+                                <option value="Заканчивается">Заканчивается</option>
+                                <option value="Истекла">Истекла</option>
+                            </select>
+                        </div>
+                    </th>
+                    <th style="width: 140px;">Действия</th>
+                </tr>
+            </thead>
+            <tbody id="warrantyTableBody">
+                <tr><td colspan="6" style="text-align: center; padding: 60px 40px; color: #94a3b8;">Записи не добавлены</td></tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- МОДАЛЬНОЕ ОКНО: Добавление записи о гарантии -->
+<!-- ============================================================ -->
+<div class="modal" id="warrantyModal">
+    <div class="modal-content" style="max-width: 500px;">
+        <div class="modal-header">
+            <h3 id="warrantyModalTitle">Добавление записи о гарантии</h3>
+            <button class="modal-close" onclick="closeWarrantyModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <form id="warrantyForm" onsubmit="saveWarranty(event)">
+                <input type="hidden" id="warrantyId" />
+                
+                <div class="form-group">
+                    <label>Наименование <span class="required">*</span></label>
+                    <input type="text" id="warrantyName" class="form-control" required />
+                </div>
+                
+                <div class="form-group">
+                    <label>Тип <span class="required">*</span></label>
+                    <select id="warrantyType" class="form-control" required>
+                        <option value="">Выбрать...</option>
+                        <option value="ТС">ТС</option>
+                        <option value="СЗИ">СЗИ</option>
+                        <option value="СКЗИ">СКЗИ</option>
+                        <option value="ИНН">ИНН</option>
+                    </select>
+                </div>
+                
+                <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                    <div class="form-group">
+                        <label>Дата начала <span class="required">*</span></label>
+                        <input type="date" id="warrantyStart" class="form-control" required />
+                    </div>
+                    <div class="form-group">
+                        <label>Дата окончания <span class="required">*</span></label>
+                        <input type="date" id="warrantyEnd" class="form-control" required />
+                    </div>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeWarrantyModal()">Отмена</button>
+                    <button type="submit" class="btn btn-primary">Сохранить</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    let warrantyData = [];
+    let editingWarrantyId = null;
+
+    document.addEventListener('DOMContentLoaded', function() {
+        try {
+            const saved = localStorage.getItem('warrantyData');
+            if (saved) {
+                warrantyData = JSON.parse(saved);
+            } else {
+                warrantyData = [
+                    { id: 1, name: 'Антивирус Касперского', type: 'СЗИ', start: '2023-02-23', end: '2024-02-23' },
+                    { id: 2, name: 'КриптоПро CSP 5.0', type: 'СКЗИ', start: '2022-11-03', end: '2024-11-03' },
+                    { id: 3, name: 'Сервер HP ProLiant DL380', type: 'ТС', start: '2021-01-15', end: '2023-01-15' }
+                ];
+                localStorage.setItem('warrantyData', JSON.stringify(warrantyData));
+            }
+        } catch(e) {
+            warrantyData = [];
+        }
+        renderWarrantyTable();
+    });
+
+    function renderWarrantyTable() {
+        const tbody = document.getElementById('warrantyTableBody');
+        tbody.innerHTML = '';
+        if (warrantyData.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 60px 40px; color: #94a3b8;">Записи не добавлены</td></tr>';
+            return;
+        }
+        
+        const today = new Date();
+        const oneMonthLater = new Date(today);
+        oneMonthLater.setMonth(today.getMonth() + 1);
+        const twoMonthsLater = new Date(today);
+        twoMonthsLater.setMonth(today.getMonth() + 2);
+        
+        warrantyData.forEach(item => {
+            const endDate = new Date(item.end);
+            let status, statusColor, rowColor;
+            
+            if (endDate < today) {
+                status = 'Истекла';
+                statusColor = '#dc2626';
+                rowColor = '#fef2f2';
+            } else if (endDate < oneMonthLater) {
+                status = 'Заканчивается (1 месяц)';
+                statusColor = '#dc2626';
+                rowColor = '#fef2f2';
+            } else if (endDate < twoMonthsLater) {
+                status = 'Заканчивается (2 месяца)';
+                statusColor = '#ea580c';
+                rowColor = '#fff7ed';
+            } else {
+                status = 'Активна';
+                statusColor = '#22c55e';
+                rowColor = '#f0fdf4';
+            }
+            
+            const startFormatted = new Date(item.start).toLocaleDateString('ru-RU');
+            const endFormatted = new Date(item.end).toLocaleDateString('ru-RU');
+            
+            const tr = document.createElement('tr');
+            tr.style.background = rowColor;
+            tr.innerHTML = `<td><strong>${item.name}</strong></td>
+                            <td>${item.type}</td>
+                            <td>${startFormatted}</td>
+                            <td>${endFormatted}</td>
+                            <td><span class="status-badge" style="background: ${statusColor}20; color: ${statusColor};">${status}</span></td>
+                            <td class="actions">
+                                <button class="btn-icon edit" onclick="editWarranty(${item.id})"><i class="fas fa-edit"></i></button>
+                                <button class="btn-icon delete" onclick="deleteWarranty(${item.id})"><i class="fas fa-trash"></i></button>
+                            </td>`;
+            tbody.appendChild(tr);
+        });
+    }
+
+    function addWarranty() {
+        editingWarrantyId = null;
+        document.getElementById('warrantyModalTitle').textContent = 'Добавление записи о гарантии';
+        document.getElementById('warrantyId').value = '';
+        document.getElementById('warrantyName').value = '';
+        document.getElementById('warrantyType').value = '';
+        document.getElementById('warrantyStart').value = '';
+        document.getElementById('warrantyEnd').value = '';
+        document.getElementById('warrantyModal').classList.add('show');
+    }
+
+    function editWarranty(id) {
+        editingWarrantyId = id;
+        const item = warrantyData.find(w => w.id === id);
+        if (!item) return;
+        document.getElementById('warrantyModalTitle').textContent = 'Редактирование записи о гарантии';
+        document.getElementById('warrantyId').value = item.id;
+        document.getElementById('warrantyName').value = item.name;
+        document.getElementById('warrantyType').value = item.type;
+        document.getElementById('warrantyStart').value = item.start;
+        document.getElementById('warrantyEnd').value = item.end;
+        document.getElementById('warrantyModal').classList.add('show');
+    }
+
+    function closeWarrantyModal() {
+        document.getElementById('warrantyModal').classList.remove('show');
+    }
+
+    function saveWarranty(e) {
+        e.preventDefault();
+        const name = document.getElementById('warrantyName').value.trim();
+        const type = document.getElementById('warrantyType').value;
+        const start = document.getElementById('warrantyStart').value;
+        const end = document.getElementById('warrantyEnd').value;
+        
+        if (!name || !type || !start || !end) {
+            alert('Пожалуйста, заполните все обязательные поля');
+            return;
+        }
+        
+        const id = document.getElementById('warrantyId').value;
+        if (id) {
+            const index = warrantyData.findIndex(w => w.id == id);
+            if (index !== -1) {
+                warrantyData[index] = { id: parseInt(id), name, type, start, end };
+            }
+        } else {
+            warrantyData.push({ id: Date.now(), name, type, start, end });
+        }
+        
+        localStorage.setItem('warrantyData', JSON.stringify(warrantyData));
+        renderWarrantyTable();
+        closeWarrantyModal();
+    }
+
+    function deleteWarranty(id) {
+        if (confirm('Вы уверены, что хотите удалить эту запись?')) {
+            warrantyData = warrantyData.filter(w => w.id !== id);
+            localStorage.setItem('warrantyData', JSON.stringify(warrantyData));
+            renderWarrantyTable();
+        }
+    }
+
+    function exportWarranty() {
+        alert('Экспорт данных в формате XLSX будет реализован');
+    }
+
+    function toggleDropdown(id) {
+        const menu = document.getElementById(id);
+        document.querySelectorAll('.dropdown-menu').forEach(m => { if (m.id !== id) m.classList.remove('show'); });
+        menu.classList.toggle('show');
+        event.stopPropagation();
+    }
+
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.dropdown')) {
+            document.querySelectorAll('.dropdown-menu').forEach(m => m.classList.remove('show'));
+        }
+    });
+
+    function filterTable(tableId, searchIdOrCol, value) {
+        const table = document.getElementById(tableId);
+        if (!table) return;
+        const tbody = table.querySelector('tbody');
+        if (!tbody) return;
+        const rows = tbody.querySelectorAll('tr');
+        if (typeof searchIdOrCol === 'string') {
+            const searchTerm = document.getElementById(searchIdOrCol)?.value?.toLowerCase() || '';
+            rows.forEach(row => {
+                row.style.display = row.textContent.toLowerCase().includes(searchTerm) ? '' : 'none';
+            });
+            return;
+        }
+        const colIndex = typeof searchIdOrCol === 'number' ? searchIdOrCol : parseInt(searchIdOrCol);
+        const searchVal = (value || '').toLowerCase();
+        rows.forEach(row => {
+            const cell = row.cells[colIndex];
+            if (cell) {
+                row.style.display = cell.textContent.toLowerCase().includes(searchVal) ? '' : 'none';
+            }
+        });
+    }
+
+    document.querySelectorAll('.modal').forEach(modal => {
+        modal.addEventListener('click', function(e) {
+            if (e.target === this) this.classList.remove('show');
+        });
+    });
+</script>

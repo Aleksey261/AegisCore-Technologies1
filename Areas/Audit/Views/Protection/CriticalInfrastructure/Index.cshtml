@@ -1,0 +1,322 @@
+@{
+    ViewData["Title"] = "Перечень бизнес-процессов";
+}
+
+<div class="audit-page">
+    <div class="page-header">
+        <h1>
+            <a href="/audit/protection" style="color: #64748b; text-decoration: none; margin-right: 12px; font-size: 24px;">
+                <i class="fas fa-arrow-left"></i>
+            </a>
+            <i class="fas fa-project-diagram"></i> Критическая информационная инфраструктура
+        </h1>
+        <p style="color: #64748b; margin-top: 8px; margin-left: 36px;">
+            Перечень бизнес-процессов
+        </p>
+    </div>
+
+    <div class="tabs-nav" style="margin-bottom: 24px;">
+        <a href="/audit/protection/critical-infrastructure" class="tab-nav-item active">
+            <i class="fas fa-project-diagram"></i> Перечень бизнес-процессов
+        </a>
+        <a href="/audit/protection/critical-infrastructure/systems" class="tab-nav-item">
+            <i class="fas fa-server"></i> Перечень объектов
+        </a>
+    </div>
+
+    <div class="toolbar">
+        <div class="toolbar-left">
+            <button class="btn btn-primary" onclick="openAddModal()">
+                <i class="fas fa-plus"></i> Добавить
+            </button>
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" onclick="toggleDropdown('exportDropdown'); event.stopPropagation();">
+                    <i class="fas fa-download"></i> Экспорт в файл
+                </button>
+                <div class="dropdown-menu" id="exportDropdown">
+                    <a onclick="exportTable('xlsx')"><i class="fas fa-file-excel"></i> Экспорт в XLSX</a>
+                </div>
+            </div>
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchInput" placeholder="Поиск..." oninput="filterTable()" />
+            </div>
+        </div>
+    </div>
+
+    <div class="table-container">
+        <table class="data-table" id="dataTable">
+            <thead>
+                <tr>
+                    <th class="th-sortable" onclick="sortTable(0)">
+                        <div class="th-header"><span>Процесс</span><i class="fas fa-sort sortable-icon"></i></div>
+                        <div class="th-filter-row"><input type="text" class="filter-inline-input" placeholder="Поиск..." oninput="filterTableColumn(0, this.value)" /></div>
+                    </th>
+                    <th class="th-sortable" onclick="sortTable(1)">
+                        <div class="th-header"><span>Обоснование</span><i class="fas fa-sort sortable-icon"></i></div>
+                        <div class="th-filter-row"><input type="text" class="filter-inline-input" placeholder="Поиск..." oninput="filterTableColumn(1, this.value)" /></div>
+                    </th>
+                    <th style="width: 150px;">
+                        <div class="th-header"><span>Критичность</span></div>
+                        <div class="th-filter-row">
+                            <select class="filter-inline-select" onchange="filterByCriticality(this.value)">
+                                <option value="">(Все)</option>
+                                <option value="Высокая">Высокая</option>
+                                <option value="Средняя">Средняя</option>
+                                <option value="Низкая">Низкая</option>
+                            </select>
+                        </div>
+                    </th>
+                    <th style="width: 120px;">Действия</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody">
+                <tr><td colspan="4" style="text-align: center; padding: 40px; color: #94a3b8;"><i class="fas fa-info-circle" style="font-size: 48px; margin-bottom: 16px; display: block;"></i>Бизнес-процессы не добавлены. Нажмите "Добавить" для создания первой записи.</td></tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Модальное окно добавления -->
+<div class="modal" id="addModal">
+    <div class="modal-content" style="max-width: 700px;">
+        <div class="modal-header"><h3><i class="fas fa-plus"></i> Добавление бизнес-процесса</h3><button class="modal-close" onclick="closeModal('addModal')">&times;</button></div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label>Процесс <span class="required">*</span></label>
+                <select id="modalProcess" class="form-control" required>
+                    <option value="">Выбрать...</option>
+                    <option value="Обработка персональных данных">Обработка персональных данных</option>
+                    <option value="Документооборот">Документооборот</option>
+                    <option value="Управление ИТ-инфраструктурой">Управление ИТ-инфраструктурой</option>
+                    <option value="Финансовое планирование">Финансовое планирование</option>
+                    <option value="Кадровое обеспечение">Кадровое обеспечение</option>
+                    <option value="Иной процесс">Иной процесс</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="checkbox-label">
+                    <input type="checkbox" id="modalSocial" />
+                    <span>Социальная значимость</span>
+                </label>
+            </div>
+            <div class="form-group">
+                <label class="checkbox-label">
+                    <input type="checkbox" id="modalPolitical" />
+                    <span>Политическая значимость</span>
+                </label>
+            </div>
+            <div class="form-group">
+                <label class="checkbox-label">
+                    <input type="checkbox" id="modalEconomic" />
+                    <span>Экономическая значимость</span>
+                </label>
+            </div>
+            <div class="form-group">
+                <label class="checkbox-label">
+                    <input type="checkbox" id="modalEcological" />
+                    <span>Экологическая значимость</span>
+                </label>
+            </div>
+            <div class="form-group">
+                <label class="checkbox-label">
+                    <input type="checkbox" id="modalDefense" />
+                    <span>Оборонная значимость</span>
+                </label>
+            </div>
+            <div class="form-group">
+                <label>Зависимые объекты</label>
+                <select id="modalObjects" class="form-control" multiple style="height: 100px;">
+                    <option value="">Выбрать...</option>
+                </select>
+                <small style="color: #64748b; font-size: 12px;">Удерживайте Ctrl для выбора нескольких объектов</small>
+            </div>
+            <div class="form-group">
+                <label>Обоснование <span class="required">*</span></label>
+                <textarea id="modalJustification" class="form-control" rows="4" required placeholder="Обоснование отнесения процесса к критическому"></textarea>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" onclick="closeModal('addModal')">Отмена</button>
+            <button type="button" class="btn btn-primary" onclick="saveData()"><i class="fas fa-save"></i> Сохранить</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    let tableData = [];
+
+    function openAddModal() {
+        document.getElementById('modalProcess').value = '';
+        document.getElementById('modalSocial').checked = false;
+        document.getElementById('modalPolitical').checked = false;
+        document.getElementById('modalEconomic').checked = false;
+        document.getElementById('modalEcological').checked = false;
+        document.getElementById('modalDefense').checked = false;
+        document.getElementById('modalObjects').value = '';
+        document.getElementById('modalJustification').value = '';
+        document.getElementById('addModal').classList.add('show');
+    }
+    function closeModal(modalId) { document.getElementById(modalId).classList.remove('show'); }
+
+    function saveData() {
+        const process = document.getElementById('modalProcess').value;
+        const justification = document.getElementById('modalJustification').value.trim();
+        
+        if (!process || !justification) {
+            alert('Пожалуйста, заполните все обязательные поля');
+            return;
+        }
+
+        const significances = [];
+        if (document.getElementById('modalSocial').checked) significances.push('Социальная');
+        if (document.getElementById('modalPolitical').checked) significances.push('Политическая');
+        if (document.getElementById('modalEconomic').checked) significances.push('Экономическая');
+        if (document.getElementById('modalEcological').checked) significances.push('Экологическая');
+        if (document.getElementById('modalDefense').checked) significances.push('Оборонная');
+
+        const criticality = significances.length >= 3 ? 'Высокая' : (significances.length >= 1 ? 'Средняя' : 'Низкая');
+
+        tableData.push({ 
+            id: Date.now(), 
+            process, 
+            justification, 
+            significances,
+            criticality 
+        });
+        renderTable();
+        closeModal('addModal');
+    }
+
+    function filterTable() { renderTable(document.getElementById('searchInput').value.toLowerCase()); }
+
+    function filterByCriticality(value) {
+        renderTable(document.getElementById('searchInput').value.toLowerCase(), value);
+    }
+
+    function sortTable(columnIndex) {
+        const keys = ['process', 'justification', 'criticality'];
+        const key = keys[columnIndex];
+        tableData.sort((a, b) => {
+            const aVal = a[key].toString().toLowerCase();
+            const bVal = b[key].toString().toLowerCase();
+            return aVal < bVal ? -1 : (aVal > bVal ? 1 : 0);
+        });
+        renderTable();
+    }
+
+    function renderTable(searchTerm = '', criticalityFilter = '') {
+        const tbody = document.getElementById('tableBody');
+        tbody.innerHTML = '';
+        
+        const filteredData = tableData.filter(row => {
+            let matchesSearch = !searchTerm || 
+                row.process.toLowerCase().includes(searchTerm) || 
+                row.justification.toLowerCase().includes(searchTerm);
+            let matchesCriticality = !criticalityFilter || row.criticality === criticalityFilter;
+            return matchesSearch && matchesCriticality;
+        });
+
+        if (filteredData.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="4" style="text-align: center; padding: 40px; color: #94a3b8;"><i class="fas fa-info-circle" style="font-size: 48px; margin-bottom: 16px; display: block;"></i>${searchTerm ? 'Ничего не найдено' : 'Бизнес-процессы не добавлены. Нажмите "Добавить" для создания первой записи.'}</td></tr>`;
+            return;
+        }
+
+        filteredData.forEach(row => {
+            const tr = document.createElement('tr');
+            const criticalityClass = row.criticality === 'Высокая' ? 'badge-danger' : (row.criticality === 'Средняя' ? 'badge-warning' : 'badge-secondary');
+            tr.innerHTML = `<td><strong>${row.process}</strong></td><td>${row.justification}</td>
+                <td><span class="badge ${criticalityClass}">${row.criticality}</span></td>
+                <td class="actions">
+                    <button class="btn-icon edit" onclick="editItem(${row.id})" title="Редактировать"><i class="fas fa-edit"></i></button>
+                    <button class="btn-icon delete" onclick="deleteItem(${row.id})" title="Удалить"><i class="fas fa-trash"></i></button>
+                </td>`;
+            tbody.appendChild(tr);
+        });
+    }
+
+    function editItem(id) {
+        const item = tableData.find(r => r.id === id);
+        if (!item) return;
+        document.getElementById('modalProcess').value = item.process;
+        document.getElementById('modalJustification').value = item.justification;
+        document.getElementById('modalSocial').checked = item.significances.includes('Социальная');
+        document.getElementById('modalPolitical').checked = item.significances.includes('Политическая');
+        document.getElementById('modalEconomic').checked = item.significances.includes('Экономическая');
+        document.getElementById('modalEcological').checked = item.significances.includes('Экологическая');
+        document.getElementById('modalDefense').checked = item.significances.includes('Оборонная');
+        document.getElementById('addModal').classList.add('show');
+    }
+
+    function deleteItem(id) {
+        if (!confirm('Вы уверены, что хотите удалить эту запись?')) return;
+        tableData = tableData.filter(r => r.id !== id);
+        renderTable();
+    }
+
+    function exportTable(format) { 
+        closeAllDropdowns(); 
+        alert(`Экспорт в формате ${format.toUpperCase()} будет реализован`); 
+    }
+
+    function toggleDropdown(dropdownId) {
+        const dropdown = document.getElementById(dropdownId);
+        const isOpen = dropdown.classList.contains('show');
+        closeAllDropdowns();
+        if (!isOpen) dropdown.classList.add('show');
+    }
+    function closeAllDropdowns() { document.querySelectorAll('.dropdown-menu').forEach(d => d.classList.remove('show')); }
+    document.addEventListener('click', function(e) { if (!e.target.closest('.dropdown')) closeAllDropdowns(); });
+    window.onclick = function(event) { if (event.target.classList.contains('modal')) event.target.classList.remove('show'); }
+
+    function filterTableColumn(columnIndex, value) {
+        const tbody = document.getElementById('tableBody');
+        const rows = tbody.querySelectorAll('tr');
+        const searchTerm = value.toLowerCase();
+        rows.forEach(row => {
+            const cell = row.cells[columnIndex];
+            if (cell) {
+                const cellText = cell.textContent.toLowerCase();
+                row.style.display = cellText.includes(searchTerm) ? '' : 'none';
+            }
+        });
+    }
+</script>
+
+<style>
+    .th-sortable { cursor: pointer; user-select: none; }
+    .th-sortable:hover { background: #f1f5f9; }
+    .th-header { display: flex; align-items: center; gap: 6px; }
+    .sortable-icon { color: #94a3b8; font-size: 12px; }
+    .actions { display: flex; gap: 4px; justify-content: flex-end; }
+    .th-filter-row { margin-top: 4px; }
+    .filter-inline-input, .filter-inline-select {
+        width: 100%; padding: 6px 10px; border: 1px solid #e2e8f0; border-radius: 6px;
+        font-size: 12px; background: white; font-family: inherit;
+    }
+    .filter-inline-input:focus, .filter-inline-select:focus { 
+        outline: none; border-color: #4F46E5; box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.1); 
+    }
+    .dropdown { position: relative; display: inline-block; }
+    .dropdown-toggle { cursor: pointer; }
+    .dropdown-menu {
+        display: none; position: absolute; top: 100%; left: 0; min-width: 180px;
+        background: white; border: 1px solid #e2e8f0; border-radius: 8px;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); z-index: 1000; margin-top: 4px;
+    }
+    .dropdown-menu.show { display: block; }
+    .dropdown-menu a {
+        display: flex; align-items: center; gap: 8px; padding: 10px 16px;
+        color: #1e293b; text-decoration: none; font-size: 14px; cursor: pointer; transition: background 0.2s;
+    }
+    .dropdown-menu a:hover { background: #f1f5f9; }
+    .checkbox-label {
+        display: flex; align-items: center; gap: 8px; cursor: pointer; font-size: 14px; color: #475569;
+        padding: 8px 0;
+    }
+    .checkbox-label input[type="checkbox"] { width: 18px; height: 18px; cursor: pointer; }
+    .badge { display: inline-block; padding: 4px 12px; border-radius: 12px; font-size: 12px; font-weight: 500; }
+    .badge-danger { background: #fee2e2; color: #991b1b; }
+    .badge-warning { background: #fef3c7; color: #92400e; }
+    .badge-secondary { background: #f3f4f6; color: #374151; }
+</style>

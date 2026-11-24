@@ -1,0 +1,399 @@
+@model AegisCore.Models.ObjectsViewModel
+@{
+    var obj = Model.CurrentObject;
+    var selectedIds = obj?.SoftwareIds ?? new List<string>();
+    var selectedSoftware = Model.AvailableSoftware.Where(s => selectedIds.Contains(s.Id)).ToList();
+}
+
+@if (obj == null || string.IsNullOrEmpty(obj.Id))
+{
+    <div class="alert alert-info"><i class="fas fa-info-circle"></i> Сначала сохраните основные сведения объекта.</div>
+}
+else
+{
+    <div class="toolbar">
+        <div class="toolbar-left">
+            <button class="btn btn-primary" onclick="openSelectModal('selectSoftwareModal')">
+                <i class="fas fa-plus"></i> Добавить
+            </button>
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Поиск..." oninput="filterSelectedTable('selectedSoftwareTable', this.value)" />
+            </div>
+        </div>
+    </div>
+
+    <div class="table-container">
+        <table class="data-table" id="selectedSoftwareTable">
+            <thead>
+                <tr>
+                    <th style="width: 40px;"><input type="checkbox" onclick="toggleAllCheckboxes(this, 'selectedSoftwareTable')" /></th>
+                    <th class="th-sortable" onclick="sortTable('selectedSoftwareTable', 1)">
+                        <div class="th-header">
+                            <span>Наименование</span>
+                            <i class="fas fa-sort sortable-icon"></i>
+                        </div>
+                        <div class="th-filter-row">
+                            <input type="text" class="filter-inline-input" placeholder="Поиск..." oninput="filterTable('selectedSoftwareTable', 1, this.value)" />
+                        </div>
+                    </th>
+                    <th class="th-sortable" onclick="sortTable('selectedSoftwareTable', 2)">
+                        <div class="th-header">
+                            <span>Версия</span>
+                            <i class="fas fa-sort sortable-icon"></i>
+                        </div>
+                        <div class="th-filter-row">
+                            <input type="text" class="filter-inline-input" placeholder="Поиск..." oninput="filterTable('selectedSoftwareTable', 2, this.value)" />
+                        </div>
+                    </th>
+                    <th class="th-sortable" onclick="sortTable('selectedSoftwareTable', 3)">
+                        <div class="th-header">
+                            <span>Тип</span>
+                            <i class="fas fa-sort sortable-icon"></i>
+                        </div>
+                        <div class="th-filter-row">
+                            <input type="text" class="filter-inline-input" placeholder="Поиск..." oninput="filterTable('selectedSoftwareTable', 3, this.value)" />
+                        </div>
+                    </th>
+                    <th class="th-sortable" onclick="sortTable('selectedSoftwareTable', 4)">
+                        <div class="th-header">
+                            <span>Производитель</span>
+                            <i class="fas fa-sort sortable-icon"></i>
+                        </div>
+                        <div class="th-filter-row">
+                            <input type="text" class="filter-inline-input" placeholder="Поиск..." oninput="filterTable('selectedSoftwareTable', 4, this.value)" />
+                        </div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (selectedSoftware.Any())
+                {
+                    @foreach (var sw in selectedSoftware)
+                    {
+                        <tr data-id="@sw.Id">
+                            <td><input type="checkbox" class="row-checkbox" /></td>
+                            <td><strong>@sw.Name</strong></td>
+                            <td>@(sw.Version ?? "—")</td>
+                            <td><span class="badge info">@(sw.Type ?? "—")</span></td>
+                            <td>@(sw.Manufacturer ?? "—")</td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr><td colspan="5" style="text-align: center; padding: 40px; color: #94a3b8;">
+                        <i class="fas fa-laptop-code" style="font-size: 48px; margin-bottom: 16px; display: block;"></i>
+                        ПО не добавлено
+                    </td></tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <div class="form-actions" style="margin-top: 20px;">
+        <button class="btn btn-secondary" onclick="removeSelected('software')">
+            <i class="fas fa-trash"></i> Удалить выбранные
+        </button>
+    </div>
+}
+
+<!-- ✅ МОДАЛКА ВЫБОРА ПО (Рисунок 107) -->
+<div class="modal" id="selectSoftwareModal">
+    <div class="modal-content" style="max-width: 700px;">
+        <div class="modal-header" style="display: flex; justify-content: space-between; align-items: center; padding: 20px 24px; border-bottom: 1px solid #e2e8f0;">
+            <h3 style="margin: 0; font-size: 20px; font-weight: 700; color: #1e293b;">Список ПО</h3>
+            <button class="modal-close" onclick="closeModal('selectSoftwareModal')" style="background: none; border: none; font-size: 24px; cursor: pointer; color: #64748b;">&times;</button>
+        </div>
+        <div class="modal-body" style="padding: 24px;">
+            <!-- Кнопка "Добавить ПО" -->
+            <div style="display: flex; justify-content: flex-end; margin-bottom: 16px;">
+                <button type="button" class="btn btn-primary" onclick="openAddSoftwareFromModal()" style="padding: 8px 16px;">
+                    <i class="fas fa-plus"></i> Добавить ПО
+                </button>
+            </div>
+
+            <!-- Поиск -->
+            <div class="search-box" style="margin-bottom: 16px; position: relative;">
+                <i class="fas fa-search" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: #94a3b8;"></i>
+                <input type="text" id="softwareListSearch" placeholder="Поиск..." 
+                       oninput="filterSoftwareList()" 
+                       style="width: 100%; padding: 10px 12px 10px 36px; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 14px;" />
+            </div>
+
+            <!-- Список ПО -->
+            <div style="max-height: 400px; overflow-y: auto; border: 1px solid #e2e8f0; border-radius: 8px;">
+                <div id="softwareListContainer">
+                    <!-- Чекбокс "Выбрать все" -->
+                    <div style="padding: 12px 16px; border-bottom: 1px solid #f1f5f9; display: flex; align-items: center; gap: 12px; background: #fafbfc;">
+                        <input type="checkbox" id="selectAllSW" onchange="toggleSelectAllSoftware()" 
+                               style="width: 16px; height: 16px; cursor: pointer;" />
+                        <label for="selectAllSW" style="flex: 1; cursor: pointer; color: #475569; font-size: 14px;">
+                            Выбрать все
+                        </label>
+                    </div>
+                    
+                    @foreach (var sw in Model.AvailableSoftware)
+                    {
+                        var isSelected = selectedIds.Contains(sw.Id);
+                        <div class="sw-list-item" data-name="@sw.Name" data-version="@(sw.Version ?? "")"
+                             style="padding: 10px 16px; border-bottom: 1px solid #f1f5f9; display: flex; align-items: center; gap: 12px; @(isSelected ? "background: #f8fafc;" : "")">
+                            <input type="checkbox" id="sw_@sw.Id" value="@sw.Id" 
+                                   class="sw-checkbox" @(isSelected ? "checked" : "")
+                                   onchange="toggleSoftwareSelection('@sw.Id')"
+                                   style="width: 16px; height: 16px; cursor: pointer;" />
+                            <label for="sw_@sw.Id" style="flex: 1; cursor: pointer; display: flex; justify-content: space-between; align-items: center; margin: 0;">
+                                <span style="font-weight: 500; color: #1e293b; font-size: 14px;">@sw.Name</span>
+                                <span style="color: #64748b; font-size: 13px;">@(sw.Version ?? "—")</span>
+                            </label>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <!-- Кнопки -->
+            <div class="form-actions" style="margin-top: 20px; justify-content: flex-end; display: flex; gap: 12px;">
+                <button type="button" class="btn btn-secondary" onclick="closeModal('selectSoftwareModal')">Отмена</button>
+                <button type="button" class="btn btn-primary" onclick="confirmSelection('software')">Сохранить ПО</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ✅ МОДАЛКА ДОБАВЛЕНИЯ НОВОГО ПО -->
+<div class="modal" id="addSoftwareModal">
+    <div class="modal-content" style="max-width: 600px;">
+        <div class="modal-header">
+            <h3>Добавление программного обеспечения</h3>
+            <button class="modal-close" onclick="closeModal('addSoftwareModal')">&times;</button>
+        </div>
+        <div class="modal-body">
+            <form id="addSoftwareForm" onsubmit="saveNewSoftware(event)">
+                <div class="form-group">
+                    <label>Наименование <span class="required">*</span></label>
+                    <input type="text" id="newSWName" class="form-control" required placeholder="Введите наименование ПО" />
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Версия</label>
+                        <input type="text" id="newSWVersion" class="form-control" placeholder="Введите версию" />
+                    </div>
+                    <div class="form-group">
+                        <label>Тип</label>
+                        <select id="newSWType" class="form-control">
+                            <option value="">Выбрать...</option>
+                            <option value="Операционная система">Операционная система</option>
+                            <option value="СУБД">СУБД</option>
+                            <option value="Средство защиты информации">Средство защиты информации</option>
+                            <option value="Офисное ПО">Офисное ПО</option>
+                            <option value="Антивирус">Антивирус</option>
+                            <option value="Прикладное ПО">Прикладное ПО</option>
+                            <option value="Системное ПО">Системное ПО</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Производитель</label>
+                    <input type="text" id="newSWManufacturer" class="form-control" placeholder="Введите производителя" />
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal('addSoftwareModal')">Отмена</button>
+                    <button type="submit" class="btn btn-primary">Сохранить</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    const objectId = '@(obj?.Id ?? "")';
+    let selectedSoftwareIds = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(selectedIds));
+
+    function openSelectModal(id) { document.getElementById(id).classList.add('show'); }
+    function closeModal(id) { document.getElementById(id).classList.remove('show'); }
+    
+    function toggleAllCheckboxes(source, tableId) {
+        const table = document.getElementById(tableId);
+        if (!table) return;
+        table.querySelectorAll('.row-checkbox').forEach(cb => { cb.checked = source.checked; });
+    }
+    
+    function filterSoftwareList() {
+        const search = document.getElementById('softwareListSearch').value.toLowerCase();
+        const items = document.querySelectorAll('#softwareListContainer .sw-list-item');
+        items.forEach(item => {
+            const name = (item.dataset.name || '').toLowerCase();
+            const version = (item.dataset.version || '').toLowerCase();
+            item.style.display = (name.includes(search) || version.includes(search)) ? '' : 'none';
+        });
+    }
+    
+    function filterSelectedTable(tableId, value) {
+        const table = document.getElementById(tableId);
+        if (!table) return;
+        const search = value.toLowerCase();
+        table.querySelectorAll('tbody tr').forEach(row => {
+            row.style.display = row.textContent.toLowerCase().includes(search) ? '' : 'none';
+        });
+    }
+    
+    // ✅ Поиск по столбцу
+    function filterTable(tableId, colIndex, value) {
+        const table = document.getElementById(tableId);
+        if (!table) return;
+        const searchValue = value.toLowerCase();
+        table.querySelectorAll('tbody tr').forEach(row => {
+            const cell = row.cells[colIndex];
+            if (cell) {
+                const text = cell.textContent.toLowerCase();
+                row.style.display = text.includes(searchValue) ? '' : 'none';
+            }
+        });
+    }
+    
+    // ✅ Сортировка таблицы
+    function sortTable(tableId, colIndex) {
+        const table = document.getElementById(tableId);
+        if (!table) return;
+        const tbody = table.querySelector('tbody');
+        const rows = Array.from(tbody.querySelectorAll('tr'));
+        
+        const currentDir = table.getAttribute('data-sort-dir') || 'asc';
+        const newDir = currentDir === 'asc' ? 'desc' : 'asc';
+        table.setAttribute('data-sort-dir', newDir);
+        
+        rows.sort((a, b) => {
+            const aText = a.cells[colIndex]?.textContent.trim() || '';
+            const bText = b.cells[colIndex]?.textContent.trim() || '';
+            if (newDir === 'asc') return aText.localeCompare(bText, 'ru');
+            else return bText.localeCompare(aText, 'ru');
+        });
+        
+        rows.forEach(row => tbody.appendChild(row));
+    }
+    
+    function toggleSoftwareSelection(id) {
+        if (selectedSoftwareIds.includes(id)) {
+            selectedSoftwareIds = selectedSoftwareIds.filter(sid => sid !== id);
+        } else {
+            selectedSoftwareIds.push(id);
+        }
+        updateSelectAllSWState();
+    }
+    
+    function toggleSelectAllSoftware() {
+        const selectAllCheckbox = document.getElementById('selectAllSW');
+        const checkboxes = document.querySelectorAll('#softwareListContainer .sw-checkbox');
+        const selectAll = selectAllCheckbox.checked;
+        
+        checkboxes.forEach(cb => {
+            cb.checked = selectAll;
+            const id = cb.value;
+            if (selectAll && !selectedSoftwareIds.includes(id)) {
+                selectedSoftwareIds.push(id);
+            } else if (!selectAll) {
+                selectedSoftwareIds = selectedSoftwareIds.filter(sid => sid !== id);
+            }
+        });
+    }
+    
+    function updateSelectAllSWState() {
+        const checkboxes = document.querySelectorAll('#softwareListContainer .sw-checkbox');
+        const checkedCheckboxes = document.querySelectorAll('#softwareListContainer .sw-checkbox:checked');
+        const selectAllCheckbox = document.getElementById('selectAllSW');
+        if (selectAllCheckbox) {
+            selectAllCheckbox.checked = checkboxes.length > 0 && checkboxes.length === checkedCheckboxes.length;
+        }
+    }
+    
+    function confirmSelection(type) {
+        if (!objectId) { alert('Сначала сохраните объект информатизации'); return; }
+        
+        fetch('/audit/objects/' + objectId + '/set-software', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(selectedSoftwareIds)
+        })
+        .then(r => r.json())
+        .then(result => {
+            if (result.success) {
+                closeModal('selectSoftwareModal');
+                location.reload();
+            } else {
+                alert(result.error || 'Ошибка при сохранении');
+            }
+        });
+    }
+    
+    function removeSelected(type) {
+        const table = document.getElementById('selectedSoftwareTable');
+        if (!table) return;
+        const checkboxes = table.querySelectorAll('.row-checkbox:checked');
+        if (checkboxes.length === 0) { alert('Выберите элементы'); return; }
+        if (!confirm('Удалить выбранное ПО из объекта?')) return;
+        
+        const promises = [];
+        checkboxes.forEach(cb => {
+            const id = cb.closest('tr').dataset.id;
+            promises.push(fetch('/audit/objects/' + objectId + '/remove-software', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(id)
+            }));
+        });
+        Promise.all(promises).then(() => location.reload());
+    }
+    
+    function openAddSoftwareFromModal() {
+        closeModal('selectSoftwareModal');
+        document.getElementById('addSoftwareModal').classList.add('show');
+    }
+    
+    function saveNewSoftware(e) {
+        e.preventDefault();
+        const newSW = {
+            name: document.getElementById('newSWName').value,
+            version: document.getElementById('newSWVersion').value,
+            type: document.getElementById('newSWType').value,
+            manufacturer: document.getElementById('newSWManufacturer').value
+        };
+        
+        fetch('/audit/infrastructure/software/save', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(newSW)
+        })
+        .then(r => r.json())
+        .then(result => {
+            if (result.success) {
+                closeModal('addSoftwareModal');
+                document.getElementById('addSoftwareForm').reset();
+                openSelectModal('selectSoftwareModal');
+                setTimeout(() => location.reload(), 500);
+            } else {
+                alert(result.error || 'Ошибка при добавлении ПО');
+            }
+        });
+    }
+</script>
+
+<style>
+    .th-sortable { cursor: pointer; user-select: none; }
+    .th-sortable:hover { background: #f1f5f9; }
+    .th-header { display: flex; align-items: center; gap: 6px; margin-bottom: 8px; }
+    .sortable-icon { color: #94a3b8; font-size: 12px; }
+    .th-filter-row { margin-top: 4px; }
+    .filter-inline-input {
+        width: 100%;
+        padding: 6px 10px;
+        border: 1px solid #e2e8f0;
+        border-radius: 6px;
+        font-size: 12px;
+        background: white;
+    }
+    .filter-inline-input:focus {
+        outline: none;
+        border-color: #4F46E5;
+        box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.1);
+    }
+</style>

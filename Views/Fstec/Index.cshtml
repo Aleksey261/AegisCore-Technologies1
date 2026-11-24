@@ -1,0 +1,17 @@
+@{ ViewData["Title"] = "ФСТЭК"; }
+<h1>Модуль ФСТЭК</h1>
+<div class="panel">
+    <h2>Импорт БДУ / OVAL</h2>
+    <input type="file" id="fstecFile" />
+    <button class="btn" onclick="importFstec()">Импортировать XML/CSV</button>
+    <button class="btn secondary" onclick="assessFstec()">Проверить последнее сканирование</button>
+    <a class="btn secondary" href="/api/fstec/report/pdf">Отчёт PDF</a>
+    <pre id="fstecResult" class="console"></pre>
+</div>
+<div class="grid2">
+    <section class="panel"><h2>Уязвимости</h2><div id="vulns"></div></section>
+    <section class="panel"><h2>Угрозы</h2><div id="threats"></div></section>
+    <section class="panel"><h2>АСУ ТП</h2><div id="ics"></div></section>
+    <section class="panel"><h2>Экспортный контроль</h2><div id="export"></div></section>
+</div>
+@section Scripts { <script src="/js/fstec.js"></script> }

@@ -1,0 +1,665 @@
+@model AegisCore.Models.InfrastructureViewModel
+@{
+    ViewData["Title"] = "СКЗИ";
+}
+
+<div class="section-header">
+    <h2 class="section-title">
+        <i class="fas fa-key"></i> Средства криптографической защиты информации
+    </h2>
+</div>
+
+<div class="toolbar">
+    <div class="toolbar-left">
+        <!-- Кнопка Добавить СЛЕВА -->
+        <button class="btn btn-primary" onclick="openSkziModal()">
+            <i class="fas fa-plus"></i> Добавить
+        </button>
+
+        <!-- Выпадающее меню "Настройка" -->
+        <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" onclick="toggleDropdown('settingsDropdown')">
+                <i class="fas fa-cog"></i> Настройка
+                <i class="fas fa-chevron-down" style="font-size: 10px; margin-left: 4px;"></i>
+            </button>
+            <div id="settingsDropdown" class="dropdown-menu">
+                <label class="dropdown-item"><input type="checkbox" checked onchange="toggleColumn('col-name')"><span>Наименование</span></label>
+                <label class="dropdown-item"><input type="checkbox" checked onchange="toggleColumn('col-serial')"><span>Серийный номер</span></label>
+                <label class="dropdown-item"><input type="checkbox" checked onchange="toggleColumn('col-certificate')"><span>Номер сертификата</span></label>
+                <label class="dropdown-item"><input type="checkbox" checked onchange="toggleColumn('col-issue')"><span>Дата выдачи</span></label>
+                <label class="dropdown-item"><input type="checkbox" onchange="toggleColumn('col-cover-letter')"><span>Сопроводительное письмо</span></label>
+                <label class="dropdown-item"><input type="checkbox" onchange="toggleColumn('col-type')"><span>Тип (от кого получено)</span></label>
+                <label class="dropdown-item"><input type="checkbox" onchange="toggleColumn('col-owner')"><span>ФИО/Организация</span></label>
+                <hr style="margin: 4px 0;">
+                <a href="#" onclick="resetTableSettings(); return false;"><i class="fas fa-undo"></i> Сбросить настройки</a>
+            </div>
+        </div>
+
+        <div class="search-box">
+            <i class="fas fa-search"></i>
+            <input type="text" id="skziSearch" placeholder="Поиск..." value="@Model.Search" oninput="filterSkzi()" />
+        </div>
+    </div>
+</div>
+
+<div class="table-container">
+    <table class="data-table" id="skziTable">
+        <thead>
+            <tr>
+                <th class="th-sortable col-name">
+                    <div class="th-header"><span>Наименование</span><i class="fas fa-sort sortable-icon"></i></div>
+                    <div class="th-filter-row"><input type="text" class="filter-inline-input" placeholder="Поиск..." oninput="filterTable('skziTable', 0, this.value)" /></div>
+                </th>
+                <th class="th-sortable col-serial">
+                    <div class="th-header"><span>Серийный номер</span><i class="fas fa-sort sortable-icon"></i></div>
+                    <div class="th-filter-row"><input type="text" class="filter-inline-input" placeholder="Поиск..." oninput="filterTable('skziTable', 1, this.value)" /></div>
+                </th>
+                <th class="th-sortable col-certificate">
+                    <div class="th-header"><span>Номер сертификата</span><i class="fas fa-sort sortable-icon"></i></div>
+                    <div class="th-filter-row"><input type="text" class="filter-inline-input" placeholder="Поиск..." oninput="filterTable('skziTable', 2, this.value)" /></div>
+                </th>
+                <th class="th-sortable col-issue">
+                    <div class="th-header"><span>Дата выдачи</span><i class="fas fa-sort sortable-icon"></i></div>
+                    <div class="th-filter-row"><input type="date" class="filter-inline-input" oninput="filterTable('skziTable', 3, this.value)" /></div>
+                </th>
+                <th class="th-sortable col-cover-letter" style="display: none;">
+                    <div class="th-header"><span>Сопроводительное письмо</span><i class="fas fa-sort sortable-icon"></i></div>
+                    <div class="th-filter-row"><input type="text" class="filter-inline-input" placeholder="Поиск..." oninput="filterTable('skziTable', 4, this.value)" /></div>
+                </th>
+                <th class="th-sortable col-type" style="display: none;">
+                    <div class="th-header"><span>Тип (от кого получено)</span><i class="fas fa-sort sortable-icon"></i></div>
+                    <div class="th-filter-row">
+                        <select class="filter-inline-select" onchange="filterTable('skziTable', 5, this.value)">
+                            <option value="">(Все)</option>
+                        </select>
+                    </div>
+                </th>
+                <th class="th-sortable col-owner" style="display: none;">
+                    <div class="th-header"><span>ФИО/Организация</span><i class="fas fa-sort sortable-icon"></i></div>
+                    <div class="th-filter-row"><input type="text" class="filter-inline-input" placeholder="Поиск..." oninput="filterTable('skziTable', 6, this.value)" /></div>
+                </th>
+                <th style="width: 140px;">Действия</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.Skzis != null && Model.Skzis.Any())
+            {
+                @foreach (var item in Model.Skzis)
+                {
+                    <tr data-id="@item.Id">
+                        <td class="col-name"><strong>@item.Name</strong></td>
+                        <td class="col-serial">@item.SerialNumber</td>
+                        <td class="col-certificate">@item.CertificateNumber</td>
+                        <td class="col-issue">@(item.IssueDate?.ToString("dd.MM.yyyy") ?? "—")</td>
+                        <td class="col-cover-letter" style="display: none;">@item.CoverLetter</td>
+                        <td class="col-type" style="display: none;">@item.Owner</td>
+                        <td class="col-owner" style="display: none;">@item.Owner</td>
+                        <td class="actions">
+                            <button class="btn-icon edit" title="Просмотр комплекта документов" onclick="openDocumentsModal('@item.Id')"><i class="fas fa-folder-open"></i></button>
+                            <button class="btn-icon edit" title="Редактировать" onclick="editSkzi('@item.Id')"><i class="fas fa-edit"></i></button>
+                            <button class="btn-icon delete" title="Удалить" onclick="deleteSkzi('@item.Id')"><i class="fas fa-trash"></i></button>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="8" style="text-align: center; padding: 60px 40px; color: #94a3b8;">
+                        <i class="fas fa-key" style="font-size: 64px; margin-bottom: 16px; display: block; color: #cbd5e1;"></i>
+                        <div style="font-size: 16px; font-weight: 500;">СКЗИ не добавлены</div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@if (Model.TotalPages > 1)
+{
+    <div class="pagination">
+        <div class="pagination-page-size">
+            <label>Показывать по:</label>
+            <select onchange="changePageSize(this.value)">
+                <option value="10" selected>10</option>
+                <option value="25">25</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+            </select>
+        </div>
+        <div class="pagination-info">
+            Страница @Model.CurrentPage из @Model.TotalPages (Всего элементов: @Model.TotalItems)
+        </div>
+        <div class="pagination-buttons">
+            @if (Model.CurrentPage > 1) { <a href="/audit/infrastructure?section=skzi&page=@(Model.CurrentPage - 1)" class="btn-pagination">‹</a> }
+            @for (int i = 1; i <= Model.TotalPages; i++) { <a href="/audit/infrastructure?section=skzi&page=@i" class="btn-pagination @(i == Model.CurrentPage ? "active" : "")">@i</a> }
+            @if (Model.CurrentPage < Model.TotalPages) { <a href="/audit/infrastructure?section=skzi&page=@(Model.CurrentPage + 1)" class="btn-pagination">›</a> }
+        </div>
+    </div>
+}
+
+<!-- ============================================================ -->
+<!-- МОДАЛКА ДОБАВЛЕНИЯ/РЕДАКТИРОВАНИЯ СКЗИ -->
+<!-- ============================================================ -->
+<div class="modal" id="skziModal">
+    <div class="modal-content" style="max-width: 650px;">
+        <div class="modal-header">
+            <h3 id="skziModalTitle">Добавление записи</h3>
+            <button class="modal-close" onclick="closeSkziModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <form id="skziForm" onsubmit="saveSkzi(event)">
+                <input type="hidden" id="skziId" name="id" />
+
+                <div class="form-group">
+                    <label>Наименование <span class="required">*</span></label>
+                    <div class="input-with-buttons">
+                        <select name="name" id="skziName" class="form-control" required>
+                            <option value="">Выбрать...</option>
+                            @if (Model.SkziNames != null)
+                            {
+                                @foreach (var name in Model.SkziNames)
+                                {
+                                    <option value="@name">@name</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Срок действия сертификата</label>
+                    <input type="text" name="certificateValidity" id="skziCertificateValidity" class="form-control" placeholder="Например: 1 год" />
+                </div>
+
+                <div class="form-group">
+                    <label>Номер дистрибутива <span class="required">*</span></label>
+                    <input type="text" name="distributionNumber" id="skziDistributionNumber" class="form-control" required />
+                </div>
+
+                <div class="form-group">
+                    <label>Номер экземпляра <span class="required">*</span></label>
+                    <div class="input-with-buttons">
+                        <select name="copyNumber" id="skziCopyNumber" class="form-control" required>
+                            <option value="">Выбрать...</option>
+                            @for (int i = 1; i <= 10; i++) { <option value="@i">№ @i</option> }
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Сопроводительное письмо</label>
+                    <div class="input-with-buttons">
+                        <select name="coverLetter" id="skziCoverLetter" class="form-control">
+                            <option value="">Выбрать...</option>
+                            @if (Model.CoverLetters != null)
+                            {
+                                @foreach (var cl in Model.CoverLetters) { <option value="@cl">@cl</option> }
+                            }
+                        </select>
+                        <button type="button" class="btn-icon-ref" title="Редактировать" onclick="editReference('coverLetters')"><i class="fas fa-edit"></i></button>
+                        <button type="button" class="btn-icon-ref add" title="Добавить письмо" onclick="openCoverLetterModal()"><i class="fas fa-plus"></i></button>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Тип (от кого получено) <span class="required">*</span></label>
+                    <div class="input-with-buttons">
+                        <select name="receivedFromType" id="skziReceivedFromType" class="form-control" required>
+                            <option value="">Выбрать...</option>
+                            <option value="Производитель">Производитель</option>
+                            <option value="Дистрибьютор">Дистрибьютор</option>
+                            <option value="Партнер">Партнер</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>ФИО/Организация <span class="required">*</span></label>
+                    <div class="input-with-buttons">
+                        <select name="owner" id="skziOwner" class="form-control" required>
+                            <option value="">Выбрать...</option>
+                            @if (Model.Organizations != null)
+                            {
+                                @foreach (var org in Model.Organizations) { <option value="@org.Name">@org.Name</option> }
+                            }
+                        </select>
+                        <button type="button" class="btn-icon-ref" title="Редактировать организацию" onclick="editReference('organizations')"><i class="fas fa-edit"></i></button>
+                        <button type="button" class="btn-icon-ref add" title="Добавить организацию" onclick="openOrganizationModal()"><i class="fas fa-plus"></i></button>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Дата получения <span class="required">*</span></label>
+                    <input type="date" name="receiptDate" id="skziReceiptDate" class="form-control" required />
+                </div>
+
+                <div class="form-group">
+                    <label>Количество лицензий <span class="required">*</span></label>
+                    <input type="number" name="licenseCount" id="skziLicenseCount" class="form-control" min="1" required value="1" />
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeSkziModal()">Отмена</button>
+                    <button type="submit" class="btn btn-primary">Сохранить</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- МОДАЛКА ДОБАВЛЕНИЯ СОПРОВОДИТЕЛЬНОГО ПИСЬМА -->
+<!-- ============================================================ -->
+<div class="modal" id="coverLetterModal">
+    <div class="modal-content" style="max-width: 500px;">
+        <div class="modal-header">
+            <h3>Добавление письма</h3>
+            <button class="modal-close" onclick="closeCoverLetterModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <form id="coverLetterForm" onsubmit="saveCoverLetter(event)">
+                <div class="form-group">
+                    <label>Номер письма <span class="required">*</span></label>
+                    <input type="text" id="letterNumber" class="form-control" required placeholder="Например: № 123 от 01.01.2024" />
+                </div>
+                <div class="form-group">
+                    <label>Дата письма <span class="required">*</span></label>
+                    <input type="date" id="letterDate" class="form-control" required />
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeCoverLetterModal()">Отменить</button>
+                    <button type="submit" class="btn btn-primary">Сохранить сопр. письмо</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- МОДАЛКА СОСТАВА КОМПЛЕКТА ДОКУМЕНТОВ -->
+<!-- ============================================================ -->
+<div class="modal" id="documentsModal">
+    <div class="modal-content" style="max-width: 900px;">
+        <div class="modal-header">
+            <h3 id="documentsModalTitle">Состав комплекта</h3>
+            <button class="modal-close" onclick="closeDocumentsModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div class="toolbar" style="margin-bottom: 16px;">
+                <div class="toolbar-left">
+                    <button class="btn btn-primary" onclick="openAddDocumentModal()"><i class="fas fa-plus"></i> Добавить документ</button>
+                </div>
+            </div>
+            <div class="table-container">
+                <table class="data-table" id="documentsTable">
+                    <thead>
+                        <tr>
+                            <th>Тип документа</th>
+                            <th>Номер</th>
+                            <th>Действительно до</th>
+                            <th style="width: 100px;">Действия</th>
+                        </tr>
+                    </thead>
+                    <tbody id="documentsTableBody">
+                        <tr>
+                            <td colspan="4" style="text-align: center; padding: 30px; color: #94a3b8;">Документы не добавлены</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="pagination" style="margin-top: 16px;">
+                <div class="pagination-page-size">
+                    <label>Показывать по:</label>
+                    <select onchange="changeDocumentsPageSize(this.value)">
+                        <option value="5">5</option>
+                        <option value="10" selected>10</option>
+                        <option value="20">20</option>
+                    </select>
+                </div>
+                <div class="pagination-info">Страница 1 из 1 (Всего элементов: 0)</div>
+                <div class="pagination-buttons">
+                    <button class="btn-pagination" disabled>‹</button>
+                    <button class="btn-pagination active">1</button>
+                    <button class="btn-pagination" disabled>›</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- МОДАЛКА ДОБАВЛЕНИЯ ДОКУМЕНТА -->
+<!-- ============================================================ -->
+<div class="modal" id="addDocumentModal">
+    <div class="modal-content" style="max-width: 500px;">
+        <div class="modal-header">
+            <h3>Документ</h3>
+            <button class="modal-close" onclick="closeAddDocumentModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <form id="documentForm" onsubmit="saveDocument(event)">
+                <div class="form-group">
+                    <label>Тип документа <span class="required">*</span></label>
+                    <select id="docType" class="form-control" required>
+                        <option value="">Выбрать...</option>
+                        <option value="Сертификат технической поддержки">Сертификат технической поддержки</option>
+                        <option value="Лицензия">Лицензия</option>
+                        <option value="Сертификат соответствия">Сертификат соответствия</option>
+                        <option value="Руководство">Руководство</option>
+                        <option value="Формуляр">Формуляр</option>
+                        <option value="Другое">Другое</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Наименование</label>
+                    <input type="text" id="docName" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label>Номер <span class="required">*</span></label>
+                    <input type="text" id="docNumber" class="form-control" required />
+                </div>
+                <div class="form-group">
+                    <label>Дата выдачи</label>
+                    <input type="date" id="docIssueDate" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label>Действительно с</label>
+                    <input type="date" id="docValidFrom" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label>Действительно до</label>
+                    <input type="date" id="docValidTo" class="form-control" />
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeAddDocumentModal()">Отмена</button>
+                    <button type="submit" class="btn btn-primary">Сохранить</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- МОДАЛКА ДОБАВЛЕНИЯ ОРГАНИЗАЦИИ -->
+<!-- ============================================================ -->
+<div class="modal" id="organizationModal">
+    <div class="modal-content" style="max-width: 600px;">
+        <div class="modal-header">
+            <h3>Добавление организации</h3>
+            <button class="modal-close" onclick="closeOrganizationModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <form id="organizationForm" onsubmit="saveOrganization(event)">
+                <div class="form-group">
+                    <label>Краткое название <span class="required">*</span></label>
+                    <input type="text" id="orgShortName" class="form-control" required />
+                </div>
+                <div class="form-group">
+                    <label>Полное название</label>
+                    <input type="text" id="orgFullName" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label>Адрес</label>
+                    <input type="text" id="orgAddress" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label>ИНН</label>
+                    <input type="text" id="orgInn" class="form-control" maxlength="12" />
+                </div>
+                <div class="form-group">
+                    <label>Телефон</label>
+                    <input type="tel" id="orgPhone" class="form-control" placeholder="(___) ___-__-__" />
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="orgEmail" class="form-control" />
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeOrganizationModal()">Отменить</button>
+                    <button type="submit" class="btn btn-primary">Сохранить организацию</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- МОДАЛКА СООБЩЕНИЯ ОБ ОШИБКЕ -->
+<!-- ============================================================ -->
+<div class="modal" id="errorModal">
+    <div class="modal-content" style="max-width: 400px;">
+        <div class="modal-header">
+            <h3 style="color: #ef4444;"><i class="fas fa-exclamation-triangle"></i> Ошибка</h3>
+            <button class="modal-close" onclick="closeErrorModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <p id="errorMessage" style="font-size: 14px; color: #475569; margin: 0;">Невозможно удалить. Данная запись используется.</p>
+            <div class="form-actions" style="justify-content: center; border-top: none; padding-top: 16px; margin-top: 16px;">
+                <button type="button" class="btn btn-secondary" onclick="closeErrorModal()">ОК</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const skziData = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.Skzis ?? new List<AegisCore.Models.Skzi>()));
+    let currentSkziId = null;
+
+    function toggleDropdown(id) {
+        const menu = document.getElementById(id);
+        document.querySelectorAll('.dropdown-menu').forEach(m => { if (m.id !== id) m.classList.remove('show'); });
+        menu.classList.toggle('show');
+        event.stopPropagation();
+    }
+
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.dropdown')) {
+            document.querySelectorAll('.dropdown-menu').forEach(m => m.classList.remove('show'));
+        }
+    });
+
+    function toggleColumn(className) {
+        const cells = document.querySelectorAll('.' + className);
+        cells.forEach(cell => {
+            cell.style.display = cell.style.display === 'none' ? '' : 'none';
+        });
+    }
+
+    function resetTableSettings() {
+        const defaultHidden = ['col-cover-letter', 'col-type', 'col-owner'];
+        const defaultVisible = ['col-name', 'col-serial', 'col-certificate', 'col-issue'];
+        defaultHidden.forEach(cls => { document.querySelectorAll('.' + cls).forEach(cell => cell.style.display = 'none'); });
+        defaultVisible.forEach(cls => { document.querySelectorAll('.' + cls).forEach(cell => cell.style.display = ''); });
+        const menu = document.getElementById('settingsDropdown');
+        menu.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+            const label = cb.closest('label');
+            if (label) {
+                const text = label.textContent.toLowerCase();
+                cb.checked = !(text.includes('сопроводительное') || text.includes('тип') || text.includes('фио'));
+            }
+        });
+    }
+
+    function openSkziModal() {
+        document.getElementById('skziForm').reset();
+        document.getElementById('skziId').value = '';
+        document.getElementById('skziLicenseCount').value = '1';
+        document.getElementById('skziModalTitle').textContent = 'Добавление записи';
+        document.getElementById('skziModal').classList.add('show');
+    }
+
+    function closeSkziModal() { document.getElementById('skziModal').classList.remove('show'); }
+
+    function editSkzi(id) {
+        const item = skziData.find(s => s.id === id);
+        if (!item) return;
+        document.getElementById('skziId').value = item.id;
+        document.getElementById('skziName').value = item.name || '';
+        document.getElementById('skziCertificateValidity').value = item.certificateValidity || '';
+        document.getElementById('skziDistributionNumber').value = item.distributionNumber || '';
+        document.getElementById('skziCopyNumber').value = item.copyNumber || '';
+        document.getElementById('skziCoverLetter').value = item.coverLetter || '';
+        document.getElementById('skziReceivedFromType').value = item.owner || '';
+        document.getElementById('skziOwner').value = item.owner || '';
+        document.getElementById('skziReceiptDate').value = item.receiptDate ? item.receiptDate.split('T')[0] : '';
+        document.getElementById('skziLicenseCount').value = item.licenseCount || 1;
+        document.getElementById('skziModalTitle').textContent = 'Редактирование записи';
+        document.getElementById('skziModal').classList.add('show');
+    }
+
+    function deleteSkzi(id) {
+        if (!confirm('Удалить СКЗИ?')) return;
+        fetch('/audit/infrastructure/skzi/delete/' + id, { method: 'DELETE' })
+            .then(r => r.json())
+            .then(data => {
+                if (data.success) { location.reload(); }
+                else {
+                    document.getElementById('errorMessage').textContent = data.error || 'Невозможно удалить. Данная запись используется.';
+                    document.getElementById('errorModal').classList.add('show');
+                }
+            });
+    }
+
+    function saveSkzi(e) {
+        e.preventDefault();
+        const form = e.target;
+        const data = {
+            id: form.id.value || null,
+            name: form.name.value,
+            serialNumber: form.serialNumber.value,
+            certificateNumber: form.certificateNumber.value,
+            issueDate: form.issueDate.value || null,
+            certificateValidity: form.certificateValidity.value,
+            distributionNumber: form.distributionNumber.value,
+            copyNumber: form.copyNumber.value,
+            coverLetter: form.coverLetter.value,
+            owner: form.owner.value,
+            receiptDate: form.receiptDate.value || null,
+            licenseCount: parseInt(form.licenseCount.value) || 1
+        };
+        fetch('/audit/infrastructure/skzi/save', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        })
+        .then(r => r.json())
+        .then(result => {
+            if (result.success) { closeSkziModal(); location.reload(); }
+            else { alert(result.error || 'Ошибка сохранения'); }
+        });
+    }
+
+    function openCoverLetterModal() {
+        document.getElementById('coverLetterForm').reset();
+        document.getElementById('coverLetterModal').classList.add('show');
+    }
+    function closeCoverLetterModal() { document.getElementById('coverLetterModal').classList.remove('show'); }
+
+    function saveCoverLetter(e) {
+        e.preventDefault();
+        const number = document.getElementById('letterNumber').value;
+        const date = document.getElementById('letterDate').value;
+        const letterText = `№ ${number} от ${new Date(date).toLocaleDateString('ru-RU')}`;
+        const select = document.getElementById('skziCoverLetter');
+        const option = document.createElement('option');
+        option.value = letterText;
+        option.textContent = letterText;
+        option.selected = true;
+        select.appendChild(option);
+        closeCoverLetterModal();
+    }
+
+    function openDocumentsModal(skziId) {
+        currentSkziId = skziId;
+        const item = skziData.find(s => s.id === skziId);
+        document.getElementById('documentsModalTitle').textContent = 'Состав комплекта: ' + (item?.name || '');
+        loadDocuments(skziId);
+        document.getElementById('documentsModal').classList.add('show');
+    }
+    function closeDocumentsModal() { document.getElementById('documentsModal').classList.remove('show'); }
+
+    function loadDocuments(skziId) {
+        const tbody = document.getElementById('documentsTableBody');
+        tbody.innerHTML = '<tr><td colspan="4" style="text-align: center; padding: 30px; color: #94a3b8;">Документы не добавлены</td></tr>';
+    }
+
+    function openAddDocumentModal() {
+        document.getElementById('documentForm').reset();
+        document.getElementById('addDocumentModal').classList.add('show');
+    }
+    function closeAddDocumentModal() { document.getElementById('addDocumentModal').classList.remove('show'); }
+    function saveDocument(e) { e.preventDefault(); alert('Документ сохранён (заглушка)'); closeAddDocumentModal(); }
+    function changeDocumentsPageSize(size) { }
+
+    function openOrganizationModal() {
+        document.getElementById('organizationForm').reset();
+        document.getElementById('organizationModal').classList.add('show');
+    }
+    function closeOrganizationModal() { document.getElementById('organizationModal').classList.remove('show'); }
+
+    function saveOrganization(e) {
+        e.preventDefault();
+        const data = {
+            shortName: document.getElementById('orgShortName').value,
+            fullName: document.getElementById('orgFullName').value,
+            address: document.getElementById('orgAddress').value,
+            inn: document.getElementById('orgInn').value,
+            phone: document.getElementById('orgPhone').value,
+            email: document.getElementById('orgEmail').value
+        };
+        fetch('/api/audit/organizations/save', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        })
+        .then(r => r.json())
+        .then(result => {
+            if (result.success) {
+                const select = document.getElementById('skziOwner');
+                const option = document.createElement('option');
+                option.value = data.shortName;
+                option.textContent = data.shortName;
+                option.selected = true;
+                select.appendChild(option);
+                closeOrganizationModal();
+            } else { alert(result.error || 'Ошибка'); }
+        });
+    }
+
+    function editReference(type) {
+        const selectId = type === 'organizations' ? 'skziOwner' : 'skziCoverLetter';
+        const select = document.getElementById(selectId);
+        const selectedValue = select.value;
+        if (!selectedValue) { alert('Сначала выберите значение для редактирования'); return; }
+        const newValue = prompt('Редактировать значение:', selectedValue);
+        if (newValue && newValue !== selectedValue) {
+            const option = select.querySelector('option[value="' + selectedValue + '"]');
+            if (option) { option.value = newValue; option.textContent = newValue; }
+        }
+    }
+
+    function filterSkzi() {
+        const search = document.getElementById('skziSearch').value.toLowerCase();
+        document.querySelectorAll('#skziTable tbody tr').forEach(row => {
+            row.style.display = row.textContent.toLowerCase().includes(search) ? '' : 'none';
+        });
+    }
+
+    function filterTable(tableId, colIndex, value) {
+        const table = document.getElementById(tableId);
+        const rows = table.querySelectorAll('tbody tr');
+        rows.forEach(row => {
+            const cell = row.cells[colIndex];
+            if (cell) { row.style.display = cell.textContent.toLowerCase().includes(value.toLowerCase()) ? '' : 'none'; }
+        });
+    }
+
+    function exportSkzi(format) { window.location.href = '/audit/infrastructure/skzi/export/' + format; }
+    function changePageSize(size) {
+        const url = new URL(window.location);
+        url.searchParams.set('pageSize', size);
+        window.location.href = url.toString();
+    }
+    function closeErrorModal() { document.getElementById('errorModal').classList.remove('show'); }
+</script>

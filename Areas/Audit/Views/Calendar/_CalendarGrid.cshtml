@@ -1,0 +1,94 @@
+@model List<AegisCore.Models.CalendarEvent>
+@{
+    var viewDate = ViewBag.ViewDate as DateTime? ?? DateTime.Now;
+    var firstDay = new DateTime(viewDate.Year, viewDate.Month, 1);
+    var daysInMonth = DateTime.DaysInMonth(viewDate.Year, viewDate.Month);
+    var startDayOfWeek = ((int)firstDay.DayOfWeek + 6) % 7; // Пн=0, Вс=6
+}
+
+<div class="calendar-grid" style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 1px; background: #e2e8f0; border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden;">
+    <!-- Заголовки дней недели -->
+    <div class="calendar-weekdays" style="display: contents;">
+        @{
+            var weekdays = new[] { "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота", "Воскресенье" };
+        }
+        @foreach (var day in weekdays)
+        {
+            var isWeekend = day == "Суббота" || day == "Воскресенье";
+            <div class="weekday-header" style="background: #f8fafc; padding: 12px; text-align: center; font-weight: 600; color: @(isWeekend ? "#ef4444" : "#475569"); font-size: 13px; text-transform: uppercase;">
+                @day
+            </div>
+        }
+    </div>
+
+    <!-- Дни месяца -->
+    <div class="calendar-days" style="display: contents;">
+        <!-- Предыдущий месяц -->
+        @{
+            var prevMonth = viewDate.AddMonths(-1);
+            var daysInPrevMonth = DateTime.DaysInMonth(prevMonth.Year, prevMonth.Month);
+        }
+        @for (int i = 0; i < startDayOfWeek; i++)
+        {
+            var dayNum = daysInPrevMonth - startDayOfWeek + i + 1;
+            <div class="calendar-day other-month" style="background: white; min-height: 120px; padding: 8px; opacity: 0.4;">
+                <span class="day-number" style="font-size: 13px; color: #94a3b8;">@dayNum</span>
+            </div>
+        }
+
+        <!-- Текущий месяц -->
+        @for (int day = 1; day <= daysInMonth; day++)
+        {
+            var currentDate = new DateTime(viewDate.Year, viewDate.Month, day);
+            var dayOfWeek = ((int)currentDate.DayOfWeek + 6) % 7;
+            var isWeekend = dayOfWeek >= 5;
+            var isToday = currentDate.Date == DateTime.Today;
+            var dayEvents = Model.Where(e => e.StartDate.Date == currentDate.Date).ToList();
+            
+            <div class="calendar-day @(isWeekend ? "weekend" : "") @(isToday ? "today" : "")" 
+                 style="background: white; min-height: 120px; padding: 8px; cursor: pointer; transition: all 0.2s; @(isToday ? "border: 2px solid #4F46E5;" : "")"
+                 onmouseover="this.style.background='#f8fafc'"
+                 onmouseout="this.style.background='white'">
+                <span class="day-number" style="font-size: 13px; font-weight: @(isToday ? "700" : "500"); color: @(isWeekend ? "#ef4444" : (isToday ? "#4F46E5" : "#475569")); display: inline-block; width: 28px; height: 28px; line-height: 28px; text-align: center; border-radius: 50%; @(isToday ? "background: #4F46E5; color: white;" : "")">
+                    @day
+                </span>
+                
+                @if (dayEvents.Any())
+                {
+                    <div class="day-events" style="margin-top: 8px; display: flex; flex-direction: column; gap: 4px;">
+                        @foreach (var evt in dayEvents.Take(3))
+                        {
+                            var eventType = evt.Type?.ToLower() ?? "default";
+                            <div class="event-badge" 
+                                 style="padding: 4px 8px; border-radius: 4px; font-size: 11px; color: white; cursor: pointer; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; background: @(eventType.Contains("планерка") ? "#8b5cf6" : eventType.Contains("сзи") ? "#10b981" : "#ec4899");"
+                                 onclick="openEventModal('@evt.Id')"
+                                 title="@evt.Title">
+                                <i class="fas fa-clipboard" style="margin-right: 4px; font-size: 10px;"></i>
+                                @(evt.Title.Length > 25 ? evt.Title.Substring(0, 25) + "..." : evt.Title)
+                            </div>
+                        }
+                        @if (dayEvents.Count > 3)
+                        {
+                            <div class="more-events" style="font-size: 11px; color: #64748b; padding: 2px 4px;">
+                                +@(dayEvents.Count - 3) ещё
+                            </div>
+                        }
+                    </div>
+                }
+            </div>
+        }
+
+        <!-- Следующий месяц -->
+        @{
+            var totalCells = 42;
+            var filledCells = startDayOfWeek + daysInMonth;
+        }
+        @for (int i = filledCells; i < totalCells; i++)
+        {
+            var dayNum = i - filledCells + 1;
+            <div class="calendar-day other-month" style="background: white; min-height: 120px; padding: 8px; opacity: 0.4;">
+                <span class="day-number" style="font-size: 13px; color: #94a3b8;">@dayNum</span>
+            </div>
+        }
+    </div>
+</div>

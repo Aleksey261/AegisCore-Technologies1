@@ -1,0 +1,476 @@
+@{
+    ViewData["Title"] = "Ответственные лица";
+    
+    var employeesList = ViewBag.Employees as IEnumerable<dynamic> ?? new List<dynamic>();
+    if (!employeesList.Any())
+    {
+        employeesList = new List<dynamic>
+        {
+            new { Id = 1, Fio = "Иванов Иван Иванович", Position = "Начальник отдела", Department = "Отдел безопасности" },
+            new { Id = 2, Fio = "Петров Петр Петрович", Position = "Ведущий специалист", Department = "IT-отдел" },
+            new { Id = 3, Fio = "Сидорова Анна Сергеевна", Position = "Специалист", Department = "Кадровый отдел" }
+        };
+    }
+}
+
+<div class="page-header">
+    <h1>
+        <a href="/audit/activity" style="color: #64748b; text-decoration: none; margin-right: 12px; font-size: 24px;">
+            <i class="fas fa-arrow-left"></i>
+        </a>
+        <i class="fas fa-user-shield"></i> Ответственные лица
+    </h1>
+    <p style="color: #64748b; margin-top: 8px; margin-left: 36px;">Назначение ответственных лиц</p>
+</div>
+
+<!-- Вкладки навигации -->
+<div class="tabs-nav">
+    <a href="/audit/activity/responsible" class="tab-nav-item active">Ответственные лица</a>
+    <a href="/audit/activity/commissions" class="tab-nav-item">Комиссии</a>
+    <a href="/audit/activity/documents" class="tab-nav-item">Документы</a>
+    <a href="/audit/activity/warranty" class="tab-nav-item">Гарантия</a>
+    <a href="/audit/activity/notifications" class="tab-nav-item">Уведомления</a>
+    <a href="/audit/activity/situations" class="tab-nav-item">Ситуации</a>
+    <a href="/audit/activity/monitoring" class="tab-nav-item">Мониторинг</a>
+</div>
+
+<div class="form-content">
+    <div class="toolbar">
+        <div class="toolbar-left">
+            <button class="btn btn-primary" onclick="openResponsibleModal()">
+                <i class="fas fa-plus"></i> Добавить
+            </button>
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" onclick="toggleDropdown('exportDropdown')">
+                    <i class="fas fa-file-export"></i> Экспорт в файл
+                    <i class="fas fa-chevron-down" style="font-size: 10px; margin-left: 4px;"></i>
+                </button>
+                <div id="exportDropdown" class="dropdown-menu">
+                    <a onclick="exportTable('responsibleTable', 'xlsx')"><i class="fas fa-file-excel"></i> Экспорт в XLSX</a>
+                    <a onclick="exportTable('responsibleTable', 'pdf')"><i class="fas fa-file-pdf"></i> Экспорт в PDF</a>
+                </div>
+            </div>
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" onclick="toggleDropdown('settingsDropdown')">
+                    <i class="fas fa-cog"></i> Настройка
+                    <i class="fas fa-chevron-down" style="font-size: 10px; margin-left: 4px;"></i>
+                </button>
+                <div id="settingsDropdown" class="dropdown-menu">
+                    <label class="dropdown-item"><input type="checkbox" checked onchange="toggleColumn('col-date')"><span>Дата назначения</span></label>
+                    <label class="dropdown-item"><input type="checkbox" checked onchange="toggleColumn('col-type')"><span>Вид ответственности</span></label>
+                    <label class="dropdown-item"><input type="checkbox" checked onchange="toggleColumn('col-person')"><span>Ответственное лицо</span></label>
+                    <label class="dropdown-item"><input type="checkbox" checked onchange="toggleColumn('col-position')"><span>Должность</span></label>
+                    <hr style="margin: 4px 0;">
+                    <a href="#" onclick="resetTableSettings(); return false;"><i class="fas fa-undo"></i> Сбросить настройки</a>
+                </div>
+            </div>
+        </div>
+        <div class="search-box">
+            <i class="fas fa-search"></i>
+            <input type="text" id="responsibleSearch" placeholder="Поиск..." oninput="filterTable('responsibleTable', 'responsibleSearch')" />
+        </div>
+    </div>
+
+    <div class="table-container">
+        <table id="responsibleTable" class="data-table">
+            <thead>
+                <tr>
+                    <th class="th-sortable col-date">
+                        <div class="th-header"><span>Дата назначения</span><i class="fas fa-sort sortable-icon"></i></div>
+                        <div class="th-filter-row"><input type="date" class="filter-inline-input" oninput="filterTable('responsibleTable', 0, this.value)" /></div>
+                    </th>
+                    <th class="th-sortable col-type">
+                        <div class="th-header"><span>Вид ответственности</span><i class="fas fa-sort sortable-icon"></i></div>
+                        <div class="th-filter-row">
+                            <select class="filter-inline-select" onchange="filterTable('responsibleTable', 1, this.value)">
+                                <option value="">(Все)</option>
+                                <option value="Ответственный за ввод в эксплуатацию ОИН">Ответственный за ввод в эксплуатацию ОИН</option>
+                                <option value="Ответственный за выполнение ОИН">Ответственный за выполнение ОИН</option>
+                                <option value="Ответственный за организацию обработки ПДн">Ответственный за организацию обработки ПДн</option>
+                                <option value="Ответственный за обработку ПДн">Ответственный за обработку ПДн</option>
+                                <option value="Ответственный за организацию работ по технической защите конфиденциальной информации">Ответственный за организацию работ по технической защите конфиденциальной информации</option>
+                            </select>
+                        </div>
+                    </th>
+                    <th class="th-sortable col-person">
+                        <div class="th-header"><span>Ответственное лицо</span><i class="fas fa-sort sortable-icon"></i></div>
+                        <div class="th-filter-row"><input type="text" class="filter-inline-input" placeholder="Поиск..." oninput="filterTable('responsibleTable', 2, this.value)" /></div>
+                    </th>
+                    <th class="th-sortable col-position">
+                        <div class="th-header"><span>Должность</span><i class="fas fa-sort sortable-icon"></i></div>
+                        <div class="th-filter-row"><input type="text" class="filter-inline-input" placeholder="Поиск..." oninput="filterTable('responsibleTable', 3, this.value)" /></div>
+                    </th>
+                    <th style="width: 140px;">Действия</th>
+                </tr>
+            </thead>
+            <tbody id="responsibleTableBody">
+                <tr><td colspan="5" style="text-align: center; padding: 60px 40px; color: #94a3b8;">Записи не добавлены</td></tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- МОДАЛЬНОЕ ОКНО: Добавление ответственного лица (Рисунок 176) -->
+<!-- ============================================================ -->
+<div class="modal" id="responsibleModal">
+    <div class="modal-content" style="max-width: 500px;">
+        <div class="modal-header">
+            <h3 id="responsibleModalTitle">Добавление ответственного лица</h3>
+            <button class="modal-close" onclick="closeResponsibleModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <form id="responsibleForm" onsubmit="saveResponsible(event)">
+                <input type="hidden" id="responsibleId" />
+                
+                <div class="form-group">
+                    <label>Дата назначения <span class="required">*</span></label>
+                    <input type="date" id="responsibleDate" class="form-control" required />
+                </div>
+                
+                <div class="form-group">
+                    <label>Вид ответственности <span class="required">*</span></label>
+                    <select id="responsibleType" class="form-control" required>
+                        <option value="">Выбрать...</option>
+                        <option value="Ответственный за ввод в эксплуатацию ОИН">Ответственный за ввод в эксплуатацию ОИН</option>
+                        <option value="Ответственный за выполнение ОИН">Ответственный за выполнение ОИН</option>
+                        <option value="Ответственный за организацию обработки ПДн">Ответственный за организацию обработки ПДн</option>
+                        <option value="Ответственный за обработку ПДн">Ответственный за обработку ПДн</option>
+                        <option value="Ответственный за организацию работ по технической защите конфиденциальной информации">Ответственный за организацию работ по технической защите конфиденциальной информации</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>Ответственное лицо <span class="required">*</span></label>
+                    <div class="input-with-buttons">
+                        <select id="responsiblePerson" class="form-control" required>
+                            <option value="">Выбрать...</option>
+                        </select>
+                        <button type="button" class="btn-icon-ref" onclick="openEmployeeList()" title="Список сотрудников">
+                            <i class="fas fa-list"></i>
+                        </button>
+                        <button type="button" class="btn-icon-ref add" onclick="addEmployee()" title="Добавить сотрудника">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                        <button type="button" class="btn-icon-ref" onclick="editEmployee()" title="Редактировать сотрудника">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeResponsibleModal()">Отмена</button>
+                    <button type="submit" class="btn btn-primary">Сохранить</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- МОДАЛЬНОЕ ОКНО: СООБЩЕНИЕ ОБ ОШИБКЕ -->
+<!-- ============================================================ -->
+<div class="modal" id="errorModal">
+    <div class="modal-content" style="max-width: 400px;">
+        <div class="modal-header">
+            <h3 style="color: #ef4444;"><i class="fas fa-exclamation-triangle"></i> Ошибка</h3>
+            <button class="modal-close" onclick="closeErrorModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <p id="errorMessage" style="font-size: 14px; color: #475569; margin: 0;">У данного сотрудника отсутствует доступ к работе с конфиденциальной информацией</p>
+            <div class="form-actions" style="justify-content: center; border-top: none; padding-top: 16px; margin-top: 16px;">
+                <button type="button" class="btn btn-secondary" onclick="closeErrorModal()">ОК</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    let responsibleData = [];
+    let editingId = null;
+    let allEmployees = [];
+
+    // Загрузка данных
+    document.addEventListener('DOMContentLoaded', function() {
+        allEmployees = [
+            @foreach (var emp in employeesList) {
+                <text>{ id: @emp.Id, fio: "@emp.Fio", position: "@emp.Position" },</text>
+            }
+        ];
+        
+        if (allEmployees.length === 0) {
+            allEmployees = [
+                { id: 1, fio: "Иванов Иван Иванович", position: "Начальник отдела" },
+                { id: 2, fio: "Петров Петр Петрович", position: "Ведущий специалист" },
+                { id: 3, fio: "Сидорова Анна Сергеевна", position: "Специалист" }
+            ];
+        }
+
+        try {
+            const saved = localStorage.getItem('responsibleData');
+            if (saved) {
+                responsibleData = JSON.parse(saved);
+            } else {
+                responsibleData = [
+                    { id: 1, date: '2024-01-15', type: 'Ответственный за ввод в эксплуатацию ОИН', personId: 1, personName: 'Иванов Иван Иванович', position: 'Начальник отдела' },
+                    { id: 2, date: '2024-02-01', type: 'Ответственный за организацию обработки ПДн', personId: 3, personName: 'Сидорова Анна Сергеевна', position: 'Специалист' }
+                ];
+                localStorage.setItem('responsibleData', JSON.stringify(responsibleData));
+            }
+        } catch(e) {
+            responsibleData = [];
+        }
+        
+        renderTable();
+    });
+
+    function renderTable() {
+        const tbody = document.getElementById('responsibleTableBody');
+        tbody.innerHTML = '';
+        if (responsibleData.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; padding: 60px 40px; color: #94a3b8;">Записи не добавлены</td></tr>';
+            return;
+        }
+        responsibleData.forEach(item => {
+            const tr = document.createElement('tr');
+            const dateFormatted = item.date ? new Date(item.date).toLocaleDateString('ru-RU') : '—';
+            tr.innerHTML = `<td class="col-date">${dateFormatted}</td>
+                            <td class="col-type">${item.type}</td>
+                            <td class="col-person">${item.personName}</td>
+                            <td class="col-position">${item.position || '-'}</td>
+                            <td class="actions">
+                                <button class="btn-icon edit" onclick="editResponsible(${item.id})"><i class="fas fa-edit"></i></button>
+                                <button class="btn-icon delete" onclick="deleteResponsible(${item.id})"><i class="fas fa-trash"></i></button>
+                            </td>`;
+            tbody.appendChild(tr);
+        });
+    }
+
+    function openResponsibleModal() {
+        editingId = null;
+        document.getElementById('responsibleModalTitle').textContent = 'Добавление ответственного лица';
+        document.getElementById('responsibleId').value = '';
+        document.getElementById('responsibleDate').value = new Date().toISOString().split('T')[0];
+        document.getElementById('responsibleType').value = '';
+        document.getElementById('responsiblePerson').value = '';
+        populateEmployeeSelect('responsiblePerson');
+        document.getElementById('responsibleModal').classList.add('show');
+    }
+
+    function editResponsible(id) {
+        editingId = id;
+        const item = responsibleData.find(i => i.id === id);
+        if (!item) return;
+        document.getElementById('responsibleModalTitle').textContent = 'Редактирование ответственного лица';
+        document.getElementById('responsibleId').value = item.id;
+        document.getElementById('responsibleDate').value = item.date;
+        document.getElementById('responsibleType').value = item.type;
+        document.getElementById('responsiblePerson').value = item.personId;
+        populateEmployeeSelect('responsiblePerson');
+        document.getElementById('responsibleModal').classList.add('show');
+    }
+
+    function closeResponsibleModal() {
+        document.getElementById('responsibleModal').classList.remove('show');
+    }
+
+    function saveResponsible(e) {
+        e.preventDefault();
+        const date = document.getElementById('responsibleDate').value;
+        const type = document.getElementById('responsibleType').value;
+        const personId = document.getElementById('responsiblePerson').value;
+        
+        if (!date || !type || !personId) {
+            alert('Пожалуйста, заполните все обязательные поля');
+            return;
+        }
+
+        const employee = allEmployees.find(emp => emp.id == personId);
+        const personName = employee ? employee.fio : 'Сотрудник';
+        const position = employee ? employee.position : '-';
+
+        if (editingId) {
+            const index = responsibleData.findIndex(i => i.id === editingId);
+            if (index !== -1) {
+                responsibleData[index] = { id: editingId, date, type, personId: parseInt(personId), personName, position };
+            }
+        } else {
+            responsibleData.push({ id: Date.now(), date, type, personId: parseInt(personId), personName, position });
+        }
+        
+        localStorage.setItem('responsibleData', JSON.stringify(responsibleData));
+        renderTable();
+        closeResponsibleModal();
+    }
+
+    function deleteResponsible(id) {
+        if (confirm('Вы уверены, что хотите удалить эту запись?')) {
+            responsibleData = responsibleData.filter(i => i.id !== id);
+            localStorage.setItem('responsibleData', JSON.stringify(responsibleData));
+            renderTable();
+        }
+    }
+
+    function populateEmployeeSelect(selectId) {
+        const select = document.getElementById(selectId);
+        if (!select) return;
+        select.innerHTML = '<option value="">Выбрать...</option>';
+        allEmployees.forEach(emp => {
+            select.innerHTML += `<option value="${emp.id}">${emp.fio}</option>`;
+        });
+        if (allEmployees.length === 0) {
+            select.innerHTML = '<option value="">Нет сотрудников</option>';
+        }
+    }
+
+    function toggleDropdown(id) {
+        const menu = document.getElementById(id);
+        document.querySelectorAll('.dropdown-menu').forEach(m => { if (m.id !== id) m.classList.remove('show'); });
+        menu.classList.toggle('show');
+        event.stopPropagation();
+    }
+
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.dropdown')) {
+            document.querySelectorAll('.dropdown-menu').forEach(m => m.classList.remove('show'));
+        }
+    });
+
+    function toggleColumn(className) {
+        document.querySelectorAll('.' + className).forEach(cell => {
+            cell.style.display = cell.style.display === 'none' ? '' : 'none';
+        });
+    }
+
+    function resetTableSettings() {
+        ['col-date', 'col-type', 'col-person', 'col-position'].forEach(cls => {
+            document.querySelectorAll('.' + cls).forEach(cell => cell.style.display = '');
+        });
+    }
+
+    function filterTable(tableId, searchIdOrCol, value) {
+        const table = document.getElementById(tableId);
+        if (!table) return;
+        const tbody = table.querySelector('tbody');
+        if (!tbody) return;
+        const rows = tbody.querySelectorAll('tr');
+        if (typeof searchIdOrCol === 'string') {
+            const searchTerm = document.getElementById(searchIdOrCol)?.value?.toLowerCase() || '';
+            rows.forEach(row => {
+                row.style.display = row.textContent.toLowerCase().includes(searchTerm) ? '' : 'none';
+            });
+            return;
+        }
+        const colIndex = typeof searchIdOrCol === 'number' ? searchIdOrCol : parseInt(searchIdOrCol);
+        const searchVal = (value || '').toLowerCase();
+        rows.forEach(row => {
+            const cell = row.cells[colIndex];
+            if (cell) {
+                row.style.display = cell.textContent.toLowerCase().includes(searchVal) ? '' : 'none';
+            }
+        });
+    }
+
+    function exportTable(tableId, format) {
+        alert(`Экспорт в формате ${format.toUpperCase()} будет реализован`);
+    }
+
+    function openEmployeeList() { window.location.href = '/audit/organization?section=employees'; }
+    function addEmployee() { window.location.href = '/audit/organization?section=employees'; }
+    function editEmployee() { window.location.href = '/audit/organization?section=employees'; }
+    function closeErrorModal() { document.getElementById('errorModal').classList.remove('show'); }
+
+    // Закрытие модальных окон по клику вне
+    document.querySelectorAll('.modal').forEach(modal => {
+        modal.addEventListener('click', function(e) {
+            if (e.target === this) this.classList.remove('show');
+        });
+    });
+</script>
+
+<style>
+    /* Стили такие же как в предыдущих файлах */
+    .page-header { margin-bottom: 24px; }
+    .page-header h1 { display: flex; align-items: center; gap: 12px; font-size: 24px; font-weight: 600; color: #1e293b; margin: 0; }
+    .page-header h1 i { color: #4F46E5; }
+    .page-header p { color: #64748b; margin-top: 8px; margin-left: 36px; }
+    
+    .tabs-nav { display: flex; gap: 4px; background: #f8fafc; padding: 4px; border-radius: 8px; margin-bottom: 24px; flex-wrap: wrap; }
+    .tab-nav-item { display: flex; align-items: center; gap: 8px; padding: 10px 20px; border-radius: 6px; cursor: pointer; transition: all 0.2s; color: #475569; text-decoration: none; font-weight: 500; border: none; background: transparent; font-size: 14px; }
+    .tab-nav-item:hover { background: #e2e8f0; color: #1e293b; }
+    .tab-nav-item.active { background: white; color: #4F46E5; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+    
+    .toolbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 8px; }
+    .toolbar-left { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .search-box { position: relative; max-width: 300px; width: 100%; }
+    .search-box i { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: #94a3b8; font-size: 14px; z-index: 1; }
+    .search-box input { padding-left: 36px; width: 100%; height: 38px; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 14px; background: white; }
+    .search-box input:focus { outline: none; border-color: #4F46E5; box-shadow: 0 0 0 3px rgba(79,70,229,0.1); }
+    
+    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; border: none; border-radius: 6px; font-size: 14px; font-weight: 500; cursor: pointer; transition: all 0.2s; text-decoration: none; }
+    .btn-primary { background: #4F46E5; color: white; }
+    .btn-primary:hover { background: #4338CA; }
+    .btn-secondary { background: #f1f5f9; color: #475569; }
+    .btn-secondary:hover { background: #e2e8f0; }
+    .btn-icon { width: 32px; height: 32px; border: none; border-radius: 4px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; font-size: 14px; transition: all 0.2s; }
+    .btn-icon.edit { background: #e0f2fe; color: #0284c7; }
+    .btn-icon.edit:hover { background: #bae6fd; }
+    .btn-icon.delete { background: #fee2e2; color: #dc2626; }
+    .btn-icon.delete:hover { background: #fecaca; }
+    
+    .dropdown { position: relative; display: inline-block; }
+    .dropdown-toggle { cursor: pointer; }
+    .dropdown-menu { display: none; position: absolute; top: 100%; left: 0; min-width: 200px; background: white; border: 1px solid #e2e8f0; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); z-index: 1000; margin-top: 4px; padding: 6px 0; }
+    .dropdown-menu.show { display: block; }
+    .dropdown-menu a { display: flex; align-items: center; gap: 10px; padding: 8px 16px; color: #1e293b; text-decoration: none; font-size: 14px; cursor: pointer; }
+    .dropdown-menu a:hover { background: #f1f5f9; }
+    .dropdown-item { display: flex; align-items: center; gap: 10px; padding: 6px 16px; font-size: 14px; cursor: pointer; }
+    .dropdown-item:hover { background: #f1f5f9; }
+    .dropdown-item input[type="checkbox"] { width: 16px; height: 16px; accent-color: #4F46E5; cursor: pointer; }
+    
+    .form-content { background: white; border-radius: 8px; padding: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+    .table-container { overflow-x: auto; margin-top: 8px; }
+    
+    .data-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    .data-table th { background: #f8fafc; padding: 0; border-bottom: 2px solid #e2e8f0; font-weight: 600; color: #475569; text-align: left; }
+    .data-table td { padding: 12px; border-bottom: 1px solid #e2e8f0; vertical-align: middle; }
+    .data-table tbody tr:hover { background: #f8fafc; }
+    .data-table tbody td { padding: 12px; }
+    
+    .th-sortable { min-width: 100px; vertical-align: top; }
+    .th-header { display: flex; align-items: center; justify-content: space-between; padding: 10px 12px; cursor: pointer; user-select: none; }
+    .th-header:hover { background: #f1f5f9; }
+    .sortable-icon { color: #94a3b8; font-size: 12px; margin-left: 8px; opacity: 0.5; }
+    .th-sortable:hover .sortable-icon { opacity: 1; }
+    .th-filter-row { padding: 4px 8px 8px 8px; }
+    .filter-inline-input { width: 100%; padding: 6px 10px; border: 1px solid #e2e8f0; border-radius: 4px; font-size: 13px; background: white; box-sizing: border-box; }
+    .filter-inline-input:focus { outline: none; border-color: #4F46E5; }
+    .filter-inline-select { width: 100%; padding: 6px 10px; border: 1px solid #e2e8f0; border-radius: 4px; font-size: 13px; background: white; }
+    
+    .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 2000; align-items: center; justify-content: center; }
+    .modal.show { display: flex !important; }
+    .modal-content { background: white; border-radius: 12px; max-width: 600px; width: 90%; max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
+    .modal-header { display: flex; justify-content: space-between; align-items: center; padding: 20px 24px; border-bottom: 1px solid #e2e8f0; }
+    .modal-header h3 { margin: 0; font-size: 18px; color: #1e293b; }
+    .modal-close { background: none; border: none; font-size: 28px; cursor: pointer; color: #94a3b8; padding: 0 4px; line-height: 1; }
+    .modal-close:hover { color: #475569; }
+    .modal-body { padding: 24px; }
+    
+    .form-group { margin-bottom: 16px; }
+    .form-group label { display: block; font-size: 14px; font-weight: 500; color: #1e293b; margin-bottom: 4px; }
+    .required { color: #ef4444; }
+    .form-control { width: 100%; padding: 10px 12px; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 14px; box-sizing: border-box; background: white; transition: border-color 0.2s; }
+    .form-control:focus { outline: none; border-color: #4F46E5; box-shadow: 0 0 0 3px rgba(79,70,229,0.1); }
+    select.form-control { appearance: auto; }
+    
+    .input-with-buttons { display: flex; gap: 6px; align-items: center; }
+    .input-with-buttons .form-control { flex: 1; }
+    .btn-icon-ref { width: 32px; height: 32px; border: 1px solid #e2e8f0; border-radius: 6px; background: white; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; color: #64748b; transition: all 0.2s; flex-shrink: 0; }
+    .btn-icon-ref:hover { background: #f1f5f9; border-color: #94a3b8; }
+    .btn-icon-ref.add { color: #4F46E5; }
+    .btn-icon-ref.add:hover { background: #eef2ff; border-color: #4F46E5; }
+    
+    .form-actions { display: flex; gap: 12px; justify-content: flex-end; padding-top: 16px; border-top: 1px solid #e2e8f0; margin-top: 16px; }
+    
+    hr { border: none; border-top: 1px solid #e2e8f0; margin: 8px 0; }
+</style>

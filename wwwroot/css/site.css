@@ -1,0 +1,8 @@
+﻿/* ============================================================ */
+/* === SITE.CSS - Основные стили для страниц без модулей === */
+/* ============================================================ */
+
+@import url('audit/base.css');
+@import url('audit/components.css');
+@import url('audit/dark-theme.css');
+@import url('audit/responsive.css');

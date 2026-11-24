@@ -1,0 +1,369 @@
+@model AegisCore.Models.ObjectsViewModel
+
+<div class="tab-content active" id="tab-main">
+    <h3 style="margin-bottom: 20px; color: #1e293b;">Основные сведения</h3>
+    
+    <form id="objectMainForm">
+        <input type="hidden" id="objectId" value="@(Model.CurrentObject?.Id ?? "")" />
+        
+        <div class="form-row">
+            <div class="form-group">
+                <label>Наименование <span class="required">*</span></label>
+                <input type="text" id="objectName" class="form-control" required 
+                       value="@Model.CurrentObject?.Name" 
+                       placeholder="Введите наименование объекта" />
+            </div>
+            <div class="form-group">
+                <label>Инвентарный номер <span class="required">*</span></label>
+                <input type="text" id="objectInventoryNumber" class="form-control" required 
+                       value="@Model.CurrentObject?.InventoryNumber" 
+                       placeholder="Введите инвентарный номер" />
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label>Дата ввода в эксплуатацию</label>
+                <input type="date" id="objectDateIn" class="form-control" 
+                       value="@(Model.CurrentObject?.DateIn?.ToString("yyyy-MM-dd") ?? "")" />
+            </div>
+            <div class="form-group">
+                <label>Дата вывода в эксплуатацию</label>
+                <input type="date" id="objectDateOut" class="form-control" 
+                       value="@(Model.CurrentObject?.DateOut?.ToString("yyyy-MM-dd") ?? "")" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Помещение № <span class="required">*</span></label>
+            <div class="input-with-buttons">
+                <select id="objectRoom" class="form-control" required>
+                    <option value="">Выбрать...</option>
+                    @if (Model.AvailableRooms != null)
+                    {
+                        @foreach (var room in Model.AvailableRooms)
+                        {
+                            <option value="@room.Number" selected="@(Model.CurrentObject?.RoomNumber == room.Number)">
+                                @room.Number - @room.Description
+                            </option>
+                        }
+                    }
+                </select>
+                <button type="button" class="btn-icon-ref" title="Редактировать" onclick="editReference('rooms')">
+                    <i class="fas fa-edit"></i>
+                </button>
+                <button type="button" class="btn-icon-ref add" title="Добавить" onclick="openRoomModal()">
+                    <i class="fas fa-plus"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Обладатель информации</label>
+            <div class="input-with-buttons">
+                <select id="objectInformationOwner" class="form-control">
+                    <option value="">Выбрать...</option>
+                    @if (Model.AvailableRooms != null)
+                    {
+                        @foreach (var room in Model.AvailableRooms)
+                        {
+                            <option value="@room.Department" selected="@(Model.CurrentObject?.InformationOwner == room.Department)">
+                                @room.Department
+                            </option>
+                        }
+                    }
+                </select>
+                <button type="button" class="btn-icon-ref" title="Редактировать" onclick="editReference('organizations')">
+                    <i class="fas fa-edit"></i>
+                </button>
+                <button type="button" class="btn-icon-ref add" title="Добавить" onclick="openOrganizationModal()">
+                    <i class="fas fa-plus"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Назначение системы <span class="required">*</span></label>
+            <textarea id="objectPurpose" class="form-control" rows="3" required 
+                      placeholder="Опишите назначение системы">@Model.CurrentObject?.Purpose</textarea>
+        </div>
+
+        <div class="form-group">
+            <label>Цели</label>
+            <textarea id="objectGoals" class="form-control" rows="3" 
+                      placeholder="Опишите цели системы">@Model.CurrentObject?.Goals</textarea>
+        </div>
+
+        <div class="form-group">
+            <label>Задачи, которые решает система</label>
+            <textarea id="objectTasks" class="form-control" rows="3" 
+                      placeholder="Опишите задачи системы">@Model.CurrentObject?.Tasks</textarea>
+        </div>
+
+        <div class="form-group">
+            <label>Обрабатываемые сведения</label>
+            <textarea id="objectProcessedData" class="form-control" rows="3" 
+                      placeholder="Опишите обрабатываемые сведения">@Model.CurrentObject?.ProcessedData</textarea>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label>Вид размещения</label>
+                <select id="objectPlacementType" class="form-control">
+                    <option value="">Выбрать...</option>
+                    <option value="Локальное" selected="@(Model.CurrentObject?.PlacementType == "Локальное")">Локальное</option>
+                    <option value="Распределенное" selected="@(Model.CurrentObject?.PlacementType == "Распределенное")">Распределенное</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Режим обработки данных</label>
+                <select id="objectProcessingMode" class="form-control">
+                    <option value="">Выбрать...</option>
+                    <option value="Автоматизированный" selected="@(Model.CurrentObject?.ProcessingMode == "Автоматизированный")">Автоматизированный</option>
+                    <option value="Автоматический" selected="@(Model.CurrentObject?.ProcessingMode == "Автоматический")">Автоматический</option>
+                    <option value="Ручной" selected="@(Model.CurrentObject?.ProcessingMode == "Ручной")">Ручной</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Взаимодействие с другими системами</label>
+            <textarea id="objectSystemInteraction" class="form-control" rows="3" 
+                      placeholder="Опишите взаимодействие с другими системами">@Model.CurrentObject?.SystemInteraction</textarea>
+        </div>
+
+        <div class="form-group">
+            <label>Характеристики безопасности</label>
+            <select id="objectSecurityCharacteristics" class="form-control">
+                <option value="">Выбрать...</option>
+                <option value="Высокий" selected="@(Model.CurrentObject?.SecurityCharacteristics == "Высокий")">Высокий</option>
+                <option value="Средний" selected="@(Model.CurrentObject?.SecurityCharacteristics == "Средний")">Средний</option>
+                <option value="Низкий" selected="@(Model.CurrentObject?.SecurityCharacteristics == "Низкий")">Низкий</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label class="checkbox-label">
+                <input type="checkbox" id="objectIsCriticalObject" @(Model.CurrentObject?.IsCriticalObject == true ? "checked" : "") />
+                <span>Установлено на критически важных объектах</span>
+            </label>
+        </div>
+
+        <div class="form-group">
+            <label class="checkbox-label">
+                <input type="checkbox" id="objectUsesSkzi" @(Model.CurrentObject?.UsesSkzi == true ? "checked" : "") />
+                <span>Используется СКЗИ</span>
+            </label>
+        </div>
+
+        <!-- Классификация защищенности объекта информатизации -->
+        <div style="background: #f8fafc; padding: 20px; border-radius: 8px; margin: 24px 0; border: 1px solid #e2e8f0;">
+            <h4 style="margin-bottom: 16px; color: #475569; font-weight: 600;">
+                Классификация защищенности объекта информатизации
+            </h4>
+            
+            <div class="form-group">
+                <label>Класс защищенности ИС <span class="required">*</span></label>
+                <select id="objectISClass" class="form-control" required>
+                    <option value="">Выбрать...</option>
+                    <option value="К1" selected="@(Model.CurrentObject?.ISClass == "К1")">К1</option>
+                    <option value="К2" selected="@(Model.CurrentObject?.ISClass == "К2")">К2</option>
+                    <option value="К3" selected="@(Model.CurrentObject?.ISClass == "К3")">К3</option>
+                    <option value="К4" selected="@(Model.CurrentObject?.ISClass == "К4")">К4</option>
+                </select>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Дата акта</label>
+                    <input type="date" id="objectISActDate" class="form-control" 
+                           value="@(Model.CurrentObject?.ISActDate?.ToString("yyyy-MM-dd") ?? "")" />
+                </div>
+                <div class="form-group">
+                    <label>Номер акта</label>
+                    <input type="text" id="objectISActNumber" class="form-control" 
+                           value="@Model.CurrentObject?.ISActNumber" 
+                           placeholder="Введите номер акта" />
+                </div>
+            </div>
+        </div>
+
+        <!-- Уровень защищенности ПДн -->
+        <div style="background: #f8fafc; padding: 20px; border-radius: 8px; margin: 24px 0; border: 1px solid #e2e8f0;">
+            <h4 style="margin-bottom: 16px; color: #475569; font-weight: 600;">
+                Уровень защищенности ПДн
+            </h4>
+            
+            <div class="form-group">
+                <label>Класс защищенности ИСПДн <span class="required">*</span></label>
+                <select id="objectISPDnClass" class="form-control" required>
+                    <option value="">Выбрать...</option>
+                    <option value="УЗ1" selected="@(Model.CurrentObject?.ISPDnClass == "УЗ1")">УЗ1</option>
+                    <option value="УЗ2" selected="@(Model.CurrentObject?.ISPDnClass == "УЗ2")">УЗ2</option>
+                    <option value="УЗ3" selected="@(Model.CurrentObject?.ISPDnClass == "УЗ3")">УЗ3</option>
+                    <option value="УЗ4" selected="@(Model.CurrentObject?.ISPDnClass == "УЗ4")">УЗ4</option>
+                </select>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Дата акта</label>
+                    <input type="date" id="objectISPDnActDate" class="form-control" 
+                           value="@(Model.CurrentObject?.ISPDnActDate?.ToString("yyyy-MM-dd") ?? "")" />
+                </div>
+                <div class="form-group">
+                    <label>Номер акта</label>
+                    <input type="text" id="objectISPDnActNumber" class="form-control" 
+                           value="@Model.CurrentObject?.ISPDnActNumber" 
+                           placeholder="Введите номер акта" />
+                </div>
+            </div>
+        </div>
+
+        <!-- Сведения о соответствии требованиям по защите информации -->
+        <div style="background: #f8fafc; padding: 20px; border-radius: 8px; margin: 24px 0; border: 1px solid #e2e8f0;">
+            <h4 style="margin-bottom: 16px; color: #475569; font-weight: 600;">
+                Сведения о соответствии объекта информатизации требованиям по защите информации
+            </h4>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Дата протокола</label>
+                    <input type="date" id="objectProtocolDate" class="form-control" 
+                           value="@(Model.CurrentObject?.ProtocolDate?.ToString("yyyy-MM-dd") ?? "")" />
+                </div>
+                <div class="form-group">
+                    <label>Номер протокола</label>
+                    <input type="text" id="objectProtocolNumber" class="form-control" 
+                           value="@Model.CurrentObject?.ProtocolNumber" 
+                           placeholder="Введите номер протокола" />
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Дата заключения</label>
+                    <input type="date" id="objectConclusionDate" class="form-control" 
+                           value="@(Model.CurrentObject?.ConclusionDate?.ToString("yyyy-MM-dd") ?? "")" />
+                </div>
+                <div class="form-group">
+                    <label>Номер заключения</label>
+                    <input type="text" id="objectConclusionNumber" class="form-control" 
+                           value="@Model.CurrentObject?.ConclusionNumber" 
+                           placeholder="Введите номер заключения" />
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Дата аттестата</label>
+                    <input type="date" id="objectAttestationDate" class="form-control" 
+                           value="@(Model.CurrentObject?.CertificateDate?.ToString("yyyy-MM-dd") ?? "")" />
+                </div>
+                <div class="form-group">
+                    <label>Номер аттестата</label>
+                    <input type="text" id="objectAttestationNumber" class="form-control" 
+                           value="@Model.CurrentObject?.CertificateNumber" 
+                           placeholder="Введите номер аттестата" />
+                </div>
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <a href="/audit/objects" class="btn btn-secondary">Отмена</a>
+            <button type="button" class="btn btn-primary" onclick="saveObjectMain()">
+                <i class="fas fa-save"></i> Сохранить
+            </button>
+        </div>
+    </form>
+</div>
+
+<script>
+    function saveObjectMain() {
+        const id = document.getElementById('objectId').value;
+        const data = {
+            id: id || null,
+            name: document.getElementById('objectName').value,
+            inventoryNumber: document.getElementById('objectInventoryNumber').value,
+            dateIn: document.getElementById('objectDateIn').value || null,
+            dateOut: document.getElementById('objectDateOut').value || null,
+            roomNumber: document.getElementById('objectRoom').value,
+            location: document.getElementById('objectRoom').value,
+            informationOwner: document.getElementById('objectInformationOwner').value,
+            purpose: document.getElementById('objectPurpose').value,
+            goals: document.getElementById('objectGoals').value,
+            tasks: document.getElementById('objectTasks').value,
+            processedData: document.getElementById('objectProcessedData').value,
+            placementType: document.getElementById('objectPlacementType').value,
+            processingMode: document.getElementById('objectProcessingMode').value,
+            systemInteraction: document.getElementById('objectSystemInteraction').value,
+            securityCharacteristics: document.getElementById('objectSecurityCharacteristics').value,
+            isCriticalObject: document.getElementById('objectIsCriticalObject').checked,
+            usesSkzi: document.getElementById('objectUsesSkzi').checked,
+            
+            // Классификация ИС
+            isClass: document.getElementById('objectISClass').value,
+            isActDate: document.getElementById('objectISActDate').value || null,
+            isActNumber: document.getElementById('objectISActNumber').value,
+            
+            // Уровень защищенности ПДн
+            isPDnClass: document.getElementById('objectISPDnClass').value,
+            isPDnActDate: document.getElementById('objectISPDnActDate').value || null,
+            isPDnActNumber: document.getElementById('objectISPDnActNumber').value,
+            
+            // Протокол, заключение, аттестат
+            protocolDate: document.getElementById('objectProtocolDate').value || null,
+            protocolNumber: document.getElementById('objectProtocolNumber').value,
+            conclusionDate: document.getElementById('objectConclusionDate').value || null,
+            conclusionNumber: document.getElementById('objectConclusionNumber').value,
+            certificateDate: document.getElementById('objectAttestationDate').value || null,
+            certificateNumber: document.getElementById('objectAttestationNumber').value,
+            
+            // Для совместимости со старыми полями
+            classification: document.getElementById('objectISClass').value,
+            securityLevel: document.getElementById('objectISPDnClass').value,
+            attestationNumber: document.getElementById('objectISActNumber').value,
+            attestationDate: document.getElementById('objectISActDate').value || null,
+            attestationValidUntil: document.getElementById('objectISPDnActDate').value || null,
+            attestationBody: document.getElementById('objectISPDnActNumber').value
+        };
+
+        if (!data.name || !data.inventoryNumber || !data.roomNumber || !data.isClass || !data.isPDnClass) {
+            alert('Пожалуйста, заполните все обязательные поля (отмечены *)');
+            return;
+        }
+
+        fetch('/audit/objects/save', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        })
+        .then(r => r.json())
+        .then(result => {
+            if (result.success) {
+                if (!id) {
+                    window.location.href = '/audit/objects/details/' + result.id;
+                } else {
+                    alert('Данные сохранены успешно');
+                }
+            } else {
+                alert(result.error || 'Ошибка при сохранении');
+            }
+        })
+        .catch(err => {
+            alert('Ошибка при сохранении: ' + err.message);
+        });
+    }
+
+    function openRoomModal() {
+        alert('Открытие модального окна добавления помещения');
+    }
+
+    function openOrganizationModal() {
+        alert('Открытие модального окна добавления организации');
+    }
+
+    function editReference(type) {
+        alert('Редактирование справочника: ' + type);
+    }
+</script>

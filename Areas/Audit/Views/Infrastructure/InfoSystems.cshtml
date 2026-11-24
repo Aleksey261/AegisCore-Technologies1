@@ -1,0 +1,1913 @@
+@model AegisCore.Models.InfrastructureViewModel
+@{
+    ViewData["Title"] = "Информационные системы";
+}
+
+@if (ViewBag.ShowCreateModal == true)
+{
+    <!-- ============================================================ -->
+    <!-- НОВАЯ ВКЛАДКА: ДОБАВЛЕНИЕ ИНФОРМАЦИОННОЙ СИСТЕМЫ (Рисунок 68) -->
+    <!-- ============================================================ -->
+    
+    <div class="section-header">
+        <h2 class="section-title">
+            <i class="fas fa-desktop"></i> Информационные системы
+        </h2>
+        <div class="header-info">
+            <i class="fas fa-info-circle" title="Учёт ИС"></i>
+            <span style="color: #64748b; font-size: 14px;">Согласно текущему законодательству РФ необходимо вести учет всех информационных систем организации.</span>
+        </div>
+    </div>
+
+    <!-- ✅ ДОБАВЛЕН TOOLBAR -->
+    <div class="toolbar">
+        <div class="toolbar-left">
+            <a href="/audit/infrastructure?section=info-systems" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> Назад к списку
+            </a>
+        </div>
+    </div>
+
+    <div class="tabs-nav" style="margin-bottom: 20px;">
+        <a href="#tab-basic" class="tab-nav-item active" onclick="switchTab(event, 'tab-basic')">
+            <i class="fas fa-info-circle"></i> Основные сведения
+        </a>
+        <a href="#tab-classification" class="tab-nav-item" onclick="switchTab(event, 'tab-classification')">
+            <i class="fas fa-layer-group"></i> Классификация ИС
+        </a>
+        <a href="#tab-attestation" class="tab-nav-item" onclick="switchTab(event, 'tab-attestation')">
+            <i class="fas fa-certificate"></i> Аттестация
+        </a>
+        <a href="#tab-database" class="tab-nav-item" onclick="switchTab(event, 'tab-database')">
+            <i class="fas fa-database"></i> БД и ЦОД
+        </a>
+        <a href="#tab-software" class="tab-nav-item" onclick="switchTab(event, 'tab-software')">
+            <i class="fas fa-laptop-code"></i> Перечень ПО в ИС
+        </a>
+        <a href="#tab-structural" class="tab-nav-item" onclick="switchTab(event, 'tab-structural')">
+            <i class="fas fa-sitemap"></i> Структурные элементы
+        </a>
+        <a href="#tab-users" class="tab-nav-item" onclick="switchTab(event, 'tab-users')">
+            <i class="fas fa-users"></i> Группы пользователей
+        </a>
+        <a href="#tab-schemes" class="tab-nav-item" onclick="switchTab(event, 'tab-schemes')">
+            <i class="fas fa-project-diagram"></i> Схемы
+        </a>
+        <a href="#tab-documents" class="tab-nav-item" onclick="switchTab(event, 'tab-documents')">
+            <i class="fas fa-file-alt"></i> Документы
+        </a>
+    </div>
+
+    <form id="infoSystemForm" onsubmit="saveInfoSystem(event)">
+        <input type="hidden" id="infoSystemId" name="id" />
+
+        <!-- Вкладка 1: Основные сведения (Рисунок 68) -->
+        <div id="tab-basic" class="tab-content active">
+            <h3 style="margin-bottom: 20px; color: #1e293b;">Основные сведения</h3>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Наименование <span class="required">*</span></label>
+                    <input type="text" name="name" id="infoSystemName" class="form-control" required placeholder="Введите наименование ИС" />
+                </div>
+                <div class="form-group">
+                    <label>Тип <span class="required">*</span></label>
+                    <select name="type" id="infoSystemType" class="form-control" required>
+                        <option value="">Выбрать...</option>
+                        <option value="ГИС/МИС.ИСПДн">ГИС/МИС.ИСПДн</option>
+                        <option value="ИСПДн">ИСПДн</option>
+                        <option value="ГИС">ГИС</option>
+                        <option value="КИИ">КИИ</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Роль</label>
+                    <select name="role" id="infoSystemRole" class="form-control">
+                        <option value="">Выбрать...</option>
+                        <option value="Основная">Основная</option>
+                        <option value="Вспомогательная">Вспомогательная</option>
+                        <option value="Тестовая">Тестовая</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Обладатель информации</label>
+                    <div class="input-with-buttons">
+                        <select name="informationOwner" id="infoSystemInformationOwner" class="form-control">
+                            <option value="">Выбрать...</option>
+                            @if (Model.Organizations != null)
+                            {
+                                @foreach (var org in Model.Organizations)
+                                {
+                                    <option value="@org.Name">@org.Name</option>
+                                }
+                            }
+                        </select>
+                        <button type="button" class="btn-icon-ref" title="Редактировать" onclick="editReference('organizations')">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button type="button" class="btn-icon-ref add" title="Добавить" onclick="openOrganizationModal()">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Дата ввода в эксплуатацию</label>
+                    <input type="date" name="createdAt" id="infoSystemCreatedAt" class="form-control" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Назначение <span class="required">*</span></label>
+                <textarea name="purpose" id="infoSystemPurpose" class="form-control" rows="3" required placeholder="Опишите назначение системы"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Цели</label>
+                <textarea name="goals" id="infoSystemGoals" class="form-control" rows="3" placeholder="Опишите цели системы"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Задачи</label>
+                <textarea name="tasks" id="infoSystemTasks" class="form-control" rows="3" placeholder="Опишите задачи системы"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Обрабатываемые сведения</label>
+                <textarea name="processedData" id="infoSystemProcessedData" class="form-control" rows="3" placeholder="Опишите обрабатываемые сведения"></textarea>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Вид информации</label>
+                    <select name="informationType" id="infoSystemInformationType" class="form-control">
+                        <option value="">Выбрать...</option>
+                        <option value="Персональные данные">Персональные данные</option>
+                        <option value="Конфиденциальная">Конфиденциальная</option>
+                        <option value="Служебная тайна">Служебная тайна</option>
+                        <option value="Открытая">Открытая</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Режимы обработки данных</label>
+                    <select name="processingModes" id="infoSystemProcessingModes" class="form-control">
+                        <option value="">Выбрать...</option>
+                        <option value="Автоматизированный">Автоматизированный</option>
+                        <option value="Автоматический">Автоматический</option>
+                        <option value="Ручной">Ручной</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Взаимодействие с другими системами</label>
+                <textarea name="systemInteraction" id="infoSystemSystemInteraction" class="form-control" rows="3" placeholder="Опишите взаимодействие с другими системами"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Характеристики безопасности</label>
+                <select name="securityCharacteristics" id="infoSystemSecurityCharacteristics" class="form-control">
+                    <option value="">Выбрать...</option>
+                    <option value="Высокий">Высокий</option>
+                    <option value="Средний">Средний</option>
+                    <option value="Низкий">Низкий</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Используемые СКЗИ</label>
+                <div class="input-with-buttons">
+                    <select name="usedSkzi" id="infoSystemUsedSkzi" class="form-control">
+                        <option value="">Выбрать...</option>
+                        @if (Model.SkziNames != null)
+                        {
+                            @foreach (var skzi in Model.SkziNames)
+                            {
+                                <option value="@skzi">@skzi</option>
+                            }
+                        }
+                    </select>
+                    <button type="button" class="btn-icon-ref" title="Редактировать" onclick="editReference('skzi')">
+                        <i class="fas fa-edit"></i>
+                    </button>
+                    <button type="button" class="btn-icon-ref add" title="Добавить" onclick="openReferenceModal('skzi')">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <a href="/audit/infrastructure?section=info-systems" class="btn btn-secondary">Отмена</a>
+                <button type="button" class="btn btn-primary" onclick="switchToTab('tab-classification')">Далее <i class="fas fa-arrow-right"></i></button>
+            </div>
+        </div>
+
+        <!-- Вкладка 2: Классификация ИС (Рисунок 69) -->
+        <div id="tab-classification" class="tab-content">
+            <h3 style="margin-bottom: 20px; color: #1e293b;">Классификация информационной системы</h3>
+            
+            <div style="background: #f8fafc; padding: 16px; border-radius: 8px; margin-bottom: 20px;">
+                <h4 style="margin-bottom: 12px; color: #475569;">Классификация защищенности ИС</h4>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Уровень значимости информации <span class="required">*</span></label>
+                        <select name="significanceLevel" id="infoSystemSignificanceLevel" class="form-control" required onchange="calculateSecurityClass()">
+                            <option value="">Выбрать...</option>
+                            <option value="Значимая">Значимая</option>
+                            <option value="Незначимая">Незначимая</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Масштаб <span class="required">*</span></label>
+                        <select name="scale" id="infoSystemScale" class="form-control" required onchange="calculateSecurityClass()">
+                            <option value="">Выбрать...</option>
+                            <option value="Федеральный">Федеральный</option>
+                            <option value="Региональный">Региональный</option>
+                            <option value="Муниципальный">Муниципальный</option>
+                            <option value="Локальный">Локальный</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Класс защищенности</label>
+                        <input type="text" id="calculatedSecurityClass" class="form-control" readonly placeholder="Определяется автоматически" />
+                        <input type="hidden" name="securityClass" id="infoSystemSecurityClass" />
+                    </div>
+                    <div class="form-group">
+                        <label>Дата</label>
+                        <input type="date" id="securityClassDate" class="form-control" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Номер акта</label>
+                    <input type="text" id="securityClassActNumber" class="form-control" placeholder="Введите номер акта" />
+                </div>
+            </div>
+
+            <div style="background: #f8fafc; padding: 16px; border-radius: 8px; margin-bottom: 20px;">
+                <h4 style="margin-bottom: 12px; color: #475569;">Уровень защищенности ПДн</h4>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Категория ПДн <span class="required">*</span></label>
+                        <select name="dataCategory" id="infoSystemDataCategory" class="form-control" required onchange="calculateSecurityLevel()">
+                            <option value="">Выбрать...</option>
+                            <option value="Общедоступные">Общедоступные</option>
+                            <option value="Биометрические">Биометрические</option>
+                            <option value="Специальные">Специальные</option>
+                            <option value="Иные">Иные</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Категория субъектов <span class="required">*</span></label>
+                        <select name="processingType" id="infoSystemProcessingType" class="form-control" required onchange="calculateSecurityLevel()">
+                            <option value="">Выбрать...</option>
+                            <option value="Сотрудники">Сотрудники</option>
+                            <option value="Клиенты">Клиенты</option>
+                            <option value="Партнеры">Партнеры</option>
+                            <option value="Иные">Иные</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Тип угроз <span class="required">*</span></label>
+                        <select name="threatType" id="infoSystemThreatType" class="form-control" required onchange="calculateSecurityLevel()">
+                            <option value="">Выбрать...</option>
+                            <option value="Актуальные">Актуальные</option>
+                            <option value="Неактуальные">Неактуальные</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Количество субъектов <span class="required">*</span></label>
+                        <input type="number" name="subjectsCount" id="infoSystemSubjectsCount" class="form-control" required min="0" onchange="calculateSecurityLevel()" placeholder="0" />
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Уровень защищенности</label>
+                        <input type="text" id="calculatedSecurityLevel" class="form-control" readonly placeholder="Определяется автоматически" />
+                        <input type="hidden" name="securityLevel" id="infoSystemSecurityLevel" />
+                    </div>
+                    <div class="form-group">
+                        <label>Дата</label>
+                        <input type="date" id="securityLevelDate" class="form-control" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Номер акта</label>
+                    <input type="text" id="securityLevelActNumber" class="form-control" placeholder="Введите номер акта" />
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="button" class="btn btn-secondary" onclick="switchToTab('tab-basic')"><i class="fas fa-arrow-left"></i> Назад</button>
+                <button type="button" class="btn btn-primary" onclick="switchToTab('tab-attestation')">Далее <i class="fas fa-arrow-right"></i></button>
+            </div>
+        </div>
+
+        <!-- Вкладка 3: Аттестация (Рисунок 70) -->
+        <div id="tab-attestation" class="tab-content">
+            <h3 style="margin-bottom: 20px; color: #1e293b;">Сведения о соответствии требованиям по защите информации</h3>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Дата протокола аттестационных испытаний</label>
+                    <input type="date" name="protocolDate" id="infoSystemProtocolDate" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label>Номер протокола аттестационных испытаний</label>
+                    <input type="text" name="protocolNumber" id="infoSystemProtocolNumber" class="form-control" placeholder="Введите номер протокола" />
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Дата заключения аттестационных испытаний</label>
+                    <input type="date" name="conclusionDate" id="infoSystemConclusionDate" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label>Номер заключения аттестационных испытаний</label>
+                    <input type="text" name="conclusionNumber" id="infoSystemConclusionNumber" class="form-control" placeholder="Введите номер заключения" />
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Дата аттестата соответствия</label>
+                    <input type="date" name="certificateDate" id="infoSystemCertificateDate" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label>Номер аттестата соответствия</label>
+                    <input type="text" name="certificateNumber" id="infoSystemCertificateNumber" class="form-control" placeholder="Введите номер аттестата" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Статус соответствия</label>
+                <select name="complianceStatus" id="infoSystemComplianceStatus" class="form-control">
+                    <option value="">Выбрать...</option>
+                    <option value="Соответствует">Соответствует</option>
+                    <option value="Не соответствует">Не соответствует</option>
+                    <option value="Требует доработки">Требует доработки</option>
+                </select>
+            </div>
+
+            <div class="form-actions">
+                <button type="button" class="btn btn-secondary" onclick="switchToTab('tab-classification')"><i class="fas fa-arrow-left"></i> Назад</button>
+                <button type="button" class="btn btn-primary" onclick="switchToTab('tab-database')">Далее <i class="fas fa-arrow-right"></i></button>
+            </div>
+        </div>
+
+        <!-- Вкладка 4: БД и ЦОД (Рисунок 71-72) -->
+        <div id="tab-database" class="tab-content">
+            <h3 style="margin-bottom: 20px; color: #1e293b;">База данных и ЦОДы</h3>
+            
+            <div id="databaseLocationsList">
+                <!-- Здесь будет динамический список БД и ЦОД -->
+            </div>
+
+            <button type="button" class="btn btn-secondary" onclick="addDatabaseLocation()" style="margin-bottom: 20px;">
+                <i class="fas fa-plus"></i> Добавить БД/ЦОД
+            </button>
+
+            <div class="form-actions">
+                <button type="button" class="btn btn-secondary" onclick="switchToTab('tab-attestation')"><i class="fas fa-arrow-left"></i> Назад</button>
+                <button type="button" class="btn btn-primary" onclick="switchToTab('tab-software')">Далее <i class="fas fa-arrow-right"></i></button>
+            </div>
+        </div>
+
+        <!-- Вкладка 5: Перечень ПО в ИС (Рисунок 73-74) -->
+        <div id="tab-software" class="tab-content">
+            <div class="section-header" style="margin-bottom: 20px;">
+                <h3 style="color: #1e293b;">Перечень ПО входящих в состав ИС</h3>
+            </div>
+            
+            <div class="toolbar" style="margin-bottom: 20px;">
+                <div class="toolbar-left">
+                    <button type="button" class="btn btn-primary" onclick="openSoftwareSelectionModal()">
+                        <i class="fas fa-plus"></i> Добавить
+                    </button>
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="softwareInSystemSearch" placeholder="Поиск..." oninput="filterSoftwareInSystem()" />
+                    </div>
+                </div>
+            </div>
+            
+            <div class="table-container">
+                <table class="data-table" id="softwareInSystemTable">
+                    <thead>
+                        <tr>
+                            <th style="width: 40px;"><input type="checkbox" id="selectAllSoftwareInSystem" onchange="toggleSelectAllSoftwareInSystem()" /></th>
+                            <th>Наименование</th>
+                            <th>Номер</th>
+                            <th>Производитель</th>
+                            <th style="width: 100px;"></th>
+                        </tr>
+                    </thead>
+                    <tbody id="softwareInSystemBody">
+                        <tr>
+                            <td colspan="5" style="text-align: center; padding: 40px; color: #94a3b8;">
+                                ПО не добавлено
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="form-actions">
+                <button type="button" class="btn btn-secondary" onclick="switchToTab('tab-database')"><i class="fas fa-arrow-left"></i> Назад</button>
+                <button type="button" class="btn btn-primary" onclick="switchToTab('tab-structural')">Далее <i class="fas fa-arrow-right"></i></button>
+            </div>
+        </div>
+
+        <!-- Модальное окно выбора ПО (Рисунок 74) -->
+        <div class="modal" id="softwareSelectionModal">
+            <div class="modal-content" style="max-width: 700px;">
+                <div class="modal-header">
+                    <h3>Список ПО</h3>
+                    <button type="button" class="modal-close" onclick="closeSoftwareSelectionModal()">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="toolbar" style="margin-bottom: 16px;">
+                        <button type="button" class="btn btn-primary" onclick="openAddSoftwareFromModal()">
+                            <i class="fas fa-plus"></i> Добавить ПО
+                        </button>
+                        <div class="search-box" style="flex: 1;">
+                            <i class="fas fa-search"></i>
+                            <input type="text" id="softwareListSearch" placeholder="Поиск..." oninput="filterSoftwareList()" />
+                        </div>
+                    </div>
+                    
+                    <div style="max-height: 400px; overflow-y: auto; border: 1px solid #e2e8f0; border-radius: 8px;">
+                        <div id="softwareListContainer">
+                            <!-- Здесь будет список ПО с чекбоксами -->
+                        </div>
+                    </div>
+                    
+                    <div class="form-actions" style="margin-top: 16px; justify-content: flex-end;">
+                        <button type="button" class="btn btn-secondary" onclick="closeSoftwareSelectionModal()">Отмена</button>
+                        <button type="button" class="btn btn-primary" onclick="saveSelectedSoftware()">Сохранить</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Модальное окно добавления ПО -->
+        <div class="modal" id="addSoftwareModal">
+            <div class="modal-content" style="max-width: 600px;">
+                <div class="modal-header">
+                    <h3>Добавление ПО</h3>
+                    <button type="button" class="modal-close" onclick="closeAddSoftwareModal()">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <form id="addSoftwareForm" onsubmit="saveNewSoftware(event)">
+                        <div class="form-group">
+                            <label>Наименование <span class="required">*</span></label>
+                            <input type="text" id="newSoftwareName" class="form-control" required placeholder="Введите наименование ПО" />
+                        </div>
+                        <div class="form-group">
+                            <label>Номер</label>
+                            <input type="text" id="newSoftwareNumber" class="form-control" placeholder="Введите номер версии" />
+                        </div>
+                        <div class="form-group">
+                            <label>Производитель</label>
+                            <input type="text" id="newSoftwareManufacturer" class="form-control" placeholder="Введите производителя" />
+                        </div>
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-secondary" onclick="closeAddSoftwareModal()">Отмена</button>
+                            <button type="submit" class="btn btn-primary">Сохранить</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Вкладка 6: Структурные элементы (Рисунок 75-76) -->
+        <div id="tab-structural" class="tab-content">
+            <div class="section-header" style="margin-bottom: 20px;">
+                <h3 style="color: #1e293b;">Структурные элементы</h3>
+            </div>
+            
+            <div class="toolbar" style="margin-bottom: 20px;">
+                <div class="toolbar-left">
+                    <button type="button" class="btn btn-primary" onclick="openStructuralElementModal()">
+                        <i class="fas fa-plus"></i> Добавить
+                    </button>
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="structuralElementSearch" placeholder="Поиск..." oninput="filterStructuralElements()" />
+                    </div>
+                </div>
+            </div>
+            
+            <div class="table-container">
+                <table class="data-table" id="structuralElementsTable">
+                    <thead>
+                        <tr>
+                            <th>Структурный элемент</th>
+                            <th>Краткое описание</th>
+                            <th style="width: 100px;"></th>
+                        </tr>
+                    </thead>
+                    <tbody id="structuralElementsBody">
+                        <tr>
+                            <td colspan="3" style="text-align: center; padding: 40px; color: #94a3b8;">
+                                Структурные элементы не добавлены
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="form-actions">
+                <button type="button" class="btn btn-secondary" onclick="switchToTab('tab-software')"><i class="fas fa-arrow-left"></i> Назад</button>
+                <button type="button" class="btn btn-primary" onclick="switchToTab('tab-users')">Далее <i class="fas fa-arrow-right"></i></button>
+            </div>
+        </div>
+
+        <!-- Модальное окно добавления/редактирования структурного элемента (Рисунок 76) -->
+        <div class="modal" id="structuralElementModal">
+            <div class="modal-content" style="max-width: 650px;">
+                <div class="modal-header">
+                    <h3 id="structuralElementModalTitle">Редактирование</h3>
+                    <button type="button" class="modal-close" onclick="closeStructuralElementModal()">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <form id="structuralElementForm" onsubmit="saveStructuralElement(event)">
+                        <input type="hidden" id="structuralElementId" />
+                        
+                        <div class="form-group">
+                            <label>Структурный элемент <span class="required">*</span></label>
+                            <div class="input-with-buttons">
+                                <select id="structuralElementType" class="form-control" required>
+                                    <option value="">Выбрать...</option>
+                                    <option value="Сетевое оборудование">Сетевое оборудование</option>
+                                    <option value="Сервер">Сервер</option>
+                                    <option value="Рабочая станция">Рабочая станция</option>
+                                    <option value="Система хранения данных">Система хранения данных</option>
+                                    <option value="Программное обеспечение">Программное обеспечение</option>
+                                </select>
+                                <button type="button" class="btn-icon-ref" title="Редактировать" onclick="editReference('structuralTypes')">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button type="button" class="btn-icon-ref add" title="Добавить" onclick="addNewStructuralType()">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Краткое описание <span class="required">*</span></label>
+                            <textarea id="structuralElementDescription" class="form-control" rows="4" required placeholder="Сетевое оборудование авторизованных пользователей и серверного сегмента с ГИС для организации каналов связи между сегментами"></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Взаимодействие с др. элементами</label>
+                            <textarea id="structuralElementInteraction" class="form-control" rows="3" placeholder="Опишите взаимодействие с другими элементами"></textarea>
+                        </div>
+                        
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-secondary" onclick="closeStructuralElementModal()">Отмена</button>
+                            <button type="submit" class="btn btn-primary">Сохранить</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Вкладка 7: Группы пользователей (Рисунок 77-78) -->
+        <div id="tab-users" class="tab-content">
+            <div class="section-header" style="margin-bottom: 20px;">
+                <h3 style="color: #1e293b;">Группы пользователей</h3>
+            </div>
+            
+            <div class="toolbar" style="margin-bottom: 20px;">
+                <div class="toolbar-left">
+                    <button type="button" class="btn btn-primary" onclick="openUserGroupModal()">
+                        <i class="fas fa-plus"></i> Добавить
+                    </button>
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="userGroupSearch" placeholder="Поиск..." oninput="filterUserGroups()" />
+                    </div>
+                </div>
+            </div>
+            
+            <div class="table-container">
+                <table class="data-table" id="userGroupsTable">
+                    <thead>
+                        <tr>
+                            <th>Пользователь</th>
+                            <th>Краткое описание</th>
+                            <th style="width: 100px;"></th>
+                        </tr>
+                    </thead>
+                    <tbody id="userGroupsBody">
+                        <tr>
+                            <td colspan="3" style="text-align: center; padding: 40px; color: #94a3b8;">
+                                Группы пользователей не добавлены
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="form-actions">
+                <button type="button" class="btn btn-secondary" onclick="switchToTab('tab-structural')"><i class="fas fa-arrow-left"></i> Назад</button>
+                <button type="button" class="btn btn-primary" onclick="switchToTab('tab-schemes')">Далее <i class="fas fa-arrow-right"></i></button>
+            </div>
+        </div>
+
+        <!-- Модальное окно добавления группы пользователей (Рисунок 78) -->
+        <div class="modal" id="userGroupModal">
+            <div class="modal-content" style="max-width: 600px;">
+                <div class="modal-header">
+                    <h3>Добавление</h3>
+                    <button type="button" class="modal-close" onclick="closeUserGroupModal()">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <form id="userGroupForm" onsubmit="saveUserGroup(event)">
+                        <input type="hidden" id="userGroupId" />
+                        
+                        <div class="form-group">
+                            <label>Пользователь <span class="required">*</span></label>
+                            <select id="userGroupUser" class="form-control" required>
+                                <option value="">Выбрать...</option>
+                                <option value="Администраторы пользователей">Администраторы пользователей</option>
+                                <option value="Администраторы информационной безопасности">Администраторы информационной безопасности</option>
+                                <option value="Операторы">Операторы</option>
+                                <option value="Пользователи">Пользователи</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Краткое описание <span class="required">*</span></label>
+                            <textarea id="userGroupDescription" class="form-control" rows="4" required placeholder="Введите описание группы пользователей"></textarea>
+                        </div>
+                        
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-secondary" onclick="closeUserGroupModal()">Отмена</button>
+                            <button type="submit" class="btn btn-primary">Сохранить</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Вкладка 8: Схемы (Рисунок 79-80) -->
+        <div id="tab-schemes" class="tab-content">
+            <div class="section-header" style="margin-bottom: 20px;">
+                <h3 style="color: #1e293b;">Схемы работы системы</h3>
+            </div>
+            
+            <div class="toolbar" style="margin-bottom: 20px;">
+                <div class="toolbar-left">
+                    <button type="button" class="btn btn-primary" onclick="openSchemeModal()">
+                        <i class="fas fa-plus"></i> Добавить
+                    </button>
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="schemeSearch" placeholder="Поиск..." oninput="filterSchemes()" />
+                    </div>
+                </div>
+            </div>
+            
+            <div class="table-container">
+                <table class="data-table" id="schemesTable">
+                    <thead>
+                        <tr>
+                            <th>Вид</th>
+                            <th>Схема</th>
+                            <th style="width: 100px;"></th>
+                        </tr>
+                    </thead>
+                    <tbody id="schemesBody">
+                        <tr>
+                            <td colspan="3" style="text-align: center; padding: 40px; color: #94a3b8;">
+                                Схемы не добавлены
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="form-actions">
+                <button type="button" class="btn btn-secondary" onclick="switchToTab('tab-users')"><i class="fas fa-arrow-left"></i> Назад</button>
+                <button type="button" class="btn btn-primary" onclick="switchToTab('tab-documents')">Далее <i class="fas fa-arrow-right"></i></button>
+            </div>
+        </div>
+
+        <!-- Модальное окно добавления схемы (Рисунок 80) -->
+        <div class="modal" id="schemeModal">
+            <div class="modal-content" style="max-width: 650px;">
+                <div class="modal-header">
+                    <h3>Добавление</h3>
+                    <button type="button" class="modal-close" onclick="closeSchemeModal()">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <form id="schemeForm" onsubmit="saveScheme(event)">
+                        <input type="hidden" id="schemeId" />
+                        
+                        <div class="form-group">
+                            <label>Вид <span class="required">*</span></label>
+                            <select id="schemeType" class="form-control" required>
+                                <option value="">Выбрать...</option>
+                                <option value="Структурная схема">Структурная схема</option>
+                                <option value="Схема потоков">Схема потоков</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Файл схемы <span class="required">*</span></label>
+                            <div class="upload-area" id="schemeUploadArea" ondragover="handleSchemeDragOver(event)" ondragleave="handleSchemeDragLeave(event)" ondrop="handleSchemeDrop(event)" style="border: 2px dashed #cbd5e1; border-radius: 8px; padding: 40px; text-align: center; background: #f8fafc; cursor: pointer; transition: all 0.2s;">
+                                <div class="upload-placeholder">
+                                    <i class="fas fa-cloud-upload-alt" style="font-size: 48px; color: #94a3b8; margin-bottom: 16px;"></i>
+                                    <p style="color: #64748b; margin-bottom: 16px;">Прикрепить новую схему или перетащите файл в эту область</p>
+                                    <p style="color: #94a3b8; font-size: 12px; margin-bottom: 16px;">Допустимые форматы: *.png, *.jpg, *.jpeg, *.bpm</p>
+                                    <input type="file" id="schemeFile" accept=".png,.jpg,.jpeg,.bpm" style="display: none;" onchange="handleSchemeFileSelect(event)" />
+                                    <button type="button" class="btn btn-primary" onclick="document.getElementById('schemeFile').click()">
+                                        <i class="fas fa-folder-open"></i> Выберите файл
+                                    </button>
+                                </div>
+                            </div>
+                            <div id="schemeFileName" style="margin-top: 12px; padding: 12px; background: #f0fdf4; border: 1px solid #86efac; border-radius: 6px; display: none;">
+                                <i class="fas fa-file" style="color: #16a34a;"></i>
+                                <span id="schemeFileNameText" style="margin-left: 8px; color: #166534;"></span>
+                            </div>
+                        </div>
+                        
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-secondary" onclick="closeSchemeModal()">Отмена</button>
+                            <button type="submit" class="btn btn-primary">Сохранить</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Вкладка 9: Документы (Рисунок 81-83) -->
+        <div id="tab-documents" class="tab-content">
+            <div class="section-header" style="margin-bottom: 20px;">
+                <h3 style="color: #1e293b;">Основные документы на систему</h3>
+            </div>
+            
+            <div class="toolbar" style="margin-bottom: 20px;">
+                <div class="toolbar-left">
+                    <button type="button" class="btn btn-primary" onclick="openDocumentModal()">
+                        <i class="fas fa-plus"></i> Добавить
+                    </button>
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="documentSearch" placeholder="Поиск..." oninput="filterDocuments()" />
+                    </div>
+                </div>
+            </div>
+            
+            <div class="table-container">
+                <table class="data-table" id="documentsTable">
+                    <thead>
+                        <tr>
+                            <th>Наименование документа</th>
+                            <th>Статус</th>
+                            <th>Сформирован/загружен</th>
+                            <th style="width: 150px;"></th>
+                        </tr>
+                    </thead>
+                    <tbody id="documentsBody">
+                        <tr>
+                            <td colspan="4" style="text-align: center; padding: 40px; color: #94a3b8;">
+                                Документы не добавлены
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="form-actions">
+                <button type="button" class="btn btn-secondary" onclick="switchToTab('tab-schemes')"><i class="fas fa-arrow-left"></i> Назад</button>
+                <button type="submit" class="btn btn-primary" form="infoSystemForm"><i class="fas fa-save"></i> Сохранить ИС</button>
+            </div>
+        </div>
+
+        <!-- Модальное окно добавления документа (Рисунок 82) -->
+        <div class="modal" id="documentModal">
+            <div class="modal-content" style="max-width: 600px;">
+                <div class="modal-header">
+                    <h3>Добавление документа</h3>
+                    <button type="button" class="modal-close" onclick="closeDocumentModal()">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <form id="documentForm" onsubmit="saveDocument(event)">
+                        <input type="hidden" id="documentId" />
+                        
+                        <div class="form-group">
+                            <label>Вид документа <span class="required">*</span></label>
+                            <select id="documentType" class="form-control" required onchange="handleDocumentTypeChange()">
+                                <option value="">Выбрать...</option>
+                                <optgroup label="Основные документы (формируются)">
+                                    <option value="Технический паспорт">Технический паспорт</option>
+                                    <option value="Приказ на ввод в эксплуатацию">Приказ на ввод в эксплуатацию</option>
+                                    <option value="Акт классификации ИС">Акт классификации ИС</option>
+                                    <option value="Акт определения уровня защищенности">Акт определения уровня защищенности</option>
+                                </optgroup>
+                                <optgroup label="Утвержденные документы (загружаются)">
+                                    <option value="Техническое задание на систему защиты информации">Техническое задание на СЗИ</option>
+                                    <option value="Технический проект системы защиты информации">Технический проект СЗИ</option>
+                                    <option value="Описание технологического процесса обработки информации">Описание технологического процесса</option>
+                                    <option value="Разрешительная система доступа к информационным ресурсам">Разрешительная система доступа</option>
+                                    <option value="Модель угроз">Модель угроз</option>
+                                </optgroup>
+                            </select>
+                        </div>
+                        
+                        <div id="documentFileGroup" style="display: none; margin-top: 16px;">
+                            <div style="display: flex; align-items: center; gap: 12px; padding: 12px; border: 1px solid #e2e8f0; border-radius: 8px; background: #f8fafc;">
+                                <button type="button" class="btn btn-secondary" onclick="document.getElementById('documentFile').click()" style="white-space: nowrap;">
+                                    <i class="fas fa-paperclip"></i> Прикрепить утвержденный документ
+                                </button>
+                                <span style="color: #64748b; font-size: 14px;">или перетащите файл в эту область</span>
+                                <input type="file" id="documentFile" accept=".pdf,.jpg,.jpeg,.doc,.docx" style="display: none;" onchange="handleDocumentFileSelect(event)" />
+                            </div>
+                            <div id="documentFileName" style="margin-top: 8px; padding: 8px 12px; background: #f0fdf4; border: 1px solid #86efac; border-radius: 6px; display: none; font-size: 13px;">
+                                <i class="fas fa-file" style="color: #16a34a;"></i>
+                                <span id="documentFileNameText" style="margin-left: 8px; color: #166534;"></span>
+                            </div>
+                        </div>
+                        
+                        <div class="form-actions" style="margin-top: 24px;">
+                            <button type="button" class="btn btn-secondary" onclick="closeDocumentModal()">Отмена</button>
+                            <button type="submit" class="btn btn-primary">Сохранить</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Модальное окно подтверждения переформирования (Рисунок 83) -->
+        <div class="modal" id="confirmRegenerateModal">
+            <div class="modal-content" style="max-width: 500px;">
+                <div class="modal-header">
+                    <h3>Подтверждение</h3>
+                    <button type="button" class="modal-close" onclick="closeConfirmRegenerateModal()">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <p style="margin-bottom: 20px; color: #475569; line-height: 1.6;">
+                        При переформировании документа потребуется его заново утвердить. 
+                        Вы действительно хотите продолжить?
+                    </p>
+                    <div class="form-actions" style="justify-content: center; gap: 12px;">
+                        <button type="button" class="btn btn-secondary" onclick="closeConfirmRegenerateModal()">Нет</button>
+                        <button type="button" class="btn btn-primary" onclick="confirmRegenerateDocument()">Да</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+}
+else
+{
+    <!-- ============================================================ -->
+    <!-- СПИСОК ИНФОРМАЦИОННЫХ СИСТЕМ (Рисунок 1) -->
+    <!-- ============================================================ -->
+    
+    <div class="section-header">
+        <h2 class="section-title">
+            <i class="fas fa-desktop"></i> Информационные системы
+        </h2>
+        <div class="header-info">
+            <i class="fas fa-info-circle" title="Учёт ИС"></i>
+            <span style="color: #64748b; font-size: 14px;">Согласно текущему законодательству РФ необходимо вести учет всех информационных систем организации.</span>
+        </div>
+    </div>
+
+    <!-- TOOLBAR с кнопкой "Добавить" и общим поиском -->
+    <div class="toolbar">
+        <div class="toolbar-left">
+            <a href="/audit/infrastructure/create-info-system" class="btn btn-primary">
+                <i class="fas fa-plus"></i> Добавить
+            </a>
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" id="infoSystemSearch" placeholder="Поиск по информационным системам..." value="@Model.Search" oninput="filterInfoSystems()" />
+            </div>
+        </div>
+    </div>
+
+    <!-- ТАБЛИЦА с двумя колонками: Наименование и Номер -->
+    <div class="table-container">
+        <table class="data-table" id="infoSystemsTable">
+            <thead>
+                <tr>
+                    <th class="th-sortable" onclick="sortTable('infoSystemsTable', 0)">
+                        <div class="th-header">
+                            <span>Наименование</span>
+                            <i class="fas fa-sort sortable-icon"></i>
+                        </div>
+                        <div class="th-filter-row">
+                            <input type="text" class="filter-inline-input" placeholder="Поиск..." oninput="filterTable('infoSystemsTable', 0, this.value)" />
+                        </div>
+                    </th>
+                    <th class="th-sortable" onclick="sortTable('infoSystemsTable', 1)">
+                        <div class="th-header">
+                            <span>Тип</span>
+                            <i class="fas fa-sort sortable-icon"></i>
+                        </div>
+                        <div class="th-filter-row">
+                            <input type="text" class="filter-inline-input" placeholder="Поиск..." oninput="filterTable('infoSystemsTable', 1, this.value)" />
+                        </div>
+                    </th>
+                    <th class="th-sortable" onclick="sortTable('infoSystemsTable', 2)">
+                        <div class="th-header">
+                            <span>Номер</span>
+                            <i class="fas fa-sort sortable-icon"></i>
+                        </div>
+                        <div class="th-filter-row">
+                            <input type="text" class="filter-inline-input" placeholder="Поиск..." oninput="filterTable('infoSystemsTable', 2, this.value)" />
+                        </div>
+                    </th>
+                    <th class="th-sortable" onclick="sortTable('infoSystemsTable', 3)">
+                        <div class="th-header">
+                            <span>Класс защищенности ИС</span>
+                            <i class="fas fa-sort sortable-icon"></i>
+                        </div>
+                        <div class="th-filter-row">
+                            <input type="text" class="filter-inline-input" placeholder="Поиск..." oninput="filterTable('infoSystemsTable', 3, this.value)" />
+                        </div>
+                    </th>
+                    <th class="th-sortable" onclick="sortTable('infoSystemsTable', 4)">
+                        <div class="th-header">
+                            <span>Класс защищенности ПДн</span>
+                            <i class="fas fa-sort sortable-icon"></i>
+                        </div>
+                        <div class="th-filter-row">
+                            <input type="text" class="filter-inline-input" placeholder="Поиск..." oninput="filterTable('infoSystemsTable', 4, this.value)" />
+                        </div>
+                    </th>
+                    <th style="width: 100px;"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.InfoSystems != null && Model.InfoSystems.Any())
+                {
+                    @foreach (var item in Model.InfoSystems)
+                    {
+                        <tr data-id="@item.Id">
+                            <td><strong>@item.Name</strong></td>
+                            <td>@(item.Type ?? "—")</td>
+                            <td>@(item.RegistrationNumber ?? "—")</td>
+                            <td><span class="badge warning">@(item.SecurityClass ?? "—")</span></td>
+                            <td><span class="badge success">@(item.SecurityLevel ?? "—")</span></td>
+                            <td class="actions">
+                                <button class="btn-icon edit" title="Редактировать" onclick="editInfoSystem('@item.Id')"><i class="fas fa-edit"></i></button>
+                                <button class="btn-icon delete" title="Удалить" onclick="deleteInfoSystem('@item.Id')"><i class="fas fa-trash"></i></button>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="6" style="text-align: center; padding: 60px 40px; color: #94a3b8;">
+                            <i class="fas fa-desktop" style="font-size: 64px; margin-bottom: 16px; display: block; color: #cbd5e1;"></i>
+                            <div style="font-size: 16px; font-weight: 500;">Информационные системы не добавлены</div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    @if (Model.TotalPages > 1)
+    {
+        <div class="pagination">
+            <div class="pagination-page-size">
+                <label>Показывать по:</label>
+                <select onchange="changePageSize(this.value)"><option value="10" selected>10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select>
+            </div>
+            <div class="pagination-info">Страница @Model.CurrentPage из @Model.TotalPages (Всего элементов: @Model.TotalItems)</div>
+            <div class="pagination-buttons">
+                @if (Model.CurrentPage > 1) { <a href="/audit/infrastructure?section=info-systems&page=@(Model.CurrentPage - 1)" class="btn-pagination">‹</a> }
+                @for (int i = 1; i <= Model.TotalPages; i++) { <a href="/audit/infrastructure?section=info-systems&page=@i" class="btn-pagination @(i == Model.CurrentPage ? "active" : "")">@i</a> }
+                @if (Model.CurrentPage < Model.TotalPages) { <a href="/audit/infrastructure?section=info-systems&page=@(Model.CurrentPage + 1)" class="btn-pagination">›</a> }
+            </div>
+        </div>
+    }
+}
+
+<style>
+    .tab-content {
+        display: none;
+    }
+    .tab-content.active {
+        display: block;
+    }
+    .tabs-nav {
+        display: flex;
+        gap: 4px;
+        border-bottom: 2px solid #e2e8f0;
+        margin-bottom: 20px;
+        overflow-x: auto;
+        padding: 8px 8px 0;
+        background: white;
+        border-radius: 8px 8px 0 0;
+    }
+    .tab-nav-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 16px;
+        color: #64748b;
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 500;
+        border-bottom: 2px solid transparent;
+        margin-bottom: -2px;
+        transition: all 0.2s;
+        white-space: nowrap;
+        cursor: pointer;
+        border-radius: 6px 6px 0 0;
+    }
+    .tab-nav-item:hover {
+        color: #4F46E5;
+        background: #f8fafc;
+    }
+    .tab-nav-item.active {
+        color: #4F46E5;
+        border-bottom-color: #4F46E5;
+        background: #EEF2FF;
+    }
+    .tab-nav-item i {
+        font-size: 15px;
+    }
+    .upload-area.drag-over {
+        border-color: #4F46E5 !important;
+        background: #eef2ff !important;
+    }
+    .upload-area .upload-placeholder {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+    
+    /* Стили для сортировки таблицы */
+    .th-sortable {
+        cursor: pointer;
+        user-select: none;
+    }
+    .th-sortable:hover {
+        background: #f1f5f9;
+    }
+    .sortable-icon {
+        font-size: 12px;
+        color: #94a3b8;
+        margin-left: 4px;
+    }
+</style>
+
+<script>
+    const infoSystemsData = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.InfoSystems ?? new List<AegisCore.Models.InfoSystem>()));
+
+    let selectedSoftwareIds = [];
+    let availableSoftware = [
+        { id: '1', name: 'Astra Linux', version: '2342325', manufacturer: 'РусБИТех-Астра' },
+        { id: '2', name: 'Advanced', version: '6452353635', manufacturer: '' },
+        { id: '3', name: 'CRM', version: '', manufacturer: '' },
+        { id: '4', name: 'Firebird', version: '', manufacturer: 'Firebird Project' },
+        { id: '5', name: 'Microsoft Windows', version: '6797989', manufacturer: 'Microsoft' },
+        { id: '6', name: 'SQL', version: '22', manufacturer: 'Microsoft' },
+        { id: '7', name: 'AISC ЛЕД', version: '56546546', manufacturer: '' },
+        { id: '8', name: 'AISC КДИ', version: '68779', manufacturer: '' },
+        { id: '9', name: 'AISC Семья', version: '435454', manufacturer: '' }
+    ];
+    let structuralElements = [];
+    let userGroups = [];
+    let schemes = [];
+    let documents = [];
+    let currentSchemeFile = null;
+    let currentDocumentFile = null;
+    let documentToRegenerate = null;
+
+    function switchTab(event, tabId) {
+        event.preventDefault();
+        document.querySelectorAll('.tab-nav-item').forEach(item => item.classList.remove('active'));
+        document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+        event.currentTarget.classList.add('active');
+        document.getElementById(tabId).classList.add('active');
+    }
+
+    function switchToTab(tabId) {
+        const tabLink = document.querySelector(`a[href="#${tabId}"]`);
+        if (tabLink) tabLink.click();
+    }
+
+    function calculateSecurityClass() {
+        const significance = document.getElementById('infoSystemSignificanceLevel').value;
+        const scale = document.getElementById('infoSystemScale').value;
+        let securityClass = '';
+        if (significance === 'Значимая') {
+            if (scale === 'Федеральный') securityClass = 'К1';
+            else if (scale === 'Региональный') securityClass = 'К2';
+            else if (scale === 'Муниципальный') securityClass = 'К3';
+            else securityClass = 'К4';
+        } else {
+            securityClass = 'К4';
+        }
+        document.getElementById('calculatedSecurityClass').value = securityClass;
+        document.getElementById('infoSystemSecurityClass').value = securityClass;
+    }
+
+    function calculateSecurityLevel() {
+        const dataCategory = document.getElementById('infoSystemDataCategory').value;
+        const processingType = document.getElementById('infoSystemProcessingType').value;
+        const threatType = document.getElementById('infoSystemThreatType').value;
+        const subjectsCount = parseInt(document.getElementById('infoSystemSubjectsCount').value) || 0;
+        let securityLevel = '';
+        if (dataCategory === 'Биометрические' || dataCategory === 'Специальные') {
+            securityLevel = 'УЗ1';
+        } else if (subjectsCount > 100000) {
+            securityLevel = 'УЗ2';
+        } else if (subjectsCount > 10000) {
+            securityLevel = 'УЗ3';
+        } else {
+            securityLevel = 'УЗ4';
+        }
+        document.getElementById('calculatedSecurityLevel').value = securityLevel;
+        document.getElementById('infoSystemSecurityLevel').value = securityLevel;
+    }
+
+    function addDatabaseLocation() {
+        const container = document.getElementById('databaseLocationsList');
+        const index = container.children.length;
+        const div = document.createElement('div');
+        div.className = 'database-location-item';
+        div.style.cssText = 'background: #f8fafc; padding: 16px; border-radius: 8px; margin-bottom: 12px; border: 1px solid #e2e8f0;';
+        div.innerHTML = `
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <h4 style="margin: 0; color: #475569;">БД/ЦОД #${index + 1}</h4>
+                <button type="button" class="btn-icon delete" onclick="this.closest('.database-location-item').remove()">
+                    <i class="fas fa-trash"></i>
+                </button>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Страна, где расположена БД <span class="required">*</span></label>
+                    <select class="form-control" required>
+                        <option value="">Выбрать...</option>
+                        <option value="Россия">Россия</option>
+                        <option value="Другая">Другая</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Адрес ЦОДа</label>
+                    <input type="text" class="form-control" placeholder="Введите адрес ЦОДа" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Собственный ЦОД</label>
+                <select class="form-control">
+                    <option value="">Выбрать...</option>
+                    <option value="Да">Да</option>
+                    <option value="Нет">Нет</option>
+                </select>
+            </div>
+        `;
+        container.appendChild(div);
+    }
+
+    function openSoftwareSelectionModal() {
+        document.getElementById('softwareSelectionModal').classList.add('show');
+        renderSoftwareList();
+    }
+
+    function closeSoftwareSelectionModal() {
+        document.getElementById('softwareSelectionModal').classList.remove('show');
+    }
+
+    function renderSoftwareList() {
+        const container = document.getElementById('softwareListContainer');
+        const searchTerm = document.getElementById('softwareListSearch').value.toLowerCase();
+        
+        let html = `
+            <div style="padding: 12px 16px; border-bottom: 1px solid #f1f5f9; display: flex; align-items: center; gap: 12px; background: #f8fafc;">
+                <input type="checkbox" id="selectAllSoftware" onchange="toggleSelectAllSoftware()" style="width: 18px; height: 18px; cursor: pointer;" />
+                <label for="selectAllSoftware" style="flex: 1; cursor: pointer; font-weight: 500; color: #1e293b;">
+                    Выбрать все
+                </label>
+            </div>
+        `;
+        
+        let hasItems = false;
+        availableSoftware.forEach(sw => {
+            if (sw.name.toLowerCase().includes(searchTerm) || 
+                (sw.version && sw.version.toLowerCase().includes(searchTerm)) ||
+                (sw.manufacturer && sw.manufacturer.toLowerCase().includes(searchTerm))) {
+                
+                hasItems = true;
+                const isChecked = selectedSoftwareIds.includes(sw.id) ? 'checked' : '';
+                html += `
+                    <div style="padding: 12px 16px; border-bottom: 1px solid #f1f5f9; display: flex; align-items: center; gap: 12px;">
+                        <input type="checkbox" id="sw_${sw.id}" value="${sw.id}" ${isChecked} onchange="toggleSoftwareSelection('${sw.id}')" style="width: 18px; height: 18px; cursor: pointer;" />
+                        <label for="sw_${sw.id}" style="flex: 1; cursor: pointer; margin: 0;">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <div style="font-weight: 500; color: #1e293b;">${sw.name}</div>
+                                ${sw.version ? `<div style="font-size: 13px; color: #64748b;">${sw.version}</div>` : ''}
+                            </div>
+                            ${sw.manufacturer ? `<div style="font-size: 12px; color: #94a3b8; margin-top: 4px;">${sw.manufacturer}</div>` : ''}
+                        </label>
+                    </div>
+                `;
+            }
+        });
+        
+        if (!hasItems) {
+            html = '<div style="padding: 40px; text-align: center; color: #94a3b8;">ПО не найдено</div>';
+        }
+        
+        container.innerHTML = html;
+    }
+
+    function filterSoftwareList() { renderSoftwareList(); }
+
+    function toggleSelectAllSoftware() {
+        const selectAllCheckbox = document.getElementById('selectAllSoftware');
+        const checkboxes = document.querySelectorAll('#softwareListContainer input[type="checkbox"]:not(#selectAllSoftware)');
+        const selectAll = selectAllCheckbox.checked;
+        
+        checkboxes.forEach(cb => {
+            cb.checked = selectAll;
+            const id = cb.value;
+            if (selectAll && !selectedSoftwareIds.includes(id)) {
+                selectedSoftwareIds.push(id);
+            } else if (!selectAll) {
+                selectedSoftwareIds = selectedSoftwareIds.filter(sid => sid !== id);
+            }
+        });
+    }
+
+    function toggleSoftwareSelection(id) {
+        if (selectedSoftwareIds.includes(id)) {
+            selectedSoftwareIds = selectedSoftwareIds.filter(sid => sid !== id);
+        } else {
+            selectedSoftwareIds.push(id);
+        }
+        
+        // Обновляем состояние чекбокса "Выбрать все"
+        const allCheckboxes = document.querySelectorAll('#softwareListContainer input[type="checkbox"]:not(#selectAllSoftware)');
+        const checkedCheckboxes = document.querySelectorAll('#softwareListContainer input[type="checkbox"]:not(#selectAllSoftware):checked');
+        const selectAllCheckbox = document.getElementById('selectAllSoftware');
+        
+        if (selectAllCheckbox) {
+            selectAllCheckbox.checked = allCheckboxes.length > 0 && allCheckboxes.length === checkedCheckboxes.length;
+        }
+    }
+
+    function saveSelectedSoftware() {
+        alert(`Выбрано ПО: ${selectedSoftwareIds.length} элементов`);
+        closeSoftwareSelectionModal();
+        renderSoftwareInSystem();
+    }
+
+    function openAddSoftwareFromModal() {
+        closeSoftwareSelectionModal();
+        document.getElementById('addSoftwareModal').classList.add('show');
+    }
+
+    function closeAddSoftwareModal() {
+        document.getElementById('addSoftwareModal').classList.remove('show');
+    }
+
+    function saveNewSoftware(e) {
+        e.preventDefault();
+        const newSoftware = {
+            id: Date.now().toString(),
+            name: document.getElementById('newSoftwareName').value,
+            version: document.getElementById('newSoftwareNumber').value,  // Используем version для хранения номера
+            manufacturer: document.getElementById('newSoftwareManufacturer').value
+        };
+        availableSoftware.push(newSoftware);
+        closeAddSoftwareModal();
+        openSoftwareSelectionModal();
+        alert('ПО добавлено в список');
+    }
+
+    function renderSoftwareInSystem() {
+        const tbody = document.getElementById('softwareInSystemBody');
+        if (selectedSoftwareIds.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; padding: 40px; color: #94a3b8;">ПО не добавлено</td></tr>';
+            return;
+        }
+        let html = '';
+        selectedSoftwareIds.forEach(id => {
+            const sw = availableSoftware.find(s => s.id === id);
+            if (sw) {
+                html += `
+                    <tr>
+                        <td><input type="checkbox" checked /></td>
+                        <td><strong>${sw.name}</strong></td>
+                        <td>${sw.version || '—'}</td>
+                        <td>${sw.manufacturer || '—'}</td>
+                        <td class="actions">
+                            <button class="btn-icon edit" title="Редактировать"><i class="fas fa-edit"></i></button>
+                            <button class="btn-icon delete" title="Удалить" onclick="removeSoftwareFromSystem('${id}')"><i class="fas fa-trash"></i></button>
+                        </td>
+                    </tr>
+                `;
+            }
+        });
+        tbody.innerHTML = html;
+    }
+
+    function removeSoftwareFromSystem(id) {
+        selectedSoftwareIds = selectedSoftwareIds.filter(sid => sid !== id);
+        renderSoftwareInSystem();
+    }
+
+    function filterSoftwareInSystem() {
+        const search = document.getElementById('softwareInSystemSearch').value.toLowerCase();
+        const rows = document.querySelectorAll('#softwareInSystemTable tbody tr');
+        rows.forEach(row => {
+            const text = row.textContent.toLowerCase();
+            row.style.display = text.includes(search) ? '' : 'none';
+        });
+    }
+
+    function openStructuralElementModal() {
+        document.getElementById('structuralElementForm').reset();
+        document.getElementById('structuralElementId').value = '';
+        document.getElementById('structuralElementModalTitle').textContent = 'Добавление';
+        document.getElementById('structuralElementModal').classList.add('show');
+    }
+
+    function closeStructuralElementModal() {
+        document.getElementById('structuralElementModal').classList.remove('show');
+    }
+
+    function editStructuralElement(id) {
+        const element = structuralElements.find(e => e.id === id);
+        if (!element) return;
+        document.getElementById('structuralElementId').value = element.id;
+        document.getElementById('structuralElementType').value = element.type || '';
+        document.getElementById('structuralElementDescription').value = element.description || '';
+        document.getElementById('structuralElementInteraction').value = element.interaction || '';
+        document.getElementById('structuralElementModalTitle').textContent = 'Редактирование';
+        document.getElementById('structuralElementModal').classList.add('show');
+    }
+
+    function saveStructuralElement(e) {
+        e.preventDefault();
+        const id = document.getElementById('structuralElementId').value || Date.now().toString();
+        const element = {
+            id: id,
+            type: document.getElementById('structuralElementType').value,
+            description: document.getElementById('structuralElementDescription').value,
+            interaction: document.getElementById('structuralElementInteraction').value
+        };
+        const existingIndex = structuralElements.findIndex(e => e.id === id);
+        if (existingIndex >= 0) {
+            structuralElements[existingIndex] = element;
+        } else {
+            structuralElements.push(element);
+        }
+        closeStructuralElementModal();
+        renderStructuralElements();
+    }
+
+    function renderStructuralElements() {
+        const tbody = document.getElementById('structuralElementsBody');
+        if (structuralElements.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="3" style="text-align: center; padding: 40px; color: #94a3b8;">Структурные элементы не добавлены</td></tr>';
+            return;
+        }
+        let html = '';
+        structuralElements.forEach(el => {
+            html += `
+                <tr>
+                    <td><strong>${el.type}</strong></td>
+                    <td>${el.description}</td>
+                    <td class="actions">
+                        <button class="btn-icon edit" title="Редактировать" onclick="editStructuralElement('${el.id}')"><i class="fas fa-edit"></i></button>
+                        <button class="btn-icon delete" title="Удалить" onclick="deleteStructuralElement('${el.id}')"><i class="fas fa-trash"></i></button>
+                    </td>
+                </tr>
+            `;
+        });
+        tbody.innerHTML = html;
+    }
+
+    function deleteStructuralElement(id) {
+        if (!confirm('Удалить структурный элемент?')) return;
+        structuralElements = structuralElements.filter(e => e.id !== id);
+        renderStructuralElements();
+    }
+
+    function filterStructuralElements() {
+        const search = document.getElementById('structuralElementSearch').value.toLowerCase();
+        const rows = document.querySelectorAll('#structuralElementsTable tbody tr');
+        rows.forEach(row => {
+            const text = row.textContent.toLowerCase();
+            row.style.display = text.includes(search) ? '' : 'none';
+        });
+    }
+
+    function addNewStructuralType() {
+        const newType = prompt('Введите наименование типа структурного элемента:');
+        if (newType) {
+            const select = document.getElementById('structuralElementType');
+            const option = document.createElement('option');
+            option.value = newType;
+            option.textContent = newType;
+            option.selected = true;
+            select.appendChild(option);
+        }
+    }
+
+    function editReference(type) {
+        alert('Редактирование справочника: ' + type);
+    }
+
+    function openUserGroupModal() {
+        document.getElementById('userGroupForm').reset();
+        document.getElementById('userGroupId').value = '';
+        document.getElementById('userGroupModal').classList.add('show');
+    }
+
+    function closeUserGroupModal() {
+        document.getElementById('userGroupModal').classList.remove('show');
+    }
+
+    function editUserGroup(id) {
+        const group = userGroups.find(g => g.id === id);
+        if (!group) return;
+        document.getElementById('userGroupId').value = group.id;
+        document.getElementById('userGroupUser').value = group.user || '';
+        document.getElementById('userGroupDescription').value = group.description || '';
+        document.getElementById('userGroupModal').classList.add('show');
+    }
+
+    function saveUserGroup(e) {
+        e.preventDefault();
+        const id = document.getElementById('userGroupId').value || Date.now().toString();
+        const group = {
+            id: id,
+            user: document.getElementById('userGroupUser').value,
+            description: document.getElementById('userGroupDescription').value
+        };
+        const existingIndex = userGroups.findIndex(g => g.id === id);
+        if (existingIndex >= 0) {
+            userGroups[existingIndex] = group;
+        } else {
+            userGroups.push(group);
+        }
+        closeUserGroupModal();
+        renderUserGroups();
+    }
+
+    function renderUserGroups() {
+        const tbody = document.getElementById('userGroupsBody');
+        if (userGroups.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="3" style="text-align: center; padding: 40px; color: #94a3b8;">Группы пользователей не добавлены</td></tr>';
+            return;
+        }
+        let html = '';
+        userGroups.forEach(group => {
+            html += `
+                <tr>
+                    <td><strong>${group.user}</strong></td>
+                    <td>${group.description}</td>
+                    <td class="actions">
+                        <button class="btn-icon edit" title="Редактировать" onclick="editUserGroup('${group.id}')"><i class="fas fa-edit"></i></button>
+                        <button class="btn-icon delete" title="Удалить" onclick="deleteUserGroup('${group.id}')"><i class="fas fa-trash"></i></button>
+                    </td>
+                </tr>
+            `;
+        });
+        tbody.innerHTML = html;
+    }
+
+    function deleteUserGroup(id) {
+        if (!confirm('Удалить группу пользователей?')) return;
+        userGroups = userGroups.filter(g => g.id !== id);
+        renderUserGroups();
+    }
+
+    function filterUserGroups() {
+        const search = document.getElementById('userGroupSearch').value.toLowerCase();
+        const rows = document.querySelectorAll('#userGroupsTable tbody tr');
+        rows.forEach(row => {
+            const text = row.textContent.toLowerCase();
+            row.style.display = text.includes(search) ? '' : 'none';
+        });
+    }
+
+    function openSchemeModal() {
+        document.getElementById('schemeForm').reset();
+        document.getElementById('schemeId').value = '';
+        document.getElementById('schemeType').value = '';
+        currentSchemeFile = null;
+        document.getElementById('schemeFileName').style.display = 'none';
+        document.getElementById('schemeModal').classList.add('show');
+    }
+
+    function closeSchemeModal() {
+        document.getElementById('schemeModal').classList.remove('show');
+    }
+
+    function handleSchemeDragOver(e) {
+        e.preventDefault();
+        e.currentTarget.classList.add('drag-over');
+    }
+
+    function handleSchemeDragLeave(e) {
+        e.currentTarget.classList.remove('drag-over');
+    }
+
+    function handleSchemeDrop(e) {
+        e.preventDefault();
+        e.currentTarget.classList.remove('drag-over');
+        const files = e.dataTransfer.files;
+        if (files.length > 0) {
+            document.getElementById('schemeFile').files = files;
+            handleSchemeFileSelect({ target: { files: files } });
+        }
+    }
+
+    function handleSchemeFileSelect(e) {
+        const file = e.target.files[0];
+        if (file) {
+            currentSchemeFile = file;
+            document.getElementById('schemeFileNameText').textContent = file.name;
+            document.getElementById('schemeFileName').style.display = 'block';
+        }
+    }
+
+    function saveScheme(e) {
+        e.preventDefault();
+        const id = document.getElementById('schemeId').value || Date.now().toString();
+        const scheme = {
+            id: id,
+            type: document.getElementById('schemeType').value,
+            fileName: currentSchemeFile ? currentSchemeFile.name : 'scheme.png',
+            file: currentSchemeFile
+        };
+        const existingIndex = schemes.findIndex(s => s.id === id);
+        if (existingIndex >= 0) {
+            schemes[existingIndex] = scheme;
+        } else {
+            schemes.push(scheme);
+        }
+        closeSchemeModal();
+        renderSchemes();
+    }
+
+    function renderSchemes() {
+        const tbody = document.getElementById('schemesBody');
+        if (schemes.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="3" style="text-align: center; padding: 40px; color: #94a3b8;">Схемы не добавлены</td></tr>';
+            return;
+        }
+        let html = '';
+        schemes.forEach(scheme => {
+            html += `
+                <tr>
+                    <td><strong>${scheme.type}</strong></td>
+                    <td><i class="fas fa-image" style="color: #4F46E5;"></i> ${scheme.fileName}</td>
+                    <td class="actions">
+                        <button class="btn-icon edit" title="Редактировать" onclick="editScheme('${scheme.id}')"><i class="fas fa-edit"></i></button>
+                        <button class="btn-icon delete" title="Удалить" onclick="deleteScheme('${scheme.id}')"><i class="fas fa-trash"></i></button>
+                    </td>
+                </tr>
+            `;
+        });
+        tbody.innerHTML = html;
+    }
+
+    function editScheme(id) {
+        const scheme = schemes.find(s => s.id === id);
+        if (!scheme) return;
+        document.getElementById('schemeId').value = scheme.id;
+        document.getElementById('schemeType').value = scheme.type || '';
+        if (scheme.fileName) {
+            document.getElementById('schemeFileNameText').textContent = scheme.fileName;
+            document.getElementById('schemeFileName').style.display = 'block';
+        }
+        document.getElementById('schemeModal').classList.add('show');
+    }
+
+    function deleteScheme(id) {
+        if (!confirm('Удалить схему?')) return;
+        schemes = schemes.filter(s => s.id !== id);
+        renderSchemes();
+    }
+
+    function filterSchemes() {
+        const search = document.getElementById('schemeSearch').value.toLowerCase();
+        const rows = document.querySelectorAll('#schemesTable tbody tr');
+        rows.forEach(row => {
+            const text = row.textContent.toLowerCase();
+            row.style.display = text.includes(search) ? '' : 'none';
+        });
+    }
+
+    function openDocumentModal() {
+        document.getElementById('documentForm').reset();
+        document.getElementById('documentId').value = '';
+        document.getElementById('documentType').value = '';
+        currentDocumentFile = null;
+        document.getElementById('documentFileGroup').style.display = 'none';
+        document.getElementById('documentFileName').style.display = 'none';
+        document.getElementById('documentModal').classList.add('show');
+    }
+
+    function closeDocumentModal() {
+        document.getElementById('documentModal').classList.remove('show');
+    }
+
+    function handleDocumentTypeChange() {
+        const type = document.getElementById('documentType').value;
+        const fileGroup = document.getElementById('documentFileGroup');
+        const requiresFile = type.includes('Техническое задание') || 
+                            type.includes('Технический проект') || 
+                            type.includes('Описание технологического') ||
+                            type.includes('Разрешительная система') ||
+                            type.includes('Модель угроз');
+        fileGroup.style.display = requiresFile ? 'block' : 'none';
+    }
+
+    function handleDocumentDragOver(e) {
+        e.preventDefault();
+        e.currentTarget.classList.add('drag-over');
+    }
+
+    function handleDocumentDragLeave(e) {
+        e.currentTarget.classList.remove('drag-over');
+    }
+
+    function handleDocumentDrop(e) {
+        e.preventDefault();
+        e.currentTarget.classList.remove('drag-over');
+        const files = e.dataTransfer.files;
+        if (files.length > 0) {
+            document.getElementById('documentFile').files = files;
+            handleDocumentFileSelect({ target: { files: files } });
+        }
+    }
+
+    function handleDocumentFileSelect(e) {
+        const file = e.target.files[0];
+        if (file) {
+            currentDocumentFile = file;
+            document.getElementById('documentFileNameText').textContent = file.name;
+            document.getElementById('documentFileName').style.display = 'block';
+        }
+    }
+
+    function saveDocument(e) {
+        e.preventDefault();
+        const id = document.getElementById('documentId').value || Date.now().toString();
+        const type = document.getElementById('documentType').value;
+        const isMainDocument = type.includes('Технический паспорт') || 
+                              type.includes('Приказ на ввод') || 
+                              type.includes('Акт классификации') ||
+                              type.includes('Акт определения');
+        const doc = {
+            id: id,
+            type: type,
+            status: isMainDocument ? 'Не сформирован' : (currentDocumentFile ? 'Загружен' : 'Не загружен'),
+            fileName: currentDocumentFile ? currentDocumentFile.name : null,
+            file: currentDocumentFile,
+            isMainDocument: isMainDocument
+        };
+        const existingIndex = documents.findIndex(d => d.id === id);
+        if (existingIndex >= 0) {
+            documents[existingIndex] = doc;
+        } else {
+            documents.push(doc);
+        }
+        closeDocumentModal();
+        renderDocuments();
+    }
+
+    function renderDocuments() {
+        const tbody = document.getElementById('documentsBody');
+        if (documents.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="4" style="text-align: center; padding: 40px; color: #94a3b8;">Документы не добавлены</td></tr>';
+            return;
+        }
+        let html = '';
+        documents.forEach(doc => {
+            let statusBadge = '';
+            if (doc.status === 'Сформирован' || doc.status === 'Загружен') {
+                statusBadge = '<span class="badge success">' + doc.status + '</span>';
+            } else {
+                statusBadge = '<span class="badge warning">' + doc.status + '</span>';
+            }
+            let actions = '';
+            if (doc.isMainDocument) {
+                if (doc.status === 'Не сформирован') {
+                    actions = `<button class="btn-icon edit" title="Сформировать" onclick="generateDocument('${doc.id}')"><i class="fas fa-file-alt"></i></button>`;
+                } else {
+                    actions = `
+                        <button class="btn-icon edit" title="Переформировать" onclick="confirmRegenerate('${doc.id}')"><i class="fas fa-sync-alt"></i></button>
+                        <button class="btn-icon" title="Скачать" onclick="downloadDocument('${doc.id}')"><i class="fas fa-download"></i></button>
+                    `;
+                }
+            } else {
+                actions = `<button class="btn-icon edit" title="Загрузить" onclick="uploadApprovedDocument('${doc.id}')"><i class="fas fa-upload"></i></button>`;
+            }
+            html += `
+                <tr>
+                    <td><strong>${doc.type}</strong></td>
+                    <td>${statusBadge}</td>
+                    <td>${doc.fileName || '—'}</td>
+                    <td class="actions">
+                        ${actions}
+                        <button class="btn-icon delete" title="Удалить" onclick="deleteDocument('${doc.id}')"><i class="fas fa-trash"></i></button>
+                    </td>
+                </tr>
+            `;
+        });
+        tbody.innerHTML = html;
+    }
+
+    function generateDocument(id) {
+        const doc = documents.find(d => d.id === id);
+        if (!doc) return;
+        doc.status = 'Сформирован';
+        doc.fileName = doc.type.replace(/\s+/g, '_') + '.pdf';
+        alert('Документ "' + doc.type + '" сформирован. Скачайте его, распечатайте, подпишите и загрузите утвержденную версию.');
+        renderDocuments();
+    }
+
+    function confirmRegenerate(id) {
+        documentToRegenerate = id;
+        document.getElementById('confirmRegenerateModal').classList.add('show');
+    }
+
+    function closeConfirmRegenerateModal() {
+        document.getElementById('confirmRegenerateModal').classList.remove('show');
+        documentToRegenerate = null;
+    }
+
+    function confirmRegenerateDocument() {
+        if (documentToRegenerate) {
+            generateDocument(documentToRegenerate);
+            closeConfirmRegenerateModal();
+        }
+    }
+
+    function downloadDocument(id) {
+        const doc = documents.find(d => d.id === id);
+        if (!doc) return;
+        alert('Скачивание документа: ' + doc.fileName);
+    }
+
+    function uploadApprovedDocument(id) {
+        const doc = documents.find(d => d.id === id);
+        if (!doc) return;
+        document.getElementById('documentId').value = id;
+        document.getElementById('documentType').value = doc.type;
+        document.getElementById('documentFileGroup').style.display = 'block';
+        handleDocumentTypeChange();
+        document.getElementById('documentModal').classList.add('show');
+    }
+
+    function deleteDocument(id) {
+        if (!confirm('Удалить документ?')) return;
+        documents = documents.filter(d => d.id !== id);
+        renderDocuments();
+    }
+
+    function filterDocuments() {
+        const search = document.getElementById('documentSearch').value.toLowerCase();
+        const rows = document.querySelectorAll('#documentsTable tbody tr');
+        rows.forEach(row => {
+            const text = row.textContent.toLowerCase();
+            row.style.display = text.includes(search) ? '' : 'none';
+        });
+    }
+
+    function editInfoSystem(id) {
+        const item = infoSystemsData.find(s => s.id === id);
+        if (!item) return;
+        window.location.href = '/audit/infrastructure/create-info-system?edit=' + id;
+    }
+
+    function deleteInfoSystem(id) {
+        if (!confirm('Удалить информационную систему?')) return;
+        fetch('/audit/infrastructure/info-systems/delete/' + id, { method: 'DELETE' })
+            .then(r => r.json())
+            .then(data => {
+                if (data.success) {
+                    location.reload();
+                } else {
+                    alert(data.error || 'Ошибка при удалении');
+                }
+            });
+    }
+
+    function saveInfoSystem(e) {
+        e.preventDefault();
+        const form = e.target;
+        const data = {
+            id: form.id.value || null,
+            name: form.name.value,
+            type: form.type.value,
+            role: form.role.value,
+            purpose: form.purpose.value,
+            goals: form.goals.value,
+            tasks: form.tasks.value,
+            createdAt: form.createdAt.value || null,
+            significanceLevel: form.significanceLevel.value,
+            scale: form.scale.value,
+            securityClass: form.securityClass.value,
+            dataCategory: form.dataCategory.value,
+            processingType: form.processingType.value,
+            threatType: form.threatType.value,
+            subjectsCount: parseInt(form.subjectsCount.value) || 0,
+            securityLevel: form.securityLevel.value,
+            attestationDate: form.attestationDate.value || null,
+            attestationNumber: form.attestationNumber.value,
+            attestationValidUntil: form.attestationValidUntil.value || null,
+            attestationBody: form.attestationBody.value,
+            complianceStatus: form.complianceStatus.value
+        };
+        fetch('/audit/infrastructure/info-systems/save', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        })
+        .then(r => r.json())
+        .then(result => {
+            if (result.success) {
+                window.location.href = '/audit/infrastructure?section=info-systems';
+            } else {
+                alert(result.error || 'Ошибка при сохранении');
+            }
+        });
+    }
+
+    function filterInfoSystems() {
+        const search = document.getElementById('infoSystemSearch').value.toLowerCase();
+        document.querySelectorAll('#infoSystemsTable tbody tr').forEach(row => {
+            row.style.display = row.textContent.toLowerCase().includes(search) ? '' : 'none';
+        });
+    }
+
+    function filterTable(tableId, colIndex, value) {
+        const table = document.getElementById(tableId);
+        if (!table) return;
+        const rows = table.querySelectorAll('tbody tr');
+        const searchValue = value.toLowerCase();
+        rows.forEach(row => {
+            const cell = row.cells[colIndex];
+            if (cell) {
+                const text = cell.textContent.toLowerCase();
+                row.style.display = text.includes(searchValue) ? '' : 'none';
+            }
+        });
+    }
+
+    function sortTable(tableId, colIndex) {
+        const table = document.getElementById(tableId);
+        if (!table) return;
+        const tbody = table.querySelector('tbody');
+        const rows = Array.from(tbody.querySelectorAll('tr'));
+        
+        // Определяем направление сортировки
+        const currentDir = table.getAttribute('data-sort-dir') || 'asc';
+        const newDir = currentDir === 'asc' ? 'desc' : 'asc';
+        table.setAttribute('data-sort-dir', newDir);
+        
+        rows.sort((a, b) => {
+            const aText = a.cells[colIndex]?.textContent.trim() || '';
+            const bText = b.cells[colIndex]?.textContent.trim() || '';
+            
+            if (newDir === 'asc') {
+                return aText.localeCompare(bText, 'ru');
+            } else {
+                return bText.localeCompare(aText, 'ru');
+            }
+        });
+        
+        rows.forEach(row => tbody.appendChild(row));
+    }
+
+    function changePageSize(size) {
+        const url = new URL(window.location);
+        url.searchParams.set('pageSize', size);
+        window.location.href = url.toString();
+    }
+</script>

@@ -1,0 +1,862 @@
+@{
+    ViewData["Title"] = "Журналы";
+}
+
+<div class="audit-page">
+    <div class="page-header">
+        <h1>
+            <a href="/audit" style="color: #64748b; text-decoration: none; margin-right: 12px; font-size: 24px;">
+                <i class="fas fa-arrow-left"></i>
+            </a>
+            <i class="fas fa-book"></i> Журналы
+        </h1>
+        <p style="color: #64748b; margin-top: 8px; margin-left: 36px;">
+            Формирование и ведение журналов по информационной безопасности
+        </p>
+    </div>
+
+    <div class="form-content" style="background: white; border-radius: 8px; padding: 32px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+        
+        <!-- Сетка журналов -->
+        <div class="journals-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px;">
+            
+            <div class="journal-card" onclick="openJournal('antivirus')" style="background: white; border: 1px solid #e2e8f0; border-radius: 8px; padding: 20px; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; gap: 16px;">
+                <div class="journal-icon" style="width: 48px; height: 48px; background: #e0f2fe; color: #0284c7; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0;">
+                    <i class="fas fa-shield-virus"></i>
+                </div>
+                <div>
+                    <h4 style="margin: 0; font-size: 14px; font-weight: 600; color: #1e293b; line-height: 1.4;">Журнал антивирусных проверок</h4>
+                </div>
+            </div>
+
+            <div class="journal-card" onclick="openJournal('internal-checks')" style="background: white; border: 1px solid #e2e8f0; border-radius: 8px; padding: 20px; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; gap: 16px;">
+                <div class="journal-icon" style="width: 48px; height: 48px; background: #d1fae5; color: #059669; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0;">
+                    <i class="fas fa-clipboard-check"></i>
+                </div>
+                <div>
+                    <h4 style="margin: 0; font-size: 14px; font-weight: 600; color: #1e293b; line-height: 1.4;">Журнал внутренних проверок режима защиты ПДн</h4>
+                </div>
+            </div>
+
+            <div class="journal-card" onclick="openJournal('incoming-dsp')" style="background: white; border: 1px solid #e2e8f0; border-radius: 8px; padding: 20px; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; gap: 16px;">
+                <div class="journal-icon" style="width: 48px; height: 48px; background: #fef3c7; color: #d97706; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0;">
+                    <i class="fas fa-file-import"></i>
+                </div>
+                <div>
+                    <h4 style="margin: 0; font-size: 14px; font-weight: 600; color: #1e293b; line-height: 1.4;">Журнал учета входящих документов ДСП</h4>
+                </div>
+            </div>
+
+            <div class="journal-card" onclick="openJournal('access-requests')" style="background: white; border: 1px solid #e2e8f0; border-radius: 8px; padding: 20px; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; gap: 16px;">
+                <div class="journal-icon" style="width: 48px; height: 48px; background: #fce4ec; color: #dc2626; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0;">
+                    <i class="fas fa-user-lock"></i>
+                </div>
+                <div>
+                    <h4 style="margin: 0; font-size: 14px; font-weight: 600; color: #1e293b; line-height: 1.4;">Журнал заявок на изменение прав доступа</h4>
+                </div>
+            </div>
+
+            <div class="journal-card" onclick="openJournal('briefing')" style="background: white; border: 1px solid #e2e8f0; border-radius: 8px; padding: 20px; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; gap: 16px;">
+                <div class="journal-icon" style="width: 48px; height: 48px; background: #eef2ff; color: #4F46E5; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0;">
+                    <i class="fas fa-chalkboard-teacher"></i>
+                </div>
+                <div>
+                    <h4 style="margin: 0; font-size: 14px; font-weight: 600; color: #1e293b; line-height: 1.4;">Журнал проведения инструктажа по ИБ</h4>
+                </div>
+            </div>
+
+            <div class="journal-card" onclick="openJournal('outgoing-dsp')" style="background: white; border: 1px solid #e2e8f0; border-radius: 8px; padding: 20px; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; gap: 16px;">
+                <div class="journal-icon" style="width: 48px; height: 48px; background: #f3e8ff; color: #7c3aed; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0;">
+                    <i class="fas fa-file-export"></i>
+                </div>
+                <div>
+                    <h4 style="margin: 0; font-size: 14px; font-weight: 600; color: #1e293b; line-height: 1.4;">Журнал учета исходящих документов ДСП</h4>
+                </div>
+            </div>
+
+            <div class="journal-card" onclick="openJournal('media')" style="background: white; border: 1px solid #e2e8f0; border-radius: 8px; padding: 20px; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; gap: 16px;">
+                <div class="journal-icon" style="width: 48px; height: 48px; background: #fef2f2; color: #dc2626; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0;">
+                    <i class="fas fa-database"></i>
+                </div>
+                <div>
+                    <h4 style="margin: 0; font-size: 14px; font-weight: 600; color: #1e293b; line-height: 1.4;">Журнал учета машинных носителей информации</h4>
+                </div>
+            </div>
+
+            <div class="journal-card" onclick="openJournal('emergency')" style="background: white; border: 1px solid #e2e8f0; border-radius: 8px; padding: 20px; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; gap: 16px;">
+                <div class="journal-icon" style="width: 48px; height: 48px; background: #ffedd5; color: #ea580c; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0;">
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+                <div>
+                    <h4 style="margin: 0; font-size: 14px; font-weight: 600; color: #1e293b; line-height: 1.4;">Журнал учета нештатных ситуаций</h4>
+                </div>
+            </div>
+
+            <div class="journal-card" onclick="openJournal('appeals')" style="background: white; border: 1px solid #e2e8f0; border-radius: 8px; padding: 20px; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; gap: 16px;">
+                <div class="journal-icon" style="width: 48px; height: 48px; background: #ecfdf5; color: #059669; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0;">
+                    <i class="fas fa-comments"></i>
+                </div>
+                <div>
+                    <h4 style="margin: 0; font-size: 14px; font-weight: 600; color: #1e293b; line-height: 1.4;">Журнал учета обращений субъектов ПДн</h4>
+                </div>
+            </div>
+
+            <div class="journal-card" onclick="openJournal('sealing')" style="background: white; border: 1px solid #e2e8f0; border-radius: 8px; padding: 20px; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; gap: 16px;">
+                <div class="journal-icon" style="width: 48px; height: 48px; background: #f3e8ff; color: #7c3aed; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0;">
+                    <i class="fas fa-lock"></i>
+                </div>
+                <div>
+                    <h4 style="margin: 0; font-size: 14px; font-weight: 600; color: #1e293b; line-height: 1.4;">Журнал опечатывания ТС</h4>
+                </div>
+            </div>
+
+            <div class="journal-card" onclick="openJournal('transfer')" style="background: white; border: 1px solid #e2e8f0; border-radius: 8px; padding: 20px; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; gap: 16px;">
+                <div class="journal-icon" style="width: 48px; height: 48px; background: #e0f2fe; color: #0284c7; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0;">
+                    <i class="fas fa-exchange-alt"></i>
+                </div>
+                <div>
+                    <h4 style="margin: 0; font-size: 14px; font-weight: 600; color: #1e293b; line-height: 1.4;">Журнал учета передачи ПДн</h4>
+                </div>
+            </div>
+
+            <div class="journal-card" onclick="openJournal('szi-testing')" style="background: white; border: 1px solid #e2e8f0; border-radius: 8px; padding: 20px; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; gap: 16px;">
+                <div class="journal-icon" style="width: 48px; height: 48px; background: #d1fae5; color: #059669; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0;">
+                    <i class="fas fa-microscope"></i>
+                </div>
+                <div>
+                    <h4 style="margin: 0; font-size: 14px; font-weight: 600; color: #1e293b; line-height: 1.4;">Журнал периодического тестирования СЗИ</h4>
+                </div>
+            </div>
+
+            <div class="journal-card" onclick="openJournal('documents')" style="background: white; border: 1px solid #e2e8f0; border-radius: 8px; padding: 20px; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; gap: 16px;">
+                <div class="journal-icon" style="width: 48px; height: 48px; background: #fef3c7; color: #d97706; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0;">
+                    <i class="fas fa-file-alt"></i>
+                </div>
+                <div>
+                    <h4 style="margin: 0; font-size: 14px; font-weight: 600; color: #1e293b; line-height: 1.4;">Журнал учета подготовленных документов</h4>
+                </div>
+            </div>
+
+            <div class="journal-card" onclick="openJournal('skzi-oki')" style="background: white; border: 1px solid #e2e8f0; border-radius: 8px; padding: 20px; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; gap: 16px;">
+                <div class="journal-icon" style="width: 48px; height: 48px; background: #fce4ec; color: #dc2626; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0;">
+                    <i class="fas fa-key"></i>
+                </div>
+                <div>
+                    <h4 style="margin: 0; font-size: 14px; font-weight: 600; color: #1e293b; line-height: 1.4;">Журнал поэкземплярного учета СКЗИ (для ОКИ)</h4>
+                </div>
+            </div>
+
+            <div class="journal-card" onclick="openJournal('skzi-other')" style="background: white; border: 1px solid #e2e8f0; border-radius: 8px; padding: 20px; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; gap: 16px;">
+                <div class="journal-icon" style="width: 48px; height: 48px; background: #eef2ff; color: #4F46E5; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0;">
+                    <i class="fas fa-key"></i>
+                </div>
+                <div>
+                    <h4 style="margin: 0; font-size: 14px; font-weight: 600; color: #1e293b; line-height: 1.4;">Журнал поэкземплярного учета СКЗИ (для обладателя КИ)</h4>
+                </div>
+            </div>
+
+            <div class="journal-card" onclick="openJournal('modification')" style="background: white; border: 1px solid #e2e8f0; border-radius: 8px; padding: 20px; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; gap: 16px;">
+                <div class="journal-icon" style="width: 48px; height: 48px; background: #f3e8ff; color: #7c3aed; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0;">
+                    <i class="fas fa-code-branch"></i>
+                </div>
+                <div>
+                    <h4 style="margin: 0; font-size: 14px; font-weight: 600; color: #1e293b; line-height: 1.4;">Журнал учета работ по модификации ПО, ТС, СЗИ</h4>
+                </div>
+            </div>
+
+            <div class="journal-card" onclick="openJournal('distribution')" style="background: white; border: 1px solid #e2e8f0; border-radius: 8px; padding: 20px; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; gap: 16px;">
+                <div class="journal-icon" style="width: 48px; height: 48px; background: #ecfdf5; color: #059669; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0;">
+                    <i class="fas fa-share-alt"></i>
+                </div>
+                <div>
+                    <h4 style="margin: 0; font-size: 14px; font-weight: 600; color: #1e293b; line-height: 1.4;">Журнал распределения документов ДСП</h4>
+                </div>
+            </div>
+
+            <div class="journal-card" onclick="openJournal('seals')" style="background: white; border: 1px solid #e2e8f0; border-radius: 8px; padding: 20px; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; gap: 16px;">
+                <div class="journal-icon" style="width: 48px; height: 48px; background: #ffedd5; color: #ea580c; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0;">
+                    <i class="fas fa-stamp"></i>
+                </div>
+                <div>
+                    <h4 style="margin: 0; font-size: 14px; font-weight: 600; color: #1e293b; line-height: 1.4;">Журнал регистрации выдачи/приема пеналов, печатей, ключей</h4>
+                </div>
+            </div>
+
+            <div class="journal-card" onclick="openJournal('backup')" style="background: white; border: 1px solid #e2e8f0; border-radius: 8px; padding: 20px; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; gap: 16px;">
+                <div class="journal-icon" style="width: 48px; height: 48px; background: #e0f2fe; color: #0284c7; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0;">
+                    <i class="fas fa-hdd"></i>
+                </div>
+                <div>
+                    <h4 style="margin: 0; font-size: 14px; font-weight: 600; color: #1e293b; line-height: 1.4;">Журнал учета резервных копий ПО и БД ПДн</h4>
+                </div>
+            </div>
+
+            <div class="journal-card" onclick="openJournal('technical')" style="background: white; border: 1px solid #e2e8f0; border-radius: 8px; padding: 20px; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; gap: 16px;">
+                <div class="journal-icon" style="width: 48px; height: 48px; background: #d1fae5; color: #059669; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0;">
+                    <i class="fas fa-server"></i>
+                </div>
+                <div>
+                    <h4 style="margin: 0; font-size: 14px; font-weight: 600; color: #1e293b; line-height: 1.4;">Технический (аппаратный) журнал</h4>
+                </div>
+            </div>
+
+            <div class="journal-card" onclick="openJournal('szi-install')" style="background: white; border: 1px solid #e2e8f0; border-radius: 8px; padding: 20px; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; gap: 16px;">
+                <div class="journal-icon" style="width: 48px; height: 48px; background: #fef3c7; color: #d97706; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0;">
+                    <i class="fas fa-plug"></i>
+                </div>
+                <div>
+                    <h4 style="margin: 0; font-size: 14px; font-weight: 600; color: #1e293b; line-height: 1.4;">Журнал учета установки/изъятия СЗИ</h4>
+                </div>
+            </div>
+
+            <div class="journal-card" onclick="openJournal('identifiers')" style="background: white; border: 1px solid #e2e8f0; border-radius: 8px; padding: 20px; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; gap: 16px;">
+                <div class="journal-icon" style="width: 48px; height: 48px; background: #fce4ec; color: #dc2626; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0;">
+                    <i class="fas fa-id-card"></i>
+                </div>
+                <div>
+                    <h4 style="margin: 0; font-size: 14px; font-weight: 600; color: #1e293b; line-height: 1.4;">Журнал учета электронных идентификаторов</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- МОДАЛЬНОЕ ОКНО: Просмотр журнала -->
+<!-- ============================================================ -->
+<div class="modal" id="journalModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 2000; align-items: center; justify-content: center;">
+    <div class="modal-content" style="background: white; border-radius: 12px; max-width: 1200px; width: 95%; max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.3);">
+        <div class="modal-header" style="margin-bottom: 24px; display: flex; justify-content: space-between; align-items: center; padding: 24px 32px; border-bottom: 1px solid #e2e8f0;">
+            <h3 id="journalModalTitle" style="margin: 0; color: #1e293b; display: flex; align-items: center; gap: 12px; font-size: 20px;">Журнал</h3>
+            <button type="button" class="btn-close" onclick="closeJournalModal()" style="background: none; border: none; font-size: 28px; cursor: pointer; color: #64748b; padding: 0 4px; line-height: 1;">&times;</button>
+        </div>
+        <div class="modal-body" style="padding: 0 32px 32px 32px;">
+            
+            <!-- Toolbar -->
+            <div class="toolbar" style="margin-bottom: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+                <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                    <button class="btn btn-primary" onclick="openAddEntryModal()">
+                        <i class="fas fa-plus"></i> Добавить
+                    </button>
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" onclick="toggleDropdown('exportDropdown'); event.stopPropagation();">
+                            <i class="fas fa-file-export"></i> Экспорт в файл
+                        </button>
+                        <div class="dropdown-menu" id="exportDropdown">
+                            <a onclick="exportJournal('xlsx')"><i class="fas fa-file-excel"></i> Экспорт в XLSX</a>
+                            <a onclick="exportJournal('pdf')"><i class="fas fa-file-pdf"></i> Экспорт в PDF</a>
+                        </div>
+                    </div>
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" onclick="toggleDropdown('settingsDropdown'); event.stopPropagation();">
+                            <i class="fas fa-cog"></i> Настройка
+                        </button>
+                        <div class="dropdown-menu" id="settingsDropdown">
+                            <label class="dropdown-item" style="display: flex; align-items: center; gap: 8px; padding: 8px 16px; cursor: pointer;">
+                                <input type="checkbox" checked onchange="toggleColumn('col-date')">
+                                <span>Дата</span>
+                            </label>
+                            <label class="dropdown-item" style="display: flex; align-items: center; gap: 8px; padding: 8px 16px; cursor: pointer;">
+                                <input type="checkbox" checked onchange="toggleColumn('col-event')">
+                                <span>Событие</span>
+                            </label>
+                            <label class="dropdown-item" style="display: flex; align-items: center; gap: 8px; padding: 8px 16px; cursor: pointer;">
+                                <input type="checkbox" checked onchange="toggleColumn('col-responsible')">
+                                <span>Ответственный</span>
+                            </label>
+                            <hr style="margin: 4px 0; border: none; border-top: 1px solid #e2e8f0;">
+                            <a onclick="resetTableSettings()" style="display: flex; align-items: center; gap: 8px; padding: 8px 16px; color: #1e293b; cursor: pointer;">
+                                <i class="fas fa-undo"></i> Сбросить настройки
+                            </a>
+                        </div>
+                    </div>
+                    <button class="btn btn-secondary" onclick="printJournal()">
+                        <i class="fas fa-print"></i> Печать
+                    </button>
+                </div>
+                <div class="search-box" style="position: relative; max-width: 300px; width: 100%;">
+                    <i class="fas fa-search" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: #94a3b8; font-size: 14px;"></i>
+                    <input type="text" id="journalSearch" class="form-control" placeholder="Поиск..." oninput="filterJournalTable()" style="padding-left: 36px; width: 100%; padding: 10px 12px; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 14px; box-sizing: border-box;" />
+                </div>
+            </div>
+
+            <!-- Таблица журнала -->
+            <div class="table-container" style="overflow-x: auto;">
+                <table id="journalTable" class="data-table" style="width: 100%; border-collapse: collapse;">
+                    <thead id="journalTableHead">
+                        <!-- Заголовки будут генерироваться динамически -->
+                    </thead>
+                    <tbody id="journalTableBody">
+                        <tr>
+                            <td colspan="5" style="text-align: center; padding: 60px 40px; color: #94a3b8;">
+                                <i class="fas fa-book" style="font-size: 48px; margin-bottom: 16px; display: block; color: #cbd5e1;"></i>
+                                <div style="font-size: 16px; font-weight: 500;">Записи в журнале отсутствуют</div>
+                                <div style="font-size: 14px; margin-top: 8px;">Нажмите "Добавить" для создания первой записи</div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- МОДАЛЬНОЕ ОКНО: Добавление записи в журнал -->
+<!-- ============================================================ -->
+<div class="modal" id="addEntryModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 2000; align-items: center; justify-content: center;">
+    <div class="modal-content" style="background: white; border-radius: 12px; max-width: 700px; width: 90%; max-height: 90vh; overflow-y: auto;">
+        <div class="modal-header" style="margin-bottom: 24px; display: flex; justify-content: space-between; align-items: center; padding: 24px 32px; border-bottom: 1px solid #e2e8f0;">
+            <h3 style="margin: 0; color: #1e293b; font-size: 20px;">Добавление записи в журнал</h3>
+            <button type="button" class="btn-close" onclick="closeAddEntryModal()" style="background: none; border: none; font-size: 28px; cursor: pointer; color: #64748b; padding: 0 4px; line-height: 1;">&times;</button>
+        </div>
+        <div class="modal-body" style="padding: 0 32px 32px 32px;">
+            <form id="journalEntryForm">
+                <div class="form-group" style="margin-bottom: 16px;">
+                    <label style="display: block; font-size: 14px; font-weight: 500; color: #1e293b; margin-bottom: 4px;">
+                        Наименование СЗИ <span class="required" style="color: #ef4444;">*</span>
+                    </label>
+                    <div style="display: flex; gap: 8px;">
+                        <select id="entrySziName" class="form-control" required style="flex: 1; padding: 10px 12px; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 14px; box-sizing: border-box;">
+                            <option value="">Выбрать...</option>
+                            <option value="СЗИ-1">СЗИ-1</option>
+                            <option value="СЗИ-2">СЗИ-2</option>
+                        </select>
+                        <button type="button" class="btn btn-secondary" onclick="editReference('szi')" title="Редактировать справочник" style="padding: 10px 12px;">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button type="button" class="btn btn-secondary" onclick="addReference('szi')" title="Добавить в справочник" style="padding: 10px 12px;">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="form-group" style="margin-bottom: 16px;">
+                    <label style="display: block; font-size: 14px; font-weight: 500; color: #1e293b; margin-bottom: 4px;">
+                        Дата тестирования <span class="required" style="color: #ef4444;">*</span>
+                    </label>
+                    <input type="date" id="entryTestDate" class="form-control" required style="width: 100%; padding: 10px 12px; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 14px; box-sizing: border-box;" />
+                </div>
+
+                <div class="form-group" style="margin-bottom: 16px;">
+                    <label style="display: block; font-size: 14px; font-weight: 500; color: #1e293b; margin-bottom: 4px;">
+                        Кто тестировал <span class="required" style="color: #ef4444;">*</span>
+                    </label>
+                    <div style="display: flex; gap: 8px;">
+                        <select id="entryTester" class="form-control" required style="flex: 1; padding: 10px 12px; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 14px; box-sizing: border-box;">
+                            <option value="">Выбрать...</option>
+                        </select>
+                        <button type="button" class="btn btn-secondary" onclick="editReference('tester')" title="Редактировать" style="padding: 10px 12px;">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button type="button" class="btn btn-secondary" onclick="addReference('tester')" title="Добавить" style="padding: 10px 12px;">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="form-group" style="margin-bottom: 16px;">
+                    <label style="display: block; font-size: 14px; font-weight: 500; color: #1e293b; margin-bottom: 4px;">
+                        Наименование теста <span class="required" style="color: #ef4444;">*</span>
+                    </label>
+                    <div style="display: flex; gap: 8px;">
+                        <select id="entryTestName" class="form-control" required style="flex: 1; padding: 10px 12px; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 14px; box-sizing: border-box;">
+                            <option value="">Выбрать...</option>
+                        </select>
+                        <button type="button" class="btn btn-secondary" onclick="editReference('testname')" title="Редактировать" style="padding: 10px 12px;">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button type="button" class="btn btn-secondary" onclick="addReference('testname')" title="Добавить" style="padding: 10px 12px;">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="form-group" style="margin-bottom: 16px;">
+                    <label style="display: block; font-size: 14px; font-weight: 500; color: #1e293b; margin-bottom: 4px;">
+                        Результат
+                    </label>
+                    <select id="entryResult" class="form-control" style="width: 100%; padding: 10px 12px; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 14px; box-sizing: border-box;">
+                        <option value="">Выбрать...</option>
+                        <option value="Успешно">Успешно</option>
+                        <option value="Не успешно">Не успешно</option>
+                        <option value="Требует доработки">Требует доработки</option>
+                    </select>
+                </div>
+
+                <div class="form-group" style="margin-bottom: 16px;">
+                    <label style="display: block; font-size: 14px; font-weight: 500; color: #1e293b; margin-bottom: 4px;">
+                        Комментарий
+                    </label>
+                    <textarea id="entryComment" class="form-control" rows="3" style="width: 100%; padding: 10px 12px; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 14px; box-sizing: border-box; resize: vertical;" placeholder="Введите комментарий"></textarea>
+                </div>
+
+                <div class="form-group" style="margin-bottom: 24px;">
+                    <label style="display: block; font-size: 14px; font-weight: 500; color: #1e293b; margin-bottom: 4px;">
+                        Дата следующего теста
+                    </label>
+                    <input type="date" id="entryNextTestDate" class="form-control" style="width: 100%; padding: 10px 12px; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 14px; box-sizing: border-box;" />
+                </div>
+
+                <div class="form-actions" style="display: flex; gap: 12px; justify-content: flex-end; padding-top: 16px; border-top: 1px solid #e2e8f0;">
+                    <button type="button" class="btn btn-secondary" onclick="closeAddEntryModal()">
+                        <i class="fas fa-times"></i> Отмена
+                    </button>
+                    <button type="button" class="btn btn-primary" onclick="saveJournalEntry()">
+                        <i class="fas fa-save"></i> Сохранить журнал
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Основные стили страницы */
+    .audit-page {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 24px;
+    }
+    
+    .page-header {
+        margin-bottom: 24px;
+    }
+    
+    .page-header h1 {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-size: 24px;
+        font-weight: 600;
+        color: #1e293b;
+        margin: 0;
+    }
+    
+    .page-header h1 i {
+        color: #4F46E5;
+    }
+    
+    .form-content {
+        background: white;
+        border-radius: 8px;
+        padding: 32px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    /* Стили для карточек журналов */
+    .journal-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+        border-color: #4F46E5;
+    }
+
+    /* Стили для таблиц */
+    .th-sortable { min-width: 100px; vertical-align: top; }
+    .th-header { display: flex; align-items: center; justify-content: space-between; padding: 10px 12px; cursor: pointer; user-select: none; }
+    .th-header:hover { background: #f1f5f9; }
+    .sortable-icon { color: #94a3b8; font-size: 12px; margin-left: 8px; opacity: 0.5; }
+    .th-sortable:hover .sortable-icon { opacity: 1; }
+    .th-filter-row { padding: 4px 8px 8px 8px; }
+    .filter-inline-input { width: 100%; padding: 6px 10px; border: 1px solid #e2e8f0; border-radius: 4px; font-size: 13px; background: white; box-sizing: border-box; }
+    .filter-inline-input:focus { outline: none; border-color: #4F46E5; }
+    
+    /* Стили для кнопок */
+    .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 16px;
+        border: none;
+        border-radius: 6px;
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s;
+        text-decoration: none;
+    }
+    
+    .btn-primary {
+        background: #4F46E5;
+        color: white;
+    }
+    
+    .btn-primary:hover {
+        background: #4338CA;
+    }
+    
+    .btn-secondary {
+        background: #f1f5f9;
+        color: #475569;
+    }
+    
+    .btn-secondary:hover {
+        background: #e2e8f0;
+    }
+    
+    .btn-close {
+        background: none;
+        border: none;
+        font-size: 28px;
+        cursor: pointer;
+        color: #64748b;
+        padding: 0 4px;
+        line-height: 1;
+    }
+    
+    .btn-close:hover {
+        color: #1e293b;
+    }
+    
+    /* Стили для форм */
+    .form-control {
+        width: 100%;
+        padding: 10px 12px;
+        border: 1px solid #e2e8f0;
+        border-radius: 6px;
+        font-size: 14px;
+        box-sizing: border-box;
+        background: white;
+        transition: border-color 0.2s;
+    }
+    
+    .form-control:focus {
+        outline: none;
+        border-color: #4F46E5;
+        box-shadow: 0 0 0 3px rgba(79,70,229,0.1);
+    }
+    
+    .form-group {
+        margin-bottom: 16px;
+    }
+    
+    .form-actions {
+        display: flex;
+        gap: 12px;
+        justify-content: flex-end;
+        padding-top: 16px;
+        border-top: 1px solid #e2e8f0;
+    }
+    
+    /* Стили для dropdown меню */
+    .dropdown {
+        position: relative;
+        display: inline-block;
+    }
+    
+    .dropdown-toggle {
+        cursor: pointer;
+    }
+    
+    .dropdown-menu {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        min-width: 200px;
+        background: white;
+        border: 1px solid #e2e8f0;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+        z-index: 1000;
+        margin-top: 4px;
+        padding: 6px 0;
+    }
+    
+    .dropdown-menu.show {
+        display: block;
+    }
+    
+    .dropdown-menu a, .dropdown-menu label {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 8px 16px;
+        color: #1e293b;
+        text-decoration: none;
+        font-size: 14px;
+        cursor: pointer;
+    }
+    
+    .dropdown-menu a:hover, .dropdown-menu label:hover {
+        background: #f1f5f9;
+    }
+    
+    .dropdown-menu input[type="checkbox"] {
+        margin-right: 8px;
+    }
+    
+    /* Стили для модальных окон */
+    .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.5);
+        z-index: 2000;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .modal.show {
+        display: flex !important;
+    }
+    
+    .modal-content {
+        background: white;
+        border-radius: 12px;
+        max-width: 700px;
+        width: 90%;
+        max-height: 90vh;
+        overflow-y: auto;
+        box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    }
+    
+    .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 24px 32px;
+        border-bottom: 1px solid #e2e8f0;
+    }
+    
+    .modal-body {
+        padding: 0 32px 32px 32px;
+    }
+    
+    /* Стили для бейджей */
+    .badge {
+        padding: 4px 12px;
+        border-radius: 12px;
+        font-size: 12px;
+        display: inline-block;
+    }
+    
+    .badge-success {
+        background: #22c55e20;
+        color: #22c55e;
+    }
+    
+    .badge-warning {
+        background: #f59e0b20;
+        color: #f59e0b;
+    }
+    
+    .badge-secondary {
+        background: #94a3b820;
+        color: #94a3b8;
+    }
+</style>
+
+<script>
+    let currentJournal = null;
+    let journalData = [];
+
+    // Конфигурация заголовков для обычных журналов (Рисунок 1)
+    const standardJournalHeaders = [
+        { name: 'Дата проведения', type: 'date', filterType: 'date' },
+        { name: 'Тема инструктажа', type: 'text', filterType: 'text' },
+        { name: 'ФИО инструктируемого', type: 'text', filterType: 'text' },
+        { name: 'ФИО проводившего инструктаж', type: 'text', filterType: 'text' }
+    ];
+
+    // Конфигурация заголовков для журналов поэкземплярного учета (Рисунок 2)
+    const instanceJournalHeaders = [
+        { name: 'Номер лицензии', type: 'text', filterType: 'text' },
+        { name: 'Ф.И.О. пользователя СКЗИ', type: 'text', filterType: 'text' },
+        { name: 'ФИО, произведших подключение (установку)', type: 'text', filterType: 'text' },
+        { name: 'Дата подключения (установки)', type: 'date', filterType: 'date' },
+        { name: 'Дата удаления', type: 'date', filterType: 'date' },
+        { name: 'Ф.И.О. произведших удаление', type: 'text', filterType: 'text' }
+    ];
+
+    function openJournal(name) {
+        const titles = {
+            'antivirus': 'Журнал антивирусных проверок',
+            'internal-checks': 'Журнал проведенных внутренних проверок режима защиты ПДн',
+            'incoming-dsp': 'Журнал учета входящих документов ДСП',
+            'access-requests': 'Журнал учета заявок на назначение, отзыв, изменение прав доступа',
+            'briefing': 'Журнал проведения инструктажа по ИБ',
+            'outgoing-dsp': 'Журнал учета исходящих документов ДСП',
+            'media': 'Журнал учета машинных носителей информации',
+            'emergency': 'Журнал учета нештатных ситуаций',
+            'appeals': 'Журнал учета обращений субъектов ПДн',
+            'sealing': 'Журнал опечатывания ТС',
+            'transfer': 'Журнал учета передачи ПДн',
+            'szi-testing': 'Журнал периодического тестирования СЗИ',
+            'documents': 'Журнал учета подготовленных документов',
+            'skzi-oki': 'Журнал поэкземплярного учета СКЗИ (для ОКИ)',
+            'skzi-other': 'Журнал поэкземплярного учета СКЗИ (для обладателя КИ)',
+            'modification': 'Журнал учета работ по модификации ПО, ТС, СЗИ',
+            'distribution': 'Журнал распределения документов ДСП',
+            'seals': 'Журнал регистрации выдачи/приема пеналов, печатей, ключей',
+            'backup': 'Журнал учета резервных копий ПО и БД ПДн',
+            'technical': 'Технический (аппаратный) журнал',
+            'szi-install': 'Журнал учета установки/изъятия СЗИ',
+            'identifiers': 'Журнал учета электронных идентификаторов'
+        };
+        
+        currentJournal = name;
+        document.getElementById('journalModalTitle').innerHTML = `<i class="fas fa-book" style="color: #4F46E5;"></i> ${titles[name] || name}`;
+        document.getElementById('journalModal').classList.add('show');
+        loadJournalData();
+    }
+
+    function closeJournalModal() {
+        document.getElementById('journalModal').classList.remove('show');
+        currentJournal = null;
+    }
+
+    function loadJournalData() {
+        const thead = document.getElementById('journalTableHead');
+        const tbody = document.getElementById('journalTableBody');
+        
+        // Определяем, является ли журнал поэкземплярного учета
+        const isInstanceJournal = currentJournal === 'skzi-oki' || currentJournal === 'skzi-other';
+        const headers = isInstanceJournal ? instanceJournalHeaders : standardJournalHeaders;
+        
+        // Генерируем заголовки таблицы
+        let headerHTML = '<tr style="background: #f8fafc;">';
+        headers.forEach((header, index) => {
+            headerHTML += `
+                <th class="th-sortable col-${index}" style="min-width: 100px;">
+                    <div class="th-header" style="display: flex; align-items: center; justify-content: space-between; padding: 10px 12px; cursor: pointer;">
+                        <span>${header.name}</span>
+                        <i class="fas fa-sort sortable-icon" style="color: #94a3b8; font-size: 12px; margin-left: 8px;"></i>
+                    </div>
+                    <div class="th-filter-row" style="padding: 4px 8px 8px 8px;">
+                        ${header.filterType === 'date' 
+                            ? `<input type="date" class="filter-inline-input" oninput="filterTable('journalTable', ${index}, this.value)" style="width: 100%; padding: 6px 10px; border: 1px solid #e2e8f0; border-radius: 4px; font-size: 13px; background: white; box-sizing: border-box;" />`
+                            : `<input type="text" class="filter-inline-input" placeholder="Поиск..." oninput="filterTable('journalTable', ${index}, this.value)" style="width: 100%; padding: 6px 10px; border: 1px solid #e2e8f0; border-radius: 4px; font-size: 13px; background: white; box-sizing: border-box;" />`
+                        }
+                    </div>
+                </th>
+            `;
+        });
+        headerHTML += '<th style="width: 140px; text-align: center;">Действия</th></tr>';
+        thead.innerHTML = headerHTML;
+        
+        // Показываем пустое состояние
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="${headers.length + 1}" style="text-align: center; padding: 60px 40px; color: #94a3b8;">
+                    <i class="fas fa-book" style="font-size: 48px; margin-bottom: 16px; display: block; color: #cbd5e1;"></i>
+                    <div style="font-size: 16px; font-weight: 500;">Записи в журнале отсутствуют</div>
+                    <div style="font-size: 14px; margin-top: 8px;">Нажмите "Добавить" для создания первой записи</div>
+                </td>
+            </tr>
+        `;
+    }
+
+    function openAddEntryModal() {
+        document.getElementById('journalEntryForm').reset();
+        document.getElementById('addEntryModal').classList.add('show');
+        populateEmployeeSelect();
+    }
+
+    function closeAddEntryModal() {
+        document.getElementById('addEntryModal').classList.remove('show');
+    }
+
+    function populateEmployeeSelect() {
+        const select = document.getElementById('entryTester');
+        select.innerHTML = '<option value="">Выбрать...</option><option value="1">Иванов И.И.</option><option value="2">Петров П.П.</option>';
+    }
+
+    function saveJournalEntry() {
+        const form = document.getElementById('journalEntryForm');
+        if (!form.checkValidity()) {
+            form.reportValidity();
+            return;
+        }
+        
+        alert('Запись успешно добавлена в журнал!');
+        closeAddEntryModal();
+    }
+
+    function editReference(type) {
+        alert(`Редактирование справочника: ${type}`);
+    }
+
+    function addReference(type) {
+        const value = prompt('Введите новое значение для справочника:');
+        if (value) {
+            alert(`Добавлено в справочник ${type}: ${value}`);
+        }
+    }
+
+    function exportJournal(format) {
+        closeAllDropdowns();
+        if (format === 'pdf') {
+            if (confirm('Требуется подписание документа электронной подписью. Продолжить?')) {
+                alert('Экспорт в PDF с ЭЦП будет реализован');
+            }
+        } else {
+            alert(`Экспорт в формате ${format.toUpperCase()} будет реализован`);
+        }
+    }
+
+    function printJournal() {
+        alert('Печать журнала будет реализована');
+    }
+
+    function toggleDropdown(dropdownId) {
+        const dropdown = document.getElementById(dropdownId);
+        const isOpen = dropdown.classList.contains('show');
+        closeAllDropdowns();
+        if (!isOpen) dropdown.classList.add('show');
+    }
+
+    function closeAllDropdowns() {
+        document.querySelectorAll('.dropdown-menu').forEach(d => d.classList.remove('show'));
+    }
+
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.dropdown')) closeAllDropdowns();
+    });
+
+    function toggleColumn(className) {
+        const cells = document.querySelectorAll('.' + className);
+        cells.forEach(cell => {
+            cell.style.display = cell.style.display === 'none' ? '' : 'none';
+        });
+    }
+
+    function resetTableSettings() {
+        const defaultVisible = ['col-0', 'col-1', 'col-2', 'col-3'];
+        defaultVisible.forEach(cls => {
+            document.querySelectorAll('.' + cls).forEach(cell => {
+                cell.style.display = '';
+            });
+        });
+    }
+
+    function filterJournalTable() {
+        const searchTerm = document.getElementById('journalSearch').value.toLowerCase();
+        const rows = document.querySelectorAll('#journalTableBody tr');
+        rows.forEach(row => {
+            row.style.display = row.textContent.toLowerCase().includes(searchTerm) ? '' : 'none';
+        });
+    }
+
+    function filterTable(tableId, colIndex, value) {
+        const table = document.getElementById(tableId);
+        const rows = table.querySelectorAll('tbody tr');
+        rows.forEach(row => {
+            const cell = row.cells[colIndex];
+            if (cell) {
+                row.style.display = cell.textContent.toLowerCase().includes(value.toLowerCase()) ? '' : 'none';
+            }
+        });
+    }
+
+    document.querySelectorAll('.modal').forEach(modal => {
+        modal.addEventListener('click', function(e) {
+            if (e.target === this) {
+                this.classList.remove('show');
+            }
+        });
+    });
+</script>

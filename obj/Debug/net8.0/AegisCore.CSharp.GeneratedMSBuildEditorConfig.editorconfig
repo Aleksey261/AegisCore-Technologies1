@@ -1,0 +1,341 @@
+is_global = true
+build_property.TargetFramework = net8.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = AegisCore
+build_property.RootNamespace = AegisCore
+build_property.ProjectDir = J:\AegisCore Technologies1\
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 
+build_property.RazorLangVersion = 8.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = J:\AegisCore Technologies1
+build_property._RazorSourceGeneratorDebug = 
+build_property.EffectiveAnalysisLevelStyle = 8.0
+build_property.EnableCodeStyleSeverity = 
+
+[J:/AegisCore Technologies1/Areas/Audit/Views/Activity/Activity.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQXVkaXRcVmlld3NcQWN0aXZpdHlcQWN0aXZpdHkuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[J:/AegisCore Technologies1/Areas/Audit/Views/Activity/Commissions.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQXVkaXRcVmlld3NcQWN0aXZpdHlcQ29tbWlzc2lvbnMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[J:/AegisCore Technologies1/Areas/Audit/Views/Activity/Documents.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQXVkaXRcVmlld3NcQWN0aXZpdHlcRG9jdW1lbnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[J:/AegisCore Technologies1/Areas/Audit/Views/Activity/Monitoring.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQXVkaXRcVmlld3NcQWN0aXZpdHlcTW9uaXRvcmluZy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[J:/AegisCore Technologies1/Areas/Audit/Views/Activity/Notifications.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQXVkaXRcVmlld3NcQWN0aXZpdHlcTm90aWZpY2F0aW9ucy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[J:/AegisCore Technologies1/Areas/Audit/Views/Activity/Responsible.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQXVkaXRcVmlld3NcQWN0aXZpdHlcUmVzcG9uc2libGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[J:/AegisCore Technologies1/Areas/Audit/Views/Activity/Situations.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQXVkaXRcVmlld3NcQWN0aXZpdHlcU2l0dWF0aW9ucy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[J:/AegisCore Technologies1/Areas/Audit/Views/Activity/Warranty.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQXVkaXRcVmlld3NcQWN0aXZpdHlcV2FycmFudHkuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[J:/AegisCore Technologies1/Areas/Audit/Views/Calendar/Calendar.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQXVkaXRcVmlld3NcQ2FsZW5kYXJcQ2FsZW5kYXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[J:/AegisCore Technologies1/Areas/Audit/Views/Calendar/_CalendarDayWeek.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQXVkaXRcVmlld3NcQ2FsZW5kYXJcX0NhbGVuZGFyRGF5V2Vlay5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[J:/AegisCore Technologies1/Areas/Audit/Views/Calendar/_CalendarGrid.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQXVkaXRcVmlld3NcQ2FsZW5kYXJcX0NhbGVuZGFyR3JpZC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[J:/AegisCore Technologies1/Areas/Audit/Views/Calendar/_CalendarUpcoming.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQXVkaXRcVmlld3NcQ2FsZW5kYXJcX0NhbGVuZGFyVXBjb21pbmcuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[J:/AegisCore Technologies1/Areas/Audit/Views/Documents/Documents.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQXVkaXRcVmlld3NcRG9jdW1lbnRzXERvY3VtZW50cy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[J:/AegisCore Technologies1/Areas/Audit/Views/Documents/DocumentsDirectory.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQXVkaXRcVmlld3NcRG9jdW1lbnRzXERvY3VtZW50c0RpcmVjdG9yeS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[J:/AegisCore Technologies1/Areas/Audit/Views/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQXVkaXRcVmlld3NcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[J:/AegisCore Technologies1/Areas/Audit/Views/Infrastructure/Asutp.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQXVkaXRcVmlld3NcSW5mcmFzdHJ1Y3R1cmVcQXN1dHAuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[J:/AegisCore Technologies1/Areas/Audit/Views/Infrastructure/Identifiers.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQXVkaXRcVmlld3NcSW5mcmFzdHJ1Y3R1cmVcSWRlbnRpZmllcnMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[J:/AegisCore Technologies1/Areas/Audit/Views/Infrastructure/InfoSystems.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQXVkaXRcVmlld3NcSW5mcmFzdHJ1Y3R1cmVcSW5mb1N5c3RlbXMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[J:/AegisCore Technologies1/Areas/Audit/Views/Infrastructure/Infrastructure.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQXVkaXRcVmlld3NcSW5mcmFzdHJ1Y3R1cmVcSW5mcmFzdHJ1Y3R1cmUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[J:/AegisCore Technologies1/Areas/Audit/Views/Infrastructure/Its.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQXVkaXRcVmlld3NcSW5mcmFzdHJ1Y3R1cmVcSXRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[J:/AegisCore Technologies1/Areas/Audit/Views/Infrastructure/Media.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQXVkaXRcVmlld3NcSW5mcmFzdHJ1Y3R1cmVcTWVkaWEuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[J:/AegisCore Technologies1/Areas/Audit/Views/Infrastructure/Signatures.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQXVkaXRcVmlld3NcSW5mcmFzdHJ1Y3R1cmVcU2lnbmF0dXJlcy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[J:/AegisCore Technologies1/Areas/Audit/Views/Infrastructure/Skzi.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQXVkaXRcVmlld3NcSW5mcmFzdHJ1Y3R1cmVcU2t6aS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[J:/AegisCore Technologies1/Areas/Audit/Views/Infrastructure/Software.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQXVkaXRcVmlld3NcSW5mcmFzdHJ1Y3R1cmVcU29mdHdhcmUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[J:/AegisCore Technologies1/Areas/Audit/Views/Infrastructure/Storage.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQXVkaXRcVmlld3NcSW5mcmFzdHJ1Y3R1cmVcU3RvcmFnZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[J:/AegisCore Technologies1/Areas/Audit/Views/Infrastructure/Szi.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQXVkaXRcVmlld3NcSW5mcmFzdHJ1Y3R1cmVcU3ppLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[J:/AegisCore Technologies1/Areas/Audit/Views/Infrastructure/TechnicalAssets.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQXVkaXRcVmlld3NcSW5mcmFzdHJ1Y3R1cmVcVGVjaG5pY2FsQXNzZXRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[J:/AegisCore Technologies1/Areas/Audit/Views/Inspections/Inspections.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQXVkaXRcVmlld3NcSW5zcGVjdGlvbnNcSW5zcGVjdGlvbnMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[J:/AegisCore Technologies1/Areas/Audit/Views/Journals/Journals.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQXVkaXRcVmlld3NcSm91cm5hbHNcSm91cm5hbHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[J:/AegisCore Technologies1/Areas/Audit/Views/MLAnalysis/Dashboard.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQXVkaXRcVmlld3NcTUxBbmFseXNpc1xEYXNoYm9hcmQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[J:/AegisCore Technologies1/Areas/Audit/Views/Objects/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQXVkaXRcVmlld3NcT2JqZWN0c1xEZXRhaWxzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[J:/AegisCore Technologies1/Areas/Audit/Views/Objects/Objects.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQXVkaXRcVmlld3NcT2JqZWN0c1xPYmplY3RzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[J:/AegisCore Technologies1/Areas/Audit/Views/Objects/_DocumentsTab.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQXVkaXRcVmlld3NcT2JqZWN0c1xfRG9jdW1lbnRzVGFiLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[J:/AegisCore Technologies1/Areas/Audit/Views/Objects/_HistoryTab.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQXVkaXRcVmlld3NcT2JqZWN0c1xfSGlzdG9yeVRhYi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[J:/AegisCore Technologies1/Areas/Audit/Views/Objects/_InfoSystemsTab.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQXVkaXRcVmlld3NcT2JqZWN0c1xfSW5mb1N5c3RlbXNUYWIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[J:/AegisCore Technologies1/Areas/Audit/Views/Objects/_MainTab.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQXVkaXRcVmlld3NcT2JqZWN0c1xfTWFpblRhYi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[J:/AegisCore Technologies1/Areas/Audit/Views/Objects/_SkziTab.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQXVkaXRcVmlld3NcT2JqZWN0c1xfU2t6aVRhYi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[J:/AegisCore Technologies1/Areas/Audit/Views/Objects/_SoftwareTab.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQXVkaXRcVmlld3NcT2JqZWN0c1xfU29mdHdhcmVUYWIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[J:/AegisCore Technologies1/Areas/Audit/Views/Objects/_SziTab.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQXVkaXRcVmlld3NcT2JqZWN0c1xfU3ppVGFiLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[J:/AegisCore Technologies1/Areas/Audit/Views/Objects/_TechnicalAssetsTab.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQXVkaXRcVmlld3NcT2JqZWN0c1xfVGVjaG5pY2FsQXNzZXRzVGFiLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[J:/AegisCore Technologies1/Areas/Audit/Views/Objects/_TelecomTab.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQXVkaXRcVmlld3NcT2JqZWN0c1xfVGVsZWNvbVRhYi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[J:/AegisCore Technologies1/Areas/Audit/Views/Organization/Access.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQXVkaXRcVmlld3NcT3JnYW5pemF0aW9uXEFjY2Vzcy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[J:/AegisCore Technologies1/Areas/Audit/Views/Organization/Branches.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQXVkaXRcVmlld3NcT3JnYW5pemF0aW9uXEJyYW5jaGVzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[J:/AegisCore Technologies1/Areas/Audit/Views/Organization/Departments.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQXVkaXRcVmlld3NcT3JnYW5pemF0aW9uXERlcGFydG1lbnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[J:/AegisCore Technologies1/Areas/Audit/Views/Organization/Employees.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQXVkaXRcVmlld3NcT3JnYW5pemF0aW9uXEVtcGxveWVlcy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[J:/AegisCore Technologies1/Areas/Audit/Views/Organization/General.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQXVkaXRcVmlld3NcT3JnYW5pemF0aW9uXEdlbmVyYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[J:/AegisCore Technologies1/Areas/Audit/Views/Organization/Organization.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQXVkaXRcVmlld3NcT3JnYW5pemF0aW9uXE9yZ2FuaXphdGlvbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[J:/AegisCore Technologies1/Areas/Audit/Views/Organization/Rooms.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQXVkaXRcVmlld3NcT3JnYW5pemF0aW9uXFJvb21zLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[J:/AegisCore Technologies1/Areas/Audit/Views/Protection/CriticalInfrastructure/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQXVkaXRcVmlld3NcUHJvdGVjdGlvblxDcml0aWNhbEluZnJhc3RydWN0dXJlXENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[J:/AegisCore Technologies1/Areas/Audit/Views/Protection/CriticalInfrastructure/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQXVkaXRcVmlld3NcUHJvdGVjdGlvblxDcml0aWNhbEluZnJhc3RydWN0dXJlXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[J:/AegisCore Technologies1/Areas/Audit/Views/Protection/CriticalInfrastructure/Systems.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQXVkaXRcVmlld3NcUHJvdGVjdGlvblxDcml0aWNhbEluZnJhc3RydWN0dXJlXFN5c3RlbXMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[J:/AegisCore Technologies1/Areas/Audit/Views/Protection/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQXVkaXRcVmlld3NcUHJvdGVjdGlvblxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[J:/AegisCore Technologies1/Areas/Audit/Views/Protection/OtherConfidential/Access.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQXVkaXRcVmlld3NcUHJvdGVjdGlvblxPdGhlckNvbmZpZGVudGlhbFxBY2Nlc3MuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[J:/AegisCore Technologies1/Areas/Audit/Views/Protection/OtherConfidential/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQXVkaXRcVmlld3NcUHJvdGVjdGlvblxPdGhlckNvbmZpZGVudGlhbFxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[J:/AegisCore Technologies1/Areas/Audit/Views/Protection/OtherConfidential/Rooms.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQXVkaXRcVmlld3NcUHJvdGVjdGlvblxPdGhlckNvbmZpZGVudGlhbFxSb29tcy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[J:/AegisCore Technologies1/Areas/Audit/Views/Protection/OtherConfidential/Service.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQXVkaXRcVmlld3NcUHJvdGVjdGlvblxPdGhlckNvbmZpZGVudGlhbFxTZXJ2aWNlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[J:/AegisCore Technologies1/Areas/Audit/Views/Protection/PersonalData/Automated.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQXVkaXRcVmlld3NcUHJvdGVjdGlvblxQZXJzb25hbERhdGFcQXV0b21hdGVkLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[J:/AegisCore Technologies1/Areas/Audit/Views/Protection/PersonalData/Categories.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQXVkaXRcVmlld3NcUHJvdGVjdGlvblxQZXJzb25hbERhdGFcQ2F0ZWdvcmllcy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[J:/AegisCore Technologies1/Areas/Audit/Views/Protection/PersonalData/Conditions.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQXVkaXRcVmlld3NcUHJvdGVjdGlvblxQZXJzb25hbERhdGFcQ29uZGl0aW9ucy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[J:/AegisCore Technologies1/Areas/Audit/Views/Protection/PersonalData/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQXVkaXRcVmlld3NcUHJvdGVjdGlvblxQZXJzb25hbERhdGFcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[J:/AegisCore Technologies1/Areas/Audit/Views/Protection/PersonalData/Internal.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQXVkaXRcVmlld3NcUHJvdGVjdGlvblxQZXJzb25hbERhdGFcSW50ZXJuYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[J:/AegisCore Technologies1/Areas/Audit/Views/Protection/PersonalData/LegalBasis.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQXVkaXRcVmlld3NcUHJvdGVjdGlvblxQZXJzb25hbERhdGFcTGVnYWxCYXNpcy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[J:/AegisCore Technologies1/Areas/Audit/Views/Protection/PersonalData/NonAutomated.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQXVkaXRcVmlld3NcUHJvdGVjdGlvblxQZXJzb25hbERhdGFcTm9uQXV0b21hdGVkLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[J:/AegisCore Technologies1/Areas/Audit/Views/Protection/PersonalData/Purposes.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQXVkaXRcVmlld3NcUHJvdGVjdGlvblxQZXJzb25hbERhdGFcUHVycG9zZXMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[J:/AegisCore Technologies1/Areas/Audit/Views/Protection/PersonalData/ThirdParties.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQXVkaXRcVmlld3NcUHJvdGVjdGlvblxQZXJzb25hbERhdGFcVGhpcmRQYXJ0aWVzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[J:/AegisCore Technologies1/Areas/Audit/Views/Protection/PersonalData/Transboundary.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQXVkaXRcVmlld3NcUHJvdGVjdGlvblxQZXJzb25hbERhdGFcVHJhbnNib3VuZGFyeS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[J:/AegisCore Technologies1/Areas/Audit/Views/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQXVkaXRcVmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[J:/AegisCore Technologies1/Areas/Audit/Views/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQXVkaXRcVmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[J:/AegisCore Technologies1/Views/Auth/Login.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXV0aFxMb2dpbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[J:/AegisCore Technologies1/Views/Fstec/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRnN0ZWNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[J:/AegisCore Technologies1/Views/Home/Dashboard.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxEYXNoYm9hcmQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[J:/AegisCore Technologies1/Views/Home/Error.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxFcnJvci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[J:/AegisCore Technologies1/Views/Home/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[J:/AegisCore Technologies1/Views/Scanner/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2Nhbm5lclxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[J:/AegisCore Technologies1/Views/Scanner/Scans.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2Nhbm5lclxTY2Fucy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[J:/AegisCore Technologies1/Views/Scanner/Vulnerabilities.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2Nhbm5lclxWdWxuZXJhYmlsaXRpZXMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[J:/AegisCore Technologies1/Views/Shared/_LandingLayout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYW5kaW5nTGF5b3V0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[J:/AegisCore Technologies1/Views/Shared/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[J:/AegisCore Technologies1/Views/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[J:/AegisCore Technologies1/Views/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 

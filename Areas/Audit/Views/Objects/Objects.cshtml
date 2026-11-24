@@ -1,0 +1,424 @@
+@model AegisCore.Models.ObjectsViewModel
+@{
+    ViewData["Title"] = "Объекты информатизации";
+}
+
+<div class="audit-page">
+    <div class="page-header">
+        <h1><i class="fas fa-desktop"></i> Объекты информатизации</h1>
+        <p style="color: #64748b; margin-top: 8px; font-size: 14px;">
+            Объект информатизации — средства электронной вычислительной техники вместе с программным обеспечением,
+            используемые для обработки информации.
+        </p>
+    </div>
+
+    <div class="toolbar">
+        <div class="toolbar-left">
+            <a href="/audit/objects/details/new" class="btn btn-primary">
+                <i class="fas fa-plus"></i> Добавить объект
+            </a>
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" onclick="toggleDropdown('exportDropdown'); event.stopPropagation();">
+                    <i class="fas fa-download"></i> Экспорт в файл
+                </button>
+                <div class="dropdown-menu" id="exportDropdown">
+                    <a onclick="exportObjects('pdf')"><i class="fas fa-file-pdf"></i> Экспорт в PDF</a>
+                    <a onclick="exportObjects('xls')"><i class="fas fa-file-excel"></i> Экспорт в XLS</a>
+                </div>
+            </div>
+            <button class="btn btn-secondary" onclick="openTableSettings()">
+                <i class="fas fa-cog"></i> Настройка таблицы
+            </button>
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" id="objectSearch" placeholder="Поиск по объектам..." value="@Model.Search" oninput="filterObjects()" />
+            </div>
+        </div>
+    </div>
+
+    <div class="table-container">
+        <table class="data-table" id="objectsTable">
+            <thead>
+                <tr>
+                    <th class="th-sortable" data-column="name">
+                        <a href="/audit/objects?sort=name&order=@(Model.Sort == "name" && Model.SortOrder == "asc" ? "desc" : "asc")&search=@Model.Search"
+                           style="color: inherit; text-decoration: none; display: flex; align-items: center; gap: 4px;">
+                            Наименование
+                            @if (Model.Sort == "name") { <i class="fas fa-sort-@(Model.SortOrder == "asc" ? "up" : "down")"></i> }
+                            else { <i class="fas fa-sort" style="color: #94a3b8;"></i> }
+                        </a>
+                        <div class="th-filter-row">
+                            <input type="text" class="filter-inline-input" placeholder="Поиск..." oninput="filterTable('objectsTable', 0, this.value)" />
+                        </div>
+                    </th>
+                    <th class="th-sortable" data-column="inventorynumber">
+                        <a href="/audit/objects?sort=inventorynumber&order=@(Model.Sort == "inventorynumber" && Model.SortOrder == "asc" ? "desc" : "asc")&search=@Model.Search"
+                           style="color: inherit; text-decoration: none; display: flex; align-items: center; gap: 4px;">
+                            Инв. номер
+                            @if (Model.Sort == "inventorynumber") { <i class="fas fa-sort-@(Model.SortOrder == "asc" ? "up" : "down")"></i> }
+                            else { <i class="fas fa-sort" style="color: #94a3b8;"></i> }
+                        </a>
+                        <div class="th-filter-row">
+                            <input type="text" class="filter-inline-input" placeholder="Поиск..." oninput="filterTable('objectsTable', 1, this.value)" />
+                        </div>
+                    </th>
+                    <th class="th-sortable" data-column="location">
+                        <a href="/audit/objects?sort=location&order=@(Model.Sort == "location" && Model.SortOrder == "asc" ? "desc" : "asc")&search=@Model.Search"
+                           style="color: inherit; text-decoration: none; display: flex; align-items: center; gap: 4px;">
+                            Местонахождение
+                            @if (Model.Sort == "location") { <i class="fas fa-sort-@(Model.SortOrder == "asc" ? "up" : "down")"></i> }
+                            else { <i class="fas fa-sort" style="color: #94a3b8;"></i> }
+                        </a>
+                        <div class="th-filter-row">
+                            <input type="text" class="filter-inline-input" placeholder="Поиск..." oninput="filterTable('objectsTable', 2, this.value)" />
+                        </div>
+                    </th>
+                    <th class="th-sortable" data-column="classification">
+                        <a href="/audit/objects?sort=classification&order=@(Model.Sort == "classification" && Model.SortOrder == "asc" ? "desc" : "asc")&search=@Model.Search"
+                           style="color: inherit; text-decoration: none; display: flex; align-items: center; gap: 4px;">
+                            Классификация
+                            @if (Model.Sort == "classification") { <i class="fas fa-sort-@(Model.SortOrder == "asc" ? "up" : "down")"></i> }
+                            else { <i class="fas fa-sort" style="color: #94a3b8;"></i> }
+                        </a>
+                        <div class="th-filter-row">
+                            <input type="text" class="filter-inline-input" placeholder="Поиск..." oninput="filterTable('objectsTable', 3, this.value)" />
+                        </div>
+                    </th>
+                    <th data-column="securitylevel">Уровень защищённости</th>
+                    <th data-column="compliance">Соответствие</th>
+                    <th data-column="actions" style="width: 120px;"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Objects != null && Model.Objects.Any())
+                {
+                    @foreach (var obj in Model.Objects)
+                    {
+                        <tr data-id="@obj.Id">
+                            <td>
+                                <a href="/audit/objects/details/@obj.Id" style="color: #4F46E5; font-weight: 600; text-decoration: none;">
+                                    @obj.Name
+                                </a>
+                            </td>
+                            <td>@obj.InventoryNumber</td>
+                            <td>@obj.Location</td>
+                            <td><span class="badge info">@obj.Classification</span></td>
+                            <td><span class="badge warning">@obj.SecurityLevel</span></td>
+                            <td>
+                                @if (obj.ComplianceStatus == "Соответствует")
+                                {
+                                    <span class="badge success">@obj.ComplianceStatus</span>
+                                }
+                                else if (!string.IsNullOrEmpty(obj.ComplianceStatus))
+                                {
+                                    <span class="badge danger">@obj.ComplianceStatus</span>
+                                }
+                                else
+                                {
+                                    <span>—</span>
+                                }
+                            </td>
+                            <td class="actions">
+                                <a href="/audit/objects/details/@obj.Id" class="btn-icon edit" title="Открыть">
+                                    <i class="fas fa-folder-open"></i>
+                                </a>
+                                <button class="btn-icon delete" title="Удалить" onclick="deleteObject('@obj.Id')">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="7" style="text-align: center; padding: 40px; color: #94a3b8;">
+                            <i class="fas fa-desktop" style="font-size: 48px; margin-bottom: 16px; display: block;"></i>
+                            Объекты информатизации не добавлены
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    @if (Model.TotalPages > 1)
+    {
+        <div class="pagination">
+            <div class="pagination-page-size">
+                <label>Показывать по:</label>
+                <select onchange="changePageSize(this.value)">
+                    <option value="10" selected>10</option>
+                    <option value="25">25</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                </select>
+            </div>
+            <div class="pagination-info">
+                Страница @Model.CurrentPage из @Model.TotalPages (Всего: @Model.TotalItems)
+            </div>
+            <div class="pagination-buttons">
+                @if (Model.CurrentPage > 1)
+                {
+                    <a href="/audit/objects?page=@(Model.CurrentPage - 1)&search=@Model.Search&sort=@Model.Sort&order=@Model.SortOrder" class="btn-pagination">‹</a>
+                }
+                @for (int i = 1; i <= Model.TotalPages; i++)
+                {
+                    <a href="/audit/objects?page=@i&search=@Model.Search&sort=@Model.Sort&order=@Model.SortOrder"
+                       class="btn-pagination @(i == Model.CurrentPage ? "active" : "")">@i</a>
+                }
+                @if (Model.CurrentPage < Model.TotalPages)
+                {
+                    <a href="/audit/objects?page=@(Model.CurrentPage + 1)&search=@Model.Search&sort=@Model.Sort&order=@Model.SortOrder" class="btn-pagination">›</a>
+                }
+            </div>
+        </div>
+    }
+</div>
+
+<!-- ✅ МОДАЛЬНОЕ ОКНО НАСТРОЙКИ ТАБЛИЦЫ -->
+<div class="modal" id="tableSettingsModal">
+    <div class="modal-content" style="max-width: 500px;">
+        <div class="modal-header">
+            <h3><i class="fas fa-cog"></i> Настройка таблицы</h3>
+            <button class="modal-close" onclick="closeTableSettings()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label style="margin-bottom: 12px; font-weight: 600;">Отображаемые столбцы:</label>
+                <div style="display: flex; flex-direction: column; gap: 8px;">
+                    <label class="checkbox-label">
+                        <input type="checkbox" data-column="name" checked onchange="toggleColumn('name', this.checked)" />
+                        <span>Наименование</span>
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" data-column="inventorynumber" checked onchange="toggleColumn('inventorynumber', this.checked)" />
+                        <span>Инв. номер</span>
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" data-column="location" checked onchange="toggleColumn('location', this.checked)" />
+                        <span>Местонахождение</span>
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" data-column="classification" checked onchange="toggleColumn('classification', this.checked)" />
+                        <span>Классификация</span>
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" data-column="securitylevel" checked onchange="toggleColumn('securitylevel', this.checked)" />
+                        <span>Уровень защищённости</span>
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" data-column="compliance" checked onchange="toggleColumn('compliance', this.checked)" />
+                        <span>Соответствие</span>
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" data-column="actions" checked onchange="toggleColumn('actions', this.checked)" />
+                        <span>Действия</span>
+                    </label>
+                </div>
+            </div>
+            <div class="form-actions">
+                <button type="button" class="btn btn-secondary" onclick="resetTableSettings()">
+                    <i class="fas fa-undo"></i> Сбросить настройки
+                </button>
+                <button type="button" class="btn btn-primary" onclick="closeTableSettings()">
+                    <i class="fas fa-check"></i> Применить
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Стили для настройки таблицы */
+    .column-hidden {
+        display: none !important;
+    }
+</style>
+
+<script>
+    // ============================================================
+    // === DROPDOWN МЕНЮ ===
+    // ============================================================
+    
+    function toggleDropdown(dropdownId) {
+        const dropdown = document.getElementById(dropdownId);
+        const isOpen = dropdown.classList.contains('show');
+        
+        // Закрываем все dropdowns
+        closeAllDropdowns();
+        
+        // Открываем нужный, если он был закрыт
+        if (!isOpen) {
+            dropdown.classList.add('show');
+        }
+    }
+    
+    function closeAllDropdowns() {
+        document.querySelectorAll('.dropdown-menu').forEach(d => {
+            d.classList.remove('show');
+        });
+    }
+    
+    // Закрытие dropdown при клике вне
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.dropdown')) {
+            closeAllDropdowns();
+        }
+    });
+    
+    // ============================================================
+    // === ЭКСПОРТ ===
+    // ============================================================
+    
+    function exportObjects(format) {
+        closeAllDropdowns();
+        const search = document.getElementById('objectSearch')?.value || '';
+        window.location.href = `/audit/objects/export/${format}?search=${encodeURIComponent(search)}`;
+    }
+    
+    // ============================================================
+    // === НАСТРОЙКА ТАБЛИЦЫ ===
+    // ============================================================
+    
+    function openTableSettings() {
+        document.getElementById('tableSettingsModal').classList.add('show');
+        loadTableSettings();
+    }
+    
+    function closeTableSettings() {
+        document.getElementById('tableSettingsModal').classList.remove('show');
+        saveTableSettings();
+    }
+    
+    function toggleColumn(columnName, visible) {
+        const table = document.getElementById('objectsTable');
+        const headers = table.querySelectorAll('thead th');
+        const rows = table.querySelectorAll('tbody tr');
+        
+        // Находим индекс столбца
+        let columnIndex = -1;
+        headers.forEach((header, index) => {
+            if (header.dataset.column === columnName) {
+                columnIndex = index;
+            }
+        });
+        
+        if (columnIndex === -1) return;
+        
+        // Скрываем/показываем столбец
+        if (visible) {
+            headers[columnIndex].classList.remove('column-hidden');
+            rows.forEach(row => {
+                if (row.cells[columnIndex]) {
+                    row.cells[columnIndex].classList.remove('column-hidden');
+                }
+            });
+        } else {
+            headers[columnIndex].classList.add('column-hidden');
+            rows.forEach(row => {
+                if (row.cells[columnIndex]) {
+                    row.cells[columnIndex].classList.add('column-hidden');
+                }
+            });
+        }
+        
+        saveTableSettings();
+    }
+    
+    function saveTableSettings() {
+        const settings = {};
+        document.querySelectorAll('#tableSettingsModal input[type="checkbox"]').forEach(cb => {
+            const column = cb.dataset.column;
+            settings[column] = cb.checked;
+        });
+        localStorage.setItem('objectsTableSettings', JSON.stringify(settings));
+    }
+    
+    function loadTableSettings() {
+        const saved = localStorage.getItem('objectsTableSettings');
+        if (saved) {
+            const settings = JSON.parse(saved);
+            document.querySelectorAll('#tableSettingsModal input[type="checkbox"]').forEach(cb => {
+                const column = cb.dataset.column;
+                if (settings.hasOwnProperty(column)) {
+                    cb.checked = settings[column];
+                    toggleColumn(column, cb.checked);
+                }
+            });
+        }
+    }
+    
+    function resetTableSettings() {
+        if (!confirm('Сбросить все настройки таблицы к значениям по умолчанию?')) return;
+        
+        // Показываем все столбцы
+        document.querySelectorAll('#tableSettingsModal input[type="checkbox"]').forEach(cb => {
+            cb.checked = true;
+            const column = cb.dataset.column;
+            toggleColumn(column, true);
+        });
+        
+        // Удаляем сохраненные настройки
+        localStorage.removeItem('objectsTableSettings');
+        
+        alert('Настройки таблицы сброшены');
+    }
+    
+    // ============================================================
+    // === ФИЛЬТРАЦИЯ И ПОИСК ===
+    // ============================================================
+    
+    function filterObjects() {
+        const search = document.getElementById('objectSearch').value.toLowerCase();
+        document.querySelectorAll('#objectsTable tbody tr').forEach(row => {
+            row.style.display = row.textContent.toLowerCase().includes(search) ? '' : 'none';
+        });
+    }
+    
+    function filterTable(tableId, colIndex, value) {
+        const table = document.getElementById(tableId);
+        const rows = table.querySelectorAll('tbody tr');
+        rows.forEach(row => {
+            const cell = row.cells[colIndex];
+            if (cell) row.style.display = cell.textContent.toLowerCase().includes(value.toLowerCase()) ? '' : 'none';
+        });
+    }
+    
+    // ============================================================
+    // === УДАЛЕНИЕ ===
+    // ============================================================
+    
+    function deleteObject(id) {
+        if (!confirm('Удалить объект информатизации?')) return;
+        fetch('/audit/objects/delete/' + id, { method: 'DELETE' })
+            .then(r => r.json())
+            .then(data => { 
+                if (data.success) {
+                    location.reload();
+                } else {
+                    alert(data.error || 'Ошибка при удалении');
+                }
+            });
+    }
+    
+    // ============================================================
+    // === ПАГИНАЦИЯ ===
+    // ============================================================
+    
+    function changePageSize(size) {
+        const url = new URL(window.location);
+        url.searchParams.set('pageSize', size);
+        url.searchParams.set('page', 1);
+        window.location.href = url.toString();
+    }
+    
+    // ============================================================
+    // === ИНИЦИАЛИЗАЦИЯ ===
+    // ============================================================
+    
+    // Загружаем сохраненные настройки при загрузке страницы
+    document.addEventListener('DOMContentLoaded', function() {
+        loadTableSettings();
+    });
+</script>

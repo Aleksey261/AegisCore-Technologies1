@@ -1,0 +1,143 @@
+@{
+    ViewData["Title"] = "Деятельность";
+}
+
+<div class="page-header">
+    <h1>
+        <a href="/audit" style="color: #64748b; text-decoration: none; margin-right: 12px; font-size: 24px;">
+            <i class="fas fa-arrow-left"></i>
+        </a>
+        <i class="fas fa-tasks"></i> Деятельность
+    </h1>
+    <p style="color: #64748b; margin-top: 8px; margin-left: 36px;">
+        Назначение ответственных лиц не влечет за собой изменения безопасности информации
+    </p>
+</div>
+
+<div class="features-grid">
+    <div class="feature-card" onclick="window.location.href='/audit/activity/responsible'">
+        <div class="feature-icon" style="background: #eef2ff; color: #4F46E5;">
+            <i class="fas fa-user-shield"></i>
+        </div>
+        <h3>Ответственные лица</h3>
+        <p>Назначение ответственных лиц не влечет за собой изменения безопасности информации</p>
+    </div>
+
+    <div class="feature-card" onclick="window.location.href='/audit/activity/commissions'">
+        <div class="feature-icon" style="background: #fef3c7; color: #d97706;">
+            <i class="fas fa-users"></i>
+        </div>
+        <h3>Комиссии</h3>
+        <p>Учет проведенных мероприятий по вопросам обеспечения безопасности информации</p>
+    </div>
+
+    <div class="feature-card" onclick="window.location.href='/audit/activity/documents'">
+        <div class="feature-icon" style="background: #fce4ec; color: #dc2626;">
+            <i class="fas fa-file-alt"></i>
+        </div>
+        <h3>Документы</h3>
+        <p>Автоматическое формирование необходимых документов по вопросам обеспечения безопасности информации</p>
+    </div>
+
+    <div class="feature-card" onclick="window.location.href='/audit/activity/warranty'">
+        <div class="feature-icon" style="background: #e0f2fe; color: #0284c7;">
+            <i class="fas fa-shield-alt"></i>
+        </div>
+        <h3>Гарантия</h3>
+        <p>Автоматическое формирование сведений об организации гарантийных сроков на ТС, ЗВ, ИНН, сроки технической поддержки на СЗИ и СКЗИ, а также о внесении доп. изменений</p>
+    </div>
+
+    <div class="feature-card" onclick="window.location.href='/audit/activity/notifications'">
+        <div class="feature-icon" style="background: #f3e8ff; color: #7c3aed;">
+            <i class="fas fa-bell"></i>
+        </div>
+        <h3>Уведомления</h3>
+        <p>Автоматическое формирование информационных писем и сведений в системе операторов, осуществляющих обработку ПДн</p>
+    </div>
+
+    <div class="feature-card" onclick="window.location.href='/audit/activity/situations'">
+        <div class="feature-icon" style="background: #fef2f2; color: #dc2626;">
+            <i class="fas fa-magic"></i>
+        </div>
+        <h3>Ситуации</h3>
+        <p>Пошаговый мастер действий по обеспечению безопасности информации</p>
+    </div>
+
+    <div class="feature-card" onclick="window.location.href='/audit/activity/monitoring'">
+        <div class="feature-icon" style="background: #ecfdf5; color: #059669;">
+            <i class="fas fa-sitemap"></i>
+        </div>
+        <h3>Мониторинг филиалов</h3>
+        <p>Мониторинг деятельности филиалов в области информационной безопасности</p>
+    </div>
+</div>
+
+<div class="footer-copyright">
+    <p>© 2026 AegisCore Technologies</p>
+</div>
+
+<style>
+    .page-header { margin-bottom: 24px; }
+    .page-header h1 { display: flex; align-items: center; gap: 12px; font-size: 24px; font-weight: 600; color: #1e293b; margin: 0; }
+    .page-header h1 i { color: #4F46E5; }
+    .page-header p { color: #64748b; margin-top: 8px; margin-left: 36px; }
+    
+    .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 20px;
+        margin: 24px 0;
+    }
+    
+    .feature-card {
+        background: white;
+        border-radius: 12px;
+        padding: 24px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+        cursor: pointer;
+        transition: all 0.3s ease;
+        border: 1px solid #f1f5f9;
+    }
+    
+    .feature-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 24px -8px rgba(0,0,0,0.15);
+        border-color: #e2e8f0;
+    }
+    
+    .feature-icon {
+        width: 56px;
+        height: 56px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        margin-bottom: 16px;
+    }
+    
+    .feature-card h3 {
+        font-size: 16px;
+        font-weight: 600;
+        color: #1e293b;
+        margin: 0 0 8px 0;
+    }
+    
+    .feature-card p {
+        font-size: 14px;
+        color: #64748b;
+        margin: 0;
+        line-height: 1.5;
+    }
+    
+    .footer-copyright {
+        margin-top: 40px;
+        padding-top: 20px;
+        border-top: 1px solid #e2e8f0;
+        text-align: center;
+        color: #94a3b8;
+        font-size: 13px;
+    }
+    
+    .footer-copyright p { margin: 4px 0; }
+</style>

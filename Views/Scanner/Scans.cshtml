@@ -1,0 +1,4 @@
+@model List<AegisCore.Models.ScanJob>
+<table><thead><tr><th>Job ID</th><th>Имя</th><th>Статус</th><th>Порты</th><th>Найдено</th><th>Начало</th></tr></thead><tbody>
+@foreach (var j in Model) { <tr><td>@j.JobId</td><td>@j.Name</td><td>@j.Status</td><td>@j.PortsScanned</td><td>@j.VulnerabilitiesFound</td><td>@j.StartedAt</td></tr> }
+</tbody></table>

@@ -1,0 +1,209 @@
+@model AegisCore.Models.OrganizationViewModel
+@{
+    ViewData["Title"] = "Помещения";
+}
+
+<div class="section-header">
+    <h2 class="section-title">
+        <i class="fas fa-door-closed"></i> Помещения
+    </h2>
+</div>
+
+<div class="toolbar">
+    <div class="toolbar-left">
+        <button class="btn btn-primary" onclick="openRoomModal()">
+            <i class="fas fa-plus"></i> Добавить помещение
+        </button>
+        <button class="btn btn-secondary" onclick="openImportModal('rooms')">
+            <i class="fas fa-file-import"></i> Загрузить из файла
+        </button>
+        <div class="search-box">
+            <i class="fas fa-search"></i>
+            <input type="text" id="roomSearch" placeholder="Поиск по помещениям..." value="@Model.Search" oninput="filterRooms()" />
+        </div>
+    </div>
+</div>
+
+<div class="table-container">
+    <table class="data-table" id="roomsTable">
+        <thead>
+            <tr>
+                <th class="th-sortable">
+                    <div class="th-header"><span>Номер</span><i class="fas fa-sort sortable-icon"></i></div>
+                    <div class="th-filter-row"><input type="text" class="filter-inline-input" placeholder="Поиск..." oninput="filterTable('roomsTable', 0, this.value)" /></div>
+                </th>
+                <th class="th-sortable">
+                    <div class="th-header"><span>Описание местоположения, адрес</span><i class="fas fa-sort sortable-icon"></i></div>
+                    <div class="th-filter-row"><input type="text" class="filter-inline-input" placeholder="Поиск..." oninput="filterTable('roomsTable', 1, this.value)" /></div>
+                </th>
+                <th class="th-sortable">
+                    <div class="th-header"><span>Подразделение</span><i class="fas fa-sort sortable-icon"></i></div>
+                    <div class="th-filter-row">
+                        <select class="filter-inline-select" onchange="filterTable('roomsTable', 2, this.value)">
+                            <option value="">(Все)</option>
+                            @if (Model.Departments != null)
+                            {
+                                @foreach (var dept in Model.Departments)
+                                {
+                                    <option value="@dept.Name">@dept.Name</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                </th>
+                <th class="th-sortable">
+                    <div class="th-header"><span>Дата ввода в эксплуатацию</span><i class="fas fa-sort sortable-icon"></i></div>
+                    <div class="th-filter-row"><input type="date" class="filter-inline-input" oninput="filterTable('roomsTable', 3, this.value)" /></div>
+                </th>
+                <th class="th-sortable">
+                    <div class="th-header"><span>Дата вывода из эксплуатации</span><i class="fas fa-sort sortable-icon"></i></div>
+                    <div class="th-filter-row"><input type="date" class="filter-inline-input" oninput="filterTable('roomsTable', 4, this.value)" /></div>
+                </th>
+                <th style="width: 100px;"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.Rooms != null && Model.Rooms.Any())
+            {
+                @foreach (var item in Model.Rooms)
+                {
+                    <tr data-id="@item.Id">
+                        <td><strong>@item.Number</strong></td>
+                        <td>@item.Description</td>
+                        <td>@item.Department</td>
+                        <td>@(item.DateIn?.ToString("dd.MM.yyyy") ?? "—")</td>
+                        <td class="@(item.DateOut.HasValue ? "text-danger" : "")">@(item.DateOut?.ToString("dd.MM.yyyy") ?? "—")</td>
+                        <td class="actions">
+                            <button class="btn-icon edit" onclick="editRoom('@item.Id')"><i class="fas fa-edit"></i></button>
+                            <button class="btn-icon delete" onclick="deleteRoom('@item.Id')"><i class="fas fa-trash"></i></button>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="6" style="text-align: center; padding: 40px; color: #94a3b8;">
+                        <i class="fas fa-door-closed" style="font-size: 48px; margin-bottom: 16px; display: block;"></i>
+                        Помещения не добавлены
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@if (Model.TotalPages > 1)
+{
+    <div class="pagination">
+        <div class="pagination-page-size">
+            <label>Показывать по:</label>
+            <select onchange="changePageSize(this.value)"><option value="10" selected>10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select>
+        </div>
+        <div class="pagination-info">Страница @Model.CurrentPage из @Model.TotalPages (Всего элементов: @Model.TotalItems)</div>
+        <div class="pagination-buttons">
+            @if (Model.CurrentPage > 1) { <a href="/audit/organization?section=rooms&page=@(Model.CurrentPage - 1)" class="btn-pagination">‹</a> }
+            @for (int i = 1; i <= Model.TotalPages; i++) { <a href="/audit/organization?section=rooms&page=@i" class="btn-pagination @(i == Model.CurrentPage ? "active" : "")">@i</a> }
+            @if (Model.CurrentPage < Model.TotalPages) { <a href="/audit/organization?section=rooms&page=@(Model.CurrentPage + 1)" class="btn-pagination">›</a> }
+        </div>
+    </div>
+}
+
+<!-- Модалка -->
+<div class="modal" id="roomModal">
+    <div class="modal-content" style="max-width: 600px;">
+        <div class="modal-header">
+            <h3 id="roomModalTitle">Добавление помещения</h3>
+            <button class="modal-close" onclick="closeRoomModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <form id="roomForm" onsubmit="saveRoom(event)">
+                <input type="hidden" id="roomId" name="id" />
+                <div class="form-group">
+                    <label>Номер помещения <span class="required">*</span></label>
+                    <input type="text" name="number" id="roomNumber" class="form-control" required placeholder="101" />
+                </div>
+                <div class="form-group">
+                    <label>Описание</label>
+                    <input type="text" name="description" id="roomDescription" class="form-control" placeholder="Серверная" />
+                </div>
+                <div class="form-group">
+                    <label>Подразделение <span class="required">*</span></label>
+                    <select name="department" id="roomDepartment" class="form-control" required>
+                        <option value="">Выберите подразделение</option>
+                        @if (Model.Departments != null)
+                        {
+                            @foreach (var dept in Model.Departments)
+                            {
+                                <option value="@dept.Name">@dept.Name</option>
+                            }
+                        }
+                    </select>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Дата ввода в эксплуатацию<span class="required">*</span></label>
+                        <input type="date" name="dateIn" id="roomDateIn" class="form-control" required />
+                    </div>
+                    <div class="form-group">
+                        <label>Дата вывода из эксплуатации</label>
+                        <input type="date" name="dateOut" id="roomDateOut" class="form-control" />
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeRoomModal()">Отмена</button>
+                    <button type="submit" class="btn btn-primary">Сохранить помещение</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Модалка импорта -->
+<div class="modal" id="importModal">
+    <div class="modal-content" style="max-width: 600px;">
+        <div class="modal-header">
+            <h3>Загрузка списка помещений</h3>
+            <button class="modal-close" onclick="closeImportModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div class="import-info">
+                <p><i class="fas fa-info-circle"></i> Загрузите файл в формате XLS, XLSX или ODS.</p>
+                <a href="#" onclick="downloadTemplate('rooms')"><i class="fas fa-download"></i> Скачать шаблон файла</a>
+            </div>
+            <div class="upload-area" id="uploadArea" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event)">
+                <div class="upload-placeholder">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <p>Перетащите файл сюда или нажмите кнопку ниже</p>
+                    <input type="file" id="importFile" accept=".xls,.xlsx,.ods" style="display: none;" onchange="handleFileSelect(event)" />
+                    <button type="button" class="btn btn-primary" onclick="document.getElementById('importFile').click()"><i class="fas fa-folder-open"></i> Выберите файл</button>
+                </div>
+            </div>
+            <div class="form-actions">
+                <button type="button" class="btn btn-secondary" onclick="closeImportModal()">Отмена</button>
+                <button type="button" class="btn btn-primary" onclick="uploadImportFile()"><i class="fas fa-upload"></i> Загрузить данные в таблицу</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const roomsData = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.Rooms ?? new List<AegisCore.Models.Room>()));
+    function openRoomModal() { document.getElementById('roomForm').reset(); document.getElementById('roomId').value = ''; document.getElementById('roomModalTitle').textContent = 'Добавление помещения'; document.getElementById('roomModal').classList.add('show'); }
+    function closeRoomModal() { document.getElementById('roomModal').classList.remove('show'); }
+    function editRoom(id) { const item = roomsData.find(r => r.id === id); if (!item) return; document.getElementById('roomId').value = item.id; document.getElementById('roomNumber').value = item.number || ''; document.getElementById('roomDescription').value = item.description || ''; document.getElementById('roomDepartment').value = item.department || ''; document.getElementById('roomDateIn').value = item.dateIn ? item.dateIn.split('T')[0] : ''; document.getElementById('roomDateOut').value = item.dateOut ? item.dateOut.split('T')[0] : ''; document.getElementById('roomModalTitle').textContent = 'Редактирование помещения'; document.getElementById('roomModal').classList.add('show'); }
+    function deleteRoom(id) { if (!confirm('Удалить помещение?')) return; fetch('/api/audit/organization/rooms/delete/' + id, { method: 'DELETE' }).then(r => r.json()).then(data => { if (data.success) location.reload(); else alert(data.error || 'Ошибка'); }); }
+    function saveRoom(e) { e.preventDefault(); const form = e.target; const data = { id: form.id.value || null, number: form.number.value, description: form.description.value, department: form.department.value, dateIn: form.dateIn.value || null, dateOut: form.dateOut.value || null }; fetch('/api/audit/organization/rooms/save', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) }).then(r => r.json()).then(result => { if (result.success) location.reload(); else alert(result.error || 'Ошибка'); }); }
+    function filterRooms() { const search = document.getElementById('roomSearch').value.toLowerCase(); document.querySelectorAll('#roomsTable tbody tr').forEach(row => { row.style.display = row.textContent.toLowerCase().includes(search) ? '' : 'none'; }); }
+    function filterTable(tableId, colIndex, value) { const table = document.getElementById(tableId); const rows = table.querySelectorAll('tbody tr'); rows.forEach(row => { const cell = row.cells[colIndex]; if (cell) { row.style.display = cell.textContent.toLowerCase().includes(value.toLowerCase()) ? '' : 'none'; } }); }
+    function openImportModal(type) { document.getElementById('importModal').classList.add('show'); }
+    function closeImportModal() { document.getElementById('importModal').classList.remove('show'); }
+    function handleDragOver(e) { e.preventDefault(); e.currentTarget.classList.add('drag-over'); }
+    function handleDragLeave(e) { e.currentTarget.classList.remove('drag-over'); }
+    function handleDrop(e) { e.preventDefault(); e.currentTarget.classList.remove('drag-over'); const files = e.dataTransfer.files; if (files.length > 0) { document.getElementById('importFile').files = files; showFileInfo(files[0]); } }
+    function handleFileSelect(e) { if (e.target.files.length > 0) { showFileInfo(e.target.files[0]); } }
+    function showFileInfo(file) { document.getElementById('uploadArea').innerHTML = `<div class="file-info"><div class="file-name"><i class="fas fa-file-excel"></i> ${file.name}</div><div class="file-size">${(file.size / 1024).toFixed(2)} KB</div><div class="file-status"><i class="fas fa-check-circle"></i> Файл готов к загрузке</div></div>`; }
+    function uploadImportFile() { alert('Загрузка файла будет реализована'); }
+    function downloadTemplate(type) { alert('Скачивание шаблона для: ' + type); }
+    function changePageSize(size) { const url = new URL(window.location); url.searchParams.set('pageSize', size); window.location.href = url.toString(); }
+</script>

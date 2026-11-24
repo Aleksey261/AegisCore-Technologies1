@@ -1,0 +1,2144 @@
+using AegisCore.Models;
+using AegisCore.Services;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+
+namespace AegisCore.Controllers;
+
+[Authorize]
+public class AuditController : Controller
+{
+    private readonly AuditService _audit;
+    private readonly JsonDataStore _store;
+
+    private static readonly List<Dictionary<string, string>> ActivitySections = new()
+    {
+        new() { { "id", "responsible" }, { "title", "Ответственные лица" }, { "icon", "fas fa-users" }, { "bg", "#eef2ff" }, { "color", "#4f46e5" }, { "desc", "Назначение ответственных за безопасность информации" } },
+        new() { { "id", "commissions" }, { "title", "Комиссии" }, { "icon", "fas fa-clipboard-list" }, { "bg", "#fef3c7" }, { "color", "#ea580c" }, { "desc", "Учет комиссий по вопросам безопасности" } },
+        new() { { "id", "journals" }, { "title", "Журналы" }, { "icon", "fas fa-book-open" }, { "bg", "#f0fdf4" }, { "color", "#16a34a" }, { "desc", "Ведение журналов обработки и безопасности" } },
+        new() { { "id", "documents" }, { "title", "Документы" }, { "icon", "fas fa-folder-open" }, { "bg", "#eff6ff" }, { "color", "#3b82f6" }, { "desc", "Формирование документов для внутренних процессов" } },
+        new() { { "id", "warranty" }, { "title", "Гарантия" }, { "icon", "fas fa-shield-alt" }, { "bg", "#fdf2f8" }, { "color", "#db2777" }, { "desc", "Учет гарантийных сроков на ТС, СЗИ и СКЗИ" } },
+        new() { { "id", "notifications" }, { "title", "Уведомления" }, { "icon", "fas fa-envelope" }, { "bg", "#f3e8ff" }, { "color", "#9333ea" }, { "desc", "Формирование писем о внесении изменений в реестр" } },
+        new() { { "id", "situations" }, { "title", "Ситуации" }, { "icon", "fas fa-exclamation-triangle" }, { "bg", "#ffedd5" }, { "color", "#ea580c" }, { "desc", "Мастер создания ситуаций для документов" } },
+        new() { { "id", "monitoring" }, { "title", "Мониторинг филиалов" }, { "icon", "fas fa-building" }, { "bg", "#f3e8ff" }, { "color", "#7e22ce" }, { "desc", "Контроль деятельности филиалов" } },
+        new() { { "id", "inspections" }, { "title", "Проверки" }, { "icon", "fas fa-clipboard-check" }, { "bg", "#fef9c3" }, { "color", "#ca8a04" }, { "desc", "Учет внутренних и внешних проверок" } }
+    };
+
+    public AuditController(AuditService audit, JsonDataStore store)
+    {
+        _audit = audit;
+        _store = store;
+    }
+
+    // ============================================================
+    // ГЛАВНЫЕ МАРШРУТЫ
+    // ============================================================
+
+    [HttpGet("/audit")]
+    [HttpGet("/audit/index")]
+    public IActionResult Index()
+    {
+        ViewBag.ActiveModule = "audit";
+        ViewBag.ActiveSection = "";
+        var stats = _audit.GetAuditStats();
+        var activities = _audit.GetRecentActivities(5);
+        // ✅ View в папке Audit/
+        return View("Index", new AuditIndexModel { Stats = stats, Activities = activities });
+    }
+
+    // ============================================================
+    // ОРГАНИЗАЦИЯ (папка Views/Audit/Organization/)
+    // ============================================================
+
+    [HttpGet("/audit/organization")]
+    public IActionResult Organization(string? section, string? search, int page = 1, string? sort = null, string? order = null, int? pageSize = null)
+    {
+        ViewBag.ActiveModule = "audit";
+        ViewBag.ActiveSection = "organization";
+        var target = section ?? "general";
+
+        var model = new OrganizationViewModel
+        {
+            ActiveTab = target,
+            Search = search ?? "",
+            Sort = sort,
+            SortOrder = order,
+            CurrentPage = page,
+            PageSize = pageSize ?? 10,
+            Organization = _audit.GetOrganization()
+        };
+
+        switch (target)
+        {
+            case "departments":
+                var departments = FilterDepartments(_audit.GetDepartments(), search);
+                model.TotalItems = departments.Count;
+                if (!string.IsNullOrEmpty(sort))
+                {
+                    departments = sort.ToLower() switch
+                    {
+                        "name" => order == "desc" ? departments.OrderByDescending(d => d.Name).ToList() : departments.OrderBy(d => d.Name).ToList(),
+                        _ => departments
+                    };
+                }
+                model.Departments = departments.Skip((page - 1) * model.PageSize).Take(model.PageSize).ToList();
+                break;
+
+            case "rooms":
+                var rooms = FilterRooms(_audit.GetRooms(), search);
+                model.TotalItems = rooms.Count;
+                if (!string.IsNullOrEmpty(sort))
+                {
+                    rooms = sort.ToLower() switch
+                    {
+                        "number" => order == "desc" ? rooms.OrderByDescending(r => r.Number).ToList() : rooms.OrderBy(r => r.Number).ToList(),
+                        "description" => order == "desc" ? rooms.OrderByDescending(r => r.Description).ToList() : rooms.OrderBy(r => r.Description).ToList(),
+                        "department" => order == "desc" ? rooms.OrderByDescending(r => r.Department).ToList() : rooms.OrderBy(r => r.Department).ToList(),
+                        _ => rooms
+                    };
+                }
+                model.Rooms = rooms.Skip((page - 1) * model.PageSize).Take(model.PageSize).ToList();
+                break;
+
+            case "employees":
+                var employees = FilterEmployees(_audit.GetEmployees(), search);
+                model.TotalItems = employees.Count;
+                if (!string.IsNullOrEmpty(sort))
+                {
+                    employees = sort.ToLower() switch
+                    {
+                        "fio" => order == "desc" ? employees.OrderByDescending(e => e.Fio).ToList() : employees.OrderBy(e => e.Fio).ToList(),
+                        "position" => order == "desc" ? employees.OrderByDescending(e => e.Position).ToList() : employees.OrderBy(e => e.Position).ToList(),
+                        "department" => order == "desc" ? employees.OrderByDescending(e => e.Department).ToList() : employees.OrderBy(e => e.Department).ToList(),
+                        "datestart" => order == "desc" ? employees.OrderByDescending(e => e.DateStart).ToList() : employees.OrderBy(e => e.DateStart).ToList(),
+                        "dateend" => order == "desc" ? employees.OrderByDescending(e => e.DateEnd).ToList() : employees.OrderBy(e => e.DateEnd).ToList(),
+                        _ => employees
+                    };
+                }
+                model.Employees = employees.Skip((page - 1) * model.PageSize).Take(model.PageSize).ToList();
+                break;
+
+            case "access":
+                var accesses = FilterAccesses(_audit.GetAccesses(), search);
+                model.TotalItems = accesses.Count;
+                if (!string.IsNullOrEmpty(sort))
+                {
+                    accesses = sort.ToLower() switch
+                    {
+                        "employeefio" => order == "desc" ? accesses.OrderByDescending(a => a.EmployeeFio).ToList() : accesses.OrderBy(a => a.EmployeeFio).ToList(),
+                        _ => accesses
+                    };
+                }
+                model.Accesses = accesses.Skip((page - 1) * model.PageSize).Take(model.PageSize).ToList();
+                break;
+
+            case "branches":
+                var branches = FilterBranches(_audit.GetBranches(), search);
+                model.TotalItems = branches.Count;
+                if (!string.IsNullOrEmpty(sort))
+                {
+                    branches = sort.ToLower() switch
+                    {
+                        "name" => order == "desc" ? branches.OrderByDescending(b => b.Name).ToList() : branches.OrderBy(b => b.Name).ToList(),
+                        "address" => order == "desc" ? branches.OrderByDescending(b => b.Address).ToList() : branches.OrderBy(b => b.Address).ToList(),
+                        "director" => order == "desc" ? branches.OrderByDescending(b => b.Director).ToList() : branches.OrderBy(b => b.Director).ToList(),
+                        _ => branches
+                    };
+                }
+                model.Branches = branches.Skip((page - 1) * model.PageSize).Take(model.PageSize).ToList();
+                break;
+        }
+
+        // ✅ Явно указываем путь к View в подпапке Organization/
+        return View("Organization/Organization", model);
+    }
+
+    [HttpPost("/audit/organization/save")]
+    public IActionResult SaveOrganization(OrganizationData org)
+    {
+        if (string.IsNullOrWhiteSpace(org.FullName))
+        {
+            TempData["Error"] = "Полное наименование обязательно";
+            return RedirectToAction("Organization", new { section = "general" });
+        }
+        _audit.SaveOrganization(org);
+        _audit.LogActivity(new AuditActivity
+        {
+            Event = "Обновление данных организации",
+            User = User.Identity?.Name ?? "unknown",
+            Status = "OK"
+        });
+        return RedirectToAction("Organization", new { section = "general" });
+    }
+
+    // ============================================================
+    // API: ПОДРАЗДЕЛЕНИЯ
+    // ============================================================
+
+    [HttpGet("/api/audit/organization/departments")]
+    public IActionResult GetDepartmentsApi()
+    {
+        var departments = _audit.GetDepartments();
+        return Json(departments.Select(d => new { id = d.Id, name = d.Name }));
+    }
+
+    [HttpPost("/api/audit/organization/departments/save")]
+    [IgnoreAntiforgeryToken]
+    public IActionResult SaveDepartment([FromBody] DepartmentDto dto)
+    {
+        try
+        {
+            if (string.IsNullOrWhiteSpace(dto.Name))
+                return Json(new { success = false, error = "Наименование обязательно для заполнения" });
+
+            var departments = _audit.GetDepartments();
+
+            if (string.IsNullOrWhiteSpace(dto.Id))
+            {
+                var newDept = new Department
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    Name = dto.Name,
+                    CreatedAt = DateTime.Now
+                };
+                departments.Add(newDept);
+                _audit.LogActivity(new AuditActivity
+                {
+                    Event = $"Добавлено подразделение: {dto.Name}",
+                    User = User.Identity?.Name ?? "unknown",
+                    Status = "OK"
+                });
+            }
+            else
+            {
+                var dept = departments.FirstOrDefault(d => d.Id == dto.Id);
+                if (dept == null)
+                    return Json(new { success = false, error = "Подразделение не найдено" });
+
+                var oldName = dept.Name;
+                dept.Name = dto.Name;
+                _audit.LogActivity(new AuditActivity
+                {
+                    Event = $"Изменено подразделение: {oldName} → {dto.Name}",
+                    User = User.Identity?.Name ?? "unknown",
+                    Status = "OK"
+                });
+            }
+
+            _audit.SaveDepartments(departments);
+            return Json(new { success = true });
+        }
+        catch (Exception ex)
+        {
+            return Json(new { success = false, error = ex.Message });
+        }
+    }
+
+    [HttpDelete("/api/audit/organization/departments/delete/{id}")]
+    [IgnoreAntiforgeryToken]
+    public IActionResult DeleteDepartment(string id)
+    {
+        try
+        {
+            var departments = _audit.GetDepartments();
+            var dept = departments.FirstOrDefault(d => d.Id == id);
+            if (dept == null)
+                return Json(new { success = false, error = "Подразделение не найдено" });
+
+            var employees = _audit.GetEmployees();
+            var rooms = _audit.GetRooms();
+            if (employees.Any(e => e.Department == dept.Name) || rooms.Any(r => r.Department == dept.Name))
+            {
+                return Json(new
+                {
+                    success = false,
+                    error = "Невозможно удалить. Данное структурное подразделение уже используется в системе.",
+                    inUse = true
+                });
+            }
+
+            departments.Remove(dept);
+            _audit.SaveDepartments(departments);
+            _audit.LogActivity(new AuditActivity
+            {
+                Event = $"Удалено подразделение: {dept.Name}",
+                User = User.Identity?.Name ?? "unknown",
+                Status = "OK"
+            });
+            return Json(new { success = true });
+        }
+        catch (Exception ex)
+        {
+            return Json(new { success = false, error = ex.Message });
+        }
+    }
+
+    // ============================================================
+    // API: ПОМЕЩЕНИЯ
+    // ============================================================
+
+    [HttpPost("/api/audit/organization/rooms/save")]
+    [IgnoreAntiforgeryToken]
+    public IActionResult SaveRoom([FromBody] RoomDto dto)
+    {
+        try
+        {
+            if (string.IsNullOrWhiteSpace(dto.Number))
+                return Json(new { success = false, error = "Номер помещения обязателен для заполнения" });
+            if (string.IsNullOrWhiteSpace(dto.Department))
+                return Json(new { success = false, error = "Подразделение обязательно для заполнения" });
+
+            var rooms = _audit.GetRooms();
+
+            if (string.IsNullOrWhiteSpace(dto.Id))
+            {
+                var newRoom = new Room
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    Number = dto.Number,
+                    Description = dto.Description,
+                    Department = dto.Department,
+                    DateIn = dto.DateIn,
+                    DateOut = dto.DateOut
+                };
+                rooms.Add(newRoom);
+                _audit.LogActivity(new AuditActivity
+                {
+                    Event = $"Добавлено помещение: {dto.Number}",
+                    User = User.Identity?.Name ?? "unknown",
+                    Status = "OK"
+                });
+            }
+            else
+            {
+                var room = rooms.FirstOrDefault(r => r.Id == dto.Id);
+                if (room == null)
+                    return Json(new { success = false, error = "Помещение не найдено" });
+
+                room.Number = dto.Number;
+                room.Description = dto.Description;
+                room.Department = dto.Department;
+                room.DateIn = dto.DateIn;
+                room.DateOut = dto.DateOut;
+                _audit.LogActivity(new AuditActivity
+                {
+                    Event = $"Изменено помещение: {dto.Number}",
+                    User = User.Identity?.Name ?? "unknown",
+                    Status = "OK"
+                });
+            }
+
+            _audit.SaveRooms(rooms);
+            return Json(new { success = true });
+        }
+        catch (Exception ex)
+        {
+            return Json(new { success = false, error = ex.Message });
+        }
+    }
+
+    [HttpDelete("/api/audit/organization/rooms/delete/{id}")]
+    [IgnoreAntiforgeryToken]
+    public IActionResult DeleteRoom(string id)
+    {
+        try
+        {
+            var rooms = _audit.GetRooms();
+            var room = rooms.FirstOrDefault(r => r.Id == id);
+            if (room == null)
+                return Json(new { success = false, error = "Помещение не найдено" });
+
+            var employees = _audit.GetEmployees();
+            if (employees.Any(e => e.Department == room.Department))
+            {
+                return Json(new
+                {
+                    success = false,
+                    error = "Невозможно удалить. Помещение используется сотрудниками.",
+                    inUse = true
+                });
+            }
+
+            rooms.Remove(room);
+            _audit.SaveRooms(rooms);
+            _audit.LogActivity(new AuditActivity
+            {
+                Event = $"Удалено помещение: {room.Number}",
+                User = User.Identity?.Name ?? "unknown",
+                Status = "OK"
+            });
+            return Json(new { success = true });
+        }
+        catch (Exception ex)
+        {
+            return Json(new { success = false, error = ex.Message });
+        }
+    }
+
+    [HttpPost("/api/audit/organization/rooms/import")]
+    [IgnoreAntiforgeryToken]
+    public IActionResult ImportRooms(IFormFile file)
+    {
+        try
+        {
+            if (file == null || file.Length == 0)
+                return Json(new { success = false, error = "Файл не выбран" });
+
+            var validExtensions = new[] { ".xls", ".xlsx", ".ods" };
+            var ext = Path.GetExtension(file.FileName).ToLower();
+            if (!validExtensions.Contains(ext))
+                return Json(new { success = false, error = "Неверный формат файла. Допустимы только xls, xlsx или ods." });
+            if (file.Length > 20 * 1024 * 1024)
+                return Json(new { success = false, error = "Размер файла превышает 20МВ." });
+
+            int processedRows = 0;
+
+            _audit.LogActivity(new AuditActivity
+            {
+                Event = $"Импортировано помещений: {processedRows}",
+                User = User.Identity?.Name ?? "unknown",
+                Status = "OK"
+            });
+
+            return Json(new { success = true, processedRows });
+        }
+        catch (Exception ex)
+        {
+            return Json(new { success = false, error = ex.Message });
+        }
+    }
+
+    // ============================================================
+    // API: СОТРУДНИКИ
+    // ============================================================
+
+    [HttpPost("/api/audit/organization/employees/save")]
+    [IgnoreAntiforgeryToken]
+    public IActionResult SaveEmployee([FromBody] EmployeeDto dto)
+    {
+        try
+        {
+            if (string.IsNullOrWhiteSpace(dto.Fio))
+                return Json(new { success = false, error = "ФИО обязательно для заполнения" });
+            if (string.IsNullOrWhiteSpace(dto.Position))
+                return Json(new { success = false, error = "Должность обязательна для заполнения" });
+            if (string.IsNullOrWhiteSpace(dto.Department))
+                return Json(new { success = false, error = "Подразделение обязательно для заполнения" });
+
+            var employees = _audit.GetEmployees();
+
+            if (string.IsNullOrWhiteSpace(dto.Id))
+            {
+                var newEmp = new Employee
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    Fio = dto.Fio,
+                    Position = dto.Position,
+                    Department = dto.Department,
+                    Phone = dto.Phone,
+                    Email = dto.Email,
+                    DateStart = dto.DateStart,
+                    DateEnd = dto.DateEnd
+                };
+                employees.Add(newEmp);
+                _audit.LogActivity(new AuditActivity
+                {
+                    Event = $"Добавлен сотрудник: {dto.Fio}",
+                    User = User.Identity?.Name ?? "unknown",
+                    Status = "OK"
+                });
+            }
+            else
+            {
+                var emp = employees.FirstOrDefault(e => e.Id == dto.Id);
+                if (emp == null)
+                    return Json(new { success = false, error = "Сотрудник не найден" });
+
+                emp.Fio = dto.Fio;
+                emp.Position = dto.Position;
+                emp.Department = dto.Department;
+                emp.Phone = dto.Phone;
+                emp.Email = dto.Email;
+                emp.DateStart = dto.DateStart;
+                emp.DateEnd = dto.DateEnd;
+                _audit.LogActivity(new AuditActivity
+                {
+                    Event = $"Изменён сотрудник: {dto.Fio}",
+                    User = User.Identity?.Name ?? "unknown",
+                    Status = "OK"
+                });
+            }
+
+            _audit.SaveEmployees(employees);
+            return Json(new { success = true });
+        }
+        catch (Exception ex)
+        {
+            return Json(new { success = false, error = ex.Message });
+        }
+    }
+
+    [HttpDelete("/api/audit/organization/employees/delete/{id}")]
+    [IgnoreAntiforgeryToken]
+    public IActionResult DeleteEmployee(string id)
+    {
+        try
+        {
+            var employees = _audit.GetEmployees();
+            var emp = employees.FirstOrDefault(e => e.Id == id);
+            if (emp == null)
+                return Json(new { success = false, error = "Сотрудник не найден" });
+
+            var accesses = _audit.GetAccesses();
+            if (accesses.Any(a => a.EmployeeFio == emp.Fio || a.EmployeeId == id))
+            {
+                return Json(new
+                {
+                    success = false,
+                    error = "Невозможно удалить. Данный сотрудник уже используется в системе."
+                });
+            }
+
+            employees.Remove(emp);
+            _audit.SaveEmployees(employees);
+            _audit.LogActivity(new AuditActivity
+            {
+                Event = $"Удалён сотрудник: {emp.Fio}",
+                User = User.Identity?.Name ?? "unknown",
+                Status = "OK"
+            });
+            return Json(new { success = true });
+        }
+        catch (Exception ex)
+        {
+            return Json(new { success = false, error = ex.Message });
+        }
+    }
+
+    [HttpPost("/api/audit/organization/employees/import")]
+    [IgnoreAntiforgeryToken]
+    public IActionResult ImportEmployees(IFormFile file)
+    {
+        try
+        {
+            if (file == null || file.Length == 0)
+                return Json(new { success = false, error = "Файл не выбран" });
+
+            var validExtensions = new[] { ".xls", ".xlsx", ".ods" };
+            var ext = Path.GetExtension(file.FileName).ToLower();
+            if (!validExtensions.Contains(ext))
+                return Json(new { success = false, error = "Неверный формат файла. Допустимы только xls, xlsx или ods." });
+            if (file.Length > 20 * 1024 * 1024)
+                return Json(new { success = false, error = "Размер файла превышает 20МВ." });
+
+            int processedRows = 5;
+
+            _audit.LogActivity(new AuditActivity
+            {
+                Event = $"Импортировано сотрудников: {processedRows}",
+                User = User.Identity?.Name ?? "unknown",
+                Status = "OK"
+            });
+
+            return Json(new { success = true, processedRows });
+        }
+        catch (Exception ex)
+        {
+            return Json(new { success = false, error = ex.Message });
+        }
+    }
+
+    // ============================================================
+    // API: ФИЛИАЛЫ
+    // ============================================================
+
+    [HttpPost("/api/audit/organization/branches/save")]
+    [IgnoreAntiforgeryToken]
+    public IActionResult SaveBranch([FromBody] BranchDto dto)
+    {
+        try
+        {
+            if (string.IsNullOrWhiteSpace(dto.Name))
+                return Json(new { success = false, error = "Наименование обязательно для заполнения" });
+            if (string.IsNullOrWhiteSpace(dto.Address))
+                return Json(new { success = false, error = "Адрес обязателен для заполнения" });
+
+            var branches = _audit.GetBranches();
+
+            if (string.IsNullOrWhiteSpace(dto.Id))
+            {
+                var newBranch = new Branch
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    Name = dto.Name,
+                    Address = dto.Address,
+                    Director = dto.Director
+                };
+                branches.Add(newBranch);
+                _audit.LogActivity(new AuditActivity
+                {
+                    Event = $"Добавлен филиал: {dto.Name}",
+                    User = User.Identity?.Name ?? "unknown",
+                    Status = "OK"
+                });
+            }
+            else
+            {
+                var branch = branches.FirstOrDefault(b => b.Id == dto.Id);
+                if (branch == null)
+                    return Json(new { success = false, error = "Филиал не найден" });
+
+                branch.Name = dto.Name;
+                branch.Address = dto.Address;
+                branch.Director = dto.Director;
+                _audit.LogActivity(new AuditActivity
+                {
+                    Event = $"Изменён филиал: {dto.Name}",
+                    User = User.Identity?.Name ?? "unknown",
+                    Status = "OK"
+                });
+            }
+
+            _audit.SaveBranches(branches);
+            return Json(new { success = true });
+        }
+        catch (Exception ex)
+        {
+            return Json(new { success = false, error = ex.Message });
+        }
+    }
+
+    [HttpDelete("/api/audit/organization/branches/delete/{id}")]
+    [IgnoreAntiforgeryToken]
+    public IActionResult DeleteBranch(string id)
+    {
+        try
+        {
+            var branches = _audit.GetBranches();
+            var branch = branches.FirstOrDefault(b => b.Id == id);
+            if (branch == null)
+                return Json(new { success = false, error = "Филиал не найден" });
+
+            branches.Remove(branch);
+            _audit.SaveBranches(branches);
+            _audit.LogActivity(new AuditActivity
+            {
+                Event = $"Удалён филиал: {branch.Name}",
+                User = User.Identity?.Name ?? "unknown",
+                Status = "OK"
+            });
+            return Json(new { success = true });
+        }
+        catch (Exception ex)
+        {
+            return Json(new { success = false, error = ex.Message });
+        }
+    }
+
+    // ============================================================
+    // API: ДОСТУПЫ
+    // ============================================================
+
+    [HttpPost("/api/audit/organization/access/save")]
+    [IgnoreAntiforgeryToken]
+    public IActionResult SaveAccess([FromBody] AccessDto dto)
+    {
+        try
+        {
+            if (string.IsNullOrWhiteSpace(dto.EmployeeId))
+                return Json(new { success = false, error = "Сотрудник не выбран" });
+
+            var accesses = _audit.GetAccesses();
+
+            if (string.IsNullOrWhiteSpace(dto.Id))
+            {
+                // Проверяем, есть ли уже доступ для этого сотрудника
+                var existing = accesses.FirstOrDefault(a => a.EmployeeId == dto.EmployeeId);
+                if (existing != null)
+                {
+                    // Обновляем существующий доступ
+                    existing.PdnISPDn = dto.PdnISPDn;
+                    existing.PdnPaper = dto.PdnPaper;
+                    existing.ConfInfo = dto.ConfInfo;
+                    existing.SkziRoom = dto.SkziRoom;
+                    existing.SkziWork = dto.SkziWork;
+                }
+                else
+                {
+                    // Создаём новый доступ
+                    var newAccess = new AccessRecord
+                    {
+                        Id = Guid.NewGuid().ToString(),
+                        EmployeeId = dto.EmployeeId,
+                        EmployeeFio = dto.EmployeeFio,
+                        PdnISPDn = dto.PdnISPDn,
+                        PdnPaper = dto.PdnPaper,
+                        ConfInfo = dto.ConfInfo,
+                        SkziRoom = dto.SkziRoom,
+                        SkziWork = dto.SkziWork
+                    };
+                    accesses.Add(newAccess);
+                }
+                
+                _audit.LogActivity(new AuditActivity
+                {
+                    Event = $"Назначен доступ для: {dto.EmployeeFio}",
+                    User = User.Identity?.Name ?? "unknown",
+                    Status = "OK"
+                });
+            }
+            else
+            {
+                var access = accesses.FirstOrDefault(a => a.Id == dto.Id);
+                if (access == null)
+                    return Json(new { success = false, error = "Доступ не найден" });
+
+                access.EmployeeId = dto.EmployeeId;
+                access.EmployeeFio = dto.EmployeeFio;
+                access.PdnISPDn = dto.PdnISPDn;
+                access.PdnPaper = dto.PdnPaper;
+                access.ConfInfo = dto.ConfInfo;
+                access.SkziRoom = dto.SkziRoom;
+                access.SkziWork = dto.SkziWork;
+                
+                _audit.LogActivity(new AuditActivity
+                {
+                    Event = $"Изменён доступ для: {dto.EmployeeFio}",
+                    User = User.Identity?.Name ?? "unknown",
+                    Status = "OK"
+                });
+            }
+
+            _audit.SaveAccesses(accesses);
+            return Json(new { success = true });
+        }
+        catch (Exception ex)
+        {
+            return Json(new { success = false, error = ex.Message });
+        }
+    }
+
+    [HttpDelete("/api/audit/organization/access/delete/{id}")]
+    [IgnoreAntiforgeryToken]
+    public IActionResult DeleteAccess(string id)
+    {
+        try
+        {
+            var accesses = _audit.GetAccesses();
+            var access = accesses.FirstOrDefault(a => a.Id == id);
+            if (access == null)
+                return Json(new { success = false, error = "Доступ не найден" });
+
+            accesses.Remove(access);
+            _audit.SaveAccesses(accesses);
+            _audit.LogActivity(new AuditActivity
+            {
+                Event = $"Удалён доступ для: {access.EmployeeFio}",
+                User = User.Identity?.Name ?? "unknown",
+                Status = "OK"
+            });
+            return Json(new { success = true });
+        }
+        catch (Exception ex)
+        {
+            return Json(new { success = false, error = ex.Message });
+        }
+    }
+
+    // ============================================================
+    // API: СПРАВОЧНИКИ
+    // ============================================================
+
+    [HttpGet("/api/audit/organization/positions")]
+    public IActionResult GetPositions()
+    {
+        var employees = _audit.GetEmployees();
+        var positions = employees
+            .Where(e => !string.IsNullOrWhiteSpace(e.Position))
+            .Select(e => e.Position)
+            .Distinct()
+            .OrderBy(p => p)
+            .Select(name => new { id = name, name = name })
+            .ToList();
+        return Json(positions);
+    }
+
+    [HttpPost("/api/audit/organization/positions/save")]
+    [IgnoreAntiforgeryToken]
+    public IActionResult SavePosition([FromBody] ReferenceDto dto)
+    {
+        try
+        {
+            if (string.IsNullOrWhiteSpace(dto.Name))
+                return Json(new { success = false, error = "Наименование обязательно" });
+
+            var employees = _audit.GetEmployees();
+
+            if (!string.IsNullOrWhiteSpace(dto.Id) && dto.Id != dto.Name)
+            {
+                var exists = employees.Any(e => e.Position == dto.Id);
+                if (!exists)
+                {
+                    _audit.LogActivity(new AuditActivity
+                    {
+                        Event = $"Добавлена должность: {dto.Name}",
+                        User = User.Identity?.Name ?? "unknown",
+                        Status = "OK"
+                    });
+                    return Json(new { success = true });
+                }
+
+                foreach (var emp in employees.Where(e => e.Position == dto.Id))
+                {
+                    emp.Position = dto.Name;
+                }
+                _audit.SaveEmployees(employees);
+                _audit.LogActivity(new AuditActivity
+                {
+                    Event = $"Переименована должность: {dto.Id} → {dto.Name}",
+                    User = User.Identity?.Name ?? "unknown",
+                    Status = "OK"
+                });
+            }
+            else
+            {
+                _audit.LogActivity(new AuditActivity
+                {
+                    Event = $"Добавлена должность: {dto.Name}",
+                    User = User.Identity?.Name ?? "unknown",
+                    Status = "OK"
+                });
+            }
+
+            return Json(new { success = true });
+        }
+        catch (Exception ex)
+        {
+            return Json(new { success = false, error = ex.Message });
+        }
+    }
+
+    [HttpDelete("/api/audit/organization/positions/delete/{name}")]
+    [IgnoreAntiforgeryToken]
+    public IActionResult DeletePosition(string name)
+    {
+        try
+        {
+            var employees = _audit.GetEmployees();
+            var used = employees.Any(e => e.Position == name);
+            if (used)
+            {
+                return Json(new
+                {
+                    success = false,
+                    error = "Невозможно удалить. Данная должность используется сотрудниками."
+                });
+            }
+            return Json(new { success = true });
+        }
+        catch (Exception ex)
+        {
+            return Json(new { success = false, error = ex.Message });
+        }
+    }
+
+    // ============================================================
+    // ИНФРАСТРУКТУРА (папка Views/Audit/Infrastructure/)
+    // ============================================================
+
+    [HttpGet("/audit/infrastructure")]
+    public IActionResult Infrastructure(string? section, string? search, int page = 1, string? sort = null, string? order = null, int? pageSize = null)
+    {
+        ViewBag.ActiveModule = "audit";
+        ViewBag.ActiveSection = "infrastructure";
+
+        var model = new InfrastructureViewModel
+        {
+            ActiveTab = section ?? "info-systems",
+            Search = search ?? "",
+            Sort = sort,
+            SortOrder = order,
+            CurrentPage = page,
+            PageSize = pageSize ?? 10
+        };
+
+        switch (model.ActiveTab)
+        {
+            case "info-systems":
+                var infoSystems = FilterInfoSystems(_audit.GetInfoSystems(), search);
+                model.TotalItems = infoSystems.Count;
+                if (!string.IsNullOrEmpty(sort))
+                {
+                    infoSystems = sort.ToLower() switch
+                    {
+                        "name" => order == "desc" ? infoSystems.OrderByDescending(i => i.Name).ToList() : infoSystems.OrderBy(i => i.Name).ToList(),
+                        "type" => order == "desc" ? infoSystems.OrderByDescending(i => i.Type).ToList() : infoSystems.OrderBy(i => i.Type).ToList(),
+                        _ => infoSystems
+                    };
+                }
+                model.InfoSystems = infoSystems.Skip((page - 1) * model.PageSize).Take(model.PageSize).ToList();
+                break;
+
+            case "storage":
+                var storages = FilterStorages(_audit.GetStorages(), search);
+                model.TotalItems = storages.Count;
+                if (!string.IsNullOrEmpty(sort))
+                {
+                    storages = sort.ToLower() switch
+                    {
+                        "name" => order == "desc" ? storages.OrderByDescending(s => s.Name).ToList() : storages.OrderBy(s => s.Name).ToList(),
+                        "type" => order == "desc" ? storages.OrderByDescending(s => s.Type).ToList() : storages.OrderBy(s => s.Type).ToList(),
+                        _ => storages
+                    };
+                }
+                model.Storages = storages.Skip((page - 1) * model.PageSize).Take(model.PageSize).ToList();
+                break;
+
+            case "technical-assets":
+                var technicalAssets = FilterTechnicalAssets(_audit.GetTechnicalAssets(), search);
+                model.TotalItems = technicalAssets.Count;
+                if (!string.IsNullOrEmpty(sort))
+                {
+                    technicalAssets = sort.ToLower() switch
+                    {
+                        "name" => order == "desc" ? technicalAssets.OrderByDescending(t => t.Name).ToList() : technicalAssets.OrderBy(t => t.Name).ToList(),
+                        "type" => order == "desc" ? technicalAssets.OrderByDescending(t => t.Type).ToList() : technicalAssets.OrderBy(t => t.Type).ToList(),
+                        _ => technicalAssets
+                    };
+                }
+                model.TechnicalAssets = technicalAssets.Skip((page - 1) * model.PageSize).Take(model.PageSize).ToList();
+                break;
+
+            case "szi":
+                var szis = FilterSzi(_audit.GetSzi(), search);
+                model.TotalItems = szis.Count;
+                if (!string.IsNullOrEmpty(sort))
+                {
+                    szis = sort.ToLower() switch
+                    {
+                        "name" => order == "desc" ? szis.OrderByDescending(s => s.Name).ToList() : szis.OrderBy(s => s.Name).ToList(),
+                        "serialnumber" => order == "desc" ? szis.OrderByDescending(s => s.SerialNumber).ToList() : szis.OrderBy(s => s.SerialNumber).ToList(),
+                        "receiptdate" => order == "desc" ? szis.OrderByDescending(s => s.ReceiptDate).ToList() : szis.OrderBy(s => s.ReceiptDate).ToList(),
+                        "installbydate" => order == "desc" ? szis.OrderByDescending(s => s.InstallByDate).ToList() : szis.OrderBy(s => s.InstallByDate).ToList(),
+                        "receivedfrom" => order == "desc" ? szis.OrderByDescending(s => s.ReceivedFrom).ToList() : szis.OrderBy(s => s.ReceivedFrom).ToList(),
+                        _ => szis
+                    };
+                }
+                model.Szis = szis.Skip((page - 1) * model.PageSize).Take(model.PageSize).ToList();
+                break;
+
+            case "skzi":
+                var skzis = FilterSkzi(_audit.GetSkzi(), search);
+                model.TotalItems = skzis.Count;
+                if (!string.IsNullOrEmpty(sort))
+                {
+                    skzis = sort.ToLower() switch
+                    {
+                        "name" => order == "desc" ? skzis.OrderByDescending(s => s.Name).ToList() : skzis.OrderBy(s => s.Name).ToList(),
+                        _ => skzis
+                    };
+                }
+                model.Szkis = skzis.Skip((page - 1) * model.PageSize).Take(model.PageSize).ToList();
+                break;
+
+            case "identifiers":
+                var identifiers = FilterIdentifiers(_audit.GetIdentifiers(), search);
+                model.TotalItems = identifiers.Count;
+                if (!string.IsNullOrEmpty(sort))
+                {
+                    identifiers = sort.ToLower() switch
+                    {
+                        "name" => order == "desc" ? identifiers.OrderByDescending(i => i.Name).ToList() : identifiers.OrderBy(i => i.Name).ToList(),
+                        _ => identifiers
+                    };
+                }
+                model.Identifiers = identifiers.Skip((page - 1) * model.PageSize).Take(model.PageSize).ToList();
+                break;
+
+            case "signatures":
+                var signatures = FilterSignatures(_audit.GetSignatures(), search);
+                model.TotalItems = signatures.Count;
+                if (!string.IsNullOrEmpty(sort))
+                {
+                    signatures = sort.ToLower() switch
+                    {
+                        "name" => order == "desc" ? signatures.OrderByDescending(s => s.Name).ToList() : signatures.OrderBy(s => s.Name).ToList(),
+                        _ => signatures
+                    };
+                }
+                model.Signatures = signatures.Skip((page - 1) * model.PageSize).Take(model.PageSize).ToList();
+                break;
+
+            case "media":
+                var media = FilterMedia(_audit.GetMedia(), search);
+                model.TotalItems = media.Count;
+                if (!string.IsNullOrEmpty(sort))
+                {
+                    media = sort.ToLower() switch
+                    {
+                        "name" => order == "desc" ? media.OrderByDescending(m => m.Name).ToList() : media.OrderBy(m => m.Name).ToList(),
+                        _ => media
+                    };
+                }
+                model.Media = media.Skip((page - 1) * model.PageSize).Take(model.PageSize).ToList();
+                break;
+
+            case "software":
+                var software = FilterSoftware(_audit.GetSoftware(), search);
+                model.TotalItems = software.Count;
+                if (!string.IsNullOrEmpty(sort))
+                {
+                    software = sort.ToLower() switch
+                    {
+                        "name" => order == "desc" ? software.OrderByDescending(s => s.Name).ToList() : software.OrderBy(s => s.Name).ToList(),
+                        _ => software
+                    };
+                }
+                model.Software = software.Skip((page - 1) * model.PageSize).Take(model.PageSize).ToList();
+                break;
+
+            case "asutp":
+                var asutps = FilterAsutp(_audit.GetAsutp(), search);
+                model.TotalItems = asutps.Count;
+                if (!string.IsNullOrEmpty(sort))
+                {
+                    asutps = sort.ToLower() switch
+                    {
+                        "name" => order == "desc" ? asutps.OrderByDescending(a => a.Name).ToList() : asutps.OrderBy(a => a.Name).ToList(),
+                        _ => asutps
+                    };
+                }
+                model.Asutps = asutps.Skip((page - 1) * model.PageSize).Take(model.PageSize).ToList();
+                break;
+
+            case "its":
+                var its = FilterIts(_audit.GetIts(), search);
+                model.TotalItems = its.Count;
+                if (!string.IsNullOrEmpty(sort))
+                {
+                    its = sort.ToLower() switch
+                    {
+                        "name" => order == "desc" ? its.OrderByDescending(i => i.Name).ToList() : its.OrderBy(i => i.Name).ToList(),
+                        _ => its
+                    };
+                }
+                model.Its = its.Skip((page - 1) * model.PageSize).Take(model.PageSize).ToList();
+                break;
+        }
+
+        // ✅ Явно указываем путь к View в подпапке Infrastructure/
+        return View("Infrastructure/Infrastructure", model);
+    }
+
+    // ============================================================
+    // API: ИНФОРМАЦИОННЫЕ СИСТЕМЫ
+    // ============================================================
+
+    [HttpPost("/api/audit/infrastructure/info-systems/save")]
+    [IgnoreAntiforgeryToken]
+    public IActionResult SaveInfoSystem([FromBody] InfoSystemDto dto)
+    {
+        try
+        {
+            if (string.IsNullOrWhiteSpace(dto.Name))
+                return Json(new { success = false, error = "Наименование обязательно" });
+
+            var infoSystems = _audit.GetInfoSystems();
+
+            if (string.IsNullOrWhiteSpace(dto.Id))
+            {
+                var newItem = new InfoSystem
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    Name = dto.Name,
+                    Type = dto.Type,
+                    SecurityClass = dto.SecurityClass,
+                    SecurityLevel = dto.SecurityLevel
+                };
+                infoSystems.Add(newItem);
+            }
+            else
+            {
+                var item = infoSystems.FirstOrDefault(i => i.Id == dto.Id);
+                if (item == null)
+                    return Json(new { success = false, error = "Запись не найдена" });
+
+                item.Name = dto.Name;
+                item.Type = dto.Type;
+                item.SecurityClass = dto.SecurityClass;
+                item.SecurityLevel = dto.SecurityLevel;
+            }
+
+            _audit.SaveInfoSystems(infoSystems);
+            return Json(new { success = true });
+        }
+        catch (Exception ex)
+        {
+            return Json(new { success = false, error = ex.Message });
+        }
+    }
+
+    [HttpDelete("/api/audit/infrastructure/info-systems/delete/{id}")]
+    [IgnoreAntiforgeryToken]
+    public IActionResult DeleteInfoSystem(string id)
+    {
+        try
+        {
+            var infoSystems = _audit.GetInfoSystems();
+            var item = infoSystems.FirstOrDefault(i => i.Id == id);
+
+            if (item == null)
+                return Json(new { success = false, error = "Запись не найдена" });
+
+            infoSystems.Remove(item);
+            _audit.SaveInfoSystems(infoSystems);
+            return Json(new { success = true });
+        }
+        catch (Exception ex)
+        {
+            return Json(new { success = false, error = ex.Message });
+        }
+    }
+
+    // ============================================================
+    // API: СЗИ (СРЕДСТВА ЗАЩИТЫ ИНФОРМАЦИИ)
+    // ============================================================
+
+    [HttpGet("/api/audit/infrastructure/szi/{id}")]
+    public IActionResult GetSzi(string id)
+    {
+        var szi = _audit.GetSzi().FirstOrDefault(s => s.Id == id);
+        if (szi == null)
+            return NotFound();
+
+        return Json(szi);
+    }
+
+    [HttpPost("/api/audit/infrastructure/szi/save")]
+    [IgnoreAntiforgeryToken]
+    public IActionResult SaveSzi([FromBody] SziDto dto)
+    {
+        try
+        {
+            if (string.IsNullOrWhiteSpace(dto.Name))
+                return Json(new { success = false, error = "Наименование обязательно" });
+            if (string.IsNullOrWhiteSpace(dto.SerialNumber))
+                return Json(new { success = false, error = "Заводской номер обязателен" });
+
+            var szis = _audit.GetSzi();
+
+            string? receivedFromName = null;
+            if (!string.IsNullOrWhiteSpace(dto.ReceivedFromId))
+            {
+                var vendors = _store.GetSziVendors();
+                var vendor = vendors.FirstOrDefault(v => v.Id == dto.ReceivedFromId);
+                receivedFromName = vendor?.ShortName ?? vendor?.FullName;
+            }
+
+            if (string.IsNullOrWhiteSpace(dto.Id))
+            {
+                var newSzi = new Szi
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    Name = dto.Name,
+                    SerialNumber = dto.SerialNumber,
+                    ConformityMark = dto.ConformityMark,
+                    LicenseNumber = dto.LicenseNumber,
+                    MaxInstallations = dto.MaxInstallations,
+                    ReceiptDate = dto.ReceiptDate,
+                    InstallByDate = dto.InstallByDate,
+                    ReceivedFromId = dto.ReceivedFromId,
+                    ReceivedFrom = receivedFromName,
+                    Configuration = dto.Configuration,
+                    DestructionDate = dto.DestructionDate
+                };
+                szis.Add(newSzi);
+
+                if (dto.InstallByDate.HasValue)
+                {
+                    var events = _audit.GetCalendarEvents();
+                    events.Add(new CalendarEvent
+                    {
+                        Id = Guid.NewGuid().ToString(),
+                        Title = $"Установка СЗИ: {dto.Name}",
+                        StartDate = dto.InstallByDate.Value,
+                        Type = "szi_installation",
+                        Description = $"Необходимо установить СЗИ «{dto.Name}» (зав. № {dto.SerialNumber})",
+                        Completed = false
+                    });
+                    _audit.SaveCalendarEvents(events);
+                }
+
+                _audit.LogActivity(new AuditActivity
+                {
+                    Event = $"Добавлено СЗИ: {dto.Name} (зав. № {dto.SerialNumber})",
+                    User = User.Identity?.Name ?? "unknown",
+                    Status = "OK"
+                });
+            }
+            else
+            {
+                var szi = szis.FirstOrDefault(s => s.Id == dto.Id);
+                if (szi == null)
+                    return Json(new { success = false, error = "СЗИ не найдено" });
+
+                szi.Name = dto.Name;
+                szi.SerialNumber = dto.SerialNumber;
+                szi.ConformityMark = dto.ConformityMark;
+                szi.LicenseNumber = dto.LicenseNumber;
+                szi.MaxInstallations = dto.MaxInstallations;
+                szi.ReceiptDate = dto.ReceiptDate;
+                szi.InstallByDate = dto.InstallByDate;
+                szi.ReceivedFromId = dto.ReceivedFromId;
+                szi.ReceivedFrom = receivedFromName;
+                szi.Configuration = dto.Configuration;
+                szi.DestructionDate = dto.DestructionDate;
+
+                _audit.LogActivity(new AuditActivity
+                {
+                    Event = $"Изменено СЗИ: {dto.Name}",
+                    User = User.Identity?.Name ?? "unknown",
+                    Status = "OK"
+                });
+            }
+
+            _audit.SaveSzi(szis);
+            return Json(new { success = true });
+        }
+        catch (Exception ex)
+        {
+            return Json(new { success = false, error = ex.Message });
+        }
+    }
+
+    [HttpDelete("/api/audit/infrastructure/szi/delete/{id}")]
+    [IgnoreAntiforgeryToken]
+    public IActionResult DeleteSzi(string id)
+    {
+        try
+        {
+            var szis = _audit.GetSzi();
+            var szi = szis.FirstOrDefault(s => s.Id == id);
+
+            if (szi == null)
+                return Json(new { success = false, error = "СЗИ не найдено" });
+
+            szis.Remove(szi);
+            _audit.SaveSzi(szis);
+
+            _audit.LogActivity(new AuditActivity
+            {
+                Event = $"Удалено СЗИ: {szi.Name} (зав. № {szi.SerialNumber})",
+                User = User.Identity?.Name ?? "unknown",
+                Status = "OK"
+            });
+
+            return Json(new { success = true });
+        }
+        catch (Exception ex)
+        {
+            return Json(new { success = false, error = ex.Message });
+        }
+    }
+
+    // ============================================================
+    // API: СПРАВОЧНИК ПОСТАВЩИКОВ СЗИ
+    // ============================================================
+
+    [HttpGet("/api/audit/organization/szi-vendors")]
+    public IActionResult GetSziVendors()
+    {
+        var vendors = _store.GetSziVendors();
+        return Json(vendors.Select(v => new
+        {
+            id = v.Id,
+            shortName = v.ShortName,
+            fullName = v.FullName,
+            address = v.Address,
+            inn = v.Inn,
+            phone = v.Phone,
+            email = v.Email
+        }));
+    }
+
+    [HttpPost("/api/audit/organization/szi-vendors/save")]
+    [IgnoreAntiforgeryToken]
+    public IActionResult SaveSziVendor([FromBody] SziVendorDto dto)
+    {
+        try
+        {
+            if (string.IsNullOrWhiteSpace(dto.ShortName))
+                return Json(new { success = false, error = "Краткое название обязательно" });
+
+            var vendors = _store.GetSziVendors();
+
+            if (string.IsNullOrWhiteSpace(dto.Id))
+            {
+                var newVendor = new SziVendor
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    ShortName = dto.ShortName,
+                    FullName = dto.FullName,
+                    Address = dto.Address,
+                    Inn = dto.Inn,
+                    Phone = dto.Phone,
+                    Email = dto.Email
+                };
+                vendors.Add(newVendor);
+                _store.SaveSziVendors(vendors);
+
+                _audit.LogActivity(new AuditActivity
+                {
+                    Event = $"Добавлен поставщик СЗИ: {dto.ShortName}",
+                    User = User.Identity?.Name ?? "unknown",
+                    Status = "OK"
+                });
+
+                return Json(new { success = true, id = newVendor.Id });
+            }
+            else
+            {
+                var vendor = vendors.FirstOrDefault(v => v.Id == dto.Id);
+                if (vendor == null)
+                    return Json(new { success = false, error = "Организация не найдена" });
+
+                vendor.ShortName = dto.ShortName;
+                vendor.FullName = dto.FullName;
+                vendor.Address = dto.Address;
+                vendor.Inn = dto.Inn;
+                vendor.Phone = dto.Phone;
+                vendor.Email = dto.Email;
+
+                _store.SaveSziVendors(vendors);
+
+                _audit.LogActivity(new AuditActivity
+                {
+                    Event = $"Изменён поставщик СЗИ: {dto.ShortName}",
+                    User = User.Identity?.Name ?? "unknown",
+                    Status = "OK"
+                });
+
+                return Json(new { success = true });
+            }
+        }
+        catch (Exception ex)
+        {
+            return Json(new { success = false, error = ex.Message });
+        }
+    }
+
+    [HttpDelete("/api/audit/organization/szi-vendors/delete/{id}")]
+    [IgnoreAntiforgeryToken]
+    public IActionResult DeleteSziVendor(string id)
+    {
+        try
+        {
+            var vendors = _store.GetSziVendors();
+            var vendor = vendors.FirstOrDefault(v => v.Id == id);
+
+            if (vendor == null)
+                return Json(new { success = false, error = "Организация не найдена" });
+
+            var szis = _audit.GetSzi();
+            var usedInSzi = szis.Any(s => s.ReceivedFromId == id);
+
+            if (usedInSzi)
+            {
+                return Json(new
+                {
+                    success = false,
+                    error = "Невозможно удалить. Данная организация указана как поставщик в существующих СЗИ."
+                });
+            }
+
+            vendors.Remove(vendor);
+            _store.SaveSziVendors(vendors);
+
+            return Json(new { success = true });
+        }
+        catch (Exception ex)
+        {
+            return Json(new { success = false, error = ex.Message });
+        }
+    }
+
+    // ============================================================
+    // КАЛЕНДАРЬ (папка Views/Audit/Calendar/)
+    // ============================================================
+
+    [HttpGet("/audit/calendar")]
+    public IActionResult Calendar(DateTime? date, string? type, string? view)
+    {
+        ViewBag.ActiveModule = "audit";
+        ViewBag.ActiveSection = "calendar";
+        var viewDate = date ?? DateTime.Now;
+        ViewBag.ViewDate = viewDate;
+        ViewBag.SelectedType = type;
+        ViewBag.ViewMode = view ?? "month";
+        var events = _audit.GetCalendarEvents();
+        ViewBag.EventTypes = GetEventTypes();
+        ViewBag.AllEvents = events;
+        // ✅ Явно указываем путь к View в подпапке Calendar/
+        return View("Calendar/Calendar", events);
+    }
+
+    [HttpGet("/api/audit/calendar/events")]
+    public IActionResult GetCalendarEventsApi(int? year, int? month)
+    {
+        var events = _audit.GetCalendarEvents();
+
+        if (year.HasValue && month.HasValue)
+        {
+            events = events.Where(e =>
+                e.StartDate.Year == year.Value &&
+                e.StartDate.Month == month.Value
+            ).ToList();
+        }
+
+        return Json(events.Select(e => new
+        {
+            id = e.Id,
+            title = e.Title,
+            startDate = e.StartDate.ToString("yyyy-MM-dd"),
+            endDate = e.EndDate?.ToString("yyyy-MM-dd"),
+            type = e.Type,
+            description = e.Description,
+            completed = e.Completed
+        }));
+    }
+
+    [HttpPost("/audit/calendar/event/save")]
+    public IActionResult SaveCalendarEvent(CalendarEventForm form)
+    {
+        var events = _audit.GetCalendarEvents();
+
+        if (!string.IsNullOrWhiteSpace(form.Id))
+        {
+            var existingEvent = events.FirstOrDefault(e => e.Id == form.Id);
+            if (existingEvent != null)
+            {
+                existingEvent.Title = form.Title;
+                existingEvent.StartDate = DateTime.TryParse(form.StartDate, out var start) ? start : DateTime.Now;
+                existingEvent.EndDate = DateTime.TryParse(form.EndDate, out var end) ? end : null;
+                existingEvent.Type = form.Type;
+                existingEvent.Description = form.Description;
+                existingEvent.Completed = form.Completed;
+            }
+        }
+        else
+        {
+            events.Add(new CalendarEvent
+            {
+                Id = Guid.NewGuid().ToString(),
+                Title = form.Title,
+                StartDate = DateTime.TryParse(form.StartDate, out var start) ? start : DateTime.Now,
+                EndDate = DateTime.TryParse(form.EndDate, out var end) ? end : null,
+                Type = form.Type,
+                Description = form.Description,
+                Completed = form.Completed
+            });
+        }
+
+        _audit.SaveCalendarEvents(events);
+
+        if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+        {
+            return Json(new { success = true });
+        }
+
+        return RedirectToAction("Calendar");
+    }
+
+    [HttpGet("/audit/calendar/event/edit/{id}")]
+    public IActionResult EditCalendarEvent(string id)
+    {
+        var events = _audit.GetCalendarEvents();
+        var eventToEdit = events.FirstOrDefault(e => e.Id == id);
+
+        if (eventToEdit == null)
+            return NotFound();
+
+        return Json(new
+        {
+            id = eventToEdit.Id,
+            title = eventToEdit.Title,
+            startDate = eventToEdit.StartDate.ToString("yyyy-MM-dd"),
+            endDate = eventToEdit.EndDate?.ToString("yyyy-MM-dd"),
+            type = eventToEdit.Type,
+            description = eventToEdit.Description,
+            completed = eventToEdit.Completed
+        });
+    }
+
+    [HttpPost("/api/audit/calendar/event/toggle/{id}")]
+    [IgnoreAntiforgeryToken]
+    public IActionResult ToggleCalendarEvent(string id)
+    {
+        var events = _audit.GetCalendarEvents();
+        var eventToToggle = events.FirstOrDefault(e => e.Id == id);
+
+        if (eventToToggle == null)
+            return Json(new { success = false, error = "Событие не найдено" });
+
+        eventToToggle.Completed = !eventToToggle.Completed;
+        _audit.SaveCalendarEvents(events);
+
+        return Json(new { success = true, completed = eventToToggle.Completed });
+    }
+
+    [HttpGet("/audit/calendar/event/delete/{id}")]
+    public IActionResult DeleteCalendarEvent(string id)
+    {
+        var events = _audit.GetCalendarEvents().Where(e => e.Id != id).ToList();
+        _audit.SaveCalendarEvents(events);
+
+        if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+        {
+            return Json(new { success = true });
+        }
+
+        return RedirectToAction("Calendar");
+    }
+
+    // ============================================================
+    // ОБЪЕКТЫ (папка Views/Audit/Objects/)
+    // ============================================================
+
+    [HttpGet("/audit/objects")]
+    public IActionResult Objects()
+    {
+        ViewBag.ActiveModule = "audit";
+        ViewBag.ActiveSection = "objects";
+        return View("Objects/Objects");
+    }
+
+    // ============================================================
+    // ЖУРНАЛЫ (папка Views/Audit/Journals/)
+    // ============================================================
+
+    [HttpGet("/audit/journals")]
+    [HttpGet("/audit/journals/{type}")]
+    public IActionResult Journals(string? type)
+    {
+        ViewBag.ActiveModule = "audit";
+        ViewBag.ActiveSection = "journals";
+        ViewBag.JournalType = type ?? "default";
+        var entries = _audit.GetJournals(type ?? "default");
+        return View("Journals/Journals", entries);
+    }
+
+    // ============================================================
+    // ДЕЯТЕЛЬНОСТЬ (папка Views/Audit/Activity/)
+    // ============================================================
+
+    [HttpGet("/audit/activity")]
+    public IActionResult Activity()
+    {
+        ViewBag.ActiveModule = "audit";
+        ViewBag.ActiveSection = "activity";
+        return View("Activity/Activity", ActivitySections);
+    }
+
+    [HttpGet("/audit/activity/inspections")]
+    public IActionResult ActivityInspections(string? subsection, string? search)
+    {
+        ViewBag.ActiveModule = "audit";
+        ViewBag.ActiveSection = "activity/inspections";
+        ViewBag.ActiveSubsection = subsection ?? "internal";
+        ViewBag.Search = search;
+        return View(GetMockInspections());
+    }
+
+    [HttpGet("/audit/activity/responsible")]
+    public IActionResult Responsible(string? search, int page = 1, int size = 10)
+    {
+        ViewBag.ActiveModule = "audit";
+        ViewBag.ActiveSection = "activity/responsible";
+        ViewBag.Search = search;
+        ViewBag.CurrentPage = page;
+        var items = FilterResponsible(GetMockResponsible(), search);
+        ViewBag.TotalPages = (int)Math.Ceiling((double)items.Count / size);
+        return View(Paginate(items, page, size));
+    }
+
+    [HttpGet("/audit/activity/warranty")]
+    public IActionResult Warranty(string? search, int page = 1, int size = 10)
+    {
+        ViewBag.ActiveModule = "audit";
+        ViewBag.ActiveSection = "activity/warranty";
+        ViewBag.Search = search;
+        ViewBag.CurrentPage = page;
+        var items = FilterWarranty(GetMockWarranty(), search);
+        ViewBag.TotalPages = (int)Math.Ceiling((double)items.Count / size);
+        return View(Paginate(items, page, size));
+    }
+
+    [HttpGet("/audit/activity/documents")]
+    public IActionResult ActivityDocuments()
+    {
+        ViewBag.ActiveModule = "audit";
+        ViewBag.ActiveSection = "activity/documents";
+        var docs = GetMockDocuments();
+        ViewBag.Stats = GetDocumentStats(docs);
+        return View(docs);
+    }
+
+    [HttpGet("/audit/activity/situations")]
+    public IActionResult Situations(string? view, string? search)
+    {
+        ViewBag.ActiveModule = "audit";
+        ViewBag.ActiveSection = "activity/situations";
+        ViewBag.ViewMode = view ?? "grid";
+        ViewBag.Search = search;
+        ViewBag.Situations = GetMockSituations();
+        ViewBag.History = GetMockSituationHistory();
+        return View();
+    }
+
+    [HttpGet("/audit/activity/notifications")]
+    public IActionResult Notifications(string? tab, string? registryNumber)
+    {
+        ViewBag.ActiveModule = "audit";
+        ViewBag.ActiveSection = "activity/notifications";
+        ViewBag.ActiveSubtab = tab ?? "main";
+        ViewBag.RegistryNumber = registryNumber;
+        ViewBag.HasRegistry = !string.IsNullOrEmpty(registryNumber);
+        return View(GetMockNotifications());
+    }
+
+    // ============================================================
+    // ПРОВЕРКИ (папка Views/Audit/Inspections/)
+    // ============================================================
+
+    [HttpGet("/audit/inspections")]
+    public IActionResult InspectionsMain()
+    {
+        ViewBag.ActiveModule = "audit";
+        ViewBag.ActiveSection = "inspections";
+        return View("Inspections/Inspections");
+    }
+
+    // ============================================================
+    // ДОКУМЕНТЫ (папка Views/Audit/Documents/)
+    // ============================================================
+
+    [HttpGet("/audit/documents")]
+    public IActionResult DocumentsDirectory(string? type, string? search)
+    {
+        ViewBag.ActiveModule = "audit";
+        ViewBag.ActiveSection = "documents";
+        var targetType = type ?? "document-types";
+        ViewBag.ActiveDocType = targetType;
+        ViewBag.Search = search;
+        ViewBag.Groups = GetDirectoryGroups();
+        var config = GetDirectoryConfig(targetType);
+        ViewBag.Title = config["title"];
+        ViewBag.Columns = config["columns"];
+        ViewBag.HasAdditionalFields = config["hasAdditionalFields"];
+        var items = FilterDirectoryItems(GetMockDirectoryItems(targetType), search);
+        return View("Documents/DocumentsDirectory", items);
+    }
+
+    [HttpPost("/audit/documents/{type}/save")]
+    public IActionResult SaveDirectoryItem(string type, DirectoryItemForm form)
+    {
+        return RedirectToAction("DocumentsDirectory", new { type });
+    }
+
+    [HttpGet("/audit/documents/{type}/delete/{id}")]
+    public IActionResult DeleteDirectoryItem(string type, string id)
+    {
+        return RedirectToAction("DocumentsDirectory", new { type });
+    }
+
+    // ============================================================
+    // ЗАЩИТА (папка Views/Audit/Protection/)
+    // ============================================================
+
+    [HttpGet("/audit/protection")]
+    public IActionResult Protection()
+    {
+        ViewBag.ActiveModule = "audit";
+        ViewBag.ActiveSection = "protection";
+        return View("Protection/Protection");
+    }
+
+    // ============================================================
+    // ВСПОМОГАТЕЛЬНЫЕ МЕТОДЫ
+    // ============================================================
+
+    private List<T> Paginate<T>(List<T> list, int page, int size)
+    {
+        int start = (page - 1) * size;
+        int end = Math.Min(start + size, list.Count);
+        return start < end ? list.GetRange(start, end - start) : new List<T>();
+    }
+
+    private List<Department> FilterDepartments(List<Department> list, string? search)
+    {
+        if (string.IsNullOrEmpty(search)) return list;
+        var s = search.ToLower();
+        return list.Where(d => d.Name.ToLower().Contains(s)).ToList();
+    }
+
+    private List<Room> FilterRooms(List<Room> list, string? search)
+    {
+        if (string.IsNullOrEmpty(search)) return list;
+        var s = search.ToLower();
+        return list.Where(r =>
+            r.Number.ToLower().Contains(s) ||
+            (r.Description?.ToLower().Contains(s) ?? false) ||
+            (r.Department?.ToLower().Contains(s) ?? false)
+        ).ToList();
+    }
+
+    private List<Employee> FilterEmployees(List<Employee> list, string? search)
+    {
+        if (string.IsNullOrEmpty(search)) return list;
+        var s = search.ToLower();
+        return list.Where(e =>
+            e.Fio.ToLower().Contains(s) ||
+            (e.Position?.ToLower().Contains(s) ?? false) ||
+            (e.Department?.ToLower().Contains(s) ?? false)
+        ).ToList();
+    }
+
+    private List<AccessRecord> FilterAccesses(List<AccessRecord> list, string? search)
+    {
+        if (string.IsNullOrEmpty(search)) return list;
+        var s = search.ToLower();
+        return list.Where(a => a.EmployeeFio.ToLower().Contains(s)).ToList();
+    }
+
+    private List<InfoSystem> FilterInfoSystems(List<InfoSystem> list, string? search)
+    {
+        if (string.IsNullOrEmpty(search)) return list;
+        var s = search.ToLower();
+        return list.Where(i => i.Name.ToLower().Contains(s) || (i.Type?.ToLower().Contains(s) ?? false)).ToList();
+    }
+
+    private List<Storage> FilterStorages(List<Storage> list, string? search)
+    {
+        if (string.IsNullOrEmpty(search)) return list;
+        var s = search.ToLower();
+        return list.Where(i => i.Name.ToLower().Contains(s) || (i.Type?.ToLower().Contains(s) ?? false)).ToList();
+    }
+
+    private List<TechnicalAsset> FilterTechnicalAssets(List<TechnicalAsset> list, string? search)
+    {
+        if (string.IsNullOrEmpty(search)) return list;
+        var s = search.ToLower();
+        return list.Where(i => i.Name.ToLower().Contains(s) || (i.Type?.ToLower().Contains(s) ?? false)).ToList();
+    }
+
+    private List<Szi> FilterSzi(List<Szi> list, string? search)
+    {
+        if (string.IsNullOrEmpty(search)) return list;
+        var s = search.ToLower();
+        return list.Where(i =>
+            i.Name.ToLower().Contains(s) ||
+            (i.SerialNumber?.ToLower().Contains(s) ?? false) ||
+            (i.ReceivedFrom?.ToLower().Contains(s) ?? false) ||
+            (i.LicenseNumber?.ToLower().Contains(s) ?? false) ||
+            (i.ConformityMark?.ToLower().Contains(s) ?? false)
+        ).ToList();
+    }
+
+    private List<Skzi> FilterSkzi(List<Skzi> list, string? search)
+    {
+        if (string.IsNullOrEmpty(search)) return list;
+        var s = search.ToLower();
+        return list.Where(i => i.Name.ToLower().Contains(s)).ToList();
+    }
+
+    private List<Identifier> FilterIdentifiers(List<Identifier> list, string? search)
+    {
+        if (string.IsNullOrEmpty(search)) return list;
+        var s = search.ToLower();
+        return list.Where(i => i.Name.ToLower().Contains(s)).ToList();
+    }
+
+    private List<Signature> FilterSignatures(List<Signature> list, string? search)
+    {
+        if (string.IsNullOrEmpty(search)) return list;
+        var s = search.ToLower();
+        return list.Where(i => i.Name.ToLower().Contains(s)).ToList();
+    }
+
+    private List<Media> FilterMedia(List<Media> list, string? search)
+    {
+        if (string.IsNullOrEmpty(search)) return list;
+        var s = search.ToLower();
+        return list.Where(i => i.Name.ToLower().Contains(s)).ToList();
+    }
+
+    private List<Software> FilterSoftware(List<Software> list, string? search)
+    {
+        if (string.IsNullOrEmpty(search)) return list;
+        var s = search.ToLower();
+        return list.Where(i => i.Name.ToLower().Contains(s)).ToList();
+    }
+
+    private List<Asutp> FilterAsutp(List<Asutp> list, string? search)
+    {
+        if (string.IsNullOrEmpty(search)) return list;
+        var s = search.ToLower();
+        return list.Where(i => i.Name.ToLower().Contains(s)).ToList();
+    }
+
+    private List<Its> FilterIts(List<Its> list, string? search)
+    {
+        if (string.IsNullOrEmpty(search)) return list;
+        var s = search.ToLower();
+        return list.Where(i => i.Name.ToLower().Contains(s)).ToList();
+    }
+
+    private List<Branch> FilterBranches(List<Branch> list, string? search)
+    {
+        if (string.IsNullOrEmpty(search)) return list;
+        var s = search.ToLower();
+        return list.Where(b =>
+            b.Name.ToLower().Contains(s) ||
+            (b.Address?.ToLower().Contains(s) ?? false) ||
+            (b.Director?.ToLower().Contains(s) ?? false)
+        ).ToList();
+    }
+
+    // ============================================================
+    // МОКОВЫЕ ДАННЫЕ
+    // ============================================================
+
+    private List<Dictionary<string, string>> GetMockInspections() => new()
+    {
+        new() { { "id", "1" }, { "name", "Новое мероприятие" }, { "validFrom", "16.04.2022" }, { "validTo", "31.05.2022" }, { "executor", "Почеев Иван Романович" }, { "frequency", "Число месяца" }, { "period", "11" } },
+        new() { { "id", "2" }, { "name", "План котировки" }, { "validFrom", "10.08.1990" }, { "validTo", "31.12.2055" }, { "executor", "Андреева Елена Ивановна" }, { "frequency", "Раз в (количество месяцев)" }, { "period", "8" } },
+        new() { { "id", "3" }, { "name", "Проверка" }, { "validFrom", "15.05.2022" }, { "validTo", "10.10.2022" }, { "executor", "Бурлаков Сергей Сергеевич" }, { "frequency", "Ежемесячно" }, { "period", "-" } }
+    };
+
+    private List<Dictionary<string, string>> FilterResponsible(List<Dictionary<string, string>> list, string? search)
+    {
+        if (string.IsNullOrEmpty(search)) return list;
+        var s = search.ToLower();
+        return list.Where(i => i["employee"].ToLower().Contains(s) || i["responsibilityType"].ToLower().Contains(s)).ToList();
+    }
+
+    private List<Dictionary<string, string>> GetMockResponsible() => new()
+    {
+        new() { { "id", "1" }, { "responsibilityType", "Ответственный за ввод в эксплуатацию ОИ" }, { "employee", "Иванов Иван Алексеевич" }, { "appointmentDate", "15.06.2022" } },
+        new() { { "id", "2" }, { "responsibilityType", "Ответственный за эксплуатацию СЗИ" }, { "employee", "Петров Петр Петрович" }, { "appointmentDate", "01.06.2022" } }
+    };
+
+    private List<Dictionary<string, string>> FilterWarranty(List<Dictionary<string, string>> list, string? search)
+    {
+        if (string.IsNullOrEmpty(search)) return list;
+        var s = search.ToLower();
+        return list.Where(i => i["name"].ToLower().Contains(s)).ToList();
+    }
+
+    private List<Dictionary<string, string>> GetMockWarranty() => new()
+    {
+        new() { { "id", "1" }, { "name", "Антивирус" }, { "startDate", "23.02.2026" }, { "endDate", "23.02.2027" } },
+        new() { { "id", "2" }, { "name", "КриптоПро-АБ 3.1" }, { "startDate", "03.11.2024" }, { "endDate", "01.11.2026" } }
+    };
+
+    private List<Dictionary<string, string>> GetMockDocuments() => new()
+    {
+        new() { { "id", "1" }, { "name", "Инструкция ответственного за тех. защиту ПДн" }, { "status", "approved" }, { "date", "14.09.2022" } },
+        new() { { "id", "2" }, { "name", "Инструкция пользователя СКЗИ" }, { "status", "approved" }, { "date", "14.09.2022" } }
+    };
+
+    private Dictionary<string, long> GetDocumentStats(List<Dictionary<string, string>> docs) => new()
+    {
+        { "approved", docs.Count(d => d["status"] == "approved") },
+        { "needs_approval", docs.Count(d => d["status"] == "needs_approval") },
+        { "modified", docs.Count(d => d["status"] == "modified") },
+        { "error", docs.Count(d => d["status"] == "error") },
+        { "not_generated", docs.Count(d => d["status"] == "not_generated") }
+    };
+
+    private List<Dictionary<string, string>> GetMockSituations() => new()
+    {
+        new() { { "id", "update_sizi" }, { "title", "Обновление СЗИ" }, { "icon", "💡" } },
+        new() { { "id", "new_premise" }, { "title", "Новое помещение" }, { "icon", "💡" } }
+    };
+
+    private List<Dictionary<string, string>> GetMockSituationHistory() => new()
+    {
+        new() { { "id", "1" }, { "name", "Обновление СЗИ" }, { "object", "Маршрутизаторы Huawei" }, { "date", "15.09.2022" }, { "status", "Завершено" } }
+    };
+
+    private List<Dictionary<string, string>> GetMockNotifications() => new()
+    {
+        new() { { "id", "1" }, { "type", "Уведомление об обработке ПДн" }, { "sendDate", "30.04.2022" }, { "status", "Отправлено" } }
+    };
+
+    private Dictionary<string, string> GetEventTypes() => new()
+    {
+        { "planning", "Планерка" },
+        { "backup", "Создание резервных копий" },
+        { "testing", "Тестирование СЗИ" },
+        { "incoming", "Входящие документы ДСП" },
+        { "outgoing", "Исходящие документы ДСП" },
+        { "skzi_oki", "Учет СКЗИ (ОКИ)" },
+        { "skzi_okz", "Учет СКЗИ (ОКЗ)" },
+        { "szi", "СЗИ" },
+        { "szi_installation", "Установка СЗИ" },
+        { "meeting", "Заседание" }
+    };
+
+    private Dictionary<string, object> GetDirectoryGroups()
+    {
+        var groups = new Dictionary<string, object>();
+        var directories = new List<Dictionary<string, string>>
+        {
+            new() { { "id", "document-types" }, { "label", "документов" } },
+            new() { { "id", "positions" }, { "label", "должностей" } },
+            new() { { "id", "briefings" }, { "label", "инструктажа" } },
+            new() { { "id", "szi-maintenance" }, { "label", "обслуживания СКЗИ" } },
+            new() { { "id", "testing" }, { "label", "тестирования" } },
+            new() { { "id", "tech-documentation" }, { "label", "технической документации" } },
+            new() { { "id", "storages" }, { "label", "хранилищ" } },
+            new() { { "id", "electronic-identifiers" }, { "label", "электронных идентификаторов" } },
+            new() { { "id", "media-types" }, { "label", "машинных носителей" } },
+            new() { { "id", "departments" }, { "label", "подразделений" } }
+        };
+        groups["directories"] = directories;
+
+        var registries = new List<Dictionary<string, string>>
+        {
+            new() { { "id", "documents" }, { "label", "Документы" } },
+            new() { { "id", "cover-letters" }, { "label", "Сопроводительные письма" } },
+            new() { { "id", "organizations" }, { "label", "Организации" } },
+            new() { { "id", "keys" }, { "label", "Ключи" } },
+            new() { { "id", "stamps" }, { "label", "Печати" } },
+            new() { { "id", "pencils" }, { "label", "Пеналы" } },
+            new() { { "id", "szi-certificates" }, { "label", "Сертификаты СЗИ" } },
+            new() { { "id", "skzi-certificates" }, { "label", "Сертификаты СКЗИ" } },
+            new() { { "id", "certificates" }, { "label", "Свидетельства" } }
+        };
+        groups["registries"] = registries;
+        groups["npa"] = new Dictionary<string, string> { { "id", "legal-acts" }, { "label", "Нормативно-правовые акты" } };
+        return groups;
+    }
+
+    private Dictionary<string, object> GetDirectoryConfig(string type) => new()
+    {
+        { "title", GetDirectoryTitle(type) },
+        { "columns", GetDirectoryColumns(type) },
+        { "hasAdditionalFields", new[] { "szi-certificates", "skzi-certificates", "pencils" }.Contains(type) }
+    };
+
+    private string GetDirectoryTitle(string type) => type switch
+    {
+        "document-types" => "Виды документов",
+        "positions" => "Должности",
+        "briefings" => "Инструктажи",
+        "szi-maintenance" => "Обслуживания СЗИ",
+        "testing" => "Тестирования",
+        "tech-documentation" => "Технической документации",
+        "storages" => "Хранилища",
+        "electronic-identifiers" => "Электронных идентификаторов",
+        "media-types" => "Типы носителей",
+        "departments" => "Подразделения",
+        "documents" => "Документы",
+        "cover-letters" => "Сопроводительные письма",
+        "organizations" => "Организации",
+        "keys" => "Ключи",
+        "stamps" => "Печати",
+        "pencils" => "Пеналы",
+        "szi-certificates" => "Сертификаты СЗИ",
+        "skzi-certificates" => "Сертификаты СКЗИ",
+        "certificates" => "Свидетельства",
+        "legal-acts" => "Нормативно-правовые акты",
+        _ => "Справочник"
+    };
+
+    private List<Dictionary<string, string>> GetDirectoryColumns(string type) => type switch
+    {
+        "pencils" => new List<Dictionary<string, string>>
+        {
+            new() { { "key", "name" }, { "label", "Наименование" } },
+            new() { { "key", "number" }, { "label", "Номер" } },
+            new() { { "key", "keyNumber" }, { "label", "Номер ключа" } }
+        },
+        "szi-certificates" or "skzi-certificates" => new List<Dictionary<string, string>>
+        {
+            new() { { "key", "name" }, { "label", "Наименование" } },
+            new() { { "key", "number" }, { "label", "Номер" } },
+            new() { { "key", "issueDate" }, { "label", "Дата выдачи" } },
+            new() { { "key", "validUntil" }, { "label", "Действителен до" } },
+            new() { { "key", "manufacturer" }, { "label", "Изготовитель" } }
+        },
+        "organizations" => new List<Dictionary<string, string>>
+        {
+            new() { { "key", "name" }, { "label", "Наименование" } },
+            new() { { "key", "inn" }, { "label", "ИНН" } },
+            new() { { "key", "address" }, { "label", "Адрес" } }
+        },
+        "cover-letters" => new List<Dictionary<string, string>>
+        {
+            new() { { "key", "name" }, { "label", "Наименование" } },
+            new() { { "key", "number" }, { "label", "Номер" } },
+            new() { { "key", "date" }, { "label", "Дата" } }
+        },
+        _ => new List<Dictionary<string, string>>
+        {
+            new() { { "key", "name" }, { "label", "Наименование" } }
+        }
+    };
+
+    private List<Dictionary<string, string>> GetMockDirectoryItems(string type) => type switch
+    {
+        "document-types" => new List<Dictionary<string, string>>
+        {
+            new() { { "id", "1" }, { "name", "Постановление" } },
+            new() { { "id", "2" }, { "name", "Приказ" } },
+            new() { { "id", "3" }, { "name", "Протокол" } },
+            new() { { "id", "4" }, { "name", "Расписка" } },
+            new() { { "id", "5" }, { "name", "Распоряжение" } }
+        },
+        "pencils" => new List<Dictionary<string, string>>
+        {
+            new() { { "id", "1" }, { "name", "Пенал железный" }, { "number", "111" }, { "keyNumber", "2222999110" } },
+            new() { { "id", "2" }, { "name", "пенал ленточный" }, { "number", "499" }, { "keyNumber", "018" } },
+            new() { { "id", "3" }, { "name", "пенал на 2 ключа" }, { "number", "067857" }, { "keyNumber", "ключ" } }
+        },
+        "szi-certificates" => new List<Dictionary<string, string>>
+        {
+            new() { { "id", "1" }, { "name", "Контур-Эксперт" }, { "number", "4397" }, { "issueDate", "14.10.2022" }, { "validUntil", "14.10.2027" }, { "manufacturer", "ФАП «ГНИИИ ПТЭИ ФСТЭК России»" } },
+            new() { { "id", "2" }, { "name", "С-ТЕЛЕМ РОЛЛЕР" }, { "number", "4695" }, { "issueDate", "12.10.2022" }, { "validUntil", "12.10.2027" }, { "manufacturer", "АО Центр «Аттестацияинформ»" } }
+        },
+        "legal-acts" => new List<Dictionary<string, string>>
+        {
+            new() { { "id", "1" }, { "name", "ФЗ №152-ФЗ «О персональных данных»" } },
+            new() { { "id", "2" }, { "name", "ФЗ №149-ФЗ «Об информации...»" } },
+            new() { { "id", "3" }, { "name", "ФЗ №187-ФЗ «О безопасности КИИ»" } }
+        },
+        _ => new List<Dictionary<string, string>>()
+    };
+
+    private List<Dictionary<string, string>> FilterDirectoryItems(List<Dictionary<string, string>> list, string? search)
+    {
+        if (string.IsNullOrEmpty(search)) return list;
+        var s = search.ToLower();
+        return list.Where(item => item.Values.Any(v => v.ToLower().Contains(s))).ToList();
+    }
+}
+
+// ============================================================
+// DTO КЛАССЫ (только для API)
+// ============================================================
+
+public class CalendarEventForm
+{
+    public string? Id { get; set; }
+    public string Title { get; set; } = "";
+    public string? StartDate { get; set; }
+    public string? EndDate { get; set; }
+    public string? Type { get; set; }
+    public string? Description { get; set; }
+    public bool Completed { get; set; }
+}
+
+public class DirectoryItemForm
+{
+    public string? Id { get; set; }
+    public string Name { get; set; } = "";
+    public string? Number { get; set; }
+    public string? KeyNumber { get; set; }
+    public string? IssueDate { get; set; }
+    public string? ValidUntil { get; set; }
+    public string? Manufacturer { get; set; }
+    public string? Inn { get; set; }
+    public string? Address { get; set; }
+    public string? Date { get; set; }
+}
+
+public class DepartmentDto
+{
+    public string? Id { get; set; }
+    public string Name { get; set; } = "";
+}
+
+public class RoomDto
+{
+    public string? Id { get; set; }
+    public string Number { get; set; } = "";
+    public string? Description { get; set; }
+    public string Department { get; set; } = "";
+    public DateTime? DateIn { get; set; }
+    public DateTime? DateOut { get; set; }
+}
+
+public class ReferenceDto
+{
+    public string? Id { get; set; }
+    public string Name { get; set; } = "";
+}
+
+public class EmployeeDto
+{
+    public string? Id { get; set; }
+    public string Fio { get; set; } = "";
+    public string Position { get; set; } = "";
+    public string Department { get; set; } = "";
+    public string Phone { get; set; } = "";
+    public string Email { get; set; } = "";
+    public DateTime? DateStart { get; set; }
+    public DateTime? DateEnd { get; set; }
+}
+
+public class InfoSystemDto
+{
+    public string? Id { get; set; }
+    public string Name { get; set; } = "";
+    public string Type { get; set; } = "";
+    public string SecurityClass { get; set; } = "";
+    public string SecurityLevel { get; set; } = "";
+}
+
+public class SziDto
+{
+    public string? Id { get; set; }
+    public string Name { get; set; } = "";
+    public string SerialNumber { get; set; } = "";
+    public string ConformityMark { get; set; } = "";
+    public string LicenseNumber { get; set; } = "";
+    public int MaxInstallations { get; set; }
+    public DateTime? ReceiptDate { get; set; }
+    public DateTime? InstallByDate { get; set; }
+    public string? ReceivedFromId { get; set; }
+    public string? Configuration { get; set; }
+    public DateTime? DestructionDate { get; set; }
+}
+
+public class SziVendorDto
+{
+    public string? Id { get; set; }
+    public string ShortName { get; set; } = "";
+    public string? FullName { get; set; }
+    public string? Address { get; set; }
+    public string? Inn { get; set; }
+    public string? Phone { get; set; }
+    public string? Email { get; set; }
+}
+
+public class BranchDto
+{
+    public string? Id { get; set; }
+    public string Name { get; set; } = "";
+    public string Address { get; set; } = "";
+    public string? Director { get; set; }
+}
+
+public class AccessDto
+{
+    public string? Id { get; set; }
+    public string EmployeeId { get; set; } = "";
+    public string EmployeeFio { get; set; } = "";
+    public bool PdnISPDn { get; set; }
+    public bool PdnPaper { get; set; }
+    public bool ConfInfo { get; set; }
+    public bool SkziRoom { get; set; }
+    public bool SkziWork { get; set; }
+}

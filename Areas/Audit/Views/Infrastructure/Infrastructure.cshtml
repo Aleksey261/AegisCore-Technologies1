@@ -1,0 +1,143 @@
+﻿@model AegisCore.Models.InfrastructureViewModel
+@{
+    ViewData["Title"] = "Инфраструктура";
+}
+
+<div class="audit-page">
+    <div class="page-header">
+        <h1><i class="fas fa-server"></i> Инфраструктура</h1>
+    </div>
+
+    <div class="tabs-nav">
+        <a href="/audit/infrastructure?section=szi" class="tab-nav-item @(Model.ActiveTab == "szi" ? "active" : "")">
+            <i class="fas fa-shield-alt"></i> СЗИ
+        </a>
+        <a href="/audit/infrastructure?section=skzi" class="tab-nav-item @(Model.ActiveTab == "skzi" ? "active" : "")">
+            <i class="fas fa-key"></i> СКЗИ
+        </a>
+        <a href="/audit/infrastructure?section=technical-assets" class="tab-nav-item @(Model.ActiveTab == "technical-assets" ? "active" : "")">
+            <i class="fas fa-microchip"></i> Технические средства
+        </a>
+        <a href="/audit/infrastructure?section=storage" class="tab-nav-item @(Model.ActiveTab == "storage" ? "active" : "")">
+            <i class="fas fa-hdd"></i> Хранилища
+        </a>
+        <a href="/audit/infrastructure?section=identifiers" class="tab-nav-item @(Model.ActiveTab == "identifiers" ? "active" : "")">
+            <i class="fas fa-id-card"></i> Электронные идентификаторы
+        </a>
+        <a href="/audit/infrastructure?section=signatures" class="tab-nav-item @(Model.ActiveTab == "signatures" ? "active" : "")">
+            <i class="fas fa-signature"></i> Электронные подписи
+        </a>
+        <a href="/audit/infrastructure?section=media" class="tab-nav-item @(Model.ActiveTab == "media" ? "active" : "")">
+            <i class="fas fa-compact-disc"></i> Машинные носители
+        </a>
+        <a href="/audit/infrastructure?section=software" class="tab-nav-item @(Model.ActiveTab == "software" ? "active" : "")">
+            <i class="fas fa-laptop-code"></i> Программное обеспечение
+        </a>
+        <a href="/audit/infrastructure?section=info-systems" class="tab-nav-item @(Model.ActiveTab == "info-systems" ? "active" : "")">
+            <i class="fas fa-desktop"></i> Информационные системы
+        </a>
+        <a href="/audit/infrastructure?section=asutp" class="tab-nav-item @(Model.ActiveTab == "asutp" ? "active" : "")">
+            <i class="fas fa-industry"></i> АСУ ТП
+        </a>
+        <a href="/audit/infrastructure?section=its" class="tab-nav-item @(Model.ActiveTab == "its" ? "active" : "")">
+            <i class="fas fa-network-wired"></i> ИТС
+        </a>
+    </div>
+
+    <div class="tab-content active">
+        @switch (Model.ActiveTab)
+        {
+            case "szi":
+                @await Html.PartialAsync("Szi", Model)
+                break;
+            case "skzi":
+                @await Html.PartialAsync("Skzi", Model)
+                break;
+            case "technical-assets":
+                @await Html.PartialAsync("TechnicalAssets", Model)
+                break;
+            case "storage":
+                @await Html.PartialAsync("Storage", Model)
+                break;
+            case "identifiers":
+                @await Html.PartialAsync("Identifiers", Model)
+                break;
+            case "signatures":
+                @await Html.PartialAsync("Signatures", Model)
+                break;
+            case "media":
+                @await Html.PartialAsync("Media", Model)
+                break;
+            case "software":
+                @await Html.PartialAsync("Software", Model)
+                break;
+            case "info-systems":
+                @await Html.PartialAsync("InfoSystems", Model)
+                break;
+            case "asutp":
+                @await Html.PartialAsync("Asutp", Model)
+                break;
+            case "its":
+                @await Html.PartialAsync("Its", Model)
+                break;
+            default:
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <i class="fas fa-info-circle"></i> @GetSectionTitle(Model.ActiveTab)
+                    </h2>
+                </div>
+                break;
+        }
+    </div>
+</div>
+
+<script>
+    // ============================================================
+    // ФИЛЬТРАЦИЯ ТАБЛИЦ
+    // ============================================================
+    function filterTable(tableId, colIndex, value) {
+        const table = document.getElementById(tableId);
+        if (!table) return;
+        const rows = table.querySelectorAll('tbody tr');
+        const searchValue = value.toLowerCase();
+        rows.forEach(row => {
+            const cell = row.cells[colIndex];
+            if (cell) {
+                const text = cell.textContent.toLowerCase();
+                row.style.display = text.includes(searchValue) ? '' : 'none';
+            }
+        });
+    }
+
+    function editInfoSystem(id) {
+        alert('Редактирование ИС: ' + id);
+    }
+
+    function deleteInfoSystem(id) {
+        if (!confirm('Удалить информационную систему?')) return;
+        fetch('/audit/infrastructure/api/info-systems/delete/' + id, { method: 'DELETE' })
+            .then(r => r.json())
+            .then(result => {
+                if (result.success) location.reload();
+                else alert('Ошибка: ' + (result.error || 'Неизвестная ошибка'));
+            });
+    }
+</script>
+
+@functions {
+    string GetSectionTitle(string section) => section switch
+    {
+        "szi" => "Средства защиты информации (СЗИ)",
+        "skzi" => "Средства криптографической защиты информации (СКЗИ)",
+        "technical-assets" => "Технические средства",
+        "storage" => "Хранилища",
+        "identifiers" => "Электронные идентификаторы",
+        "signatures" => "Электронные подписи",
+        "media" => "Машинные носители информации",
+        "software" => "Программное обеспечение",
+        "info-systems" => "Информационные системы",
+        "asutp" => "АСУ ТП",
+        "its" => "ИТС",
+        _ => "Раздел"
+    };
+}

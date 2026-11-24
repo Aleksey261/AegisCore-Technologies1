@@ -1,0 +1,129 @@
+@model AegisCore.Models.DashboardStats
+@{
+    ViewData["Title"] = "Панель управления";
+    Layout = "_Layout";
+}
+
+<!-- Welcome Section -->
+<div class="welcome-section">
+    <h1>Добро пожаловать, @User.Identity!.Name!</h1>
+    <p>Выберите модуль для работы</p>
+</div>
+
+<!-- Modules Grid -->
+<div class="modules-grid">
+    <!-- Audit Module -->
+    <a href="/audit" class="module-card">
+        <div class="module-icon audit">
+            <i class="fas fa-clipboard-list"></i>
+        </div>
+        <h3>Аудит безопасности</h3>
+        <p>Комплексная проверка безопасности информационной системы</p>
+        <span class="module-link">Перейти <i class="fas fa-arrow-right"></i></span>
+    </a>
+
+    <!-- Scanner Module -->
+    <a href="/scanner" class="module-card">
+        <div class="module-icon scanner">
+            <i class="fas fa-search"></i>
+        </div>
+        <h3>Сканер безопасности</h3>
+        <p>Автоматическое сканирование уязвимостей и анализ защищенности</p>
+        <span class="module-link">Перейти <i class="fas fa-arrow-right"></i></span>
+    </a>
+
+    <!-- FSTEC Module -->
+    <a href="/fstec" class="module-card">
+        <div class="module-icon admin">
+            <i class="fas fa-chart-bar"></i>
+        </div>
+        <h3>ФСТЭК и отчётность</h3>
+        <p>Работа с БДУ, уязвимостями, экспортный контроль и отчёты</p>
+        <span class="module-link">Перейти <i class="fas fa-arrow-right"></i></span>
+    </a>
+</div>
+
+<!-- Stats Section -->
+<div class="stats-section">
+    <h2><i class="fas fa-chart-line"></i> Текущая статистика</h2>
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-icon">
+                <i class="fas fa-bullseye"></i>
+            </div>
+            <div class="stat-info">
+                <div class="stat-value">@Model.Targets</div>
+                <div class="stat-label">Целей сканирования</div>
+            </div>
+        </div>
+        
+        <div class="stat-card">
+            <div class="stat-icon">
+                <i class="fas fa-tasks"></i>
+            </div>
+            <div class="stat-info">
+                <div class="stat-value">@Model.ScanJobs</div>
+                <div class="stat-label">Заданий сканирования</div>
+            </div>
+        </div>
+        
+        <div class="stat-card">
+            <div class="stat-icon">
+                <i class="fas fa-bug"></i>
+            </div>
+            <div class="stat-info">
+                <div class="stat-value">@Model.Vulnerabilities</div>
+                <div class="stat-label">Записей уязвимостей</div>
+            </div>
+        </div>
+        
+        <div class="stat-card">
+            <div class="stat-icon">
+                <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            <div class="stat-info">
+                <div class="stat-value">@Model.Findings</div>
+                <div class="stat-label">Результатов проверки</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+<script src="~/js/theme.js"></script>
+<script>
+    // Theme toggle for dashboard
+    function toggleTheme() {
+        const body = document.body;
+        const icon = document.querySelector('.theme-toggle i');
+        
+        if (body.classList.contains('dark-theme')) {
+            body.classList.remove('dark-theme');
+            body.classList.add('light-theme');
+            icon.classList.remove('fa-sun');
+            icon.classList.add('fa-moon');
+            localStorage.setItem('theme', 'light');
+        } else {
+            body.classList.remove('light-theme');
+            body.classList.add('dark-theme');
+            icon.classList.remove('fa-moon');
+            icon.classList.add('fa-sun');
+            localStorage.setItem('theme', 'dark');
+        }
+    }
+
+    // Load saved theme
+    window.addEventListener('load', function() {
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        if (savedTheme === 'dark') {
+            document.body.classList.add('dark-theme');
+            const icon = document.querySelector('.theme-toggle i');
+            if (icon) {
+                icon.classList.replace('fa-moon', 'fa-sun');
+            }
+        } else {
+            document.body.classList.add('light-theme');
+        }
+    });
+</script>
+}

@@ -1,0 +1,86 @@
+@model List<AegisCore.Models.CalendarEvent>
+@{
+    var viewDate = ViewBag.ViewDate as DateTime? ?? DateTime.Now;
+    var mode = ViewBag.CurrentMode as string ?? "day";
+    
+    // Вычисляем начало недели (понедельник) без использования метода расширения
+    int diff = (7 + ((int)viewDate.DayOfWeek - (int)DayOfWeek.Monday)) % 7;
+    var weekStart = viewDate.AddDays(-1 * diff).Date;
+}
+
+<div class="day-week-view" style="display: flex; flex-direction: column; gap: 8px;">
+    @if (mode == "day")
+    {
+        <div class="day-header" style="padding: 16px; background: #f8fafc; border-radius: 8px; text-align: center;">
+            <h3 style="margin: 0; color: #1e293b; font-size: 18px;">@viewDate.ToString("dd MMMM yyyy")</h3>
+            <p style="margin: 4px 0 0 0; color: #64748b; font-size: 14px;">@viewDate.ToString("dddd")</p>
+        </div>
+        
+        <div class="day-events" style="margin-top: 16px;">
+            @{
+                var dayEvents = Model.Where(e => e.StartDate.Date == viewDate.Date).OrderBy(e => e.StartDate).ToList();
+            }
+            
+            @if (!dayEvents.Any())
+            {
+                <div style="text-align: center; padding: 48px; color: #64748b;">
+                    <i class="fas fa-calendar-day" style="font-size: 48px; margin-bottom: 16px; opacity: 0.3;"></i>
+                    <p>Нет событий на этот день</p>
+                </div>
+            }
+            else
+            {
+                @foreach (var evt in dayEvents)
+                {
+                    <div class="event-block" style="padding: 16px; background: #f8fafc; border-left: 4px solid #4F46E5; border-radius: 8px; margin-bottom: 12px;">
+                        <h4 style="margin: 0 0 8px 0; color: #1e293b; font-size: 15px;">@evt.Title</h4>
+                        <p style="margin: 0 0 4px 0; color: #64748b; font-size: 13px;">
+                            <i class="fas fa-clock" style="margin-right: 4px;"></i>
+                            @evt.StartDate.ToString("HH:mm") - @(evt.EndDate?.ToString("HH:mm") ?? "—")
+                        </p>
+                        @if (!string.IsNullOrEmpty(evt.Description))
+                        {
+                            <p style="margin: 8px 0 0 0; color: #475569; font-size: 13px;">@evt.Description</p>
+                        }
+                    </div>
+                }
+            }
+        </div>
+    }
+    else
+    {
+        // Режим недели
+        var weekEnd = weekStart.AddDays(6);
+        
+        <div class="week-header" style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; margin-bottom: 16px;">
+            @for (int i = 0; i < 7; i++)
+            {
+                var day = weekStart.AddDays(i);
+                var isToday = day.Date == DateTime.Today;
+                
+                <div class="day-header" style="padding: 12px; background: @(isToday ? "#4F46E5" : "#f8fafc"); color: @(isToday ? "white" : "#475569"); border-radius: 8px; text-align: center;">
+                    <div style="font-size: 12px; font-weight: 500;">@day.ToString("ddd")</div>
+                    <div style="font-size: 20px; font-weight: 700; margin-top: 4px;">@day.Day</div>
+                </div>
+            }
+        </div>
+        
+        <div class="week-events" style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px;">
+            @for (int i = 0; i < 7; i++)
+            {
+                var day = weekStart.AddDays(i);
+                var dayEvents = Model.Where(e => e.StartDate.Date == day.Date).ToList();
+                
+                <div class="day-column" style="min-height: 400px; background: #f8fafc; border-radius: 8px; padding: 8px;">
+                    @foreach (var evt in dayEvents)
+                    {
+                        <div class="event-block" style="padding: 8px; background: white; border-radius: 6px; margin-bottom: 8px; font-size: 12px; box-shadow: 0 1px 2px rgba(0,0,0,0.05);">
+                            <div style="font-weight: 600; color: #1e293b; margin-bottom: 4px;">@evt.Title</div>
+                            <div style="color: #64748b; font-size: 11px;">@evt.StartDate.ToString("HH:mm")</div>
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+    }
+</div>

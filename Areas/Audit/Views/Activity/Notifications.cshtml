@@ -1,0 +1,1223 @@
+@{
+    ViewData["Title"] = "Уведомления";
+    
+    // Получаем данные из ViewBag
+    var registryInfo = ViewBag.RegistryInfo as Dictionary<string, string> ?? new Dictionary<string, string>();
+    var notificationsList = ViewBag.Notifications as List<Dictionary<string, string>> ?? new List<Dictionary<string, string>>();
+    
+    // Заглушка для демонстрации
+    if (!notificationsList.Any())
+    {
+        notificationsList = new List<Dictionary<string, string>>
+        {
+            new() { { "id", "1" }, { "type", "Уведомление об обработке (о намерении осуществлять обработку ПДн)" }, { "sendDate", "30.04.2022" }, { "status", "Отправлено" } }
+        };
+    }
+    
+    // Список территориальных органов Роскомнадзора
+    var territories = new List<string>
+    {
+        "Алтайскому краю и Республике Алтай",
+        "Амурской области",
+        "Архангельской области и Ненецкому автономному округу",
+        "Астраханской области",
+        "Белгородской области",
+        "Брянской области",
+        "Владимирской области",
+        "Волгоградской области",
+        "Вологодской области",
+        "Воронежской области",
+        "г. Москве и Московской области",
+        "г. Санкт-Петербургу и Ленинградской области",
+        "Еврейской автономной области",
+        "Забайкальскому краю",
+        "Ивановской области",
+        "Иркутской области",
+        "Кабардино-Балкарской Республике",
+        "Калининградской области",
+        "Калужской области",
+        "Камчатскому краю",
+        "Карачаево-Черкесской Республике",
+        "Кемеровской области",
+        "Кировской области",
+        "Костромской области",
+        "Краснодарскому краю",
+        "Красноярскому краю",
+        "Курганской области",
+        "Курской области",
+        "Липецкой области",
+        "Магаданской области",
+        "Мурманской области",
+        "Нижегородской области",
+        "Новгородской области",
+        "Новосибирской области",
+        "Омской области",
+        "Оренбургской области",
+        "Орловской области",
+        "Пензенской области",
+        "Пермскому краю",
+        "Приморскому краю",
+        "Псковской области",
+        "Республике Адыгея",
+        "Республике Алтай",
+        "Республике Башкортостан",
+        "Республике Бурятия",
+        "Республике Дагестан",
+        "Республике Ингушетия",
+        "Республике Калмыкия",
+        "Республике Карелия",
+        "Республике Коми",
+        "Республике Крым",
+        "Республике Марий Эл",
+        "Республике Мордовия",
+        "Республике Саха (Якутия)",
+        "Республике Северная Осетия-Алания",
+        "Республике Татарстан",
+        "Республике Тыва",
+        "Республике Хакасия",
+        "Ростовской области",
+        "Рязанской области",
+        "Самарской области",
+        "Саратовской области",
+        "Сахалинской области",
+        "Свердловской области",
+        "Смоленской области",
+        "Ставропольскому краю",
+        "Тамбовской области",
+        "Тверской области",
+        "Томской области",
+        "Тульской области",
+        "Тюменской области",
+        "Удмуртской Республике",
+        "Ульяновской области",
+        "Хабаровскому краю",
+        "Челябинской области",
+        "Чеченской Республике",
+        "Чувашской Республике",
+        "Ярославской области"
+    };
+}
+
+<div class="page-header">
+    <h1>
+        <a href="/audit/activity" style="color: #64748b; text-decoration: none; margin-right: 12px; font-size: 24px;">
+            <i class="fas fa-arrow-left"></i>
+        </a>
+        <i class="fas fa-bell"></i> Уведомления
+    </h1>
+    <p style="color: #64748b; margin-top: 8px; margin-left: 36px;">Автоматическое формирование информационных писем и сведений в системе операторов, осуществляющих обработку ПДн</p>
+</div>
+
+<!-- Вкладки навигации -->
+<div class="tabs-nav">
+    <a href="/audit/activity/responsible" class="tab-nav-item">Ответственные лица</a>
+    <a href="/audit/activity/commissions" class="tab-nav-item">Комиссии</a>
+    <a href="/audit/activity/documents" class="tab-nav-item">Документы</a>
+    <a href="/audit/activity/warranty" class="tab-nav-item">Гарантия</a>
+    <a href="/audit/activity/notifications" class="tab-nav-item active">Уведомления</a>
+    <a href="/audit/activity/situations" class="tab-nav-item">Ситуации</a>
+    <a href="/audit/activity/monitoring" class="tab-nav-item">Мониторинг</a>
+</div>
+
+<div class="form-content">
+    <!-- Вкладки внутри подраздела -->
+    <div class="sub-tabs" style="display: flex; gap: 4px; margin-bottom: 20px; background: #f1f5f9; padding: 4px; border-radius: 8px;">
+        <button class="sub-tab active" onclick="switchNotificationTab('main', this)">Основные сведения</button>
+        <button class="sub-tab" onclick="switchNotificationTab('letters', this)">Уведомления/письма</button>
+    </div>
+
+    <!-- Вкладка: Основные сведения (Рисунок 195) -->
+    <div id="notification-main" class="notification-tab active">
+        <div class="info-panel" style="margin-bottom: 20px; padding: 16px; background: #f0fdf4; border-radius: 8px; border-left: 4px solid #22c55e;">
+            <p style="margin: 0; color: #166534; font-size: 14px;">
+                <i class="fas fa-info-circle"></i>
+                Рекомендуется указывать перечень действий, совершаемых оператором с персональными данными субъектов, а также используемые способы обработки персональных данных.
+            </p>
+        </div>
+
+        <form id="notificationForm" onsubmit="saveNotificationMain(event)">
+            <div class="form-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
+                <div class="form-group">
+                    <label>Наименование ТО Роскомнадзора по:</label>
+                    <select id="registryTerritory" class="form-control">
+                        <option value="">Выбрать...</option>
+                        @foreach (var territory in territories)
+                        {
+                            if (territory == "Алтайскому краю и Республике Алтай")
+                            {
+                                <option value="@territory" selected>@territory</option>
+                            }
+                            else
+                            {
+                                <option value="@territory">@territory</option>
+                            }
+                        }
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Регистрационный номер записи в Реестре:</label>
+                    <input type="text" id="registryNumber" class="form-control" value="10-0119771" />
+                </div>
+                <div class="form-group">
+                    <label>Дата начала обработки ПДн:</label>
+                    <input type="date" id="registryStartDate" class="form-control" value="2009-04-09" />
+                </div>
+                <div class="form-group">
+                    <label>Субъекты РФ, на территории которых происходит обработка ПДн:</label>
+                    <input type="text" id="registrySubjects" class="form-control" value="Алтайский край" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Правовое основание обработки ПДн:</label>
+                <textarea id="registryLegalBasis" class="form-control" rows="3">Конституция Российской Федерации, Трудовой кодекс РФ, Федеральный закон РФ от 27.07.2006 № 152-ФЗ "О персональных данных", Основы законодательства Российской Федерации об охране здоровья граждан" от 22.07.1993 № 5487-1, Основы законодательства Российской Федерации о культуре" от 09.10.1992 № 3612-1, Федеральный закон "О библиотечном деле" от 23.11.1994 № 78-ФЗ, Закон Кировской области "О библиотечном деле Кировской области" от 28.08.1997 № 11-30.</textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Цель обработки ПДн:</label>
+                <textarea id="registryPurpose" class="form-control" rows="2">Формирование единой информационной системы здравоохранения на территории Кировской области, повышение оперативности и качества обслуживания читателей библиотеки, ведение кадрового делопроизводства, заключение договоров гражданско-правового характера.</textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Описание мер, предусмотренных ст. 18.1 и 19 Закона «О персональных данных»:</label>
+                <textarea id="registryMeasures" class="form-control" rows="3">1) Издание локальных актов по вопросам обработки персональных данных, а также локальных актов, устанавливающих процедуры, направленные на предотвращение, выявление и устранение последствий нарушений; 2) обеспечение безопасности персональных данных, хранящихся в соответствии с определенным угрозой безопасности персональных данных при их обработке в информационных системах персональных данных; применение организационных и технических мер по обеспечению безопасности персональных данных.</textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Сведения об обеспечении безопасности ПДн в соответствии с требованиями к защите ПДн, установленными Правительством РФ:</label>
+                <textarea id="registrySecurity" class="form-control" rows="2">Назначен ответственный за обеспечение безопасности ПДн в ИСПДн, утвержден инструкция ответственного за обеспечение безопасности ПДн в ИСПДн. Организован режим обеспечения безопасности помещений, в которых размещены ИС, препятствующий возможности неконтролируемого проникновения или пребывания в этих помещениях лиц, не имеющих права доступа в эти помещения. Утвержден документ, определяющий перечень лиц, доступ которых к ПДн.</textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Срок или условие прекращения обработки ПДн:</label>
+                <input type="text" id="registryTermination" class="form-control" value="Ликвидация, реорганизация." />
+            </div>
+
+            <div class="form-actions" style="justify-content: flex-start;">
+                <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Сохранить</button>
+                <button type="button" class="btn btn-secondary" onclick="checkRegistry()">
+                    <i class="fas fa-search"></i> Проверить данные в реестре операторов
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Вкладка: Уведомления/письма (Рисунок 198) -->
+    <div id="notification-letters" class="notification-tab" style="display: none;">
+        <div class="info-panel" style="margin-bottom: 20px; padding: 16px; background: #eef2ff; border-radius: 8px; border-left: 4px solid #4F46E5;">
+            <p style="margin: 0; color: #1e293b; font-size: 14px;">
+                <i class="fas fa-info-circle" style="color: #4F46E5;"></i>
+                Данный раздел предназначен для создания Уведомления о намерении осуществлять обработку ПДн/Информационного письма о внесении изменений в сведения в реестре операторов, осуществляющих обработку ПДн, для подачи на сайт Роскомнадзора в электронном виде.
+            </p>
+            <p style="margin: 8px 0 0 0; color: #64748b; font-size: 13px;">
+                <strong>Порядок подачи уведомления в электронном виде:</strong>
+                после заполнения формы заявления об исключении сведений из реестра операторов, осуществляющих обработку ПДн и отправки его в информационную систему Уполномоченного органа по защите прав субъектов ПДн. Вам необходимо распечатать заполненную форму после чего ее подписать и направить в соответствующий территориальный орган Роскомнадзора по месту регистрации оператора.
+            </p>
+        </div>
+
+        <div class="toolbar">
+            <div class="toolbar-left">
+                <button class="btn btn-primary" onclick="createNotification()">
+                    <i class="fas fa-plus"></i> Создать уведомление об обработке ПДн
+                </button>
+                <button class="btn btn-warning" onclick="createChangeLetter()" style="background: #f59e0b; color: white;">
+                    <i class="fas fa-edit"></i> Создать письмо о внесении изменений
+                </button>
+                <button class="btn btn-danger" onclick="createTerminationLetter()" style="background: #dc2626; color: white;">
+                    <i class="fas fa-stop"></i> Создать письмо о прекращении обработки ПДн
+                </button>
+                <button class="btn btn-secondary" onclick="addHistoryRecord()">
+                    <i class="fas fa-plus"></i> Добавить
+                </button>
+            </div>
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" id="lettersSearch" placeholder="Поиск..." oninput="filterTable('lettersTable', 'lettersSearch')" />
+            </div>
+        </div>
+
+        <div class="table-container">
+            <table id="lettersTable" class="data-table">
+                <thead>
+                    <tr>
+                        <th class="th-sortable">
+                            <div class="th-header"><span>Вид уведомления</span><i class="fas fa-sort sortable-icon"></i></div>
+                            <div class="th-filter-row">
+                                <select class="filter-inline-select" onchange="filterTable('lettersTable', 0, this.value)">
+                                    <option value="">(Все)</option>
+                                    <option value="Уведомление об обработке (о намерении осуществлять обработку ПДн)">Уведомление об обработке</option>
+                                    <option value="Письмо о внесении изменений">Письмо о внесении изменений</option>
+                                    <option value="Письмо о прекращении обработки ПДн">Письмо о прекращении обработки</option>
+                                </select>
+                            </div>
+                        </th>
+                        <th class="th-sortable">
+                            <div class="th-header"><span>Дата отправки</span><i class="fas fa-sort sortable-icon"></i></div>
+                            <div class="th-filter-row"><input type="date" class="filter-inline-input" oninput="filterTable('lettersTable', 1, this.value)" /></div>
+                        </th>
+                        <th class="th-sortable">
+                            <div class="th-header"><span>Статус</span><i class="fas fa-sort sortable-icon"></i></div>
+                            <div class="th-filter-row">
+                                <select class="filter-inline-select" onchange="filterTable('lettersTable', 2, this.value)">
+                                    <option value="">(Все)</option>
+                                    <option value="Отправлено">Отправлено</option>
+                                    <option value="Создано">Создано</option>
+                                    <option value="Подписано">Подписано</option>
+                                </select>
+                            </div>
+                        </th>
+                        <th style="width: 150px;">Действия</th>
+                    </tr>
+                </thead>
+                <tbody id="lettersTableBody">
+                    @if (notificationsList.Any())
+                    {
+                        @foreach (var item in notificationsList)
+                        {
+                            var type = item["type"] ?? "—";
+                            var sendDate = item["sendDate"] ?? "—";
+                            var status = item["status"] ?? "—";
+                            var id = item["id"] ?? "0";
+                            var statusColor = status == "Отправлено" ? "#22c55e" : status == "Создано" ? "#f59e0b" : "#94a3b8";
+                            
+                            <tr data-id="@id">
+                                <td><strong>@type</strong></td>
+                                <td>@sendDate</td>
+                                <td>
+                                    <span class="status-badge" style="background: @statusColor; color: white; padding: 4px 12px; border-radius: 12px; font-size: 12px; display: inline-block;">
+                                        @status
+                                    </span>
+                                </td>
+                                <td class="actions">
+                                    <button class="btn-icon" style="background: #e0f2fe; color: #0284c7;" onclick="viewNotification('@id')" title="Просмотр">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                    <button class="btn-icon edit" onclick="editNotification('@id')" title="Редактировать">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="btn-icon delete" onclick="deleteNotification('@id')" title="Удалить">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="4" style="text-align: center; padding: 60px 40px; color: #94a3b8;">
+                                <i class="fas fa-bell" style="font-size: 48px; margin-bottom: 16px; display: block;"></i>
+                                Уведомления не созданы
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Пагинация -->
+        <div class="pagination" style="margin-top: 16px;">
+            <div class="pagination-page-size">
+                <label>Показывать по:</label>
+                <select onchange="changePageSize(this.value)">
+                    <option value="5">5</option>
+                    <option value="10" selected>10</option>
+                    <option value="20">20</option>
+                </select>
+            </div>
+            <div class="pagination-info">Страница 1 из 1 (Всего элементов: @notificationsList.Count)</div>
+            <div class="pagination-buttons">
+                <button class="btn-pagination" disabled>‹</button>
+                <button class="btn-pagination active">1</button>
+                <button class="btn-pagination" disabled>›</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- МОДАЛЬНОЕ ОКНО: Данные из реестра операторов (Рисунок 196) -->
+<!-- ============================================================ -->
+<div class="modal" id="registryModal">
+    <div class="modal-content" style="max-width: 750px;">
+        <div class="modal-header">
+            <h3><i class="fas fa-database"></i> Данные из реестра операторов, осуществляющих обработку ПДн</h3>
+            <button class="modal-close" onclick="closeRegistryModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div style="padding: 16px 20px; background: #f1f5f9; border-radius: 8px; margin-bottom: 20px;">
+                <h4 style="margin: 0; color: #1e293b; font-size: 16px; font-weight: 600;">
+                    Публичное акционерное общество "Ростелеком"
+                </h4>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px 20px; margin-bottom: 20px; font-size: 14px;">
+                <div>
+                    <label style="font-weight: 600; color: #475569; display: block; font-size: 13px;">Регистрационный номер</label>
+                    <span style="color: #1e293b;">08-0007079</span>
+                </div>
+                <div>
+                    <label style="font-weight: 600; color: #475569; display: block; font-size: 13px;">Дата и основание внесения оператора в реестр</label>
+                    <span style="color: #1e293b;">Приказ № 408 от 07.06.2008</span>
+                </div>
+                <div>
+                    <label style="font-weight: 600; color: #475569; display: block; font-size: 13px;">Наименование оператора</label>
+                    <span style="color: #1e293b;">Публичное акционерное общество "Ростелеком"</span>
+                </div>
+                <div>
+                    <label style="font-weight: 600; color: #475569; display: block; font-size: 13px;">ИНН</label>
+                    <span style="color: #1e293b;">7707049388</span>
+                </div>
+                <div style="grid-column: span 2;">
+                    <label style="font-weight: 600; color: #475569; display: block; font-size: 13px;">Юридический адрес</label>
+                    <span style="color: #1e293b;">191002, г. Санкт-Петербург, ул. Достоевского, д. 15</span>
+                </div>
+                <div>
+                    <label style="font-weight: 600; color: #475569; display: block; font-size: 13px;">Дата регистрации уведомления</label>
+                    <span style="color: #1e293b;">24.01.2008</span>
+                </div>
+            </div>
+
+            <div style="padding: 16px 20px; background: #f8fafc; border-radius: 8px;">
+                <h4 style="margin: 0 0 12px 0; color: #1e293b; font-size: 15px; font-weight: 600;">
+                    Субъекты РФ, на территории которых осуществляется деятельность
+                </h4>
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 4px 16px; font-size: 13px; color: #475569; max-height: 200px; overflow-y: auto;">
+                    <div>Алтайский край</div>
+                    <div>Амурская область</div>
+                    <div>Архангельская область</div>
+                    <div>Астраханская область</div>
+                    <div>Белгородская область</div>
+                    <div>Брянская область</div>
+                    <div>Владимирская область</div>
+                    <div>Волгоградская область</div>
+                    <div>Вологодская область</div>
+                    <div>Воронежская область</div>
+                    <div>Еврейская автономная область</div>
+                    <div>Забайкальский край</div>
+                    <div>Ивановская область</div>
+                    <div>Иркутская область</div>
+                    <div>Кабардино-Балкарская Республика</div>
+                    <div>Калининградская область</div>
+                    <div>Калужская область</div>
+                    <div>Камчатский край</div>
+                    <div>Карачаево-Черкесская Республика</div>
+                    <div>Кемеровская область</div>
+                    <div>Кировская область</div>
+                    <div>Костромская область</div>
+                    <div>Краснодарский край</div>
+                    <div>Красноярский край</div>
+                    <div>Курганская область</div>
+                    <div>Курская область</div>
+                    <div>Ленинградская область</div>
+                    <div>Липецкая область</div>
+                    <div>Магаданская область</div>
+                    <div>Москва</div>
+                    <div>Московская область</div>
+                    <div>Мурманская область</div>
+                    <div>Новгородская область</div>
+                    <div>Новосибирская область</div>
+                    <div>Омская область</div>
+                    <div>Оренбургская область</div>
+                    <div>Орловская область</div>
+                    <div>Пензенская область</div>
+                    <div>Пермский край</div>
+                    <div>Ростовская область</div>
+                    <div>Рязанская область</div>
+                    <div>Самарская область</div>
+                    <div>Саратовская область</div>
+                    <div>Сахалинская область</div>
+                    <div>Свердловская область</div>
+                    <div>Смоленская область</div>
+                    <div>Ставропольский край</div>
+                    <div>Тамбовская область</div>
+                    <div>Тверская область</div>
+                    <div>Томская область</div>
+                    <div>Тульская область</div>
+                    <div>Тюменская область</div>
+                    <div>Удмуртская Республика</div>
+                    <div>Ульяновская область</div>
+                    <div>Хабаровский край</div>
+                    <div>Челябинская область</div>
+                    <div>Ярославская область</div>
+                </div>
+            </div>
+
+            <div class="form-actions" style="justify-content: center; border-top: none; padding-top: 16px; margin-top: 16px;">
+                <button type="button" class="btn btn-secondary" onclick="closeRegistryModal()">Закрыть</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- МОДАЛЬНОЕ ОКНО: Запрос на обновление данных (Рисунок 197) -->
+<!-- ============================================================ -->
+<div class="modal" id="confirmModal">
+    <div class="modal-content" style="max-width: 400px;">
+        <div class="modal-header">
+            <h3><i class="fas fa-question-circle"></i> Подтверждение</h3>
+            <button class="modal-close" onclick="closeConfirmModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <p style="font-size: 14px; color: #475569; margin: 0; text-align: center;">
+                Вы действительно хотите обновить данные в программе?
+            </p>
+            <div class="form-actions" style="justify-content: center; border-top: none; padding-top: 16px; margin-top: 16px;">
+                <button type="button" class="btn btn-secondary" onclick="closeConfirmModal()">Нет</button>
+                <button type="button" class="btn btn-primary" onclick="confirmUpdate()">Да</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- МОДАЛЬНОЕ ОКНО: Уведомление об обработке ПДн (Рисунок 199) -->
+<!-- ============================================================ -->
+<div class="modal" id="notificationModal">
+    <div class="modal-content" style="max-width: 700px;">
+        <div class="modal-header">
+            <h3 id="notificationModalTitle">Уведомление об обработке ПДн</h3>
+            <button class="modal-close" onclick="closeNotificationModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <form id="notificationForm" onsubmit="submitNotification(event)">
+                <div class="form-group">
+                    <label>Наименование ТО Роскомнадзора:</label>
+                    <select id="notifTerritory" class="form-control">
+                        <option value="">Выбрать...</option>
+                        @foreach (var territory in territories)
+                        {
+                            if (territory == "Алтайскому краю и Республике Алтай")
+                            {
+                                <option value="@territory" selected>@territory</option>
+                            }
+                            else
+                            {
+                                <option value="@territory">@territory</option>
+                            }
+                        }
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>Тип оператора <span class="required">*</span></label>
+                    <select id="notifOperatorType" class="form-control" required>
+                        <option value="">Выбрать...</option>
+                        <option value="Муниципальный орган">Муниципальный орган</option>
+                        <option value="Юридическое лицо">Юридическое лицо</option>
+                        <option value="Индивидуальный предприниматель">Индивидуальный предприниматель</option>
+                        <option value="Физическое лицо">Физическое лицо</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>Наименование оператора <span class="required">*</span></label>
+                    <input type="text" id="notifOperatorName" class="form-control" value="Министерство образования Кировской области" required />
+                </div>
+                
+                <div class="form-group">
+                    <label>Сокращенное наименование оператора</label>
+                    <input type="text" id="notifShortName" class="form-control" value="Министерство образования Кировской области" />
+                </div>
+                
+                <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                    <div class="form-group">
+                        <label>Индекс</label>
+                        <input type="text" id="notifIndex" class="form-control" value="808808" />
+                    </div>
+                    <div class="form-group">
+                        <label>Адрес местонахождения</label>
+                        <input type="text" id="notifAddress" class="form-control" value="Кировская область, г. Кирово-Чепецк, ул. Ленина 1" />
+                    </div>
+                </div>
+                
+                <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                    <div class="form-group">
+                        <label>Индекс</label>
+                        <input type="text" id="notifPostIndex" class="form-control" value="222222" />
+                    </div>
+                    <div class="form-group">
+                        <label>Почтовый адрес</label>
+                        <input type="text" id="notifPostAddress" class="form-control" value="Кировская область, г. Кирово-Чепецк, ул. Ленина 1" />
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Телефон</label>
+                    <input type="text" id="notifPhone" class="form-control" value="534456" />
+                </div>
+                
+                <div class="form-group" style="display: flex; gap: 16px; align-items: center; padding: 12px; background: #f8fafc; border-radius: 6px;">
+                    <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                        <input type="checkbox" id="notifConfirmRead" /> Ознакомлен
+                    </label>
+                    <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                        <input type="checkbox" id="notifConfirmConsent" /> Подтверждаю согласие на передачу
+                    </label>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeNotificationModal()">Отмена</button>
+                    <button type="submit" class="btn btn-primary">Сформировать</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- МОДАЛЬНОЕ ОКНО: Информационное письмо (Рисунок 200) -->
+<!-- ============================================================ -->
+<div class="modal" id="changeLetterModal">
+    <div class="modal-content" style="max-width: 700px;">
+        <div class="modal-header">
+            <h3>Информационное письмо</h3>
+            <button class="modal-close" onclick="closeChangeLetterModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <form id="changeLetterForm" onsubmit="submitChangeLetter(event)">
+                <div class="form-group">
+                    <label>Наименование ТО Роскомнадзора по:</label>
+                    <select id="changeTerritory" class="form-control">
+                        <option value="">Выбрать...</option>
+                        @foreach (var territory in territories)
+                        {
+                            if (territory == "Алтайскому краю и Республике Алтай")
+                            {
+                                <option value="@territory" selected>@territory</option>
+                            }
+                            else
+                            {
+                                <option value="@territory">@territory</option>
+                            }
+                        }
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>Тип оператора <span class="required">*</span></label>
+                    <select id="changeOperatorType" class="form-control" required>
+                        <option value="">Выбрать...</option>
+                        <option value="Муниципальный орган">Муниципальный орган</option>
+                        <option value="Юридическое лицо">Юридическое лицо</option>
+                        <option value="Индивидуальный предприниматель">Индивидуальный предприниматель</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>Наименование оператора <span class="required">*</span></label>
+                    <input type="text" id="changeOperatorName" class="form-control" value="Министерство образования Кировской области" required />
+                </div>
+                
+                <div class="form-group">
+                    <label>Сокращенное наименование оператора</label>
+                    <input type="text" id="changeShortName" class="form-control" value="Министерство образования Кировской области" />
+                </div>
+                
+                <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                    <div class="form-group">
+                        <label>Индекс</label>
+                        <input type="text" id="changeIndex" class="form-control" value="080808" />
+                    </div>
+                    <div class="form-group">
+                        <label>Адрес местонахождения</label>
+                        <input type="text" id="changeAddress" class="form-control" value="Кировская область, г. Кирово-Чепецк, ул. Ленина 1" />
+                    </div>
+                </div>
+                
+                <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                    <div class="form-group">
+                        <label>Индекс</label>
+                        <input type="text" id="changePostIndex" class="form-control" value="222222" />
+                    </div>
+                    <div class="form-group">
+                        <label>Почтовый адрес</label>
+                        <input type="text" id="changePostAddress" class="form-control" value="Кировская область, г. Кирово-Чепецк, ул. Ленина 1" />
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Телефон</label>
+                    <input type="text" id="changePhone" class="form-control" value="8 8888" />
+                </div>
+                
+                <div class="form-group" style="display: flex; gap: 16px; align-items: center; padding: 12px; background: #f8fafc; border-radius: 6px;">
+                    <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                        <input type="checkbox" id="changeConfirmRead" /> Ознакомлен
+                    </label>
+                    <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                        <input type="checkbox" id="changeConfirmConsent" /> Подтверждаю согласие на передачу
+                    </label>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeChangeLetterModal()">Отмена</button>
+                    <button type="submit" class="btn btn-primary">Сформировать</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- МОДАЛЬНОЕ ОКНО: Письмо о прекращении обработки ПДн (Рисунок 201) -->
+<!-- ============================================================ -->
+<div class="modal" id="terminationLetterModal">
+    <div class="modal-content" style="max-width: 700px;">
+        <div class="modal-header">
+            <h3>Письмо о прекращении обработки ПДн</h3>
+            <button class="modal-close" onclick="closeTerminationLetterModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <form id="terminationLetterForm" onsubmit="submitTerminationLetter(event)">
+                <div class="form-group">
+                    <label>Наименование ТО Роскомнадзора по:</label>
+                    <select id="termTerritory" class="form-control">
+                        <option value="">Выбрать...</option>
+                        @foreach (var territory in territories)
+                        {
+                            if (territory == "Алтайскому краю и Республике Алтай")
+                            {
+                                <option value="@territory" selected>@territory</option>
+                            }
+                            else
+                            {
+                                <option value="@territory">@territory</option>
+                            }
+                        }
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>Тип документа <span class="required">*</span></label>
+                    <select id="termDocType" class="form-control" required>
+                        <option value="">Выбрать...</option>
+                        <option value="Заявление о прекращении обработки">Заявление о прекращении обработки</option>
+                        <option value="Уведомление о прекращении">Уведомление о прекращении</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>Наименование оператора <span class="required">*</span></label>
+                    <input type="text" id="termOperatorName" class="form-control" value="Министерство образования Кировской области" required />
+                </div>
+                
+                <div class="form-group">
+                    <label>Сокращенное наименование оператора</label>
+                    <input type="text" id="termShortName" class="form-control" value="Министерство образования Кировской области" />
+                </div>
+                
+                <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                    <div class="form-group">
+                        <label>Идентификационный код</label>
+                        <input type="text" id="termCode" class="form-control" value="088088" />
+                    </div>
+                    <div class="form-group">
+                        <label>Адрес местонахождения</label>
+                        <input type="text" id="termAddress" class="form-control" value="Кировская область, г. Кирово-Чепецк, ул. Ленина 1" />
+                    </div>
+                </div>
+                
+                <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                    <div class="form-group">
+                        <label>Идентификационный код</label>
+                        <input type="text" id="termPostCode" class="form-control" value="222222" />
+                    </div>
+                    <div class="form-group">
+                        <label>Почтовый адрес</label>
+                        <input type="text" id="termPostAddress" class="form-control" value="Кировская область, г. Кирово-Чепецк, ул. Ленина 1" />
+                    </div>
+                </div>
+                
+                <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                    <div class="form-group">
+                        <label>ИНН</label>
+                        <input type="text" id="termInn" class="form-control" value="0401028549" />
+                    </div>
+                    <div class="form-group">
+                        <label>ОГРН</label>
+                        <input type="text" id="termOgrn" class="form-control" placeholder="Введите ОГРН" />
+                    </div>
+                </div>
+                
+                <div class="form-group" style="display: flex; gap: 16px; align-items: center; padding: 12px; background: #f8fafc; border-radius: 6px;">
+                    <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                        <input type="checkbox" id="termConfirmRead" /> Ознакомлен
+                    </label>
+                    <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                        <input type="checkbox" id="termConfirmConsent" /> Подтверждаю согласие на передачу
+                    </label>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeTerminationLetterModal()">Отмена</button>
+                    <button type="submit" class="btn btn-primary">Сформировать</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- МОДАЛЬНОЕ ОКНО: Добавление уведомления/письма (Рисунок 202) -->
+<!-- ============================================================ -->
+<div class="modal" id="addRecordModal">
+    <div class="modal-content" style="max-width: 600px;">
+        <div class="modal-header">
+            <h3>Добавление уведомления/письма</h3>
+            <button class="modal-close" onclick="closeAddRecordModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <form id="addRecordForm" onsubmit="submitAddRecord(event)">
+                <div class="form-group">
+                    <label>Вид уведомления <span class="required">*</span></label>
+                    <select id="recordType" class="form-control" required>
+                        <option value="">Выбрать...</option>
+                        <option value="Уведомление об обработке (о намерении осуществлять обработку ПДн)">Уведомление об обработке</option>
+                        <option value="Письмо о внесении изменений">Письмо о внесении изменений</option>
+                        <option value="Письмо о прекращении обработки ПДн">Письмо о прекращении обработки</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>Дата отправки уведомления <span class="required">*</span></label>
+                    <input type="date" id="recordDate" class="form-control" required />
+                </div>
+                
+                <div class="form-group">
+                    <label>Отправлено на бумаге</label>
+                    <select id="recordPaper" class="form-control">
+                        <option value="Нет">Нет</option>
+                        <option value="Да">Да</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>Номер</label>
+                    <input type="text" id="recordNumber" class="form-control" placeholder="Введите номер" />
+                </div>
+                
+                <div class="form-group">
+                    <label>Ключ</label>
+                    <input type="text" id="recordKey" class="form-control" placeholder="Введите ключ" />
+                </div>
+                
+                <div class="form-group">
+                    <label>Статус</label>
+                    <select id="recordStatus" class="form-control">
+                        <option value="Создано">Создано</option>
+                        <option value="Отправлено">Отправлено</option>
+                        <option value="Подписано">Подписано</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>Дата проверки статуса</label>
+                    <input type="date" id="recordCheckDate" class="form-control" />
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeAddRecordModal()">Отмена</button>
+                    <button type="submit" class="btn btn-primary">Сохранить</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    let lettersData = [];
+
+    document.addEventListener('DOMContentLoaded', function() {
+        try {
+            const saved = localStorage.getItem('notificationsData');
+            if (saved) {
+                lettersData = JSON.parse(saved);
+            } else {
+                lettersData = [
+                    { id: 1, type: 'Уведомление об обработке (о намерении осуществлять обработку ПДн)', sendDate: '30.04.2022', status: 'Отправлено' }
+                ];
+                localStorage.setItem('notificationsData', JSON.stringify(lettersData));
+            }
+        } catch(e) {
+            lettersData = [];
+        }
+        renderLettersTable();
+    });
+
+    function switchNotificationTab(tab, btn) {
+        document.querySelectorAll('.notification-tab').forEach(el => el.style.display = 'none');
+        document.querySelectorAll('.sub-tab').forEach(el => el.classList.remove('active'));
+        document.getElementById('notification-' + tab).style.display = 'block';
+        if (btn) btn.classList.add('active');
+    }
+
+    function renderLettersTable() {
+        const tbody = document.getElementById('lettersTableBody');
+        tbody.innerHTML = '';
+        if (lettersData.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="4" style="text-align: center; padding: 60px 40px; color: #94a3b8;">Уведомления не созданы</td></tr>';
+            return;
+        }
+        lettersData.forEach(item => {
+            const statusColor = item.status === 'Отправлено' ? '#22c55e' : item.status === 'Создано' ? '#f59e0b' : '#94a3b8';
+            const tr = document.createElement('tr');
+            tr.innerHTML = `<td><strong>${item.type}</strong></td>
+                            <td>${item.sendDate}</td>
+                            <td><span class="status-badge" style="background: ${statusColor}; color: white; padding: 4px 12px; border-radius: 12px; font-size: 12px; display: inline-block;">${item.status}</span></td>
+                            <td class="actions">
+                                <button class="btn-icon" style="background: #e0f2fe; color: #0284c7;" onclick="viewNotification(${item.id})"><i class="fas fa-eye"></i></button>
+                                <button class="btn-icon edit" onclick="editNotification(${item.id})"><i class="fas fa-edit"></i></button>
+                                <button class="btn-icon delete" onclick="deleteNotification(${item.id})"><i class="fas fa-trash"></i></button>
+                            </td>`;
+            tbody.appendChild(tr);
+        });
+    }
+
+    function saveNotificationMain(e) {
+        e.preventDefault();
+        alert('Основные сведения сохранены!');
+    }
+
+    function checkRegistry() {
+        document.getElementById('registryModal').classList.add('show');
+    }
+
+    function closeRegistryModal() {
+        document.getElementById('registryModal').classList.remove('show');
+        document.getElementById('confirmModal').classList.add('show');
+    }
+
+    function closeConfirmModal() {
+        document.getElementById('confirmModal').classList.remove('show');
+    }
+
+    function confirmUpdate() {
+        closeConfirmModal();
+        alert('Данные успешно обновлены из реестра операторов');
+        document.getElementById('registryNumber').value = '08-0007079';
+        document.getElementById('registryStartDate').value = '2008-01-24';
+    }
+
+    function createNotification() {
+        document.getElementById('notificationModalTitle').textContent = 'Уведомление об обработке ПДн';
+        document.getElementById('notifConfirmRead').checked = false;
+        document.getElementById('notifConfirmConsent').checked = false;
+        document.getElementById('notificationModal').classList.add('show');
+    }
+
+    function closeNotificationModal() {
+        document.getElementById('notificationModal').classList.remove('show');
+    }
+
+    function submitNotification(e) {
+        e.preventDefault();
+        const operatorType = document.getElementById('notifOperatorType').value;
+        const operatorName = document.getElementById('notifOperatorName').value.trim();
+        const read = document.getElementById('notifConfirmRead').checked;
+        const consent = document.getElementById('notifConfirmConsent').checked;
+        
+        if (!operatorType || !operatorName) {
+            alert('Пожалуйста, заполните все обязательные поля');
+            return;
+        }
+        if (!read || !consent) {
+            alert('Необходимо подтвердить ознакомление и согласие на передачу');
+            return;
+        }
+        
+        const newLetter = {
+            id: Date.now(),
+            type: 'Уведомление об обработке (о намерении осуществлять обработку ПДн)',
+            sendDate: new Date().toLocaleDateString('ru-RU'),
+            status: 'Создано'
+        };
+        lettersData.push(newLetter);
+        localStorage.setItem('notificationsData', JSON.stringify(lettersData));
+        renderLettersTable();
+        closeNotificationModal();
+        alert('Уведомление сформировано успешно! Откройте новую вкладку для просмотра и распечатайте документ.');
+    }
+
+    function createChangeLetter() {
+        document.getElementById('changeConfirmRead').checked = false;
+        document.getElementById('changeConfirmConsent').checked = false;
+        document.getElementById('changeLetterModal').classList.add('show');
+    }
+
+    function closeChangeLetterModal() {
+        document.getElementById('changeLetterModal').classList.remove('show');
+    }
+
+    function submitChangeLetter(e) {
+        e.preventDefault();
+        const operatorType = document.getElementById('changeOperatorType').value;
+        const operatorName = document.getElementById('changeOperatorName').value.trim();
+        const read = document.getElementById('changeConfirmRead').checked;
+        const consent = document.getElementById('changeConfirmConsent').checked;
+        
+        if (!operatorType || !operatorName) {
+            alert('Пожалуйста, заполните все обязательные поля');
+            return;
+        }
+        if (!read || !consent) {
+            alert('Необходимо подтвердить ознакомление и согласие на передачу');
+            return;
+        }
+        
+        const newLetter = {
+            id: Date.now(),
+            type: 'Письмо о внесении изменений',
+            sendDate: new Date().toLocaleDateString('ru-RU'),
+            status: 'Создано'
+        };
+        lettersData.push(newLetter);
+        localStorage.setItem('notificationsData', JSON.stringify(lettersData));
+        renderLettersTable();
+        closeChangeLetterModal();
+        alert('Информационное письмо сформировано успешно!');
+    }
+
+    function createTerminationLetter() {
+        document.getElementById('termConfirmRead').checked = false;
+        document.getElementById('termConfirmConsent').checked = false;
+        document.getElementById('terminationLetterModal').classList.add('show');
+    }
+
+    function closeTerminationLetterModal() {
+        document.getElementById('terminationLetterModal').classList.remove('show');
+    }
+
+    function submitTerminationLetter(e) {
+        e.preventDefault();
+        const docType = document.getElementById('termDocType').value;
+        const operatorName = document.getElementById('termOperatorName').value.trim();
+        const read = document.getElementById('termConfirmRead').checked;
+        const consent = document.getElementById('termConfirmConsent').checked;
+        
+        if (!docType || !operatorName) {
+            alert('Пожалуйста, заполните все обязательные поля');
+            return;
+        }
+        if (!read || !consent) {
+            alert('Необходимо подтвердить ознакомление и согласие на передачу');
+            return;
+        }
+        
+        const newLetter = {
+            id: Date.now(),
+            type: 'Письмо о прекращении обработки ПДн',
+            sendDate: new Date().toLocaleDateString('ru-RU'),
+            status: 'Создано'
+        };
+        lettersData.push(newLetter);
+        localStorage.setItem('notificationsData', JSON.stringify(lettersData));
+        renderLettersTable();
+        closeTerminationLetterModal();
+        alert('Письмо о прекращении обработки сформировано успешно!');
+    }
+
+    function addHistoryRecord() {
+        document.getElementById('recordDate').value = new Date().toISOString().split('T')[0];
+        document.getElementById('addRecordModal').classList.add('show');
+    }
+
+    function closeAddRecordModal() {
+        document.getElementById('addRecordModal').classList.remove('show');
+    }
+
+    function submitAddRecord(e) {
+        e.preventDefault();
+        const type = document.getElementById('recordType').value;
+        const date = document.getElementById('recordDate').value;
+        
+        if (!type || !date) {
+            alert('Пожалуйста, заполните все обязательные поля');
+            return;
+        }
+        
+        const newRecord = {
+            id: Date.now(),
+            type: type,
+            sendDate: new Date(date).toLocaleDateString('ru-RU'),
+            status: document.getElementById('recordStatus').value
+        };
+        lettersData.push(newRecord);
+        localStorage.setItem('notificationsData', JSON.stringify(lettersData));
+        renderLettersTable();
+        closeAddRecordModal();
+        alert('Запись добавлена успешно!');
+    }
+
+    function viewNotification(id) {
+        const item = lettersData.find(l => l.id === id);
+        if (item) {
+            alert('Просмотр уведомления:\n\nВид: ' + item.type + '\nДата отправки: ' + item.sendDate + '\nСтатус: ' + item.status);
+        }
+    }
+
+    function editNotification(id) {
+        const item = lettersData.find(l => l.id === id);
+        if (item) {
+            const newStatus = prompt('Измените статус уведомления:', item.status);
+            if (newStatus && ['Отправлено', 'Создано', 'Подписано'].includes(newStatus)) {
+                item.status = newStatus;
+                localStorage.setItem('notificationsData', JSON.stringify(lettersData));
+                renderLettersTable();
+            }
+        }
+    }
+
+    function deleteNotification(id) {
+        if (confirm('Вы уверены, что хотите удалить это уведомление?')) {
+            lettersData = lettersData.filter(l => l.id !== id);
+            localStorage.setItem('notificationsData', JSON.stringify(lettersData));
+            renderLettersTable();
+        }
+    }
+
+    function filterTable(tableId, searchIdOrCol, value) {
+        const table = document.getElementById(tableId);
+        if (!table) return;
+        const tbody = table.querySelector('tbody');
+        if (!tbody) return;
+        const rows = tbody.querySelectorAll('tr');
+        if (typeof searchIdOrCol === 'string') {
+            const searchTerm = document.getElementById(searchIdOrCol)?.value?.toLowerCase() || '';
+            rows.forEach(row => {
+                row.style.display = row.textContent.toLowerCase().includes(searchTerm) ? '' : 'none';
+            });
+            return;
+        }
+        const colIndex = typeof searchIdOrCol === 'number' ? searchIdOrCol : parseInt(searchIdOrCol);
+        const searchVal = (value || '').toLowerCase();
+        rows.forEach(row => {
+            const cell = row.cells[colIndex];
+            if (cell) {
+                row.style.display = cell.textContent.toLowerCase().includes(searchVal) ? '' : 'none';
+            }
+        });
+    }
+
+    function changePageSize(value) {
+        alert('Изменение размера страницы на ' + value);
+    }
+
+    document.querySelectorAll('.modal').forEach(modal => {
+        modal.addEventListener('click', function(e) {
+            if (e.target === this) this.classList.remove('show');
+        });
+    });
+</script>
+
+<style>
+    .sub-tab {
+        padding: 8px 20px;
+        border: none;
+        background: transparent;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 500;
+        color: #475569;
+        transition: all 0.2s;
+    }
+    
+    .sub-tab:hover {
+        background: #e2e8f0;
+    }
+    
+    .sub-tab.active {
+        background: white;
+        color: #4F46E5;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    }
+    
+    .btn-warning:hover {
+        background: #d97706;
+    }
+    
+    .btn-danger:hover {
+        background: #b91c1c;
+    }
+    
+    .page-header { margin-bottom: 24px; }
+    .page-header h1 { display: flex; align-items: center; gap: 12px; font-size: 24px; font-weight: 600; color: #1e293b; margin: 0; }
+    .page-header h1 i { color: #4F46E5; }
+    .page-header p { color: #64748b; margin-top: 8px; margin-left: 36px; }
+    
+    .tabs-nav { display: flex; gap: 4px; background: #f8fafc; padding: 4px; border-radius: 8px; margin-bottom: 24px; flex-wrap: wrap; }
+    .tab-nav-item { display: flex; align-items: center; gap: 8px; padding: 10px 20px; border-radius: 6px; cursor: pointer; transition: all 0.2s; color: #475569; text-decoration: none; font-weight: 500; border: none; background: transparent; font-size: 14px; }
+    .tab-nav-item:hover { background: #e2e8f0; color: #1e293b; }
+    .tab-nav-item.active { background: white; color: #4F46E5; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+    
+    .toolbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 8px; }
+    .toolbar-left { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .search-box { position: relative; max-width: 300px; width: 100%; }
+    .search-box i { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: #94a3b8; font-size: 14px; z-index: 1; }
+    .search-box input { padding-left: 36px; width: 100%; height: 38px; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 14px; background: white; }
+    .search-box input:focus { outline: none; border-color: #4F46E5; box-shadow: 0 0 0 3px rgba(79,70,229,0.1); }
+    
+    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; border: none; border-radius: 6px; font-size: 14px; font-weight: 500; cursor: pointer; transition: all 0.2s; text-decoration: none; }
+    .btn-primary { background: #4F46E5; color: white; }
+    .btn-primary:hover { background: #4338CA; }
+    .btn-secondary { background: #f1f5f9; color: #475569; }
+    .btn-secondary:hover { background: #e2e8f0; }
+    .btn-icon { width: 32px; height: 32px; border: none; border-radius: 4px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; font-size: 14px; transition: all 0.2s; }
+    .btn-icon.edit { background: #e0f2fe; color: #0284c7; }
+    .btn-icon.edit:hover { background: #bae6fd; }
+    .btn-icon.delete { background: #fee2e2; color: #dc2626; }
+    .btn-icon.delete:hover { background: #fecaca; }
+    
+    .form-content { background: white; border-radius: 8px; padding: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+    .table-container { overflow-x: auto; margin-top: 8px; }
+    
+    .data-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    .data-table th { background: #f8fafc; padding: 0; border-bottom: 2px solid #e2e8f0; font-weight: 600; color: #475569; text-align: left; }
+    .data-table td { padding: 12px; border-bottom: 1px solid #e2e8f0; vertical-align: middle; }
+    .data-table tbody tr:hover { background: #f8fafc; }
+    .data-table tbody td { padding: 12px; }
+    
+    .th-sortable { min-width: 100px; vertical-align: top; }
+    .th-header { display: flex; align-items: center; justify-content: space-between; padding: 10px 12px; cursor: pointer; user-select: none; }
+    .th-header:hover { background: #f1f5f9; }
+    .sortable-icon { color: #94a3b8; font-size: 12px; margin-left: 8px; opacity: 0.5; }
+    .th-sortable:hover .sortable-icon { opacity: 1; }
+    .th-filter-row { padding: 4px 8px 8px 8px; }
+    .filter-inline-input { width: 100%; padding: 6px 10px; border: 1px solid #e2e8f0; border-radius: 4px; font-size: 13px; background: white; box-sizing: border-box; }
+    .filter-inline-input:focus { outline: none; border-color: #4F46E5; }
+    .filter-inline-select { width: 100%; padding: 6px 10px; border: 1px solid #e2e8f0; border-radius: 4px; font-size: 13px; background: white; }
+    
+    .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 2000; align-items: center; justify-content: center; }
+    .modal.show { display: flex !important; }
+    .modal-content { background: white; border-radius: 12px; max-width: 750px; width: 90%; max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
+    .modal-header { display: flex; justify-content: space-between; align-items: center; padding: 20px 24px; border-bottom: 1px solid #e2e8f0; }
+    .modal-header h3 { margin: 0; font-size: 18px; color: #1e293b; display: flex; align-items: center; gap: 8px; }
+    .modal-close { background: none; border: none; font-size: 28px; cursor: pointer; color: #94a3b8; padding: 0 4px; line-height: 1; }
+    .modal-close:hover { color: #475569; }
+    .modal-body { padding: 24px; }
+    
+    .form-group { margin-bottom: 16px; }
+    .form-group label { display: block; font-size: 14px; font-weight: 500; color: #1e293b; margin-bottom: 4px; }
+    .required { color: #ef4444; }
+    .form-control { width: 100%; padding: 10px 12px; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 14px; box-sizing: border-box; background: white; transition: border-color 0.2s; }
+    .form-control:focus { outline: none; border-color: #4F46E5; box-shadow: 0 0 0 3px rgba(79,70,229,0.1); }
+    textarea.form-control { resize: vertical; }
+    
+    .form-actions { display: flex; gap: 12px; justify-content: flex-end; padding-top: 16px; border-top: 1px solid #e2e8f0; margin-top: 16px; }
+    
+    .pagination { display: flex; justify-content: space-between; align-items: center; gap: 16px; margin-top: 20px; flex-wrap: wrap; }
+    .pagination-page-size { display: flex; align-items: center; gap: 8px; font-size: 14px; color: #475569; }
+    .pagination-page-size select { padding: 4px 8px; border: 1px solid #e2e8f0; border-radius: 4px; font-size: 13px; background: white; }
+    .pagination-info { font-size: 14px; color: #475569; }
+    .pagination-buttons { display: flex; gap: 4px; flex-wrap: wrap; }
+    .btn-pagination { display: inline-flex; align-items: center; justify-content: center; padding: 6px 12px; border: 1px solid #e2e8f0; border-radius: 4px; background: white; color: #475569; font-size: 14px; cursor: pointer; text-decoration: none; transition: all 0.2s; min-width: 32px; }
+    .btn-pagination:hover { background: #f1f5f9; border-color: #94a3b8; }
+    .btn-pagination.active { background: #4F46E5; color: white; border-color: #4F46E5; }
+    .btn-pagination:disabled { opacity: 0.4; cursor: not-allowed; }
+    
+    .status-badge { padding: 4px 12px; border-radius: 12px; font-size: 12px; display: inline-block; }
+    
+    hr { border: none; border-top: 1px solid #e2e8f0; margin: 8px 0; }
+</style>

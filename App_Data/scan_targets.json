@@ -1,0 +1,14 @@
+[
+  {
+    "Id": "a159744b-cabc-443e-bdbe-72a7ea52b128",
+    "Type": "HOST",
+    "TargetValue": "127.0.0.1",
+    "Name": "Localhost",
+    "Description": "",
+    "ScanMode": "C1",
+    "TimeoutSeconds": 300,
+    "Active": true,
+    "CreatedAt": "2026-06-15T11:24:10.2703783Z",
+    "UpdatedAt": "2026-06-15T11:24:10.2703786Z"
+  }
+]
