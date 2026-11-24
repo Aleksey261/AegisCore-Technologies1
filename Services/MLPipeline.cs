@@ -99,6 +99,13 @@ public class MLPipeline
         // Извлекаем матрицу ошибок для доказательства реальной оценки
         var cm = metrics.ConfusionMatrix;
 
+        // Counts[фактический класс][предсказанный класс]:
+        // [0][0] = TN, [0][1] = FP, [1][0] = FN, [1][1] = TP
+        double tp = cm.Counts[1][1];
+        double tn = cm.Counts[0][0];
+        double fp = cm.Counts[0][1];
+        double fn = cm.Counts[1][0];
+
         var modelMetrics = new ModelMetrics
         {
             ModelName = provider.ModelName,
@@ -107,13 +114,13 @@ public class MLPipeline
             Recall = metrics.PositiveRecall,
             F1Score = metrics.F1Score,
             Auc = metrics.AreaUnderRocCurve,
-            
-            // Заполняем новые поля доказательства обучения
-            TruePositives = (int)cm.PositiveCount,
-            TrueNegatives = (int)cm.NegativeCount,
-            FalsePositives = (int)cm.FalsePositiveCount,
-            FalseNegatives = (int)cm.FalseNegativeCount,
-            TotalEvaluatedRecords = (int)(cm.PositiveCount + cm.NegativeCount + cm.FalsePositiveCount + cm.FalseNegativeCount),
+
+            // Заполняем поля доказательства обучения
+            TruePositives = (int)tp,
+            TrueNegatives = (int)tn,
+            FalsePositives = (int)fp,
+            FalseNegatives = (int)fn,
+            TotalEvaluatedRecords = (int)(tp + tn + fp + fn),
             TrainingTimeMs = stopwatch.ElapsedMilliseconds
         };
 

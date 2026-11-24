@@ -1,0 +1,32 @@
+[
+  {
+    "Id": "47839e45-b51e-4fac-af7b-047089dc30f4",
+    "Name": "1\u0421:\u0411\u0443\u0445\u0433\u0430\u043B\u0442\u0435\u0440\u0438\u044F",
+    "RegistrationNumber": "",
+    "Type": "\u0418\u0421\u041F\u0414\u043D",
+    "Role": "",
+    "Purpose": "",
+    "Goals": "",
+    "Tasks": "",
+    "CreatedAt": null,
+    "SecurityClass": "\u041A2",
+    "SecurityLevel": "\u0423\u04171",
+    "SignificanceLevel": "",
+    "Scale": "",
+    "DataCategory": "",
+    "ProcessingType": "",
+    "SubjectsCount": 0,
+    "ThreatType": "",
+    "AttestationNumber": "",
+    "AttestationDate": null,
+    "AttestationValidUntil": null,
+    "AttestationBody": "",
+    "ComplianceStatus": "",
+    "DatabaseLocations": [],
+    "SoftwareIds": [],
+    "StructuralElements": [],
+    "UserGroups": [],
+    "Schemes": [],
+    "Documents": []
+  }
+]

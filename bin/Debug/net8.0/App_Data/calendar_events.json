@@ -1,0 +1,20 @@
+[
+  {
+    "Id": "d6a22677-5b18-41fd-853d-86514c7a1c8f",
+    "Title": "\u041F\u043B\u0430\u043D\u043E\u0432\u0430\u044F \u043F\u0440\u043E\u0432\u0435\u0440\u043A\u0430 \u0421\u0417\u0418",
+    "StartDate": "2026-06-21T23:55:19.5768841+04:00",
+    "EndDate": null,
+    "Type": "testing",
+    "Description": null,
+    "Completed": false
+  },
+  {
+    "Id": "b34708f5-a43a-412b-a529-6b93fc1dceea",
+    "Title": "\u0440\u043C\u0434\u0434\u0434",
+    "StartDate": "2026-07-31T00:00:00",
+    "EndDate": null,
+    "Type": "meeting",
+    "Description": "\u043F\u0440\u043F\u043C\u043B\u043E\u0440",
+    "Completed": false
+  }
+]

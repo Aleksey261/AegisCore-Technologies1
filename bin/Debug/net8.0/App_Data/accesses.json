@@ -1,0 +1,12 @@
+[
+  {
+    "Id": "0230b980-cef8-4485-bbe1-1fe54c2d4485",
+    "EmployeeId": "1",
+    "EmployeeFio": "\u0415\u043C\u0435\u043B\u044C\u044F\u043D\u043E\u0432 \u0410\u043B\u0435\u043A\u0441\u0435\u0439 \u0412\u044F\u0447\u0435\u0441\u043B\u0430\u0432\u043E\u0432\u0438\u0447",
+    "PdnISPDn": true,
+    "PdnPaper": true,
+    "ConfInfo": true,
+    "SkziRoom": true,
+    "SkziWork": true
+  }
+]

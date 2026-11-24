@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AegisCore.CSharp")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+15f1a079aaf5872b388e067774eaa5e698b3688c")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9e05900e381315809523e35a653790221d6ff24b")]
 [assembly: System.Reflection.AssemblyProductAttribute("AegisCore.CSharp")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AegisCore.CSharp")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

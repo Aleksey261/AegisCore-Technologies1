@@ -1,0 +1,1163 @@
+{
+  "Timestamp": "2026-11-13T05:00:45.9890591Z",
+  "ComputerName": "DESKTOP-542S95E",
+  "OSVersion": "Microsoft Windows NT 10.0.19045.0",
+  "RiskLevel": "ВЫСОКИЙ",
+  "VulnerabilitiesFound": 7,
+  "OpenPorts": 96,
+  "FirewallEnabled": true,
+  "AntivirusPresent": true,
+  "WindowsUpdateEnabled": false,
+  "Vulnerabilities": [
+    {
+      "Type": "Открытый опасный порт",
+      "Severity": "High",
+      "Description": "Порт 135 (MSRPC) открыт и доступен",
+      "Recommendation": "Закрыть порт 135 через брандмауэр или отключить службу MSRPC"
+    },
+    {
+      "Type": "Открытый опасный порт",
+      "Severity": "Critical",
+      "Description": "Порт 445 (SMB) открыт и доступен",
+      "Recommendation": "Закрыть порт 445 через брандмауэр или отключить службу SMB"
+    },
+    {
+      "Type": "Открытый опасный порт",
+      "Severity": "High",
+      "Description": "Порт 5432 (PostgreSQL) открыт и доступен",
+      "Recommendation": "Закрыть порт 5432 через брандмауэр или отключить службу PostgreSQL"
+    },
+    {
+      "Type": "Открытый опасный порт",
+      "Severity": "High",
+      "Description": "Порт 139 (NetBIOS) открыт и доступен",
+      "Recommendation": "Закрыть порт 139 через брандмауэр или отключить службу NetBIOS"
+    },
+    {
+      "Type": "Устаревшее ПО",
+      "Severity": "High",
+      "Description": "Установлено устаревшее ПО: Java 8 Update 481 (64-bit) 8.0.4810.10",
+      "Recommendation": "Обновить Java 8 Update 481 (64-bit) до актуальной версии"
+    },
+    {
+      "Type": "Устаревшее ПО",
+      "Severity": "High",
+      "Description": "Установлено устаревшее ПО: Java 8 Update 121 8.0.1210.13",
+      "Recommendation": "Обновить Java 8 Update 121 до актуальной версии"
+    },
+    {
+      "Type": "Отключенные обновления",
+      "Severity": "High",
+      "Description": "Автоматические обновления Windows отключены",
+      "Recommendation": "Включить автоматические обновления Windows"
+    }
+  ],
+  "RawData": [
+    {
+      "PortOpen": 1,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 1,
+      "UnencryptedTraffic": 0,
+      "Label": true
+    },
+    {
+      "PortOpen": 1,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": true
+    },
+    {
+      "PortOpen": 1,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": true
+    },
+    {
+      "PortOpen": 1,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": true
+    },
+    {
+      "PortOpen": 1,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": true
+    },
+    {
+      "PortOpen": 0,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 1,
+      "UnencryptedTraffic": 0,
+      "Label": true
+    },
+    {
+      "PortOpen": 0,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 1,
+      "UnencryptedTraffic": 0,
+      "Label": true
+    },
+    {
+      "PortOpen": 0,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": true
+    },
+    {
+      "PortOpen": 1,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 1,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 1,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 1,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 1,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 1,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 1,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 1,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 1,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 1,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 1,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 1,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 1,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 1,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 1,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 1,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 1,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 1,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 1,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 1,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 1,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 1,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 1,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 1,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 1,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 1,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 1,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 1,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 1,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 1,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 1,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 1,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 1,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 1,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 1,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 1,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 1,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 1,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 1,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 1,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 1,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 1,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 1,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 1,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 1,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 1,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 1,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 1,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 1,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 1,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 1,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 1,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 1,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 1,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 1,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 1,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 1,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 1,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 1,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 1,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 1,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 1,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 1,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 1,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 1,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 1,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 1,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 1,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 1,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 1,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 1,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 1,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 1,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 1,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": true
+    },
+    {
+      "PortOpen": 1,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 1,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 1,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 1,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 1,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 1,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 1,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 1,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 1,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 1,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 1,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 1,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 1,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 1,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 1,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 1,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 1,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 1,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 1,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 1,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 1,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 1,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 0,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 0,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 0,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 0,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 0,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 0,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 0,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 0,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 0,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 0,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 0,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 0,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 0,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 0,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 0,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 0,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 0,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 0,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 0,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 0,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 0,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 0,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 0,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 0,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 0,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 0,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 0,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 0,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 0,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 0,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 0,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 0,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 0,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 0,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 0,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 0,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 0,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 0,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 0,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 0,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 0,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 0,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 0,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 0,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 0,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 0,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 0,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 0,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 0,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 0,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 0,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 0,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 0,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    },
+    {
+      "PortOpen": 0,
+      "WeakPassword": 0,
+      "OutdatedSoftware": 0,
+      "UnencryptedTraffic": 0,
+      "Label": false
+    }
+  ]
+}
