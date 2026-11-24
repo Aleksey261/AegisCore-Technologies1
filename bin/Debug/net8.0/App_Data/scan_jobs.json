@@ -131,5 +131,43 @@
     "StartedAt": "2026-11-24T10:43:05.0901058Z",
     "CompletedAt": "2026-11-24T10:43:10.5234624Z",
     "ScheduledAt": null
+  },
+  {
+    "Id": "1fee2fe2-caf8-45b0-9986-99c8287934e4",
+    "JobId": "JOB-20261124115039",
+    "Name": "Scan 127.0.0.1",
+    "Description": "C# scanner job",
+    "Status": "COMPLETED",
+    "ScanMode": "C1",
+    "CurrentStep": "\u0417\u0430\u0432\u0435\u0440\u0448\u0435\u043D\u043E",
+    "Progress": 100,
+    "PortsScanned": 16,
+    "HostsDiscovered": 1,
+    "VulnerabilitiesFound": 2,
+    "ErrorMessage": null,
+    "CreatedBy": null,
+    "CreatedAt": "2026-11-24T15:50:39.5758666+04:00",
+    "StartedAt": "2026-11-24T11:50:39.5758887Z",
+    "CompletedAt": "2026-11-24T11:50:44.7570275Z",
+    "ScheduledAt": null
+  },
+  {
+    "Id": "8c46d845-c3ac-4e0a-8965-910f909c4472",
+    "JobId": "JOB-20261124115236",
+    "Name": "Scan 127.0.0.1",
+    "Description": "C# scanner job",
+    "Status": "COMPLETED",
+    "ScanMode": "C1",
+    "CurrentStep": "\u0417\u0430\u0432\u0435\u0440\u0448\u0435\u043D\u043E",
+    "Progress": 100,
+    "PortsScanned": 16,
+    "HostsDiscovered": 1,
+    "VulnerabilitiesFound": 2,
+    "ErrorMessage": null,
+    "CreatedBy": null,
+    "CreatedAt": "2026-11-24T15:52:36.3395368+04:00",
+    "StartedAt": "2026-11-24T11:52:36.3395553Z",
+    "CompletedAt": "2026-11-24T11:52:41.49344Z",
+    "ScheduledAt": null
   }
 ]

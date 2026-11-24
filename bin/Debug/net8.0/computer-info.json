@@ -1,0 +1,625 @@
+﻿{
+    "WindowsBuildLabEx":  "19041.1.amd64fre.vb_release.191206-1406",
+    "WindowsCurrentVersion":  "6.3",
+    "WindowsEditionId":  "Enterprise",
+    "WindowsInstallationType":  "Client",
+    "WindowsInstallDateFromRegistry":  "\/Date(1621424928000)\/",
+    "WindowsProductId":  "00328-90000-00000-AAOEM",
+    "WindowsProductName":  "Windows 10 Enterprise",
+    "WindowsRegisteredOrganization":  "",
+    "WindowsRegisteredOwner":  "BeKey261",
+    "WindowsSystemRoot":  "C:\\WINDOWS",
+    "WindowsVersion":  "2009",
+    "BiosCharacteristics":  [
+                                7,
+                                11,
+                                12,
+                                15,
+                                16,
+                                17,
+                                19,
+                                23,
+                                24,
+                                25,
+                                26,
+                                27,
+                                28,
+                                29,
+                                32,
+                                33,
+                                40,
+                                42,
+                                43
+                            ],
+    "BiosBIOSVersion":  [
+                            "ALASKA - 1072009",
+                            "BIOS Date: 09/28/12 13:44:30 Ver: 05.01"
+                        ],
+    "BiosBuildNumber":  null,
+    "BiosCaption":  "BIOS Date: 09/28/12 13:44:30 Ver: 05.01",
+    "BiosCodeSet":  null,
+    "BiosCurrentLanguage":  "en|US|iso8859-1",
+    "BiosDescription":  "BIOS Date: 09/28/12 13:44:30 Ver: 05.01",
+    "BiosEmbeddedControllerMajorVersion":  255,
+    "BiosEmbeddedControllerMinorVersion":  255,
+    "BiosFirmwareType":  1,
+    "BiosIdentificationCode":  null,
+    "BiosInstallableLanguages":  8,
+    "BiosInstallDate":  null,
+    "BiosLanguageEdition":  null,
+    "BiosListOfLanguages":  [
+                                "en|US|iso8859-1",
+                                "fr|FR|iso8859-1",
+                                "es|ES|iso8859-1",
+                                "de|DE|iso8859-1",
+                                "ru|RU|iso8859-5",
+                                "ja|JP|unicode",
+                                "zh|TW|unicode",
+                                "zh|CN|unicode"
+                            ],
+    "BiosManufacturer":  "American Megatrends Inc.",
+    "BiosName":  "BIOS Date: 09/28/12 13:44:30 Ver: 05.01",
+    "BiosOtherTargetOS":  null,
+    "BiosPrimaryBIOS":  true,
+    "BiosReleaseDate":  "\/Date(1348790400000)\/",
+    "BiosSeralNumber":  "System Serial Number",
+    "BiosSMBIOSBIOSVersion":  "0501",
+    "BiosSMBIOSMajorVersion":  2,
+    "BiosSMBIOSMinorVersion":  7,
+    "BiosSMBIOSPresent":  true,
+    "BiosSoftwareElementState":  3,
+    "BiosStatus":  "OK",
+    "BiosSystemBiosMajorVersion":  4,
+    "BiosSystemBiosMinorVersion":  6,
+    "BiosTargetOperatingSystem":  0,
+    "BiosVersion":  "ALASKA - 1072009",
+    "CsAdminPasswordStatus":  3,
+    "CsAutomaticManagedPagefile":  true,
+    "CsAutomaticResetBootOption":  true,
+    "CsAutomaticResetCapability":  true,
+    "CsBootOptionOnLimit":  null,
+    "CsBootOptionOnWatchDog":  null,
+    "CsBootROMSupported":  true,
+    "CsBootStatus":  [
+                         0,
+                         0,
+                         0,
+                         0,
+                         0,
+                         0,
+                         0,
+                         0,
+                         0,
+                         0
+                     ],
+    "CsBootupState":  "Normal boot",
+    "CsCaption":  "DESKTOP-542S95E",
+    "CsChassisBootupState":  3,
+    "CsChassisSKUNumber":  "To be filled by O.E.M.",
+    "CsCurrentTimeZone":  240,
+    "CsDaylightInEffect":  null,
+    "CsDescription":  "AT/AT COMPATIBLE",
+    "CsDNSHostName":  "DESKTOP-542S95E",
+    "CsDomain":  "WORKGROUP",
+    "CsDomainRole":  0,
+    "CsEnableDaylightSavingsTime":  true,
+    "CsFrontPanelResetStatus":  3,
+    "CsHypervisorPresent":  false,
+    "CsInfraredSupported":  false,
+    "CsInitialLoadInfo":  null,
+    "CsInstallDate":  null,
+    "CsKeyboardPasswordStatus":  3,
+    "CsLastLoadInfo":  null,
+    "CsManufacturer":  "System manufacturer",
+    "CsModel":  "System Product Name",
+    "CsName":  "DESKTOP-542S95E",
+    "CsNetworkAdapters":  [
+                              {
+                                  "Description":  "Realtek PCIe GbE Family Controller",
+                                  "ConnectionID":  "Ethernet",
+                                  "DHCPEnabled":  true,
+                                  "DHCPServer":  "192.168.1.1",
+                                  "ConnectionStatus":  2,
+                                  "IPAddresses":  [
+                                                      "192.168.1.68"
+                                                  ]
+                              },
+                              {
+                                  "Description":  "VirtualBox Host-Only Ethernet Adapter",
+                                  "ConnectionID":  "Ethernet 2",
+                                  "DHCPEnabled":  false,
+                                  "DHCPServer":  null,
+                                  "ConnectionStatus":  2,
+                                  "IPAddresses":  [
+                                                      "192.168.56.1",
+                                                      "fe80::4041:9c24:9577:9926"
+                                                  ]
+                              },
+                              {
+                                  "Description":  "Hyper-V Virtual Ethernet Adapter",
+                                  "ConnectionID":  "vEthernet (Default Switch)",
+                                  "DHCPEnabled":  false,
+                                  "DHCPServer":  null,
+                                  "ConnectionStatus":  2,
+                                  "IPAddresses":  [
+                                                      "172.31.32.1",
+                                                      "fe80::31ad:6a22:386f:d7ad"
+                                                  ]
+                              }
+                          ],
+    "CsNetworkServerModeEnabled":  true,
+    "CsNumberOfLogicalProcessors":  8,
+    "CsNumberOfProcessors":  1,
+    "CsProcessors":  [
+                         {
+                             "Name":  "Intel(R) Core(TM) i7-3770 CPU @ 3.40GHz",
+                             "Manufacturer":  "GenuineIntel",
+                             "Description":  "Intel64 Family 6 Model 58 Stepping 9",
+                             "Architecture":  9,
+                             "AddressWidth":  64,
+                             "DataWidth":  64,
+                             "MaxClockSpeed":  3401,
+                             "CurrentClockSpeed":  3401,
+                             "NumberOfCores":  4,
+                             "NumberOfLogicalProcessors":  8,
+                             "ProcessorID":  "BFEBFBFF000306A9",
+                             "SocketDesignation":  "LGA1155",
+                             "ProcessorType":  3,
+                             "Role":  "CPU",
+                             "Status":  "OK",
+                             "CpuStatus":  1,
+                             "Availability":  3
+                         }
+                     ],
+    "CsOEMStringArray":  [
+                             "08606EC5925D",
+                             "To Be Filled By O.E.M.",
+                             "To Be Filled By O.E.M.",
+                             "To Be Filled By O.E.M."
+                         ],
+    "CsPartOfDomain":  false,
+    "CsPauseAfterReset":  -1,
+    "CsPCSystemType":  1,
+    "CsPCSystemTypeEx":  1,
+    "CsPowerManagementCapabilities":  null,
+    "CsPowerManagementSupported":  null,
+    "CsPowerOnPasswordStatus":  3,
+    "CsPowerState":  0,
+    "CsPowerSupplyState":  3,
+    "CsPrimaryOwnerContact":  null,
+    "CsPrimaryOwnerName":  "BeKey261",
+    "CsResetCapability":  1,
+    "CsResetCount":  -1,
+    "CsResetLimit":  -1,
+    "CsRoles":  [
+                    "LM_Workstation",
+                    "LM_Server",
+                    "Print",
+                    "NT"
+                ],
+    "CsStatus":  "OK",
+    "CsSupportContactDescription":  null,
+    "CsSystemFamily":  "To be filled by O.E.M.",
+    "CsSystemSKUNumber":  "SKU",
+    "CsSystemType":  "x64-based PC",
+    "CsThermalState":  3,
+    "CsTotalPhysicalMemory":  14982500352,
+    "CsPhyicallyInstalledMemory":  14680064,
+    "CsUserName":  "DESKTOP-542S95E\\BeKey261",
+    "CsWakeUpType":  6,
+    "CsWorkgroup":  "WORKGROUP",
+    "OsName":  "Майкрософт Windows 10 Корпоративная",
+    "OsType":  18,
+    "OsOperatingSystemSKU":  4,
+    "OsVersion":  "10.0.19045",
+    "OsCSDVersion":  null,
+    "OsBuildNumber":  "19045",
+    "OsHotFixes":  [
+                       {
+                           "Description":  "Update",
+                           "FixComments":  "",
+                           "HotFixID":  "KB5066130",
+                           "InstalledOn":  "10/22/2025"
+                       },
+                       {
+                           "Description":  "Update",
+                           "FixComments":  "",
+                           "HotFixID":  "KB5027122",
+                           "InstalledOn":  "6/14/2023"
+                       },
+                       {
+                           "Description":  "Update",
+                           "FixComments":  "",
+                           "HotFixID":  "KB4562830",
+                           "InstalledOn":  "5/19/2021"
+                       },
+                       {
+                           "Description":  "Security Update",
+                           "FixComments":  "",
+                           "HotFixID":  "KB4580325",
+                           "InstalledOn":  "5/23/2021"
+                       },
+                       {
+                           "Description":  "Update",
+                           "FixComments":  "",
+                           "HotFixID":  "KB5003791",
+                           "InstalledOn":  "3/14/2022"
+                       },
+                       {
+                           "Description":  "Update",
+                           "FixComments":  "",
+                           "HotFixID":  "KB5011048",
+                           "InstalledOn":  "7/4/2023"
+                       },
+                       {
+                           "Description":  "Update",
+                           "FixComments":  "",
+                           "HotFixID":  "KB5011069",
+                           "InstalledOn":  "7/15/2023"
+                       },
+                       {
+                           "Description":  "Security Update",
+                           "FixComments":  "",
+                           "HotFixID":  "KB5012170",
+                           "InstalledOn":  "8/10/2022"
+                       },
+                       {
+                           "Description":  "Update",
+                           "FixComments":  "",
+                           "HotFixID":  "KB5015684",
+                           "InstalledOn":  "5/28/2023"
+                       },
+                       {
+                           "Description":  "Security Update",
+                           "FixComments":  "",
+                           "HotFixID":  "KB5072653",
+                           "InstalledOn":  "11/20/2025"
+                       },
+                       {
+                           "Description":  "Security Update",
+                           "FixComments":  "",
+                           "HotFixID":  "KB5126256",
+                           "InstalledOn":  "9/9/2026"
+                       },
+                       {
+                           "Description":  "Security Update",
+                           "FixComments":  "",
+                           "HotFixID":  "KB5066791",
+                           "InstalledOn":  "10/22/2025"
+                       },
+                       {
+                           "Description":  "Update",
+                           "FixComments":  "",
+                           "HotFixID":  "KB5006753",
+                           "InstalledOn":  "11/11/2021"
+                       },
+                       {
+                           "Description":  "Update",
+                           "FixComments":  "",
+                           "HotFixID":  "KB5007273",
+                           "InstalledOn":  "12/15/2021"
+                       },
+                       {
+                           "Description":  "Security Update",
+                           "FixComments":  "",
+                           "HotFixID":  "KB5011352",
+                           "InstalledOn":  "2/9/2022"
+                       },
+                       {
+                           "Description":  "Update",
+                           "FixComments":  "",
+                           "HotFixID":  "KB5011651",
+                           "InstalledOn":  "4/13/2022"
+                       },
+                       {
+                           "Description":  "Security Update",
+                           "FixComments":  "",
+                           "HotFixID":  "KB5014032",
+                           "InstalledOn":  "5/13/2022"
+                       },
+                       {
+                           "Description":  "Update",
+                           "FixComments":  "",
+                           "HotFixID":  "KB5014035",
+                           "InstalledOn":  "6/15/2022"
+                       },
+                       {
+                           "Description":  "Update",
+                           "FixComments":  "",
+                           "HotFixID":  "KB5014671",
+                           "InstalledOn":  "7/13/2022"
+                       },
+                       {
+                           "Description":  "Update",
+                           "FixComments":  "",
+                           "HotFixID":  "KB5015895",
+                           "InstalledOn":  "8/10/2022"
+                       },
+                       {
+                           "Description":  "Update",
+                           "FixComments":  "",
+                           "HotFixID":  "KB5016705",
+                           "InstalledOn":  "9/14/2022"
+                       },
+                       {
+                           "Description":  "Update",
+                           "FixComments":  "",
+                           "HotFixID":  "KB5018506",
+                           "InstalledOn":  "11/9/2022"
+                       },
+                       {
+                           "Description":  "Update",
+                           "FixComments":  "",
+                           "HotFixID":  "KB5020372",
+                           "InstalledOn":  "12/14/2022"
+                       },
+                       {
+                           "Description":  "Update",
+                           "FixComments":  "",
+                           "HotFixID":  "KB5022924",
+                           "InstalledOn":  "3/15/2023"
+                       },
+                       {
+                           "Description":  "Update",
+                           "FixComments":  "",
+                           "HotFixID":  "KB5023794",
+                           "InstalledOn":  "4/14/2023"
+                       },
+                       {
+                           "Description":  "Update",
+                           "FixComments":  "",
+                           "HotFixID":  "KB5025315",
+                           "InstalledOn":  "5/17/2023"
+                       },
+                       {
+                           "Description":  "Update",
+                           "FixComments":  "",
+                           "HotFixID":  "KB5026879",
+                           "InstalledOn":  "6/14/2023"
+                       },
+                       {
+                           "Description":  "Update",
+                           "FixComments":  "",
+                           "HotFixID":  "KB5028318",
+                           "InstalledOn":  "7/15/2023"
+                       },
+                       {
+                           "Description":  "Update",
+                           "FixComments":  "",
+                           "HotFixID":  "KB5028380",
+                           "InstalledOn":  "8/25/2023"
+                       },
+                       {
+                           "Description":  "Update",
+                           "FixComments":  "",
+                           "HotFixID":  "KB5029709",
+                           "InstalledOn":  "9/21/2023"
+                       },
+                       {
+                           "Description":  "Update",
+                           "FixComments":  "",
+                           "HotFixID":  "KB5031539",
+                           "InstalledOn":  "10/19/2023"
+                       },
+                       {
+                           "Description":  "Update",
+                           "FixComments":  "",
+                           "HotFixID":  "KB5032392",
+                           "InstalledOn":  "11/18/2023"
+                       },
+                       {
+                           "Description":  "Update",
+                           "FixComments":  "",
+                           "HotFixID":  "KB5032907",
+                           "InstalledOn":  "12/15/2023"
+                       },
+                       {
+                           "Description":  "Update",
+                           "FixComments":  "",
+                           "HotFixID":  "KB5036447",
+                           "InstalledOn":  "3/28/2024"
+                       },
+                       {
+                           "Description":  "Security Update",
+                           "FixComments":  "",
+                           "HotFixID":  "KB5037018",
+                           "InstalledOn":  "4/19/2024"
+                       },
+                       {
+                           "Description":  "Update",
+                           "FixComments":  "",
+                           "HotFixID":  "KB5037240",
+                           "InstalledOn":  "6/1/2024"
+                       },
+                       {
+                           "Description":  "Security Update",
+                           "FixComments":  "",
+                           "HotFixID":  "KB5041579",
+                           "InstalledOn":  "9/4/2024"
+                       },
+                       {
+                           "Description":  "Update",
+                           "FixComments":  "",
+                           "HotFixID":  "KB5041581",
+                           "InstalledOn":  "9/4/2024"
+                       },
+                       {
+                           "Description":  "Security Update",
+                           "FixComments":  "",
+                           "HotFixID":  "KB5043935",
+                           "InstalledOn":  "9/20/2024"
+                       },
+                       {
+                           "Description":  "Update",
+                           "FixComments":  "",
+                           "HotFixID":  "KB5043130",
+                           "InstalledOn":  "10/14/2024"
+                       },
+                       {
+                           "Description":  "Update",
+                           "FixComments":  "",
+                           "HotFixID":  "KB5046823",
+                           "InstalledOn":  "11/16/2024"
+                       },
+                       {
+                           "Description":  "Security Update",
+                           "FixComments":  "",
+                           "HotFixID":  "KB5050388",
+                           "InstalledOn":  "1/16/2025"
+                       },
+                       {
+                           "Description":  "Update",
+                           "FixComments":  "",
+                           "HotFixID":  "KB5050111",
+                           "InstalledOn":  "2/12/2025"
+                       },
+                       {
+                           "Description":  "Update",
+                           "FixComments":  "",
+                           "HotFixID":  "KB5052916",
+                           "InstalledOn":  "3/12/2025"
+                       },
+                       {
+                           "Description":  "Update",
+                           "FixComments":  "",
+                           "HotFixID":  "KB5054682",
+                           "InstalledOn":  "4/9/2025"
+                       },
+                       {
+                           "Description":  "Security Update",
+                           "FixComments":  "",
+                           "HotFixID":  "KB5058526",
+                           "InstalledOn":  "5/14/2025"
+                       },
+                       {
+                           "Description":  "Update",
+                           "FixComments":  "",
+                           "HotFixID":  "KB5059504",
+                           "InstalledOn":  "6/12/2025"
+                       },
+                       {
+                           "Description":  "Security Update",
+                           "FixComments":  "",
+                           "HotFixID":  "KB5063706",
+                           "InstalledOn":  "7/22/2025"
+                       },
+                       {
+                           "Description":  "Update",
+                           "FixComments":  "",
+                           "HotFixID":  "KB5063261",
+                           "InstalledOn":  "8/12/2025"
+                       },
+                       {
+                           "Description":  "Update",
+                           "FixComments":  "",
+                           "HotFixID":  "KB5063979",
+                           "InstalledOn":  "9/13/2025"
+                       },
+                       {
+                           "Description":  "Security Update",
+                           "FixComments":  "",
+                           "HotFixID":  "KB5066790",
+                           "InstalledOn":  "10/22/2025"
+                       },
+                       {
+                           "Description":  "Security Update",
+                           "FixComments":  "",
+                           "HotFixID":  "KB5005699",
+                           "InstalledOn":  "9/16/2021"
+                       }
+                   ],
+    "OsBootDevice":  "\\Device\\HarddiskVolume7",
+    "OsSystemDevice":  "\\Device\\HarddiskVolume8",
+    "OsSystemDirectory":  "C:\\WINDOWS\\system32",
+    "OsSystemDrive":  "C:",
+    "OsWindowsDirectory":  "C:\\WINDOWS",
+    "OsCountryCode":  "7",
+    "OsCurrentTimeZone":  240,
+    "OsLocaleID":  "0419",
+    "OsLocale":  "ru-RU",
+    "OsLocalDateTime":  "\/Date(1795522061590)\/",
+    "OsLastBootUpTime":  "\/Date(1795453320500)\/",
+    "OsUptime":  {
+                     "Ticks":  687410800303,
+                     "Days":  0,
+                     "Hours":  19,
+                     "Milliseconds":  80,
+                     "Minutes":  5,
+                     "Seconds":  41,
+                     "TotalDays":  0.79561435220254628,
+                     "TotalHours":  19.094744452861111,
+                     "TotalMilliseconds":  68741080.0303,
+                     "TotalMinutes":  1145.6846671716667,
+                     "TotalSeconds":  68741.0800303
+                 },
+    "OsBuildType":  "Multiprocessor Free",
+    "OsCodeSet":  "1251",
+    "OsDataExecutionPreventionAvailable":  true,
+    "OsDataExecutionPrevention32BitApplications":  true,
+    "OsDataExecutionPreventionDrivers":  true,
+    "OsDataExecutionPreventionSupportPolicy":  2,
+    "OsDebug":  false,
+    "OsDistributed":  false,
+    "OsEncryptionLevel":  256,
+    "OsForegroundApplicationBoost":  2,
+    "OsTotalVisibleMemorySize":  14631348,
+    "OsFreePhysicalMemory":  4927576,
+    "OsTotalVirtualMemorySize":  16859572,
+    "OsFreeVirtualMemory":  2879800,
+    "OsInUseVirtualMemory":  13979772,
+    "OsTotalSwapSpaceSize":  null,
+    "OsSizeStoredInPagingFiles":  2228224,
+    "OsFreeSpaceInPagingFiles":  2097468,
+    "OsPagingFiles":  [
+                          "C:\\pagefile.sys"
+                      ],
+    "OsHardwareAbstractionLayer":  "10.0.19041.6456",
+    "OsInstallDate":  "\/Date(1621439328000)\/",
+    "OsManufacturer":  "Microsoft Corporation",
+    "OsMaxNumberOfProcesses":  4294967295,
+    "OsMaxProcessMemorySize":  137438953344,
+    "OsMuiLanguages":  [
+                           "ru-RU",
+                           "en-US"
+                       ],
+    "OsNumberOfLicensedUsers":  null,
+    "OsNumberOfProcesses":  256,
+    "OsNumberOfUsers":  2,
+    "OsOrganization":  "",
+    "OsArchitecture":  "64-разрядная",
+    "OsLanguage":  "ru-RU",
+    "OsProductSuites":  [
+                            256
+                        ],
+    "OsOtherTypeDescription":  null,
+    "OsPAEEnabled":  null,
+    "OsPortableOperatingSystem":  false,
+    "OsPrimary":  true,
+    "OsProductType":  1,
+    "OsRegisteredUser":  "BeKey261",
+    "OsSerialNumber":  "00328-90000-00000-AAOEM",
+    "OsServicePackMajorVersion":  0,
+    "OsServicePackMinorVersion":  0,
+    "OsStatus":  "OK",
+    "OsSuites":  [
+                     16,
+                     256
+                 ],
+    "OsServerLevel":  null,
+    "KeyboardLayout":  "ru-RU",
+    "TimeZone":  "(UTC+04:00) Астрахань, Ульяновск",
+    "LogonServer":  "\\\\DESKTOP-542S95E",
+    "PowerPlatformRole":  1,
+    "HyperVisorPresent":  false,
+    "HyperVRequirementDataExecutionPreventionAvailable":  true,
+    "HyperVRequirementSecondLevelAddressTranslation":  true,
+    "HyperVRequirementVirtualizationFirmwareEnabled":  false,
+    "HyperVRequirementVMMonitorModeExtensions":  true,
+    "DeviceGuardSmartStatus":  0,
+    "DeviceGuardRequiredSecurityProperties":  null,
+    "DeviceGuardAvailableSecurityProperties":  null,
+    "DeviceGuardSecurityServicesConfigured":  null,
+    "DeviceGuardSecurityServicesRunning":  null,
+    "DeviceGuardCodeIntegrityPolicyEnforcementStatus":  2,
+    "DeviceGuardUserModeCodeIntegrityPolicyEnforcementStatus":  0
+}

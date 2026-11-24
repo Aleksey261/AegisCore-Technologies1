@@ -1,0 +1,251 @@
+@{
+    ViewData["Title"] = "Отчёты";
+    var section = ViewBag.ActiveSection as string ?? "main";
+}
+
+<h2>Центр отчётов</h2>
+<p style="margin:6px 0 20px; opacity:.75;">
+    Аудит железа и ПО, сканирования безопасности и быстрые справки системы.
+</p>
+
+@* ====== ЦЕНТР ОТЧЁТОВ (главная) ====== *@
+@if (section == "main")
+{
+    <section style="margin-bottom:24px;">
+        <h3>Быстрые действия</h3>
+        <p style="margin:8px 0 12px;">
+            <button type="button" onclick="arCollect('full')">Собрать базовый аудит</button>
+            <button type="button" onclick="arCollect('win')">Собрать расширенный аудит</button>
+            <button type="button" onclick="window.open('/api/ml-analysis/full-audit/html','_blank')">Открыть базовый (HTML)</button>
+            <button type="button" onclick="window.open('/api/ml-analysis/windows-native-audit/html','_blank')">Открыть расширенный (HTML)</button>
+        </p>
+    </section>
+
+    <section style="margin-bottom:32px;">
+        <h3>Обзор</h3>
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(250px, 1fr)); gap:16px;">
+            <div style="background:#f8f9fa; padding:20px; border-radius:8px; border-left:4px solid #667eea;">
+                <h4 style="margin:0 0 10px;">📊 Железо и ПО</h4>
+                <p style="margin:0; color:#666;">Полный аудит системы</p>
+                <a href="/Reports?section=hardware" style="display:inline-block; margin-top:10px; color:#667eea;">Подробнее →</a>
+            </div>
+            <div style="background:#f8f9fa; padding:20px; border-radius:8px; border-left:4px solid #28a745;">
+                <h4 style="margin:0 0 10px;">🔍 Сканирования</h4>
+                <p style="margin:0; color:#666;">История проверок безопасности</p>
+                <a href="/Reports?section=scans" style="display:inline-block; margin-top:10px; color:#28a745;">Подробнее →</a>
+            </div>
+            <div style="background:#f8f9fa; padding:20px; border-radius:8px; border-left:4px solid #17a2b8;">
+                <h4 style="margin:0 0 10px;">🧠 ML-модели</h4>
+                <p style="margin:0; color:#666;">Обучение и сравнение</p>
+                <a href="/Reports?section=ml" style="display:inline-block; margin-top:10px; color:#17a2b8;">Подробнее →</a>
+            </div>
+            <div style="background:#f8f9fa; padding:20px; border-radius:8px; border-left:4px solid #ffc107;">
+                <h4 style="margin:0 0 10px;">🔗 Быстрые ссылки</h4>
+                <p style="margin:0; color:#666;">JSON-справки и ФСТЭК</p>
+                <a href="/Reports?section=quicklinks" style="display:inline-block; margin-top:10px; color:#ffc107;">Подробнее →</a>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h3>Сохранённые отчёты аудита</h3>
+        <table style="width:100%; border-collapse:collapse;">
+            <thead>
+                <tr>
+                    <th style="border:1px solid #ccc; padding:6px; text-align:left;">Тип</th>
+                    <th style="border:1px solid #ccc; padding:6px; text-align:left;">Формат</th>
+                    <th style="border:1px solid #ccc; padding:6px; text-align:left;">Файл</th>
+                    <th style="border:1px solid #ccc; padding:6px; text-align:left;">Размер</th>
+                    <th style="border:1px solid #ccc; padding:6px; text-align:left;">Создан</th>
+                    <th style="border:1px solid #ccc; padding:6px; text-align:left;">Действие</th>
+                </tr>
+            </thead>
+            <tbody id="auditReportsRows">
+                <tr><td colspan="6" style="border:1px solid #ccc; padding:6px;">Загрузка...</td></tr>
+            </tbody>
+        </table>
+    </section>
+}
+
+@* ====== ЖЕЛЕЗО И ПО ====== *@
+@if (section == "hardware")
+{
+    <section style="margin-bottom:32px;">
+        <h3>Аудит системы: железо и ПО</h3>
+        <p style="margin:8px 0 12px;">
+            <button type="button" onclick="arCollect('full')">Собрать базовый аудит</button>
+            <button type="button" onclick="arCollect('win')">Собрать расширенный аудит</button>
+            <button type="button" onclick="window.open('/api/ml-analysis/full-audit/html','_blank')">Открыть базовый (HTML)</button>
+            <button type="button" onclick="window.open('/api/ml-analysis/windows-native-audit/html','_blank')">Открыть расширенный (HTML)</button>
+        </p>
+        <table style="width:100%; border-collapse:collapse;">
+            <thead>
+                <tr>
+                    <th style="border:1px solid #ccc; padding:6px; text-align:left;">Тип</th>
+                    <th style="border:1px solid #ccc; padding:6px; text-align:left;">Формат</th>
+                    <th style="border:1px solid #ccc; padding:6px; text-align:left;">Файл</th>
+                    <th style="border:1px solid #ccc; padding:6px; text-align:left;">Размер</th>
+                    <th style="border:1px solid #ccc; padding:6px; text-align:left;">Создан</th>
+                    <th style="border:1px solid #ccc; padding:6px; text-align:left;">Действие</th>
+                </tr>
+            </thead>
+            <tbody id="auditReportsRows">
+                <tr><td colspan="6" style="border:1px solid #ccc; padding:6px;">Загрузка...</td></tr>
+            </tbody>
+        </table>
+    </section>
+}
+
+@* ====== СКАНИРОВАНИЯ ====== *@
+@if (section == "scans")
+{
+    <section style="margin-bottom:32px;">
+        <h3>Сканирования безопасности</h3>
+        <table style="width:100%; border-collapse:collapse;">
+            <thead>
+                <tr>
+                    <th style="border:1px solid #ccc; padding:6px; text-align:left;">Файл</th>
+                    <th style="border:1px solid #ccc; padding:6px; text-align:left;">Создан</th>
+                    <th style="border:1px solid #ccc; padding:6px; text-align:left;">Размер</th>
+                    <th style="border:1px solid #ccc; padding:6px; text-align:left;">Действие</th>
+                </tr>
+            </thead>
+            <tbody id="scanReportsRows">
+                <tr><td colspan="4" style="border:1px solid #ccc; padding:6px;">Загрузка...</td></tr>
+            </tbody>
+        </table>
+    </section>
+}
+
+@* ====== ML-МОДЕЛИ ====== *@
+@if (section == "ml")
+{
+    <section style="margin-bottom:32px;">
+        <h3>Обучение и сравнение ML-моделей</h3>
+        <p style="margin:8px 0 12px;">
+            <button type="button" onclick="trainAllModels()">Обучить все модели</button>
+            <button type="button" onclick="window.open('/api/ml-analysis/compare','_blank')">Сравнить метрики (JSON)</button>
+            <button type="button" onclick="window.open('/api/ml-analysis/models','_blank')">Список моделей (JSON)</button>
+        </p>
+        <div id="mlTrainingResult" style="margin-top:20px;"></div>
+    </section>
+}
+
+@* ====== БЫСТРЫЕ ССЫЛКИ ====== *@
+@if (section == "quicklinks")
+{
+    <section style="margin-bottom:32px;">
+        <h3>Быстрые ссылки</h3>
+        <ul style="line-height:1.9;">
+            <li><a href="/api/ml-analysis/system-info" target="_blank">Состояние безопасности системы (JSON)</a></li>
+            <li><a href="/api/ml-analysis/compare" target="_blank">Сравнение метрик ML-моделей (JSON)</a></li>
+            <li><a href="/api/ml-analysis/models" target="_blank">Список доступных ML-моделей (JSON)</a></li>
+            <li><a href="/api/ml-analysis/full-audit" target="_blank">Базовый аудит (JSON)</a></li>
+            <li><a href="/api/ml-analysis/windows-native-audit" target="_blank">Расширенный аудит (JSON)</a></li>
+            <li><a href="/fstec">Модуль ФСТЭК — импорт БДУ/OVAL и Отчёт PDF</a></li>
+        </ul>
+    </section>
+}
+
+<script>
+    async function arCollect(kind) {
+        const url = kind === 'full'
+            ? '/api/ml-analysis/full-audit/save'
+            : '/api/ml-analysis/windows-native-audit/save';
+        try {
+            const res = await fetch(url, { method: 'POST' });
+            const data = await res.json();
+            if (data.success) {
+                alert('✅ Отчёт собран и сохранён:\n' + data.htmlPath);
+                arLoad();
+            } else {
+                alert('Ошибка: ' + (data.error || 'неизвестно'));
+            }
+        } catch (e) { alert('Ошибка: ' + e.message); }
+    }
+
+    async function arLoad() {
+        const tbody = document.getElementById('auditReportsRows');
+        if (!tbody) return;
+        try {
+            const res = await fetch('/Reports/list');
+            if (!res.ok) throw new Error('HTTP ' + res.status);
+            const list = await res.json();
+            if (!list || list.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" style="border:1px solid #ccc; padding:6px;">Сохранённых отчётов пока нет — нажмите «Собрать…»</td></tr>';
+                return;
+            }
+            tbody.innerHTML = list.map(r => `
+                <tr>
+                    <td style="border:1px solid #ccc; padding:6px;">${r.type}</td>
+                    <td style="border:1px solid #ccc; padding:6px;">${r.format}</td>
+                    <td style="border:1px solid #ccc; padding:6px;">${r.name}</td>
+                    <td style="border:1px solid #ccc; padding:6px;">${(r.size / 1024).toFixed(1)} КБ</td>
+                    <td style="border:1px solid #ccc; padding:6px;">${new Date(r.createdAt).toLocaleString('ru-RU')}</td>
+                    <td style="border:1px solid #ccc; padding:6px;"><a href="${r.url}" target="_blank">Открыть</a></td>
+                </tr>`).join('');
+        } catch (e) {
+            tbody.innerHTML = '<tr><td colspan="6" style="border:1px solid #ccc; padding:6px;">Ошибка загрузки списка: ' + e.message + '</td></tr>';
+        }
+    }
+
+    async function loadScanReports() {
+        const tbody = document.getElementById('scanReportsRows');
+        if (!tbody) return;
+        try {
+            const res = await fetch('/api/ml-analysis/scans?limit=25');
+            const data = await res.json();
+            if (!data.files || data.files.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="4" style="border:1px solid #ccc; padding:6px;">Сканирований пока нет</td></tr>';
+                return;
+            }
+            tbody.innerHTML = data.files.map(f => `
+                <tr>
+                    <td style="border:1px solid #ccc; padding:6px;">${f.fileName}</td>
+                    <td style="border:1px solid #ccc; padding:6px;">${new Date(f.createdAt).toLocaleString('ru-RU')}</td>
+                    <td style="border:1px solid #ccc; padding:6px;">${(f.size / 1024).toFixed(1)} КБ</td>
+                    <td style="border:1px solid #ccc; padding:6px;">
+                        <a href="/api/ml-analysis/scans/${f.fileName}" target="_blank">Открыть</a>
+                    </td>
+                </tr>`).join('');
+        } catch (e) {
+            tbody.innerHTML = '<tr><td colspan="4" style="border:1px solid #ccc; padding:6px;">Ошибка загрузки</td></tr>';
+        }
+    }
+
+    async function trainAllModels() {
+        const resultDiv = document.getElementById('mlTrainingResult');
+        resultDiv.innerHTML = '<p>Обучение моделей... Это может занять 10-20 секунд.</p>';
+        try {
+            const res = await fetch('/api/ml-analysis/train-all', { method: 'POST' });
+            const data = await res.json();
+            if (data.success) {
+                let html = `<h4>Обучение завершено</h4>`;
+                html += `<p><strong>Источник данных:</strong> ${data.dataSource}</p>`;
+                html += `<p><strong>Записей:</strong> ${data.totalRecords}</p>`;
+                html += `<table style="width:100%; border-collapse:collapse; margin-top:10px;"><thead><tr>`;
+                html += `<th style="border:1px solid #ccc; padding:6px;">Модель</th><th style="border:1px solid #ccc; padding:6px;">Accuracy</th><th style="border:1px solid #ccc; padding:6px;">Precision</th><th style="border:1px solid #ccc; padding:6px;">Recall</th><th style="border:1px solid #ccc; padding:6px;">F1</th><th style="border:1px solid #ccc; padding:6px;">AUC</th>`;
+                html += `</tr></thead><tbody>`;
+                data.models.forEach(m => {
+                    html += `<tr>`;
+                    html += `<td style="border:1px solid #ccc; padding:6px;">${m.modelName}</td>`;
+                    html += `<td style="border:1px solid #ccc; padding:6px;">${m.accuracy}%</td>`;
+                    html += `<td style="border:1px solid #ccc; padding:6px;">${m.precision}%</td>`;
+                    html += `<td style="border:1px solid #ccc; padding:6px;">${m.recall}%</td>`;
+                    html += `<td style="border:1px solid #ccc; padding:6px;">${m.f1Score}%</td>`;
+                    html += `<td style="border:1px solid #ccc; padding:6px;">${m.auc}%</td>`;
+                    html += `</tr>`;
+                });
+                html += `</tbody></table>`;
+                resultDiv.innerHTML = html;
+            } else {
+                resultDiv.innerHTML = `<p style="color:red;">Ошибка: ${data.error}</p>`;
+            }
+        } catch (e) {
+            resultDiv.innerHTML = `<p style="color:red;">Ошибка: ${e.message}</p>`;
+        }
+    }
+
+    arLoad();
+    loadScanReports();
+</script>

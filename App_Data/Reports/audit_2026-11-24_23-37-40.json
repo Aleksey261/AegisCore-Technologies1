@@ -1,0 +1,2956 @@
+{
+  "CollectedAt": "2026-11-24T23:37:37.7916679+04:00",
+  "Computer": {
+    "Name": "DESKTOP-542S95E",
+    "Os": "\u041C\u0430\u0439\u043A\u0440\u043E\u0441\u043E\u0444\u0442 Windows 10 \u041A\u043E\u0440\u043F\u043E\u0440\u0430\u0442\u0438\u0432\u043D\u0430\u044F",
+    "OsArchitecture": "64-\u0440\u0430\u0437\u0440\u044F\u0434\u043D\u0430\u044F",
+    "Cpu": "Intel(R) Core(TM) i7-3770 CPU @ 3.40GHz",
+    "CpuCores": 4,
+    "CpuLogical": 8,
+    "TotalRamGb": 14,
+    "FreeRamGb": 4.1,
+    "Manufacturer": "System manufacturer",
+    "Model": "System Product Name",
+    "SystemType": "x64-based PC",
+    "LastBoot": "2026-11-23T21:02:00.5+04:00"
+  },
+  "Bios": {
+    "Manufacturer": "American Megatrends Inc.",
+    "Version": "0501",
+    "ReleaseDate": "20120928000000.000000\u002B000",
+    "Serial": "System Serial Number",
+    "BoardManufacturer": "ASUSTeK COMPUTER INC.",
+    "BoardProduct": "P8Z77-V LX2",
+    "BoardSerial": "121105097109269"
+  },
+  "Disks": [
+    {
+      "Model": "Hitachi HDS721010CLA330",
+      "SizeGb": 931.5,
+      "MediaType": "Fixed hard disk media",
+      "Interface": "IDE",
+      "Serial": "JPS930N11TWPAV",
+      "Status": "OK"
+    },
+    {
+      "Model": "ST2000LM 015-2E8174 SCSI Disk Device",
+      "SizeGb": 1863,
+      "MediaType": "External hard disk media",
+      "Interface": "SCSI",
+      "Serial": "621098765432",
+      "Status": "OK"
+    },
+    {
+      "Model": "SSD 360GB",
+      "SizeGb": 335.3,
+      "MediaType": "Fixed hard disk media",
+      "Interface": "IDE",
+      "Serial": "1906000178",
+      "Status": "OK"
+    },
+    {
+      "Model": "WDC WD10EALS-00Z8A0",
+      "SizeGb": 931.5,
+      "MediaType": "Fixed hard disk media",
+      "Interface": "IDE",
+      "Serial": "WD-WCATR0476632",
+      "Status": "OK"
+    }
+  ],
+  "Volumes": [
+    {
+      "DeviceId": "C:",
+      "VolumeName": "",
+      "FileSystem": "NTFS",
+      "SizeGb": 334.8,
+      "FreeGb": 51.7
+    },
+    {
+      "DeviceId": "D:",
+      "VolumeName": "",
+      "FileSystem": "NTFS",
+      "SizeGb": 0.1,
+      "FreeGb": 0
+    },
+    {
+      "DeviceId": "E:",
+      "VolumeName": "system",
+      "FileSystem": "NTFS",
+      "SizeGb": 97.6,
+      "FreeGb": 78.1
+    },
+    {
+      "DeviceId": "F:",
+      "VolumeName": "data1",
+      "FileSystem": "NTFS",
+      "SizeGb": 322.3,
+      "FreeGb": 26
+    },
+    {
+      "DeviceId": "G:",
+      "VolumeName": "data2",
+      "FileSystem": "NTFS",
+      "SizeGb": 511.6,
+      "FreeGb": 114
+    },
+    {
+      "DeviceId": "H:",
+      "VolumeName": "",
+      "FileSystem": "NTFS",
+      "SizeGb": 120.5,
+      "FreeGb": 7.9
+    },
+    {
+      "DeviceId": "I:",
+      "VolumeName": "",
+      "FileSystem": "NTFS",
+      "SizeGb": 811,
+      "FreeGb": 110.8
+    },
+    {
+      "DeviceId": "J:",
+      "VolumeName": "BeKey261",
+      "FileSystem": "NTFS",
+      "SizeGb": 1863,
+      "FreeGb": 468.6
+    }
+  ],
+  "SmartStatus": [],
+  "Gpus": [
+    {
+      "Name": "AMD Radeon HD 7700 Series",
+      "VramGb": 1,
+      "DriverVersion": "27.20.1034.6",
+      "Status": "OK",
+      "Resolution": "1920x1080"
+    }
+  ],
+  "NetworkAdapters": [
+    {
+      "Description": "Realtek PCIe GbE Family Controller",
+      "Mac": "08:60:6E:C5:92:5D",
+      "IpAddresses": "192.168.1.68",
+      "DhcpEnabled": true,
+      "DhcpServer": "192.168.1.1"
+    },
+    {
+      "Description": "VirtualBox Host-Only Ethernet Adapter",
+      "Mac": "0A:00:27:00:00:06",
+      "IpAddresses": "192.168.56.1, fe80::4041:9c24:9577:9926",
+      "DhcpEnabled": false,
+      "DhcpServer": ""
+    },
+    {
+      "Description": "Hyper-V Virtual Ethernet Adapter",
+      "Mac": "00:15:5D:2F:0B:9C",
+      "IpAddresses": "172.31.32.1, fe80::31ad:6a22:386f:d7ad",
+      "DhcpEnabled": false,
+      "DhcpServer": ""
+    }
+  ],
+  "StartupItems": [
+    {
+      "Name": "SecurityHealth",
+      "Command": "C:\\WINDOWS\\system32\\SecurityHealthSystray.exe",
+      "Source": "HKLM Run"
+    },
+    {
+      "Name": "Wondershare Helper Compact.exe",
+      "Command": "C:\\Program Files\\Common Files\\Wondershare\\Wondershare Helper Compact\\WSHelper.exe",
+      "Source": "HKLM Run"
+    },
+    {
+      "Name": "UniConverterUpdateHelper",
+      "Command": "C:\\Program Files\\Wondershare\\Wondershare UniConverter 14 \u0434\u043B\u044F Windows (Russian)\\WSVCUUpdateHelper.exe",
+      "Source": "HKLM Run"
+    },
+    {
+      "Name": "PDF24",
+      "Command": "\u0022C:\\Program Files\\PDF24\\pdf24.exe\u0022",
+      "Source": "HKLM Run"
+    },
+    {
+      "Name": "SpIDerAgent",
+      "Command": "\u0022C:\\Program Files\\DrWeb\\spideragent.exe\u0022",
+      "Source": "HKLM Run"
+    },
+    {
+      "Name": "iTunesHelper",
+      "Command": "\u0022C:\\Program Files\\iTunes\\iTunesHelper.exe\u0022",
+      "Source": "HKLM Run"
+    },
+    {
+      "Name": "cmsc",
+      "Command": "\u0022c:\\program files (x86)\\cmcm\\Clean Master\\cmtray.exe\u0022 -autorun",
+      "Source": "HKLM Run (x86)"
+    },
+    {
+      "Name": "Wondershare Helper Compact.exe",
+      "Command": "C:\\Program Files (x86)\\Common Files\\Wondershare\\Wondershare Helper Compact\\WSHelper.exe",
+      "Source": "HKLM Run (x86)"
+    },
+    {
+      "Name": "SunJavaUpdateSched",
+      "Command": "\u0022C:\\Program Files (x86)\\Common Files\\Java\\Java Update\\jusched.exe\u0022",
+      "Source": "HKLM Run (x86)"
+    },
+    {
+      "Name": "GameCenter",
+      "Command": "\u0022C:\\Users\\BeKey261\\AppData\\Local\\GameCenter\\GameCenter.exe\u0022 -autostart",
+      "Source": "HKCU Run"
+    },
+    {
+      "Name": "YandexDisk2",
+      "Command": "C:\\Users\\BeKey261\\AppData\\Roaming\\Yandex\\YandexDisk2\\3.2.48.5143\\YandexDisk2.exe -autostart",
+      "Source": "HKCU Run"
+    },
+    {
+      "Name": "com.squirrel.Teams.Teams",
+      "Command": "C:\\Users\\BeKey261\\AppData\\Local\\Microsoft\\Teams\\Update.exe --processStart \u0022Teams.exe\u0022 --process-start-args \u0022--system-initiated\u0022",
+      "Source": "HKCU Run"
+    },
+    {
+      "Name": "YandexBrowserAutoLaunch_3155D825F6BC16A52B854B93D991D6D5",
+      "Command": "\u0022C:\\Program Files\\Yandex\\YandexBrowser\\Application\\browser.exe\u0022 --no-startup-window --atlogin-bgr-mark /prefetch:5",
+      "Source": "HKCU Run"
+    },
+    {
+      "Name": "GoogleDriveFS",
+      "Command": "\u0022C:\\Program Files\\Google\\Drive File Stream\\134.0.1.0\\GoogleDriveFS.exe\u0022 --startup_mode",
+      "Source": "HKCU Run"
+    },
+    {
+      "Name": "Microsoft Edge Update",
+      "Command": "\u0022C:\\Users\\BeKey261\\AppData\\Local\\Microsoft\\EdgeUpdate\\1.3.319.41\\MicrosoftEdgeUpdateCore.exe\u0022",
+      "Source": "HKCU Run"
+    },
+    {
+      "Name": "MicrosoftEdgeAutoLaunch_4B2FB9E27CA401A5D57E6C0AEE58E7CA",
+      "Command": "\u0022C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe\u0022 --no-startup-window --win-session-start",
+      "Source": "HKCU Run"
+    },
+    {
+      "Name": "CCleaner Smart Cleaning",
+      "Command": "\u0022C:\\Program Files\\CCleaner\\CCleaner64.exe\u0022 /MONITOR",
+      "Source": "HKCU Run"
+    },
+    {
+      "Name": "desktop.ini",
+      "Command": "C:\\Users\\BeKey261\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\Startup\\desktop.ini",
+      "Source": "Startup (\u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044C)"
+    },
+    {
+      "Name": "AnyDesk.lnk",
+      "Command": "C:\\ProgramData\\Microsoft\\Windows\\Start Menu\\Programs\\Startup\\AnyDesk.lnk",
+      "Source": "Startup (\u0432\u0441\u0435 \u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u0438)"
+    },
+    {
+      "Name": "CodeMeter Control Center.lnk",
+      "Command": "C:\\ProgramData\\Microsoft\\Windows\\Start Menu\\Programs\\Startup\\CodeMeter Control Center.lnk",
+      "Source": "Startup (\u0432\u0441\u0435 \u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u0438)"
+    },
+    {
+      "Name": "desktop.ini",
+      "Command": "C:\\ProgramData\\Microsoft\\Windows\\Start Menu\\Programs\\Startup\\desktop.ini",
+      "Source": "Startup (\u0432\u0441\u0435 \u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u0438)"
+    },
+    {
+      "Name": "Network Server.lnk",
+      "Command": "C:\\ProgramData\\Microsoft\\Windows\\Start Menu\\Programs\\Startup\\Network Server.lnk",
+      "Source": "Startup (\u0432\u0441\u0435 \u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u0438)"
+    }
+  ],
+  "ScheduledTasks": [
+    {
+      "TaskName": "\\Adobe Acrobat Update Task",
+      "NextRun": "25.11.2026 6:00:00",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Adobe Acrobat Update Task",
+      "NextRun": "25.11.2026 6:00:00",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\CCleanerSkipUAC - BeKey261",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\MicrosoftEdgeUpdateTaskUserS-1-5-21-123905777-3803031579-3024037442-1001Core{611D25CC-7A37-49E9-8E65-86088C543836}",
+      "NextRun": "25.11.2026 7:06:31",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\MicrosoftEdgeUpdateTaskUserS-1-5-21-123905777-3803031579-3024037442-1001Core{611D25CC-7A37-49E9-8E65-86088C543836}",
+      "NextRun": "25.11.2026 7:06:31",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\MicrosoftEdgeUpdateTaskUserS-1-5-21-123905777-3803031579-3024037442-1001UA{99B3D395-0CFA-480C-8FE3-C4B22F4516F6}",
+      "NextRun": "25.11.2026 0:36:31",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\OneDrive Reporting Task-S-1-5-21-123905777-3803031579-3024037442-1001",
+      "NextRun": "25.11.2026 16:16:10",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\OneDrive Standalone Update Task-S-1-5-21-123905777-3803031579-3024037442-1001",
+      "NextRun": "25.11.2026 16:04:41",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\OneDrive Startup Task-S-1-5-21-123905777-3803031579-3024037442-1001",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\ZoomUpdateTaskUser-S-1-5-21-123905777-3803031579-3024037442-1001",
+      "NextRun": "24.11.2026 23:38:59",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\\uFFFD\uFFFD\uFFFD\uFFFD\uFFFD\uFFFD\uFFFD\uFFFD\uFFFD\uFFFD \uFFFD\uFFFD\u39E5\uFFFD \uFFFD\uFFFD\uFFFD\uFFFD\uFFFD\uFFFD",
+      "NextRun": "25.11.2026 0:15:00",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Apple\\AppleSoftwareUpdate",
+      "NextRun": "30.11.2026 7:58:00",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Doctor Web\\Dr.Web Daily scan",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\u2AAB\uFFFD\u796D\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Office\\Office Automatic Updates 2.0",
+      "NextRun": "25.11.2026 8:56:02",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Office\\Office Automatic Updates 2.0",
+      "NextRun": "25.11.2026 5:50:20",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Office\\Office Automatic Updates 2.0",
+      "NextRun": "25.11.2026 13:50:40",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Office\\Office ClickToRun Service Monitor",
+      "NextRun": "25.11.2026 5:04:45",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Office\\Office Feature Updates",
+      "NextRun": "25.11.2026 5:29:33",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Office\\Office Feature Updates",
+      "NextRun": "25.11.2026 2:38:03",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Office\\Office Feature Updates",
+      "NextRun": "25.11.2026 4:29:33",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Office\\Office Feature Updates",
+      "NextRun": "25.11.2026 5:38:15",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Office\\Office Feature Updates",
+      "NextRun": "25.11.2026 3:58:57",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Office\\Office Feature Updates",
+      "NextRun": "25.11.2026 4:53:15",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Office\\Office Feature Updates Logon",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Office\\Office Feature Updates Logon",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Office\\Office Performance Monitor",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\VisualStudio\\Updates\\BackgroundDownload",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\.NET Framework\\.NET Framework NGEN v4.0.30319",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\.NET Framework\\.NET Framework NGEN v4.0.30319 64",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\.NET Framework\\.NET Framework NGEN v4.0.30319 64 Critical",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\u2AAB\uFFFD\u796D\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\.NET Framework\\.NET Framework NGEN v4.0.30319 Critical",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\u2AAB\uFFFD\u796D\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Active Directory Rights Management Services Client\\AD RMS Rights Policy Template Management (Automated)",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\u2AAB\uFFFD\u796D\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Active Directory Rights Management Services Client\\AD RMS Rights Policy Template Management (Automated)",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\u2AAB\uFFFD\u796D\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Active Directory Rights Management Services Client\\AD RMS Rights Policy Template Management (Manual)",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\AppID\\PolicyConverter",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\u2AAB\uFFFD\u796D\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\AppID\\VerifiedPublisherCertStoreCheck",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\u2AAB\uFFFD\u796D\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Application Experience\\MareBackup",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Application Experience\\Microsoft Compatibility Appraiser",
+      "NextRun": "25.11.2026 4:30:49",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Application Experience\\Microsoft Compatibility Appraiser",
+      "NextRun": "25.11.2026 4:44:53",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Application Experience\\Microsoft Compatibility Appraiser",
+      "NextRun": "25.11.2026 4:13:11",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Application Experience\\PcaPatchDbTask",
+      "NextRun": "25.11.2026 4:25:59",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Application Experience\\PcaWallpaperAppDetect",
+      "NextRun": "25.11.2026 12:00:48",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Application Experience\\ProgramDataUpdater",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Application Experience\\StartupAppTask",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\ApplicationData\\appuriverifierdaily",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\ApplicationData\\appuriverifierinstall",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\ApplicationData\\CleanupTemporaryState",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\ApplicationData\\DsSvcCleanup",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\AppListBackup\\Backup",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\AppListBackup\\BackupNonMaintenance",
+      "NextRun": "27.11.2026 2:10:45",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\AppxDeploymentClient\\Pre-staged app cleanup",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\u2AAB\uFFFD\u796D\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Autochk\\Proxy",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\BitLocker\\BitLocker Encrypt All Drives",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\BitLocker\\BitLocker MDM policy Refresh",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Bluetooth\\UninstallDeviceTask",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\BrokerInfrastructure\\BgTaskRegistrationMaintenanceTask",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\CertificateServicesClient\\UserTask",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\CertificateServicesClient\\UserTask",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\CertificateServicesClient\\UserTask",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\CertificateServicesClient\\UserTask",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\CertificateServicesClient\\UserTask-Roam",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\CertificateServicesClient\\UserTask-Roam",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Chkdsk\\ProactiveScan",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Chkdsk\\SyspartRepair",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Clip\\ClipESUConsumer",
+      "NextRun": "25.11.2026 8:08:25",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Clip\\ClipESUConsumer",
+      "NextRun": "25.11.2026 8:03:08",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Clip\\LicenseImdsIntegration",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\u2AAB\uFFFD\u796D\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Clip\\LicenseImdsIntegration",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\u2AAB\uFFFD\u796D\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Clip\\LicenseImdsIntegration",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\u2AAB\uFFFD\u796D\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\CloudExperienceHost\\CreateObjectTask",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\CloudRestore\\Backup",
+      "NextRun": "01.12.2026 9:33:50",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\ConsentUX\\UnifiedConsent\\UnifiedConsentSyncTask",
+      "NextRun": "25.11.2026 13:26:13",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\ConsentUX\\UnifiedConsent\\UnifiedConsentSyncTask",
+      "NextRun": "25.11.2026 12:21:49",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Customer Experience Improvement Program\\Consolidator",
+      "NextRun": "25.11.2026 0:00:00",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Customer Experience Improvement Program\\UsbCeip",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Data Integrity Scan\\Data Integrity Check And Scan",
+      "NextRun": "25.11.2026 23:39:30",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Data Integrity Scan\\Data Integrity Check And Scan",
+      "NextRun": "25.11.2026 23:55:34",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Data Integrity Scan\\Data Integrity Scan",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Data Integrity Scan\\Data Integrity Scan for Crash Recovery",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Defrag\\ScheduledDefrag",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Device Information\\Device",
+      "NextRun": "25.11.2026 4:50:18",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Device Information\\Device",
+      "NextRun": "25.11.2026 4:23:44",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Device Information\\Device User",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Diagnosis\\RecommendedTroubleshootingScanner",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Diagnosis\\RecommendedTroubleshootingScanner",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Diagnosis\\RecommendedTroubleshootingScanner",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Diagnosis\\Scheduled",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\DirectX\\DirectXDatabaseUpdater",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\DirectX\\DirectXDatabaseUpdater",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\DirectX\\DXGIAdapterCache",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\DirectX\\DXGIAdapterCache",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\DiskCleanup\\SilentCleanup",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\DiskDiagnostic\\Microsoft-Windows-DiskDiagnosticDataCollector",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\u2AAB\uFFFD\u796D\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\DiskDiagnostic\\Microsoft-Windows-DiskDiagnosticResolver",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\u2AAB\uFFFD\u796D\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\DiskFootprint\\Diagnostics",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\DiskFootprint\\StorageSense",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\DUSM\\dusmtask",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\EDP\\EDP App Launch Task",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\EDP\\EDP Auth Task",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\EDP\\EDP Inaccessible Credentials Task",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\EDP\\StorageCardEncryption Task",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\ExploitGuard\\ExploitGuard MDM policy Refresh",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\ExploitGuard\\ExploitGuard MDM policy Refresh",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\ExploitGuard\\ExploitGuard MDM policy Refresh",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Feedback\\Siuf\\DmClient",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Feedback\\Siuf\\DmClientOnScenarioDownload",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\File Classification Infrastructure\\Property Definition Sync",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\u2AAB\uFFFD\u796D\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\FileHistory\\File History (maintenance mode)",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Flighting\\FeatureConfig\\ReconcileFeatures",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Flighting\\FeatureConfig\\ReconcileFeatures",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Flighting\\FeatureConfig\\ReconcileFeatures",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Flighting\\FeatureConfig\\ReconcileFeatures",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Flighting\\FeatureConfig\\ReconcileFeatures",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Flighting\\FeatureConfig\\ReconcileFeatures",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Flighting\\FeatureConfig\\UsageDataFlushing",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Flighting\\FeatureConfig\\UsageDataFlushing",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Flighting\\FeatureConfig\\UsageDataFlushing",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Flighting\\FeatureConfig\\UsageDataReporting",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Flighting\\OneSettings\\RefreshCache",
+      "NextRun": "25.11.2026 1:26:22",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Flighting\\OneSettings\\RefreshCache",
+      "NextRun": "25.11.2026 2:08:12",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Flighting\\OneSettings\\RefreshCache",
+      "NextRun": "25.11.2026 1:28:19",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Input\\LocalUserSyncDataAvailable",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Input\\MouseSyncDataAvailable",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Input\\PenSyncDataAvailable",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Input\\TouchpadSyncDataAvailable",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\InstallService\\ScanForUpdates",
+      "NextRun": "25.11.2026 9:41:44",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\InstallService\\ScanForUpdates",
+      "NextRun": "25.11.2026 19:15:26",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\InstallService\\ScanForUpdates",
+      "NextRun": "25.11.2026 9:28:13",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\InstallService\\ScanForUpdatesAsUser",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\InstallService\\WakeUpAndContinueUpdates",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\u2AAB\uFFFD\u796D\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\InstallService\\WakeUpAndScanForUpdates",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\u2AAB\uFFFD\u796D\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\International\\Synchronize Language Settings",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\International\\Synchronize Language Settings",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\LanguageComponentsInstaller\\Installation",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\LanguageComponentsInstaller\\Installation",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\LanguageComponentsInstaller\\ReconcileLanguageResources",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Location\\Notifications",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Location\\WindowsActionDialog",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Maintenance\\WinSAT",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Management\\Autopilot\\DetectHardwareChange",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\u2AAB\uFFFD\u796D\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Management\\Autopilot\\DetectHardwareChange",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\u2AAB\uFFFD\u796D\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Management\\Autopilot\\RemediateHardwareChange",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\u2AAB\uFFFD\u796D\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Management\\Provisioning\\Cellular",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Management\\Provisioning\\Logon",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Management\\Provisioning\\Retry",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\u2AAB\uFFFD\u796D\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Management\\Provisioning\\RunOnReboot",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\u2AAB\uFFFD\u796D\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Maps\\MapsToastTask",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Maps\\MapsUpdateTask",
+      "NextRun": "25.11.2026 1:05:08",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\MemoryDiagnostic\\ProcessMemoryDiagnosticEvents",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\MemoryDiagnostic\\ProcessMemoryDiagnosticEvents",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\MemoryDiagnostic\\ProcessMemoryDiagnosticEvents",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\MemoryDiagnostic\\ProcessMemoryDiagnosticEvents",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\MemoryDiagnostic\\RunFullMemoryDiagnostic",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\u2AAB\uFFFD\u796D\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Mobile Broadband Accounts\\MNO Metadata Parser",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\MUI\\LPRemove",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Multimedia\\SystemSoundsService",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uBBEE\uFFFD\uFFFD\uFFFD\uFFFD\uFFFD\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\NetTrace\\GatherNetworkInfo",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\NlaSvc\\WiFiTask",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Offline Files\\Background Synchronization",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\u2AAB\uFFFD\u796D\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Offline Files\\Logon Synchronization",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\u2AAB\uFFFD\u796D\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Plug and Play\\Device Install Group Policy",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Plug and Play\\Device Install Reboot Required",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Plug and Play\\Device Install Reboot Required",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Plug and Play\\Sysprep Generalize Drivers",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Power Efficiency Diagnostics\\AnalyzeSystem",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Printing\\EduPrintProv",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Printing\\PrinterCleanupTask",
+      "NextRun": "25.11.2026 12:00:00",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\RecoveryEnvironment\\VerifyWinRE",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\u2AAB\uFFFD\u796D\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Registry\\RegIdleBackup",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Servicing\\StartComponentCleanup",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\SettingSync\\BackgroundUploadTask",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\SettingSync\\NetworkStateChangeTask",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\SettingSync\\NetworkStateChangeTask",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\SharedPC\\Account Cleanup",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\u2AAB\uFFFD\u796D\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Shell\\CreateObjectTask",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Shell\\FamilySafetyMonitor",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Shell\\FamilySafetyRefreshTask",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Shell\\IndexerAutomaticMaintenance",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Shell\\ThemesSyncedImageDownload",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\SoftwareProtectionPlatform\\SvcRestartTaskLogon",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\u2AAB\uFFFD\u796D\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\SpacePort\\SpaceAgentTask",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\SpacePort\\SpaceAgentTask",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\SpacePort\\SpaceManagerTask",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\SpacePort\\SpaceManagerTask",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Speech\\HeadsetButtonPress",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\StateRepository\\MaintenanceTasks",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Storage Tiers Management\\Storage Tiers Management Initialization",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Storage Tiers Management\\Storage Tiers Optimization",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\u2AAB\uFFFD\u796D\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Subscription\\EnableLicenseAcquisition",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Subscription\\EnableLicenseAcquisition",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Subscription\\EnableLicenseAcquisition",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Subscription\\LicenseAcquisition",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\u2AAB\uFFFD\u796D\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Subscription\\LicenseAcquisition",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\u2AAB\uFFFD\u796D\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Subscription\\LicenseAcquisition",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\u2AAB\uFFFD\u796D\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Sysmain\\HybridDriveCachePrepopulate",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\u2AAB\uFFFD\u796D\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Sysmain\\HybridDriveCacheRebalance",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\u2AAB\uFFFD\u796D\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Sysmain\\ResPriStaticDbSync",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Sysmain\\WsSwapAssessmentTask",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\SystemRestore\\SR",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Task Manager\\Interactive",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\TextServicesFramework\\MsCtfMonitor",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Time Synchronization\\ForceSynchronizeTime",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Time Synchronization\\SynchronizeTime",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Time Zone\\SynchronizeTimeZone",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\UNP\\RunUpdateNotificationMgr",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\u2AAB\uFFFD\u796D\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\UNP\\RunUpdateNotificationMgr",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\u2AAB\uFFFD\u796D\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\UPnP\\UPnPHostConfig",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\USB\\Usb-Notifications",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\USB\\Usb-Notifications",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\USB\\Usb-Notifications",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\USB\\Usb-Notifications",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\WCM\\WiFiTask",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\WDI\\ResolutionHost",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uBBEE\uFFFD\uFFFD\uFFFD\uFFFD\uFFFD\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Windows Error Reporting\\QueueReporting",
+      "NextRun": "25.11.2026 0:11:37",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Windows Error Reporting\\QueueReporting",
+      "NextRun": "25.11.2026 0:37:19",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Windows Error Reporting\\QueueReporting",
+      "NextRun": "25.11.2026 0:16:32",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Windows Error Reporting\\QueueReporting",
+      "NextRun": "25.11.2026 0:10:27",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Windows Error Reporting\\QueueReporting",
+      "NextRun": "25.11.2026 0:57:05",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Windows Filtering Platform\\BfeOnServiceStartTypeChange",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Windows Media Sharing\\UpdateLibrary",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\WindowsBackup\\AutomaticBackup",
+      "NextRun": "30.11.2026 19:00:00",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\WindowsBackup\\Windows Backup Monitor",
+      "NextRun": "25.11.2026 10:00:00",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\WindowsBackup\\Windows Backup Monitor",
+      "NextRun": "25.11.2026 10:00:00",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\WindowsBackup\\Windows Backup Monitor",
+      "NextRun": "25.11.2026 10:00:00",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\WindowsColorSystem\\Calibration Loader",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\WindowsColorSystem\\Calibration Loader",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\WindowsUpdate\\Scheduled Start",
+      "NextRun": "25.11.2026 6:35:54",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\WindowsUpdate\\Scheduled Start",
+      "NextRun": "25.11.2026 6:35:20",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\WindowsUpdate\\Scheduled Start",
+      "NextRun": "25.11.2026 6:35:44",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\WindowsUpdate\\Scheduled Start",
+      "NextRun": "25.11.2026 6:35:28",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Wininet\\CacheTask",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uBBEE\uFFFD\uFFFD\uFFFD\uFFFD\uFFFD\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\WlanSvc\\CDSSync",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Work Folders\\Work Folders Logon Synchronization",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Work Folders\\Work Folders Maintenance Work",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Workplace Join\\Automatic-Device-Join",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\u2AAB\uFFFD\u796D\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Workplace Join\\Automatic-Device-Join",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\u2AAB\uFFFD\u796D\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Workplace Join\\Device-Sync",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\u2AAB\uFFFD\u796D\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Workplace Join\\Recovery-Check",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\u2AAB\uFFFD\u796D\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\Workplace Join\\Recovery-Check",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\u2AAB\uFFFD\u796D\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\WwanSvc\\NotificationTask",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\WwanSvc\\OobeDiscovery",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\WwanSvc\\OobeDiscovery",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\Windows\\WwanSvc\\OobeDiscovery",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    },
+    {
+      "TaskName": "\\Microsoft\\XblGameSave\\XblGameSaveTask",
+      "NextRun": "N/A",
+      "Status": "\uFFFD\uFFFD\u2BA2\uFFFD"
+    }
+  ],
+  "Drivers": [
+    {
+      "DeviceName": "Local Print Queue",
+      "Manufacturer": "Microsoft",
+      "Version": "10.0.19041.1",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "Local Print Queue",
+      "Manufacturer": "Microsoft",
+      "Version": "10.0.19041.1",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "Local Print Queue",
+      "Manufacturer": "Microsoft",
+      "Version": "10.0.19041.1",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "Local Print Queue",
+      "Manufacturer": "Microsoft",
+      "Version": "10.0.19041.1",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "Local Print Queue",
+      "Manufacturer": "Microsoft",
+      "Version": "10.0.19041.1",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "Local Print Queue",
+      "Manufacturer": "",
+      "Version": "10.0.19041.1",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "Local Print Queue",
+      "Manufacturer": "",
+      "Version": "10.0.19041.1",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "Local Print Queue",
+      "Manufacturer": "Microsoft",
+      "Version": "10.0.19041.1",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "Local Print Queue",
+      "Manufacturer": "Microsoft",
+      "Version": "10.0.19041.1",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "Hyper-V Virtual Ethernet Adapter",
+      "Manufacturer": "Microsoft",
+      "Version": "10.0.19041.1",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "Hyper-V Virtual Switch Extension Adapter",
+      "Manufacturer": "Microsoft",
+      "Version": "10.0.19041.1",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "WAN Miniport (Network Monitor)",
+      "Manufacturer": "Microsoft",
+      "Version": "10.0.19041.1",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "WAN Miniport (IPv6)",
+      "Manufacturer": "Microsoft",
+      "Version": "10.0.19041.1",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "WAN Miniport (IP)",
+      "Manufacturer": "Microsoft",
+      "Version": "10.0.19041.1",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "WAN Miniport (PPPOE)",
+      "Manufacturer": "Microsoft",
+      "Version": "10.0.19041.1",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "WAN Miniport (PPTP)",
+      "Manufacturer": "Microsoft",
+      "Version": "10.0.19041.1",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "WAN Miniport (L2TP)",
+      "Manufacturer": "Microsoft",
+      "Version": "10.0.19041.1",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "WAN Miniport (IKEv2)",
+      "Manufacturer": "Microsoft",
+      "Version": "10.0.19041.1",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "WAN Miniport (SSTP)",
+      "Manufacturer": "Microsoft",
+      "Version": "10.0.19041.1",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "Generic software device",
+      "Manufacturer": "Microsoft",
+      "Version": "10.0.19041.1",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "Generic software device",
+      "Manufacturer": "Samsung Electronics",
+      "Version": "10.0.19041.1",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "Digital Media Device",
+      "Manufacturer": "Samsung Electronics",
+      "Version": "10.0.19041.1",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "Generic software device",
+      "Manufacturer": "Microsoft",
+      "Version": "10.0.19041.1",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "Generic software device",
+      "Manufacturer": "Microsoft",
+      "Version": "10.0.19041.1",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "Generic software device",
+      "Manufacturer": "Microsoft",
+      "Version": "10.0.19041.1",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "Generic software device",
+      "Manufacturer": "Microsoft",
+      "Version": "10.0.19041.1",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "Generic software device",
+      "Manufacturer": "Microsoft",
+      "Version": "10.0.19041.1",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "Generic software device",
+      "Manufacturer": "Microsoft",
+      "Version": "10.0.19041.1",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "Generic software device",
+      "Manufacturer": "Microsoft",
+      "Version": "10.0.19041.1",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "Generic software device",
+      "Manufacturer": "Microsoft",
+      "Version": "10.0.19041.1",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "Generic software device",
+      "Manufacturer": "Microsoft",
+      "Version": "10.0.19041.1",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "Generic software device",
+      "Manufacturer": "Microsoft",
+      "Version": "10.0.19041.1",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "Generic software device",
+      "Manufacturer": "Microsoft",
+      "Version": "10.0.19041.1",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "Remote Desktop Device Redirector Bus",
+      "Manufacturer": "Microsoft",
+      "Version": "10.0.19041.1",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "Microsoft Streaming Service Proxy",
+      "Manufacturer": "Microsoft",
+      "Version": "10.0.19041.1",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "Plug and Play Software Device Enumerator",
+      "Manufacturer": "(Standard system devices)",
+      "Version": "10.0.19041.1",
+      "DriverDate": "20190612000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "Microsoft System Management BIOS Driver",
+      "Manufacturer": "(Standard system devices)",
+      "Version": "10.0.19041.1",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "NDIS Virtual Network Adapter Enumerator",
+      "Manufacturer": "Microsoft",
+      "Version": "10.0.19041.1",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "USB Root Hub (USB 3.0)",
+      "Manufacturer": "(Standard USB HUBs)",
+      "Version": "10.0.19041.6456",
+      "DriverDate": "20251010000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "USBip 3.X Emulated Host Controller",
+      "Manufacturer": "USBIP-WIN2",
+      "Version": "18.25.35.984",
+      "DriverDate": "20250821000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "Microsoft RemoteFX Synth3D VSP Driver",
+      "Manufacturer": "Microsoft",
+      "Version": "10.0.19041.3636",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "Microsoft Hyper-V Virtual Disk Server",
+      "Manufacturer": "Microsoft",
+      "Version": "10.0.19041.6093",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "Microsoft Basic Render Driver",
+      "Manufacturer": "Microsoft",
+      "Version": "10.0.19041.6216",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "Smart card filter driver",
+      "Manufacturer": "Microsoft",
+      "Version": "10.0.19041.1",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "Aktiv Co. IFD Handler",
+      "Manufacturer": "Aktiv Co.",
+      "Version": "2.26.0.0",
+      "DriverDate": "20120227000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "Smart card filter driver",
+      "Manufacturer": "Microsoft",
+      "Version": "10.0.19041.1",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "Aktiv Co. IFD Handler",
+      "Manufacturer": "Aktiv Co.",
+      "Version": "2.26.0.0",
+      "DriverDate": "20120227000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "Smart card filter driver",
+      "Manufacturer": "Microsoft",
+      "Version": "10.0.19041.1",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "Aktiv Co. IFD Handler",
+      "Manufacturer": "Aktiv Co.",
+      "Version": "2.26.0.0",
+      "DriverDate": "20120227000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "Microsoft Hyper-V PCI Server",
+      "Manufacturer": "Microsoft",
+      "Version": "10.0.19041.3636",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "ACPI Fixed Feature Button",
+      "Manufacturer": "(\u0421\u0442\u0430\u043D\u0434\u0430\u0440\u0442\u043D\u044B\u0435 \u0441\u0438\u0441\u0442\u0435\u043C\u043D\u044B\u0435 \u0443\u0441\u0442\u0440\u043E\u0439\u0441\u0442\u0432\u0430)",
+      "Version": "10.0.19041.3636",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "Microsoft Windows Management Interface for ACPI",
+      "Manufacturer": "Microsoft",
+      "Version": "10.0.19041.1",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "ACPI Thermal Zone",
+      "Manufacturer": "(\u0421\u0442\u0430\u043D\u0434\u0430\u0440\u0442\u043D\u044B\u0435 \u0441\u0438\u0441\u0442\u0435\u043C\u043D\u044B\u0435 \u0443\u0441\u0442\u0440\u043E\u0439\u0441\u0442\u0432\u0430)",
+      "Version": "10.0.19041.3636",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "ACPI Thermal Zone",
+      "Manufacturer": "(\u0421\u0442\u0430\u043D\u0434\u0430\u0440\u0442\u043D\u044B\u0435 \u0441\u0438\u0441\u0442\u0435\u043C\u043D\u044B\u0435 \u0443\u0441\u0442\u0440\u043E\u0439\u0441\u0442\u0432\u0430)",
+      "Version": "10.0.19041.3636",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "ACPI Fan",
+      "Manufacturer": "(\u0421\u0442\u0430\u043D\u0434\u0430\u0440\u0442\u043D\u044B\u0435 \u0441\u0438\u0441\u0442\u0435\u043C\u043D\u044B\u0435 \u0443\u0441\u0442\u0440\u043E\u0439\u0441\u0442\u0432\u0430)",
+      "Version": "10.0.19041.3636",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "ACPI Fan",
+      "Manufacturer": "(\u0421\u0442\u0430\u043D\u0434\u0430\u0440\u0442\u043D\u044B\u0435 \u0441\u0438\u0441\u0442\u0435\u043C\u043D\u044B\u0435 \u0443\u0441\u0442\u0440\u043E\u0439\u0441\u0442\u0432\u0430)",
+      "Version": "10.0.19041.3636",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "ACPI Fan",
+      "Manufacturer": "(\u0421\u0442\u0430\u043D\u0434\u0430\u0440\u0442\u043D\u044B\u0435 \u0441\u0438\u0441\u0442\u0435\u043C\u043D\u044B\u0435 \u0443\u0441\u0442\u0440\u043E\u0439\u0441\u0442\u0432\u0430)",
+      "Version": "10.0.19041.3636",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "ACPI Fan",
+      "Manufacturer": "(\u0421\u0442\u0430\u043D\u0434\u0430\u0440\u0442\u043D\u044B\u0435 \u0441\u0438\u0441\u0442\u0435\u043C\u043D\u044B\u0435 \u0443\u0441\u0442\u0440\u043E\u0439\u0441\u0442\u0432\u0430)",
+      "Version": "10.0.19041.3636",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "ACPI Fan",
+      "Manufacturer": "(\u0421\u0442\u0430\u043D\u0434\u0430\u0440\u0442\u043D\u044B\u0435 \u0441\u0438\u0441\u0442\u0435\u043C\u043D\u044B\u0435 \u0443\u0441\u0442\u0440\u043E\u0439\u0441\u0442\u0432\u0430)",
+      "Version": "10.0.19041.3636",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "Intel Processor",
+      "Manufacturer": "Intel",
+      "Version": "10.0.19041.6093",
+      "DriverDate": "20090421000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "Intel Processor",
+      "Manufacturer": "Intel",
+      "Version": "10.0.19041.6093",
+      "DriverDate": "20090421000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "Intel Processor",
+      "Manufacturer": "Intel",
+      "Version": "10.0.19041.6093",
+      "DriverDate": "20090421000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "Intel Processor",
+      "Manufacturer": "Intel",
+      "Version": "10.0.19041.6093",
+      "DriverDate": "20090421000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "Intel Processor",
+      "Manufacturer": "Intel",
+      "Version": "10.0.19041.6093",
+      "DriverDate": "20090421000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "Intel Processor",
+      "Manufacturer": "Intel",
+      "Version": "10.0.19041.6093",
+      "DriverDate": "20090421000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "Intel Processor",
+      "Manufacturer": "Intel",
+      "Version": "10.0.19041.6093",
+      "DriverDate": "20090421000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "Intel Processor",
+      "Manufacturer": "Intel",
+      "Version": "10.0.19041.6093",
+      "DriverDate": "20090421000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "ACPI Power Button",
+      "Manufacturer": "(\u0421\u0442\u0430\u043D\u0434\u0430\u0440\u0442\u043D\u044B\u0435 \u0441\u0438\u0441\u0442\u0435\u043C\u043D\u044B\u0435 \u0443\u0441\u0442\u0440\u043E\u0439\u0441\u0442\u0432\u0430)",
+      "Version": "10.0.19041.3636",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "Motherboard resources",
+      "Manufacturer": "(\u0421\u0442\u0430\u043D\u0434\u0430\u0440\u0442\u043D\u044B\u0435 \u0441\u0438\u0441\u0442\u0435\u043C\u043D\u044B\u0435 \u0443\u0441\u0442\u0440\u043E\u0439\u0441\u0442\u0432\u0430)",
+      "Version": "10.0.19041.3636",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "System board",
+      "Manufacturer": "(\u0421\u0442\u0430\u043D\u0434\u0430\u0440\u0442\u043D\u044B\u0435 \u0441\u0438\u0441\u0442\u0435\u043C\u043D\u044B\u0435 \u0443\u0441\u0442\u0440\u043E\u0439\u0441\u0442\u0432\u0430)",
+      "Version": "10.0.19041.3636",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "SM Bus Controller",
+      "Manufacturer": "Intel",
+      "Version": "10.0.19041.3636",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "Disk drive",
+      "Manufacturer": "(Standard disk drives)",
+      "Version": "10.0.19041.4597",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "Disk drive",
+      "Manufacturer": "(Standard disk drives)",
+      "Version": "10.0.19041.4597",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "Disk drive",
+      "Manufacturer": "(Standard disk drives)",
+      "Version": "10.0.19041.4597",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "Standard SATA AHCI Controller",
+      "Manufacturer": "Standard SATA AHCI Controller",
+      "Version": "10.0.19041.3636",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "\u041F\u043E\u0441\u043B\u0435\u0434\u043E\u0432\u0430\u0442\u0435\u043B\u044C\u043D\u044B\u0439 \u043F\u043E\u0440\u0442",
+      "Manufacturer": "(\u0421\u0442\u0430\u043D\u0434\u0430\u0440\u0442\u043D\u044B\u0435 \u043F\u043E\u0440\u0442\u044B)",
+      "Version": "10.0.19041.1",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "Standard PS/2 Keyboard",
+      "Manufacturer": "(Standard keyboards)",
+      "Version": "10.0.19041.1",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "Numeric data processor",
+      "Manufacturer": "(\u0421\u0442\u0430\u043D\u0434\u0430\u0440\u0442\u043D\u044B\u0435 \u0441\u0438\u0441\u0442\u0435\u043C\u043D\u044B\u0435 \u0443\u0441\u0442\u0440\u043E\u0439\u0441\u0442\u0432\u0430)",
+      "Version": "10.0.19041.3636",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "Motherboard resources",
+      "Manufacturer": "(\u0421\u0442\u0430\u043D\u0434\u0430\u0440\u0442\u043D\u044B\u0435 \u0441\u0438\u0441\u0442\u0435\u043C\u043D\u044B\u0435 \u0443\u0441\u0442\u0440\u043E\u0439\u0441\u0442\u0432\u0430)",
+      "Version": "10.0.19041.3636",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "Motherboard resources",
+      "Manufacturer": "(\u0421\u0442\u0430\u043D\u0434\u0430\u0440\u0442\u043D\u044B\u0435 \u0441\u0438\u0441\u0442\u0435\u043C\u043D\u044B\u0435 \u0443\u0441\u0442\u0440\u043E\u0439\u0441\u0442\u0432\u0430)",
+      "Version": "10.0.19041.3636",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "Motherboard resources",
+      "Manufacturer": "(\u0421\u0442\u0430\u043D\u0434\u0430\u0440\u0442\u043D\u044B\u0435 \u0441\u0438\u0441\u0442\u0435\u043C\u043D\u044B\u0435 \u0443\u0441\u0442\u0440\u043E\u0439\u0441\u0442\u0432\u0430)",
+      "Version": "10.0.19041.3636",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "System timer",
+      "Manufacturer": "(\u0421\u0442\u0430\u043D\u0434\u0430\u0440\u0442\u043D\u044B\u0435 \u0441\u0438\u0441\u0442\u0435\u043C\u043D\u044B\u0435 \u0443\u0441\u0442\u0440\u043E\u0439\u0441\u0442\u0432\u0430)",
+      "Version": "10.0.19041.3636",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "System CMOS/real time clock",
+      "Manufacturer": "(\u0421\u0442\u0430\u043D\u0434\u0430\u0440\u0442\u043D\u044B\u0435 \u0441\u0438\u0441\u0442\u0435\u043C\u043D\u044B\u0435 \u0443\u0441\u0442\u0440\u043E\u0439\u0441\u0442\u0432\u0430)",
+      "Version": "10.0.19041.3636",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "Motherboard resources",
+      "Manufacturer": "(\u0421\u0442\u0430\u043D\u0434\u0430\u0440\u0442\u043D\u044B\u0435 \u0441\u0438\u0441\u0442\u0435\u043C\u043D\u044B\u0435 \u0443\u0441\u0442\u0440\u043E\u0439\u0441\u0442\u0432\u0430)",
+      "Version": "10.0.19041.3636",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "Programmable interrupt controller",
+      "Manufacturer": "(\u0421\u0442\u0430\u043D\u0434\u0430\u0440\u0442\u043D\u044B\u0435 \u0441\u0438\u0441\u0442\u0435\u043C\u043D\u044B\u0435 \u0443\u0441\u0442\u0440\u043E\u0439\u0441\u0442\u0432\u0430)",
+      "Version": "10.0.19041.3636",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "High precision event timer",
+      "Manufacturer": "(\u0421\u0442\u0430\u043D\u0434\u0430\u0440\u0442\u043D\u044B\u0435 \u0441\u0438\u0441\u0442\u0435\u043C\u043D\u044B\u0435 \u0443\u0441\u0442\u0440\u043E\u0439\u0441\u0442\u0432\u0430)",
+      "Version": "10.0.19041.3636",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "Legacy device",
+      "Manufacturer": "Intel",
+      "Version": "10.0.19041.3636",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "Direct memory access controller",
+      "Manufacturer": "(\u0421\u0442\u0430\u043D\u0434\u0430\u0440\u0442\u043D\u044B\u0435 \u0441\u0438\u0441\u0442\u0435\u043C\u043D\u044B\u0435 \u0443\u0441\u0442\u0440\u043E\u0439\u0441\u0442\u0432\u0430)",
+      "Version": "10.0.19041.3636",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "LPC Controller",
+      "Manufacturer": "Intel",
+      "Version": "10.0.19041.3636",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "HID-compliant mouse",
+      "Manufacturer": "Microsoft",
+      "Version": "10.0.19041.1",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "USB Input Device",
+      "Manufacturer": "(Standard system devices)",
+      "Version": "10.0.19041.3636",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "Local Print Queue",
+      "Manufacturer": "HP",
+      "Version": "10.0.19041.1",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "hp LaserJet 1010 HB",
+      "Manufacturer": "HP",
+      "Version": "61.63.461.42",
+      "DriverDate": "20080924000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "HP Printer",
+      "Manufacturer": "Hewlett-Packard",
+      "Version": "7.0.0.25",
+      "DriverDate": "20120813000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "HP LaserJet 1010",
+      "Manufacturer": "HP",
+      "Version": "7.0.0.25",
+      "DriverDate": "20120813000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "Audio Endpoint",
+      "Manufacturer": "Microsoft",
+      "Version": "10.0.19041.1",
+      "DriverDate": "20190612000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "USB Audio Device",
+      "Manufacturer": "Microsoft",
+      "Version": "10.0.19041.5794",
+      "DriverDate": "20250704000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "USB Video Device",
+      "Manufacturer": "Microsoft",
+      "Version": "10.0.19041.6033",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "USB Composite Device",
+      "Manufacturer": "(\u0421\u0442\u0430\u043D\u0434\u0430\u0440\u0442\u043D\u044B\u0439 USB \u0445\u043E\u0441\u0442-\u043A\u043E\u043D\u0442\u0440\u043E\u043B\u043B\u0435\u0440)",
+      "Version": "10.0.19041.6456",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "Generic USB Hub",
+      "Manufacturer": "(Generic USB Hub)",
+      "Version": "10.0.19041.6456",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "USB Root Hub",
+      "Manufacturer": "(Standard USB Host Controller)",
+      "Version": "10.0.19041.6456",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "Intel(R) 7 Series/C216 Chipset Family USB Enhanced Host Controller - 1E26",
+      "Manufacturer": "Intel",
+      "Version": "10.0.19041.6456",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "PCI-to-PCI Bridge",
+      "Manufacturer": "(Standard system devices)",
+      "Version": "10.0.19041.6456",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "PCI-to-PCI Bridge",
+      "Manufacturer": "(Standard system devices)",
+      "Version": "10.0.19041.6456",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "Realtek PCIe GbE Family Controller",
+      "Manufacturer": "Realtek",
+      "Version": "9.1.410.2015",
+      "DriverDate": "20151004000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "PCI-to-PCI Bridge",
+      "Manufacturer": "(Standard system devices)",
+      "Version": "10.0.19041.6456",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "High Definition Audio Device",
+      "Manufacturer": "Microsoft",
+      "Version": "10.0.19041.3636",
+      "DriverDate": "20231019000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "High Definition Audio Controller",
+      "Manufacturer": "Microsoft",
+      "Version": "10.0.19041.6157",
+      "DriverDate": "20250707000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "Generic PnP Monitor",
+      "Manufacturer": "(Standard monitor types)",
+      "Version": "10.0.19041.5794",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "Generic software component",
+      "Manufacturer": "Microsoft",
+      "Version": "10.0.19041.1",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "AMD Radeon HD 7700 Series",
+      "Manufacturer": "Advanced Micro Devices, Inc.",
+      "Version": "27.20.1034.6",
+      "DriverDate": "20200821000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "PCI-to-PCI Bridge",
+      "Manufacturer": "(Standard system devices)",
+      "Version": "10.0.19041.6456",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "Audio Endpoint",
+      "Manufacturer": "Microsoft",
+      "Version": "10.0.19041.1",
+      "DriverDate": "20190612000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "Audio Endpoint",
+      "Manufacturer": "Microsoft",
+      "Version": "10.0.19041.1",
+      "DriverDate": "20190612000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "Audio Endpoint",
+      "Manufacturer": "Microsoft",
+      "Version": "10.0.19041.1",
+      "DriverDate": "20190612000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "High Definition Audio Device",
+      "Manufacturer": "Microsoft",
+      "Version": "10.0.19041.3636",
+      "DriverDate": "20231019000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "High Definition Audio Controller",
+      "Manufacturer": "Microsoft",
+      "Version": "10.0.19041.6157",
+      "DriverDate": "20250707000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "Disk drive",
+      "Manufacturer": "(Standard disk drives)",
+      "Version": "10.0.19041.4597",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "USB Attached SCSI (UAS) Mass Storage Device",
+      "Manufacturer": "USB Attached SCSI (UAS) Compatible Device",
+      "Version": "10.0.19041.4474",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "Generic USB Hub",
+      "Manufacturer": "(Generic USB Hub)",
+      "Version": "10.0.19041.6456",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "USB Root Hub",
+      "Manufacturer": "(Standard USB Host Controller)",
+      "Version": "10.0.19041.6456",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "Intel(R) 7 Series/C216 Chipset Family USB Enhanced Host Controller - 1E2D",
+      "Manufacturer": "Intel",
+      "Version": "10.0.19041.6456",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "Intel(R) Management Engine Interface",
+      "Manufacturer": "Intel",
+      "Version": "11.0.5.1189",
+      "DriverDate": "20160328000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "USB Root Hub (USB 3.0)",
+      "Manufacturer": "(Standard USB HUBs)",
+      "Version": "10.0.19041.6456",
+      "DriverDate": "20251010000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "USB xHCI Compliant Host Controller",
+      "Manufacturer": "Generic USB xHCI Host Controller",
+      "Version": "10.0.19041.5794",
+      "DriverDate": "20250704000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "PCI-to-PCI Bridge",
+      "Manufacturer": "(Standard system devices)",
+      "Version": "10.0.19041.6456",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "Memory Controller",
+      "Manufacturer": "Intel",
+      "Version": "10.0.19041.3636",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "PCI Express Root Complex",
+      "Manufacturer": "(Standard system devices)",
+      "Version": "10.0.19041.6456",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "Microsoft ACPI-Compliant System",
+      "Manufacturer": "Microsoft",
+      "Version": "10.0.19041.6456",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "ACPI x64-based PC",
+      "Manufacturer": "(Standard computers)",
+      "Version": "10.0.19041.1",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "UMBus Root Bus Enumerator",
+      "Manufacturer": "Microsoft",
+      "Version": "10.0.19041.1",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "Microsoft Kernel Debug Network Adapter",
+      "Manufacturer": "Microsoft",
+      "Version": "10.0.19041.1",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "Microsoft Storage Spaces Controller",
+      "Manufacturer": "Microsoft",
+      "Version": "10.0.19041.4355",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "Microsoft Virtual Drive Enumerator",
+      "Manufacturer": "Microsoft",
+      "Version": "10.0.19041.1",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "Composite Bus Enumerator",
+      "Manufacturer": "Microsoft",
+      "Version": "10.0.19041.1",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "Microsoft Hyper-V Virtualization Infrastructure Driver",
+      "Manufacturer": "Microsoft",
+      "Version": "10.0.19041.5794",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "VirtualBox Host-Only Ethernet Adapter",
+      "Manufacturer": "Oracle Corporation",
+      "Version": "7.2.4.20995",
+      "DriverDate": "20251017000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "Microsoft Basic Display Driver",
+      "Manufacturer": "(Standard display types)",
+      "Version": "10.0.19041.3636",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "Microsoft Hyper-V Virtual Machine Bus Provider",
+      "Manufacturer": "Microsoft",
+      "Version": "10.0.19041.6093",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "015-2E8174",
+      "Manufacturer": "ST2000LM",
+      "Version": "10.0.19041.3636",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "Volume",
+      "Manufacturer": "Microsoft",
+      "Version": "10.0.19041.1",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "Volume",
+      "Manufacturer": "Microsoft",
+      "Version": "10.0.19041.1",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "Generic volume shadow copy",
+      "Manufacturer": "Microsoft",
+      "Version": "10.0.19041.1",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "Volume",
+      "Manufacturer": "Microsoft",
+      "Version": "10.0.19041.1",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "Volume",
+      "Manufacturer": "Microsoft",
+      "Version": "10.0.19041.1",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "Volume",
+      "Manufacturer": "Microsoft",
+      "Version": "10.0.19041.1",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "Volume",
+      "Manufacturer": "Microsoft",
+      "Version": "10.0.19041.1",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "Volume",
+      "Manufacturer": "Microsoft",
+      "Version": "10.0.19041.1",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "Volume",
+      "Manufacturer": "Microsoft",
+      "Version": "10.0.19041.1",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "Volume",
+      "Manufacturer": "Microsoft",
+      "Version": "10.0.19041.1",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "Volume",
+      "Manufacturer": "Microsoft",
+      "Version": "10.0.19041.1",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    },
+    {
+      "DeviceName": "Volume Manager",
+      "Manufacturer": "Microsoft",
+      "Version": "10.0.19041.3636",
+      "DriverDate": "20060621000000.******\u002B***",
+      "IsSigned": true
+    }
+  ],
+  "InstalledUpdates": [
+    {
+      "HotFixId": "KB5066130",
+      "Description": "Update",
+      "InstalledOn": "10/22/2025"
+    },
+    {
+      "HotFixId": "KB5027122",
+      "Description": "Update",
+      "InstalledOn": "6/14/2023"
+    },
+    {
+      "HotFixId": "KB4562830",
+      "Description": "Update",
+      "InstalledOn": "5/19/2021"
+    },
+    {
+      "HotFixId": "KB4580325",
+      "Description": "Security Update",
+      "InstalledOn": "5/23/2021"
+    },
+    {
+      "HotFixId": "KB5003791",
+      "Description": "Update",
+      "InstalledOn": "3/14/2022"
+    },
+    {
+      "HotFixId": "KB5011048",
+      "Description": "Update",
+      "InstalledOn": "7/4/2023"
+    },
+    {
+      "HotFixId": "KB5011069",
+      "Description": "Update",
+      "InstalledOn": "7/15/2023"
+    },
+    {
+      "HotFixId": "KB5012170",
+      "Description": "Security Update",
+      "InstalledOn": "8/10/2022"
+    },
+    {
+      "HotFixId": "KB5015684",
+      "Description": "Update",
+      "InstalledOn": "5/28/2023"
+    },
+    {
+      "HotFixId": "KB5072653",
+      "Description": "Security Update",
+      "InstalledOn": "11/20/2025"
+    },
+    {
+      "HotFixId": "KB5126256",
+      "Description": "Security Update",
+      "InstalledOn": "9/9/2026"
+    },
+    {
+      "HotFixId": "KB5066791",
+      "Description": "Security Update",
+      "InstalledOn": "10/22/2025"
+    },
+    {
+      "HotFixId": "KB5006753",
+      "Description": "Update",
+      "InstalledOn": "11/11/2021"
+    },
+    {
+      "HotFixId": "KB5007273",
+      "Description": "Update",
+      "InstalledOn": "12/15/2021"
+    },
+    {
+      "HotFixId": "KB5011352",
+      "Description": "Security Update",
+      "InstalledOn": "2/9/2022"
+    },
+    {
+      "HotFixId": "KB5011651",
+      "Description": "Update",
+      "InstalledOn": "4/13/2022"
+    },
+    {
+      "HotFixId": "KB5014032",
+      "Description": "Security Update",
+      "InstalledOn": "5/13/2022"
+    },
+    {
+      "HotFixId": "KB5014035",
+      "Description": "Update",
+      "InstalledOn": "6/15/2022"
+    },
+    {
+      "HotFixId": "KB5014671",
+      "Description": "Update",
+      "InstalledOn": "7/13/2022"
+    },
+    {
+      "HotFixId": "KB5015895",
+      "Description": "Update",
+      "InstalledOn": "8/10/2022"
+    },
+    {
+      "HotFixId": "KB5016705",
+      "Description": "Update",
+      "InstalledOn": "9/14/2022"
+    },
+    {
+      "HotFixId": "KB5018506",
+      "Description": "Update",
+      "InstalledOn": "11/9/2022"
+    },
+    {
+      "HotFixId": "KB5020372",
+      "Description": "Update",
+      "InstalledOn": "12/14/2022"
+    },
+    {
+      "HotFixId": "KB5022924",
+      "Description": "Update",
+      "InstalledOn": "3/15/2023"
+    },
+    {
+      "HotFixId": "KB5023794",
+      "Description": "Update",
+      "InstalledOn": "4/14/2023"
+    },
+    {
+      "HotFixId": "KB5025315",
+      "Description": "Update",
+      "InstalledOn": "5/17/2023"
+    },
+    {
+      "HotFixId": "KB5026879",
+      "Description": "Update",
+      "InstalledOn": "6/14/2023"
+    },
+    {
+      "HotFixId": "KB5028318",
+      "Description": "Update",
+      "InstalledOn": "7/15/2023"
+    },
+    {
+      "HotFixId": "KB5028380",
+      "Description": "Update",
+      "InstalledOn": "8/25/2023"
+    },
+    {
+      "HotFixId": "KB5029709",
+      "Description": "Update",
+      "InstalledOn": "9/21/2023"
+    },
+    {
+      "HotFixId": "KB5031539",
+      "Description": "Update",
+      "InstalledOn": "10/19/2023"
+    },
+    {
+      "HotFixId": "KB5032392",
+      "Description": "Update",
+      "InstalledOn": "11/18/2023"
+    },
+    {
+      "HotFixId": "KB5032907",
+      "Description": "Update",
+      "InstalledOn": "12/15/2023"
+    },
+    {
+      "HotFixId": "KB5036447",
+      "Description": "Update",
+      "InstalledOn": "3/28/2024"
+    },
+    {
+      "HotFixId": "KB5037018",
+      "Description": "Security Update",
+      "InstalledOn": "4/19/2024"
+    },
+    {
+      "HotFixId": "KB5037240",
+      "Description": "Update",
+      "InstalledOn": "6/1/2024"
+    },
+    {
+      "HotFixId": "KB5041579",
+      "Description": "Security Update",
+      "InstalledOn": "9/4/2024"
+    },
+    {
+      "HotFixId": "KB5041581",
+      "Description": "Update",
+      "InstalledOn": "9/4/2024"
+    },
+    {
+      "HotFixId": "KB5043935",
+      "Description": "Security Update",
+      "InstalledOn": "9/20/2024"
+    },
+    {
+      "HotFixId": "KB5043130",
+      "Description": "Update",
+      "InstalledOn": "10/14/2024"
+    },
+    {
+      "HotFixId": "KB5046823",
+      "Description": "Update",
+      "InstalledOn": "11/16/2024"
+    },
+    {
+      "HotFixId": "KB5050388",
+      "Description": "Security Update",
+      "InstalledOn": "1/16/2025"
+    },
+    {
+      "HotFixId": "KB5050111",
+      "Description": "Update",
+      "InstalledOn": "2/12/2025"
+    },
+    {
+      "HotFixId": "KB5052916",
+      "Description": "Update",
+      "InstalledOn": "3/12/2025"
+    },
+    {
+      "HotFixId": "KB5054682",
+      "Description": "Update",
+      "InstalledOn": "4/9/2025"
+    },
+    {
+      "HotFixId": "KB5058526",
+      "Description": "Security Update",
+      "InstalledOn": "5/14/2025"
+    },
+    {
+      "HotFixId": "KB5059504",
+      "Description": "Update",
+      "InstalledOn": "6/12/2025"
+    },
+    {
+      "HotFixId": "KB5063706",
+      "Description": "Security Update",
+      "InstalledOn": "7/22/2025"
+    },
+    {
+      "HotFixId": "KB5063261",
+      "Description": "Update",
+      "InstalledOn": "8/12/2025"
+    },
+    {
+      "HotFixId": "KB5063979",
+      "Description": "Update",
+      "InstalledOn": "9/13/2025"
+    },
+    {
+      "HotFixId": "KB5066790",
+      "Description": "Security Update",
+      "InstalledOn": "10/22/2025"
+    },
+    {
+      "HotFixId": "KB5005699",
+      "Description": "Security Update",
+      "InstalledOn": "9/16/2021"
+    }
+  ],
+  "UserAccounts": [
+    {
+      "Name": "BeKey261",
+      "FullName": "",
+      "Disabled": false,
+      "PasswordRequired": false,
+      "Sid": "S-1-5-21-123905777-3803031579-3024037442-1001",
+      "IsAdministrator": false
+    },
+    {
+      "Name": "DefaultAccount",
+      "FullName": "",
+      "Disabled": true,
+      "PasswordRequired": false,
+      "Sid": "S-1-5-21-123905777-3803031579-3024037442-503",
+      "IsAdministrator": false
+    },
+    {
+      "Name": "WDAGUtilityAccount",
+      "FullName": "",
+      "Disabled": true,
+      "PasswordRequired": true,
+      "Sid": "S-1-5-21-123905777-3803031579-3024037442-504",
+      "IsAdministrator": false
+    },
+    {
+      "Name": "\u0410\u0434\u043C\u0438\u043D\u0438\u0441\u0442\u0440\u0430\u0442\u043E\u0440",
+      "FullName": "",
+      "Disabled": true,
+      "PasswordRequired": true,
+      "Sid": "S-1-5-21-123905777-3803031579-3024037442-500",
+      "IsAdministrator": false
+    },
+    {
+      "Name": "\u0413\u043E\u0441\u0442\u044C",
+      "FullName": "",
+      "Disabled": false,
+      "PasswordRequired": false,
+      "Sid": "S-1-5-21-123905777-3803031579-3024037442-501",
+      "IsAdministrator": false
+    }
+  ],
+  "SharedFolders": [
+    {
+      "Name": "ADMIN$",
+      "Path": "C:\\WINDOWS",
+      "Type": "\u0421\u043B\u0443\u0436\u0435\u0431\u043D\u0430\u044F",
+      "Description": "\u0423\u0434\u0430\u043B\u0435\u043D\u043D\u044B\u0439 Admin"
+    },
+    {
+      "Name": "C$",
+      "Path": "C:\\",
+      "Type": "\u0421\u043B\u0443\u0436\u0435\u0431\u043D\u0430\u044F",
+      "Description": "\u0421\u0442\u0430\u043D\u0434\u0430\u0440\u0442\u043D\u044B\u0439 \u043E\u0431\u0449\u0438\u0439 \u0440\u0435\u0441\u0443\u0440\u0441"
+    },
+    {
+      "Name": "D$",
+      "Path": "D:\\",
+      "Type": "\u0421\u043B\u0443\u0436\u0435\u0431\u043D\u0430\u044F",
+      "Description": "\u0421\u0442\u0430\u043D\u0434\u0430\u0440\u0442\u043D\u044B\u0439 \u043E\u0431\u0449\u0438\u0439 \u0440\u0435\u0441\u0443\u0440\u0441"
+    },
+    {
+      "Name": "E$",
+      "Path": "E:\\",
+      "Type": "\u0421\u043B\u0443\u0436\u0435\u0431\u043D\u0430\u044F",
+      "Description": "\u0421\u0442\u0430\u043D\u0434\u0430\u0440\u0442\u043D\u044B\u0439 \u043E\u0431\u0449\u0438\u0439 \u0440\u0435\u0441\u0443\u0440\u0441"
+    },
+    {
+      "Name": "F$",
+      "Path": "F:\\",
+      "Type": "\u0421\u043B\u0443\u0436\u0435\u0431\u043D\u0430\u044F",
+      "Description": "\u0421\u0442\u0430\u043D\u0434\u0430\u0440\u0442\u043D\u044B\u0439 \u043E\u0431\u0449\u0438\u0439 \u0440\u0435\u0441\u0443\u0440\u0441"
+    },
+    {
+      "Name": "G$",
+      "Path": "G:\\",
+      "Type": "\u0421\u043B\u0443\u0436\u0435\u0431\u043D\u0430\u044F",
+      "Description": "\u0421\u0442\u0430\u043D\u0434\u0430\u0440\u0442\u043D\u044B\u0439 \u043E\u0431\u0449\u0438\u0439 \u0440\u0435\u0441\u0443\u0440\u0441"
+    },
+    {
+      "Name": "H$",
+      "Path": "H:\\",
+      "Type": "\u0421\u043B\u0443\u0436\u0435\u0431\u043D\u0430\u044F",
+      "Description": "\u0421\u0442\u0430\u043D\u0434\u0430\u0440\u0442\u043D\u044B\u0439 \u043E\u0431\u0449\u0438\u0439 \u0440\u0435\u0441\u0443\u0440\u0441"
+    },
+    {
+      "Name": "hp LaserJet 1010",
+      "Path": "hp LaserJet 1010 HB,LocalsplOnly",
+      "Type": "\u041F\u0440\u0438\u043D\u0442\u0435\u0440",
+      "Description": "hp LaserJet 1010 HB"
+    },
+    {
+      "Name": "I$",
+      "Path": "I:\\",
+      "Type": "\u0421\u043B\u0443\u0436\u0435\u0431\u043D\u0430\u044F",
+      "Description": "\u0421\u0442\u0430\u043D\u0434\u0430\u0440\u0442\u043D\u044B\u0439 \u043E\u0431\u0449\u0438\u0439 \u0440\u0435\u0441\u0443\u0440\u0441"
+    },
+    {
+      "Name": "IPC$",
+      "Path": "",
+      "Type": "\u0414\u0440\u0443\u0433\u0430\u044F",
+      "Description": "\u0423\u0434\u0430\u043B\u0435\u043D\u043D\u044B\u0439 IPC"
+    },
+    {
+      "Name": "J$",
+      "Path": "J:\\",
+      "Type": "\u0421\u043B\u0443\u0436\u0435\u0431\u043D\u0430\u044F",
+      "Description": "\u0421\u0442\u0430\u043D\u0434\u0430\u0440\u0442\u043D\u044B\u0439 \u043E\u0431\u0449\u0438\u0439 \u0440\u0435\u0441\u0443\u0440\u0441"
+    },
+    {
+      "Name": "NOVA-OS-main",
+      "Path": "J:\\NOVA\\NOVA-OS-main\\NOVA-OS-main",
+      "Type": "\u0414\u0438\u0441\u043A",
+      "Description": ""
+    },
+    {
+      "Name": "print$",
+      "Path": "C:\\WINDOWS\\system32\\spool\\drivers",
+      "Type": "\u0414\u0438\u0441\u043A",
+      "Description": "\u0414\u0440\u0430\u0439\u0432\u0435\u0440\u044B \u043F\u0440\u0438\u043D\u0442\u0435\u0440\u043E\u0432"
+    },
+    {
+      "Name": "Users",
+      "Path": "C:\\Users",
+      "Type": "\u0414\u0438\u0441\u043A",
+      "Description": ""
+    }
+  ],
+  "Summary": {
+    "DiskCount": 4,
+    "VolumeCount": 8,
+    "GpuCount": 1,
+    "StartupItemCount": 22,
+    "ScheduledTaskCount": 244,
+    "DriverCount": 152,
+    "UnsignedDriverCount": 0,
+    "UpdateCount": 52,
+    "UserCount": 5,
+    "AdminCount": 0,
+    "EnabledUserCount": 2,
+    "ShareCount": 14,
+    "SmartPredictFailure": false
+  }
+}
