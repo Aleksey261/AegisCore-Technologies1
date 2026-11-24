@@ -112,5 +112,24 @@
     "StartedAt": "2026-11-23T18:25:43.9627594Z",
     "CompletedAt": "2026-11-23T18:25:49.3803274Z",
     "ScheduledAt": null
+  },
+  {
+    "Id": "1c28d4a9-6f9b-4969-9eca-4eacf20bc9cc",
+    "JobId": "JOB-20261124104305",
+    "Name": "Scan 127.0.0.1",
+    "Description": "C# scanner job",
+    "Status": "COMPLETED",
+    "ScanMode": "C1",
+    "CurrentStep": "\u0417\u0430\u0432\u0435\u0440\u0448\u0435\u043D\u043E",
+    "Progress": 100,
+    "PortsScanned": 16,
+    "HostsDiscovered": 1,
+    "VulnerabilitiesFound": 2,
+    "ErrorMessage": null,
+    "CreatedBy": null,
+    "CreatedAt": "2026-11-24T14:43:05.0900887+04:00",
+    "StartedAt": "2026-11-24T10:43:05.0901058Z",
+    "CompletedAt": "2026-11-24T10:43:10.5234624Z",
+    "ScheduledAt": null
   }
 ]

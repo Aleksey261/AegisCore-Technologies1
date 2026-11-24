@@ -22,6 +22,8 @@ builder.Services.AddSingleton<ReportService>();
 builder.Services.AddSingleton<MlClientService>();
 builder.Services.AddSingleton<SystemMonitoringSettings>();
 builder.Services.AddSingleton<SystemMonitoringBackgroundService>();
+builder.Services.AddSingleton<FullSystemAuditService>();
+builder.Services.AddSingleton<WindowsNativeAuditService>();
 builder.Services.AddHostedService(sp => sp.GetRequiredService<SystemMonitoringBackgroundService>());
 
 builder.Services

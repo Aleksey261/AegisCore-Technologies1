@@ -19,6 +19,8 @@ public class MLAnalysisController : ControllerBase
     private readonly LocalScanAdapter _localAdapter;
     private readonly SystemMonitoringSettings _settings;
     private readonly SystemMonitoringBackgroundService _monitoringService;
+    private readonly FullSystemAuditService _auditService;
+    private readonly WindowsNativeAuditService _windowsAuditService;
     private static string _selectedModel = "LightGBM";
 
     private const string CicDatasetPath = @"J:\CIC-IDS2017\MachineLearningCVE\Friday-WorkingHours-Afternoon-DDos.pcap_ISCX.csv";
@@ -29,7 +31,9 @@ public class MLAnalysisController : ControllerBase
         SystemCollectorService systemCollector,
         LocalScanAdapter localAdapter,
         SystemMonitoringSettings settings,
-        SystemMonitoringBackgroundService monitoringService)
+        SystemMonitoringBackgroundService monitoringService,
+        FullSystemAuditService auditService,
+        WindowsNativeAuditService windowsAuditService)
     {
         _calculator = calculator;
         _pipeline = pipeline;
@@ -37,6 +41,8 @@ public class MLAnalysisController : ControllerBase
         _localAdapter = localAdapter;
         _settings = settings;
         _monitoringService = monitoringService;
+        _auditService = auditService;
+        _windowsAuditService = windowsAuditService;
     }
 
     [HttpGet("models")]
@@ -99,7 +105,6 @@ public class MLAnalysisController : ControllerBase
                 recall = Math.Round(m.Value.Recall * 100, 2),
                 f1Score = Math.Round(m.Value.F1Score * 100, 2),
                 auc = Math.Round(m.Value.Auc * 100, 2),
-                // Новые данные для визуализации на фронтенде
                 trainingTimeMs = m.Value.TrainingTimeMs,
                 truePositives = m.Value.TruePositives,
                 trueNegatives = m.Value.TrueNegatives,
@@ -203,6 +208,118 @@ public class MLAnalysisController : ControllerBase
             return BadRequest(new { success = false, error = ex.Message });
         }
     }
+
+    // ====== ПОЛНОЕ ОБСЛЕДОВАНИЕ СИСТЕМЫ (железо + ПО) ======
+
+    [HttpGet("full-audit")]
+    public async Task<IActionResult> GetFullAudit()
+    {
+        try
+        {
+            var audit = await _auditService.CollectAsync();
+            return Ok(audit);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(new { error = ex.Message });
+        }
+    }
+
+    [HttpGet("full-audit/html")]
+    public async Task<IActionResult> GetFullAuditHtml()
+    {
+        try
+        {
+            var audit = await _auditService.CollectAsync();
+            return Content(_auditService.BuildHtmlReport(audit), "text/html; charset=utf-8");
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(new { error = ex.Message });
+        }
+    }
+
+    [HttpPost("full-audit/save")]
+    public async Task<IActionResult> SaveFullAudit()
+    {
+        try
+        {
+            var audit = await _auditService.CollectAsync();
+            var dir = Path.Combine(Directory.GetCurrentDirectory(), "App_Data", "Reports");
+            Directory.CreateDirectory(dir);
+            var stamp = DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss");
+            var jsonPath = Path.Combine(dir, $"audit_{stamp}.json");
+            var htmlPath = Path.Combine(dir, $"audit_{stamp}.html");
+
+            await System.IO.File.WriteAllTextAsync(jsonPath,
+                System.Text.Json.JsonSerializer.Serialize(audit,
+                    new System.Text.Json.JsonSerializerOptions { WriteIndented = true }));
+            await System.IO.File.WriteAllTextAsync(htmlPath, _auditService.BuildHtmlReport(audit));
+
+            return Ok(new { success = true, jsonPath, htmlPath });
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(new { success = false, error = ex.Message });
+        }
+    }
+
+    // ====== WINDOWS NATIVE AUDIT (аналог systeminfo + driverquery + msinfo32 + dxdiag + perfmon) ======
+
+    [HttpGet("windows-native-audit")]
+    public async Task<IActionResult> GetWindowsNativeAudit()
+    {
+        try
+        {
+            var audit = await _windowsAuditService.CollectAsync();
+            return Ok(audit);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(new { error = ex.Message });
+        }
+    }
+
+    [HttpGet("windows-native-audit/html")]
+    public async Task<IActionResult> GetWindowsNativeAuditHtml()
+    {
+        try
+        {
+            var audit = await _windowsAuditService.CollectAsync();
+            return Content(_windowsAuditService.BuildHtmlReport(audit), "text/html; charset=utf-8");
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(new { error = ex.Message });
+        }
+    }
+
+    [HttpPost("windows-native-audit/save")]
+    public async Task<IActionResult> SaveWindowsNativeAudit()
+    {
+        try
+        {
+            var audit = await _windowsAuditService.CollectAsync();
+            var dir = Path.Combine(Directory.GetCurrentDirectory(), "App_Data", "WindowsReports");
+            Directory.CreateDirectory(dir);
+            var stamp = DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss");
+            var jsonPath = Path.Combine(dir, $"windows-audit_{stamp}.json");
+            var htmlPath = Path.Combine(dir, $"windows-audit_{stamp}.html");
+
+            await System.IO.File.WriteAllTextAsync(jsonPath,
+                System.Text.Json.JsonSerializer.Serialize(audit,
+                    new System.Text.Json.JsonSerializerOptions { WriteIndented = true }));
+            await System.IO.File.WriteAllTextAsync(htmlPath, _windowsAuditService.BuildHtmlReport(audit));
+
+            return Ok(new { success = true, jsonPath, htmlPath });
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(new { success = false, error = ex.Message });
+        }
+    }
+
+    // ====== КОМПЛАЕНС И СРАВНЕНИЕ МОДЕЛЕЙ ======
 
     [HttpPost("assess/{systemId}")]
     public IActionResult AssessSystem(string systemId, [FromBody] AssessRequest? request)
@@ -395,7 +512,6 @@ public class MLAnalysisController : ControllerBase
                 return GenerateRealisticTrainingData();
             }
 
-            // КРИТИЧНО: имена колонок CIC-IDS2017 идут с ведущими пробелами
             var headers = ParseCsvLine(headerLine).Select(h => h.Trim()).ToList();
             int ColIdx(string n) => headers.IndexOf(n);
 
@@ -436,7 +552,7 @@ public class MLAnalysisController : ControllerBase
             foreach (var line in lines.Skip(1))
             {
                 if (processedCount >= maxRecords) break;
-                if (random.Next(10) != 0) continue; // ~10% выборка
+                if (random.Next(10) != 0) continue;
 
                 var fields = ParseCsvLine(line);
                 if (fields.Count <= labelIdx) continue;
@@ -452,16 +568,15 @@ public class MLAnalysisController : ControllerBase
                     float.IsNaN(flowPackets) || float.IsInfinity(flowPackets))
                 {
                     skipped++;
-                    continue; // ML.NET не принимает NaN/Infinity
+                    continue;
                 }
 
                 data.Add(new SecurityData
                 {
-                    // Флаги — только из порта, БЕЗ утечки метки
                     PortOpen = riskyPorts.Contains(destPort) ? 1f : 0f,
                     UnencryptedTraffic = unencryptedPorts.Contains(destPort) ? 1f : 0f,
-                    WeakPassword = 0f,     // из сетевых потоков неизвестно
-                    OutdatedSoftware = 0f, // из сетевых потоков неизвестно
+                    WeakPassword = 0f,
+                    OutdatedSoftware = 0f,
 
                     DestinationPort = Num(fields, destPortIdx),
                     FlowDuration = Num(fields, flowDurationIdx),
@@ -497,7 +612,6 @@ public class MLAnalysisController : ControllerBase
         return data.OrderBy(x => random.Next()).ToList();
     }
 
-    // Простой и надежный парсер CSV-строки, корректно обрабатывающий запятые внутри кавычек
     private List<string> ParseCsvLine(string line)
     {
         var result = new List<string>();
@@ -524,7 +638,6 @@ public class MLAnalysisController : ControllerBase
         return result;
     }
 
-    // Синтетический fallback: используется ТОЛЬКО если датасет недоступен
     private List<SecurityData> GenerateRealisticTrainingData()
     {
         var data = new List<SecurityData>();
@@ -561,7 +674,7 @@ public class MLAnalysisController : ControllerBase
                 ? random.NextDouble() > 0.2
                 : random.NextDouble() > 0.9;
 
-            if (random.NextDouble() < 0.1) isAttack = !isAttack; // 10% шума в метках
+            if (random.NextDouble() < 0.1) isAttack = !isAttack;
 
             data.Add(new SecurityData
             {

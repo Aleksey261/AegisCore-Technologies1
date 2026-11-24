@@ -29262,5 +29262,4877 @@
     "ItemValue": "17.2.0.6",
     "Details": "2010-2022 Viber Media S.a.r.l",
     "ScanRunId": "JOB-20261123182543"
+  },
+  {
+    "Id": "c08f8c47-aa45-400a-b734-029d2c882683",
+    "Category": "System",
+    "ItemKey": "MachineName",
+    "ItemValue": "DESKTOP-542S95E",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "5fe60404-743f-474d-952b-d32bc985f5d7",
+    "Category": "System",
+    "ItemKey": "OSVersion",
+    "ItemValue": "Microsoft Windows NT 10.0.19045.0",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "5ec103c1-c314-450b-9d27-af68d0a6580a",
+    "Category": "System",
+    "ItemKey": "UserName",
+    "ItemValue": "BeKey261",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "b0cad983-c12e-480d-bd9f-f78d11e8c5a1",
+    "Category": "Hardware",
+    "ItemKey": "ProcessorCount",
+    "ItemValue": "8",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "dbacbd8a-a724-4437-9a47-3e951c45c607",
+    "Category": "Hardware",
+    "ItemKey": "Is64BitOperatingSystem",
+    "ItemValue": "True",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "d1f4d942-d553-4603-a31d-d8391a325509",
+    "Category": "Hardware",
+    "ItemKey": "SystemDirectory",
+    "ItemValue": "C:\\WINDOWS\\system32",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "f6be9f81-9e62-412d-97ee-44e7b1d765bb",
+    "Category": "Disk",
+    "ItemKey": "C:\\",
+    "ItemValue": "334 GB",
+    "Details": "NTFS",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "829aef3d-9e89-40cd-9ae4-ac6b3fa920be",
+    "Category": "Disk",
+    "ItemKey": "D:\\",
+    "ItemValue": "0 GB",
+    "Details": "NTFS",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "68deca8a-2bcc-4d53-a27e-8601af765014",
+    "Category": "Disk",
+    "ItemKey": "E:\\",
+    "ItemValue": "97 GB",
+    "Details": "NTFS",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "d24db1e2-b80a-415e-8e4d-1db4aa92a3e2",
+    "Category": "Disk",
+    "ItemKey": "F:\\",
+    "ItemValue": "322 GB",
+    "Details": "NTFS",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "7fb18087-8936-4c41-a509-6d59bfe2ac98",
+    "Category": "Disk",
+    "ItemKey": "G:\\",
+    "ItemValue": "511 GB",
+    "Details": "NTFS",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "986c37d6-3bf2-427d-a5cb-eeccda196f1c",
+    "Category": "Disk",
+    "ItemKey": "H:\\",
+    "ItemValue": "120 GB",
+    "Details": "NTFS",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "266c6f64-aef1-44a2-bfec-c5125e721681",
+    "Category": "Disk",
+    "ItemKey": "I:\\",
+    "ItemValue": "811 GB",
+    "Details": "NTFS",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "9ed29c61-c3ec-40ff-9225-af8aa7dcb3fb",
+    "Category": "Disk",
+    "ItemKey": "J:\\",
+    "ItemValue": "1862 GB",
+    "Details": "NTFS",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "b612e981-4f76-4de6-b590-f64a232cd523",
+    "Category": "Network",
+    "ItemKey": "vEthernet (Default Switch)",
+    "ItemValue": "00155D2F0B9C",
+    "Details": "Ethernet; Up; fe80::31ad:6a22:386f:d7ad%18, 172.31.32.1",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "0cc5fd02-6686-43af-8b2f-f79429d3c85d",
+    "Category": "Network",
+    "ItemKey": "Ethernet 2",
+    "ItemValue": "0A0027000006",
+    "Details": "Ethernet; Up; fe80::4041:9c24:9577:9926%6, 192.168.56.1",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "11f302aa-a0f4-4f3b-a8a2-3172d0879eb7",
+    "Category": "Network",
+    "ItemKey": "Ethernet",
+    "ItemValue": "08606EC5925D",
+    "Details": "Ethernet; Up; 192.168.1.68",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "66dd0b5e-9cf8-4124-a84f-6f848a02c801",
+    "Category": "Network",
+    "ItemKey": "Loopback Pseudo-Interface 1",
+    "ItemValue": "",
+    "Details": "Loopback; Up; ::1, 127.0.0.1",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "c8f0b34e-b0b1-4add-bd6c-c1af38178a17",
+    "Category": "Process",
+    "ItemKey": "AegisCore.CSharp",
+    "ItemValue": "14536",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "01097cd2-684f-4929-ba26-f78b1d661d63",
+    "Category": "Process",
+    "ItemKey": "AggregatorHost",
+    "ItemValue": "7400",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "2d5449a4-fe57-4627-a62a-1990ac49fb7e",
+    "Category": "Process",
+    "ItemKey": "AnyDesk",
+    "ItemValue": "3868",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "2b2970dd-c6e4-4306-a239-c1dc7760d913",
+    "Category": "Process",
+    "ItemKey": "AppleMobileDeviceService",
+    "ItemValue": "4016",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "6f1fcb23-b4c7-438d-8878-4bca1c74706a",
+    "Category": "Process",
+    "ItemKey": "ApplicationFrameHost",
+    "ItemValue": "5168",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "f90742f5-336c-4ed1-8ec4-82b425290a6e",
+    "Category": "Process",
+    "ItemKey": "armsvc",
+    "ItemValue": "4088",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "78bb0547-dfda-416e-9b1a-8dcc55f9b0a5",
+    "Category": "Process",
+    "ItemKey": "assistant",
+    "ItemValue": "4000",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "a1664188-17b8-4d3e-b39d-267a2d79d25e",
+    "Category": "Process",
+    "ItemKey": "assistant",
+    "ItemValue": "12800",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "0b7d033c-8686-413c-9b63-44aa8d450fc9",
+    "Category": "Process",
+    "ItemKey": "assistant",
+    "ItemValue": "13884",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "a9337b18-62b4-4f42-9eb8-7ba2ba48703a",
+    "Category": "Process",
+    "ItemKey": "ast_service",
+    "ItemValue": "3884",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "e0a31ac8-5bfe-46e3-9c01-5b58f68d5b7b",
+    "Category": "Process",
+    "ItemKey": "atieclxx",
+    "ItemValue": "1952",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "2da710be-03e5-4891-afa7-729ded495d4d",
+    "Category": "Process",
+    "ItemKey": "atiesrxx",
+    "ItemValue": "1228",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "3656b75a-b425-4b94-bf2e-a4e27b623a43",
+    "Category": "Process",
+    "ItemKey": "audiodg",
+    "ItemValue": "15804",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "2d08895b-ea43-4c5e-8217-be81e98fcc6f",
+    "Category": "Process",
+    "ItemKey": "browser",
+    "ItemValue": "8432",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "85db40ab-c782-4279-a080-3463c03f4e0d",
+    "Category": "Process",
+    "ItemKey": "browser",
+    "ItemValue": "5124",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "26e15186-4c88-4f9b-b90f-e43f737c7149",
+    "Category": "Process",
+    "ItemKey": "browser",
+    "ItemValue": "1236",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "2a4b8d44-913c-4bc1-9407-d68d6552a8cf",
+    "Category": "Process",
+    "ItemKey": "browser",
+    "ItemValue": "10080",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "51b6cc79-ab79-4f97-b059-46ca0103cdee",
+    "Category": "Process",
+    "ItemKey": "browser",
+    "ItemValue": "11552",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "6c3a20f9-8c17-4372-ac96-dae6fb96880d",
+    "Category": "Process",
+    "ItemKey": "browser",
+    "ItemValue": "1232",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "3d8e9322-b898-4c36-9b09-78694487002e",
+    "Category": "Process",
+    "ItemKey": "browser",
+    "ItemValue": "9552",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "2246db87-f969-4262-bfe9-173e4584d9a5",
+    "Category": "Process",
+    "ItemKey": "browser",
+    "ItemValue": "10660",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "36330e13-5544-4db9-b4c8-1d84f87409d4",
+    "Category": "Process",
+    "ItemKey": "browser",
+    "ItemValue": "11768",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "cdbcaf73-fcf3-454e-b8f7-833fd64474c0",
+    "Category": "Process",
+    "ItemKey": "browser",
+    "ItemValue": "8700",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "fd7c8374-18b7-48e2-9eb5-85569f92779a",
+    "Category": "Process",
+    "ItemKey": "browser",
+    "ItemValue": "11608",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "e0da32bf-ba3d-41b1-8098-640139a00c51",
+    "Category": "Process",
+    "ItemKey": "browser",
+    "ItemValue": "16068",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "10acca32-3f44-4710-bc23-d25177d7c93b",
+    "Category": "Process",
+    "ItemKey": "browser",
+    "ItemValue": "11020",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "6d2b29d0-80ce-4bf9-8ae9-06ee4a44b1da",
+    "Category": "Process",
+    "ItemKey": "browser",
+    "ItemValue": "13512",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "509e2a31-6f93-49a5-8819-81e931ac4468",
+    "Category": "Process",
+    "ItemKey": "browser",
+    "ItemValue": "14728",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "335b4e85-adce-4064-9691-73fe587117e1",
+    "Category": "Process",
+    "ItemKey": "browser",
+    "ItemValue": "6448",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "1250274c-dc76-40fe-9b6a-20b44a932ee4",
+    "Category": "Process",
+    "ItemKey": "browser",
+    "ItemValue": "11480",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "6e0edf1e-49b6-40fd-8a84-4469f5c88b92",
+    "Category": "Process",
+    "ItemKey": "browser",
+    "ItemValue": "4340",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "2474d2a3-da1c-44ae-8506-732ede8d9824",
+    "Category": "Process",
+    "ItemKey": "browser",
+    "ItemValue": "10448",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "a7c9e245-d305-48cf-b643-9e666f0fa743",
+    "Category": "Process",
+    "ItemKey": "CCleaner64",
+    "ItemValue": "16132",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "08235950-9869-48d7-b421-abdaf61d4737",
+    "Category": "Process",
+    "ItemKey": "cmcore",
+    "ItemValue": "2700",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "4910c8f1-ece7-45fa-bf23-41357765d543",
+    "Category": "Process",
+    "ItemKey": "CmWebAdmin",
+    "ItemValue": "3968",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "86400455-f8ec-40f9-a114-73945cf09cc2",
+    "Category": "Process",
+    "ItemKey": "Code",
+    "ItemValue": "6680",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "165c2a0c-e336-4fdd-8187-173a0abc9cc0",
+    "Category": "Process",
+    "ItemKey": "Code",
+    "ItemValue": "10820",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "a65a64e9-ae80-481b-b7b7-fe7833522e9d",
+    "Category": "Process",
+    "ItemKey": "Code",
+    "ItemValue": "12380",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "0c132c14-79ee-4043-bdc2-48aea8a325d9",
+    "Category": "Process",
+    "ItemKey": "Code",
+    "ItemValue": "12852",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "bf4984ad-3cdb-4cb6-ba3d-a2980ad7bba2",
+    "Category": "Process",
+    "ItemKey": "Code",
+    "ItemValue": "15912",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "dd2eca03-da77-45bc-8910-e36b7b4bbfdb",
+    "Category": "Process",
+    "ItemKey": "Code",
+    "ItemValue": "3608",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "85127565-0891-4902-b4d4-ee0282885b86",
+    "Category": "Process",
+    "ItemKey": "Code",
+    "ItemValue": "5360",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "9ebd1f29-641e-4357-a654-4ccbb3319e11",
+    "Category": "Process",
+    "ItemKey": "Code",
+    "ItemValue": "13356",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "7f435843-5da4-462f-981e-6b2552b38a87",
+    "Category": "Process",
+    "ItemKey": "Code",
+    "ItemValue": "2060",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "11f6ac9d-a573-4538-8a6d-228e3a8bf619",
+    "Category": "Process",
+    "ItemKey": "Code",
+    "ItemValue": "7276",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "d006c908-87c9-4924-b783-5e997d5ccfee",
+    "Category": "Process",
+    "ItemKey": "Code",
+    "ItemValue": "5016",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "c3f21cae-7f61-4e98-935a-e0687f327489",
+    "Category": "Process",
+    "ItemKey": "Code",
+    "ItemValue": "10572",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "a0125cd8-771a-435a-bffd-7ab8cd60157d",
+    "Category": "Process",
+    "ItemKey": "Code",
+    "ItemValue": "4840",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "c037b039-78dd-4870-b473-bbbe62f878a2",
+    "Category": "Process",
+    "ItemKey": "Code",
+    "ItemValue": "2528",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "9a03e01b-3f83-49b8-ab92-34178219cbdf",
+    "Category": "Process",
+    "ItemKey": "Code",
+    "ItemValue": "9696",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "16eb8149-b5f4-41aa-9263-1d5debde723f",
+    "Category": "Process",
+    "ItemKey": "Code",
+    "ItemValue": "528",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "731bf920-4f29-48ca-9fa6-adc0b0ebdc78",
+    "Category": "Process",
+    "ItemKey": "Code",
+    "ItemValue": "7512",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "cf60e193-10a8-4f32-bdb1-ccfdf2fa988a",
+    "Category": "Process",
+    "ItemKey": "CodeMeter",
+    "ItemValue": "4176",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "33c46c23-3d07-4436-96e1-9ffe614b9516",
+    "Category": "Process",
+    "ItemKey": "CompPkgSrv",
+    "ItemValue": "15296",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "78c7ae87-c7ae-4332-a56d-2e8ecfb110af",
+    "Category": "Process",
+    "ItemKey": "conhost",
+    "ItemValue": "5396",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "0021839e-e5f0-4e0c-b1bd-1c7fb538d92f",
+    "Category": "Process",
+    "ItemKey": "conhost",
+    "ItemValue": "5468",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "61241ce8-4a2a-46af-ac41-57d56213af17",
+    "Category": "Process",
+    "ItemKey": "conhost",
+    "ItemValue": "11584",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "68d571f4-63d7-418c-aba7-853340bcb471",
+    "Category": "Process",
+    "ItemKey": "conhost",
+    "ItemValue": "9900",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "e624c606-8625-442f-bc78-758f14ed32fa",
+    "Category": "Process",
+    "ItemKey": "conhost",
+    "ItemValue": "15008",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "369735f3-dfad-4abf-b541-aa62f6219ab5",
+    "Category": "Process",
+    "ItemKey": "conhost",
+    "ItemValue": "15324",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "f7640ccb-d4cd-4470-9665-69f0b8c3fa1f",
+    "Category": "Process",
+    "ItemKey": "conhost",
+    "ItemValue": "14776",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "4c14a829-32ac-48ae-abbf-ce83904ad272",
+    "Category": "Process",
+    "ItemKey": "conhost",
+    "ItemValue": "12460",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "1dfc9d4b-84d3-4e86-98b2-8d1748cc7e46",
+    "Category": "Process",
+    "ItemKey": "conhost",
+    "ItemValue": "6492",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "a248e9c5-71dc-4e73-bb45-8dc2a1efecc2",
+    "Category": "Process",
+    "ItemKey": "conhost",
+    "ItemValue": "16256",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "cf9148b8-c656-4f82-bec8-266183f4b319",
+    "Category": "Process",
+    "ItemKey": "conhost",
+    "ItemValue": "5352",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "c87c2302-8f0e-47ad-a847-f820d1f1a71e",
+    "Category": "Process",
+    "ItemKey": "copilot-runtime",
+    "ItemValue": "7860",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "78dd2274-0704-4c7b-b14a-030deaac980e",
+    "Category": "Process",
+    "ItemKey": "csrss",
+    "ItemValue": "688",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "1dccbf1f-6be6-4adc-843e-bb77dcda8ca7",
+    "Category": "Process",
+    "ItemKey": "csrss",
+    "ItemValue": "11876",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "ef74786c-5200-4c47-b5a7-576ff71e3974",
+    "Category": "Process",
+    "ItemKey": "ctfmon",
+    "ItemValue": "14048",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "1fbd2ff6-bdb6-4383-946e-2711cc5e47b5",
+    "Category": "Process",
+    "ItemKey": "dasHost",
+    "ItemValue": "4256",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "8840a692-4a11-4499-b595-25c1d81d8b08",
+    "Category": "Process",
+    "ItemKey": "dllhost",
+    "ItemValue": "7000",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "e8c07936-3bc0-4b3b-9261-6f10ea1d4763",
+    "Category": "Process",
+    "ItemKey": "dotnet",
+    "ItemValue": "10392",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "5b3974d7-4df8-48fe-bc1d-46d9f87c1054",
+    "Category": "Process",
+    "ItemKey": "dotnet",
+    "ItemValue": "6712",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "9787ddd4-25bc-401e-81c8-f39e2bb981aa",
+    "Category": "Process",
+    "ItemKey": "dotnet",
+    "ItemValue": "1000",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "6ec8ea0d-e7ce-425c-89c3-1db6883f067f",
+    "Category": "Process",
+    "ItemKey": "dotnet",
+    "ItemValue": "15372",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "a8e9f5b6-f3b5-4e82-a0b3-ae4a61bf791e",
+    "Category": "Process",
+    "ItemKey": "dwantispam",
+    "ItemValue": "11220",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "91624d64-e465-43db-9aa3-d5a4c1cca6e7",
+    "Category": "Process",
+    "ItemKey": "dwarkdaemon",
+    "ItemValue": "6528",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "d00a69c5-0afa-4f81-a604-bfab61763ef6",
+    "Category": "Process",
+    "ItemKey": "dwcloudhost",
+    "ItemValue": "3416",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "b795aa14-df0e-4496-99f9-e88a0be9b8ea",
+    "Category": "Process",
+    "ItemKey": "dwengine",
+    "ItemValue": "6464",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "c9f1f887-296d-4845-a25d-6579f6dfc62a",
+    "Category": "Process",
+    "ItemKey": "dwm",
+    "ItemValue": "9124",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "92afbadd-6c6d-4b7c-aa83-124040eed445",
+    "Category": "Process",
+    "ItemKey": "dwnetfilter",
+    "ItemValue": "8932",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "0160d4e8-a583-4674-a871-94318f33d9d4",
+    "Category": "Process",
+    "ItemKey": "dwservice",
+    "ItemValue": "2176",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "c20bbbb2-0391-4795-b9e9-123cdb3f8855",
+    "Category": "Process",
+    "ItemKey": "dwwatcher",
+    "ItemValue": "8764",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "1010e344-2416-4e39-92e2-29d4cfe0d761",
+    "Category": "Process",
+    "ItemKey": "explorer",
+    "ItemValue": "1176",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "0215616d-2396-4694-b920-b55c6e5140a7",
+    "Category": "Process",
+    "ItemKey": "FNPLicensingService",
+    "ItemValue": "4112",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "43db6524-83e8-47db-af96-3398717374a3",
+    "Category": "Process",
+    "ItemKey": "fontdrvhost",
+    "ItemValue": "564",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "f06d3ec3-f3cd-4d68-aca0-539bc3c386b7",
+    "Category": "Process",
+    "ItemKey": "fontdrvhost",
+    "ItemValue": "4484",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "a061da14-c7ce-41bd-bb58-ec9768db4143",
+    "Category": "Process",
+    "ItemKey": "GEM Desktop",
+    "ItemValue": "10220",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "4b00305c-7d19-4ed2-b7a9-29243a2e0506",
+    "Category": "Process",
+    "ItemKey": "GEM Desktop",
+    "ItemValue": "15580",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "56469676-57ed-4925-bbda-b430d369fd78",
+    "Category": "Process",
+    "ItemKey": "GEM Desktop",
+    "ItemValue": "14572",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "204e04e2-4e55-47b8-9fb8-94dd9fc0a652",
+    "Category": "Process",
+    "ItemKey": "GEM Desktop",
+    "ItemValue": "12464",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "1d30d2b1-3a5e-4f0f-8dcb-08e4df815678",
+    "Category": "Process",
+    "ItemKey": "Idle",
+    "ItemValue": "0",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "747cd1e5-1a6e-481b-8297-fc699f580521",
+    "Category": "Process",
+    "ItemKey": "lsass",
+    "ItemValue": "900",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "8593be2c-429c-4d56-b647-ef20ffa82ba1",
+    "Category": "Process",
+    "ItemKey": "mDNSResponder",
+    "ItemValue": "3960",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "199fb91d-6a0e-4fc9-aaad-ad7a4c79edba",
+    "Category": "Process",
+    "ItemKey": "Memory Compression",
+    "ItemValue": "2280",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "59fe9df2-12eb-4a02-9d49-cf5b147b7c0e",
+    "Category": "Process",
+    "ItemKey": "Microsoft.CodeAnalysis.LanguageServer",
+    "ItemValue": "12668",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "77e3c967-c070-4c19-a8bb-99b83c3fd206",
+    "Category": "Process",
+    "ItemKey": "Microsoft.VisualStudio.Code.Server",
+    "ItemValue": "8596",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "fc537985-3b5e-4252-9311-a0c82f193794",
+    "Category": "Process",
+    "ItemKey": "Microsoft.VisualStudio.Code.ServiceController",
+    "ItemValue": "10656",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "982e78e1-0ce2-48ec-8764-faf08ae4075a",
+    "Category": "Process",
+    "ItemKey": "Microsoft.VisualStudio.Code.ServiceHost",
+    "ItemValue": "5540",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "4ccfa0d1-1ba3-4985-8a91-5874a824d6c6",
+    "Category": "Process",
+    "ItemKey": "Microsoft.VisualStudio.Code.ServiceHost",
+    "ItemValue": "9340",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "f5f129a6-b685-4c68-a1d3-4939b7ef8b05",
+    "Category": "Process",
+    "ItemKey": "NetworkLicenseServer",
+    "ItemValue": "3976",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "6a503345-12b4-4eba-9f9a-98e9b1e8e6aa",
+    "Category": "Process",
+    "ItemKey": "OfficeClickToRun",
+    "ItemValue": "4224",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "1193ef5e-81b6-4267-9c1d-fead59680924",
+    "Category": "Process",
+    "ItemKey": "OpenConsole",
+    "ItemValue": "8452",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "11902dc3-1a97-43ff-9382-279cd5e4f8c1",
+    "Category": "Process",
+    "ItemKey": "OpenConsole",
+    "ItemValue": "12080",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "e098a3b6-c85e-4065-9219-f8f19ff0ad88",
+    "Category": "Process",
+    "ItemKey": "OpenConsole",
+    "ItemValue": "12052",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "10a3b19b-0a09-4ea3-b27d-e5e9d7cebfb4",
+    "Category": "Process",
+    "ItemKey": "pdf24",
+    "ItemValue": "4028",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "18708be1-5e84-492b-876b-fc98623ebafd",
+    "Category": "Process",
+    "ItemKey": "pet",
+    "ItemValue": "8392",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "6db540b2-6267-4d0b-a17e-8cc9722b5afb",
+    "Category": "Process",
+    "ItemKey": "pg_ctl",
+    "ItemValue": "3984",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "bc2d8eaa-5089-4b5c-bf99-37c15a95cd3a",
+    "Category": "Process",
+    "ItemKey": "PhoneExperienceHost",
+    "ItemValue": "5464",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "b07a2c6d-d8ca-4535-955f-81a4345dc1ae",
+    "Category": "Process",
+    "ItemKey": "postgres",
+    "ItemValue": "5376",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "d03587a1-8bff-433e-ad21-bdf989209a3f",
+    "Category": "Process",
+    "ItemKey": "postgres",
+    "ItemValue": "6092",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "14e5e5b0-a4cf-43fb-aa76-b26ea4ceb7a5",
+    "Category": "Process",
+    "ItemKey": "postgres",
+    "ItemValue": "5132",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "568f39b3-59ec-4781-84ab-b15d1d63b6e6",
+    "Category": "Process",
+    "ItemKey": "postgres",
+    "ItemValue": "5136",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "0d287f3f-edfd-4d3d-b2b2-af8d21b8966c",
+    "Category": "Process",
+    "ItemKey": "postgres",
+    "ItemValue": "3364",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "15584cbd-df08-4d54-ae2b-c3fc0630e730",
+    "Category": "Process",
+    "ItemKey": "postgres",
+    "ItemValue": "5020",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "fe780f2c-6fa9-49e5-b275-6106e340876f",
+    "Category": "Process",
+    "ItemKey": "postgres",
+    "ItemValue": "4320",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "3e71c59b-a6ce-49dc-a4b2-cfcab22a7749",
+    "Category": "Process",
+    "ItemKey": "postgres",
+    "ItemValue": "7552",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "a5143e64-1282-4e47-a754-a5bad67792b9",
+    "Category": "Process",
+    "ItemKey": "postgres",
+    "ItemValue": "7560",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "08f93e56-a7d1-487a-b273-d03a55b29a78",
+    "Category": "Process",
+    "ItemKey": "postgres",
+    "ItemValue": "7568",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "332c69ce-8db3-4b81-b2aa-8dd1187cfa9c",
+    "Category": "Process",
+    "ItemKey": "powershell",
+    "ItemValue": "852",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "c6edfe1a-acf5-4462-aa50-9f7468a6da98",
+    "Category": "Process",
+    "ItemKey": "powershell",
+    "ItemValue": "8384",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "59cbe161-8c00-462c-9500-5b86eaf9b9b9",
+    "Category": "Process",
+    "ItemKey": "powershell",
+    "ItemValue": "7516",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "3095170e-97c5-4055-8197-ed72def03176",
+    "Category": "Process",
+    "ItemKey": "Registry",
+    "ItemValue": "124",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "06ae277d-285b-4f2c-9518-7ed83b44fd61",
+    "Category": "Process",
+    "ItemKey": "RuntimeBroker",
+    "ItemValue": "7432",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "22946eea-6308-453e-9b77-38a33fb2b5bf",
+    "Category": "Process",
+    "ItemKey": "RuntimeBroker",
+    "ItemValue": "12720",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "ed3403e8-4cf3-409a-8cfb-7c11d42933c9",
+    "Category": "Process",
+    "ItemKey": "RuntimeBroker",
+    "ItemValue": "5356",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "11a314dd-8ad7-4e46-a313-5f1ce2fd35c3",
+    "Category": "Process",
+    "ItemKey": "RuntimeBroker",
+    "ItemValue": "8068",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "ba669d4c-c0f4-4407-b43b-f9baa495efb0",
+    "Category": "Process",
+    "ItemKey": "SearchApp",
+    "ItemValue": "1328",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "f48164ac-b446-4022-b4f2-60da5b0d1910",
+    "Category": "Process",
+    "ItemKey": "SearchFilterHost",
+    "ItemValue": "11184",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "1e4c8467-4423-47ba-b64b-64ec1aa61363",
+    "Category": "Process",
+    "ItemKey": "SearchIndexer",
+    "ItemValue": "6740",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "76858f81-44f5-4c92-bde6-ccfbde977a9d",
+    "Category": "Process",
+    "ItemKey": "SearchProtocolHost",
+    "ItemValue": "2516",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "53ac1f80-cce6-4895-bc9a-9aeef1e45139",
+    "Category": "Process",
+    "ItemKey": "SecurityHealthService",
+    "ItemValue": "11268",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "42978ef6-decf-4f80-bb51-22a4b825696f",
+    "Category": "Process",
+    "ItemKey": "SecurityHealthSystray",
+    "ItemValue": "5800",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "e95d67bc-6869-471c-a2dc-4638e1122a6e",
+    "Category": "Process",
+    "ItemKey": "service_update",
+    "ItemValue": "4052",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "b3e92d9d-a6fd-4059-bdce-f1dd0de65c97",
+    "Category": "Process",
+    "ItemKey": "service_update",
+    "ItemValue": "4828",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "b99c2154-5204-48b3-9fae-4a021f3f14d3",
+    "Category": "Process",
+    "ItemKey": "services",
+    "ItemValue": "856",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "48d4dfca-acb8-453e-85cc-bbc542159bb1",
+    "Category": "Process",
+    "ItemKey": "ShellExperienceHost",
+    "ItemValue": "2148",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "9a8839cf-14c5-4e12-a61a-6ccec43cfc3f",
+    "Category": "Process",
+    "ItemKey": "sihost",
+    "ItemValue": "14924",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "0ee1af63-447c-4700-bb34-8cc4327d5fc3",
+    "Category": "Process",
+    "ItemKey": "smss",
+    "ItemValue": "460",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "d1c77a6e-c38e-4bca-b530-e1a95ffb193f",
+    "Category": "Process",
+    "ItemKey": "spideragent",
+    "ItemValue": "9392",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "7d41a940-b6bc-4787-b452-0def9d5967a0",
+    "Category": "Process",
+    "ItemKey": "spoolsv",
+    "ItemValue": "3196",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "41ec4f42-c654-4351-a3fb-865800e16233",
+    "Category": "Process",
+    "ItemKey": "StartMenuExperienceHost",
+    "ItemValue": "16272",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "94dffd1f-c273-41a0-9ea4-f26261351e58",
+    "Category": "Process",
+    "ItemKey": "svchost",
+    "ItemValue": "436",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "cb075093-fc3c-4e82-b44e-bec074bc1207",
+    "Category": "Process",
+    "ItemKey": "svchost",
+    "ItemValue": "972",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "49f32ebf-fb74-47b1-a679-9e125760bf7c",
+    "Category": "Process",
+    "ItemKey": "svchost",
+    "ItemValue": "1028",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "7f641504-5438-4796-8d9a-9458dc7ade98",
+    "Category": "Process",
+    "ItemKey": "svchost",
+    "ItemValue": "1096",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "738b6162-71ad-4fee-8a77-bb0f3ff41ba0",
+    "Category": "Process",
+    "ItemKey": "svchost",
+    "ItemValue": "1168",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "845aa3c2-301a-4227-a8ee-04ea2732208d",
+    "Category": "Process",
+    "ItemKey": "svchost",
+    "ItemValue": "1296",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "b4618ef2-34cd-4398-aa9a-41b2dd539eae",
+    "Category": "Process",
+    "ItemKey": "svchost",
+    "ItemValue": "1304",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "e4c3d9d4-4503-43d1-89bc-54d6de85c853",
+    "Category": "Process",
+    "ItemKey": "svchost",
+    "ItemValue": "1312",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "a0f47867-955d-43b4-9d37-91511c06a5fa",
+    "Category": "Process",
+    "ItemKey": "svchost",
+    "ItemValue": "1464",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "f2ad7826-16a4-480f-ba44-6851e7488f49",
+    "Category": "Process",
+    "ItemKey": "svchost",
+    "ItemValue": "1480",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "37097ba9-ebee-4153-833d-322110a8b63e",
+    "Category": "Process",
+    "ItemKey": "svchost",
+    "ItemValue": "1524",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "89bff241-beed-4d78-bb1e-b9fe27f7b5a0",
+    "Category": "Process",
+    "ItemKey": "svchost",
+    "ItemValue": "1568",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "e090a0c4-fbeb-4b38-8c73-680993c3e998",
+    "Category": "Process",
+    "ItemKey": "svchost",
+    "ItemValue": "1580",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "cbbd3180-062d-4574-ad95-11f55f984281",
+    "Category": "Process",
+    "ItemKey": "svchost",
+    "ItemValue": "1616",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "0c7db5d3-aa1b-403d-819e-60df090e3078",
+    "Category": "Process",
+    "ItemKey": "svchost",
+    "ItemValue": "1644",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "c8d91e75-a987-4a4e-8240-8695377d05d2",
+    "Category": "Process",
+    "ItemKey": "svchost",
+    "ItemValue": "1780",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "876bd517-68b8-4fd6-a31b-6a4acf2f2679",
+    "Category": "Process",
+    "ItemKey": "svchost",
+    "ItemValue": "1812",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "9f7fb0a3-8936-4315-a2fe-af7eed11e2ae",
+    "Category": "Process",
+    "ItemKey": "svchost",
+    "ItemValue": "1824",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "c583a8b5-5505-45c4-9265-771114a652f6",
+    "Category": "Process",
+    "ItemKey": "svchost",
+    "ItemValue": "1900",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "e9f8aa38-7f6d-48bb-99c9-7f80ec7f4051",
+    "Category": "Process",
+    "ItemKey": "svchost",
+    "ItemValue": "1124",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "a2780970-1070-4fae-9b89-9ddd90cfa5af",
+    "Category": "Process",
+    "ItemKey": "svchost",
+    "ItemValue": "1240",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "56e7f1c1-1db4-4e3e-bd10-6928f73e4d67",
+    "Category": "Process",
+    "ItemKey": "svchost",
+    "ItemValue": "2052",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "88460346-6726-4ad7-9c94-92b1f507a45f",
+    "Category": "Process",
+    "ItemKey": "svchost",
+    "ItemValue": "2100",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "9c41dc77-fafc-4172-bfc9-0e680bcfae67",
+    "Category": "Process",
+    "ItemKey": "svchost",
+    "ItemValue": "2200",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "a9f31a82-e386-4cf0-bab4-3a01e93bbbd6",
+    "Category": "Process",
+    "ItemKey": "svchost",
+    "ItemValue": "2208",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "91f1caec-c72f-418d-9825-b00b60fb0eaf",
+    "Category": "Process",
+    "ItemKey": "svchost",
+    "ItemValue": "2216",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "b64713b4-a1b2-4204-8969-abb6bb510dce",
+    "Category": "Process",
+    "ItemKey": "svchost",
+    "ItemValue": "2248",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "73f4b214-8c75-4bb6-8d97-101b9348fe01",
+    "Category": "Process",
+    "ItemKey": "svchost",
+    "ItemValue": "2256",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "48516d73-f1cd-44e6-bdd2-4f9eea6b4784",
+    "Category": "Process",
+    "ItemKey": "svchost",
+    "ItemValue": "2372",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "add1df4e-e19c-4131-9a6f-20d174a47b24",
+    "Category": "Process",
+    "ItemKey": "svchost",
+    "ItemValue": "2536",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "99e66b96-bb8c-418e-86b9-7e919296d5b1",
+    "Category": "Process",
+    "ItemKey": "svchost",
+    "ItemValue": "2544",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "41e6af51-a51f-44f6-be75-dce8e4046903",
+    "Category": "Process",
+    "ItemKey": "svchost",
+    "ItemValue": "2552",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "c26528da-8383-4ae0-987e-bcdf1fb12543",
+    "Category": "Process",
+    "ItemKey": "svchost",
+    "ItemValue": "2600",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "1cad13a2-a4fc-4247-999c-a76e9e035b7b",
+    "Category": "Process",
+    "ItemKey": "svchost",
+    "ItemValue": "2608",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "4990ec73-4465-4851-a687-7d171e47a197",
+    "Category": "Process",
+    "ItemKey": "svchost",
+    "ItemValue": "2660",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "59f21e7c-a7b5-4a05-954a-385eebf6da48",
+    "Category": "Process",
+    "ItemKey": "svchost",
+    "ItemValue": "2788",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "bdc938c5-62ac-4175-b7fc-2907eee10f6c",
+    "Category": "Process",
+    "ItemKey": "svchost",
+    "ItemValue": "2884",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "e035d0c7-ca25-4326-a358-91e28ce264a8",
+    "Category": "Process",
+    "ItemKey": "svchost",
+    "ItemValue": "2640",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "663e4446-ce85-461b-8301-a0e2d203d49b",
+    "Category": "Process",
+    "ItemKey": "svchost",
+    "ItemValue": "3128",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "91f5e0d0-a2f6-4083-961e-b4c8059be2cf",
+    "Category": "Process",
+    "ItemKey": "svchost",
+    "ItemValue": "3292",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "d3af80d5-b776-458b-a213-168efad0d9e6",
+    "Category": "Process",
+    "ItemKey": "svchost",
+    "ItemValue": "3304",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "e08aa6ca-8c48-4a26-9846-125ef4abc4a1",
+    "Category": "Process",
+    "ItemKey": "svchost",
+    "ItemValue": "3356",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "fb6fd57f-ffc8-460b-bc26-43647ecdea2b",
+    "Category": "Process",
+    "ItemKey": "svchost",
+    "ItemValue": "3368",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "73a2fa63-03aa-4d9e-b67a-bf937d1687a8",
+    "Category": "Process",
+    "ItemKey": "svchost",
+    "ItemValue": "3788",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "5cdab511-baaa-4806-885c-ed9ee3a3a521",
+    "Category": "Process",
+    "ItemKey": "svchost",
+    "ItemValue": "3796",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "c03766d3-aff1-45b0-9708-853cb87b8889",
+    "Category": "Process",
+    "ItemKey": "svchost",
+    "ItemValue": "3804",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "42899fc2-54bc-4ae4-8e49-26aeef216614",
+    "Category": "Process",
+    "ItemKey": "svchost",
+    "ItemValue": "3820",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "4acaf8b7-a067-470c-b2ff-5edb83afc2b7",
+    "Category": "Process",
+    "ItemKey": "svchost",
+    "ItemValue": "3828",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "9af23914-e294-44d5-90e9-19bb69fe8902",
+    "Category": "Process",
+    "ItemKey": "svchost",
+    "ItemValue": "3844",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "3bb8c01c-8256-4a45-8116-ca1c628df71c",
+    "Category": "Process",
+    "ItemKey": "svchost",
+    "ItemValue": "3852",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "3cf4ba66-d0bf-4739-8689-e54946ab634b",
+    "Category": "Process",
+    "ItemKey": "svchost",
+    "ItemValue": "3876",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "108805c1-e40a-4271-b9d1-d27082b547c1",
+    "Category": "Process",
+    "ItemKey": "svchost",
+    "ItemValue": "4132",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "fecc90fd-c9aa-458f-b63a-67bfc17f11ae",
+    "Category": "Process",
+    "ItemKey": "svchost",
+    "ItemValue": "4512",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "8bb34062-38d2-4c48-acf1-ee23c80c95de",
+    "Category": "Process",
+    "ItemKey": "svchost",
+    "ItemValue": "4552",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "e93fb22c-790a-4862-921a-41273ecfb11f",
+    "Category": "Process",
+    "ItemKey": "svchost",
+    "ItemValue": "4844",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "bee8fe75-9d7a-4db9-8fba-eb2380d7cf3a",
+    "Category": "Process",
+    "ItemKey": "svchost",
+    "ItemValue": "6028",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "cb109dd2-a207-4905-87fb-21f688865ae5",
+    "Category": "Process",
+    "ItemKey": "svchost",
+    "ItemValue": "4824",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "7e2eeaff-4aa8-4791-8331-d718f235b283",
+    "Category": "Process",
+    "ItemKey": "svchost",
+    "ItemValue": "8000",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "d1608d90-b1e7-450c-a7b9-bbdfc4ebd7a3",
+    "Category": "Process",
+    "ItemKey": "svchost",
+    "ItemValue": "7800",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "ba65a64c-7dc8-45f7-8965-b419497721b8",
+    "Category": "Process",
+    "ItemKey": "svchost",
+    "ItemValue": "8196",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "404d25b4-93d8-4263-a6ca-c0ba525ed493",
+    "Category": "Process",
+    "ItemKey": "svchost",
+    "ItemValue": "10176",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "d549bbdf-f0f9-444e-a58d-599cab124cd0",
+    "Category": "Process",
+    "ItemKey": "svchost",
+    "ItemValue": "10420",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "76dd2bab-9d94-4bf1-a845-bd1d46936573",
+    "Category": "Process",
+    "ItemKey": "svchost",
+    "ItemValue": "9280",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "b4237819-7cc5-414d-9505-3b1f0626375c",
+    "Category": "Process",
+    "ItemKey": "svchost",
+    "ItemValue": "12932",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "9385a0e3-cac0-4dcc-acd4-0516c6f05a56",
+    "Category": "Process",
+    "ItemKey": "svchost",
+    "ItemValue": "10680",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "46c7243d-b87f-4560-aabd-d0f5d4825190",
+    "Category": "Process",
+    "ItemKey": "svchost",
+    "ItemValue": "3916",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "1fa813f1-c70f-4efc-9b0b-d7f5a8c47933",
+    "Category": "Process",
+    "ItemKey": "svchost",
+    "ItemValue": "1252",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "b43b5cd8-a66c-4912-963b-2e7c2201f396",
+    "Category": "Process",
+    "ItemKey": "svchost",
+    "ItemValue": "3748",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "009d1592-fc9d-4ea2-b7bf-ee50d45bfff0",
+    "Category": "Process",
+    "ItemKey": "svchost",
+    "ItemValue": "10984",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "c6a463c9-2def-41c5-b5b1-ef6fbb56757f",
+    "Category": "Process",
+    "ItemKey": "svchost",
+    "ItemValue": "9868",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "3d8af206-7e52-4419-9b72-6ca922351a11",
+    "Category": "Process",
+    "ItemKey": "svchost",
+    "ItemValue": "7780",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "9e70b9c3-010f-4490-8929-35bf727fe7c1",
+    "Category": "Process",
+    "ItemKey": "svchost",
+    "ItemValue": "6884",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "af18f25f-aa07-424d-abfd-785c3d2a44f7",
+    "Category": "Process",
+    "ItemKey": "svchost",
+    "ItemValue": "4184",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "6fdfba92-ed02-442f-8b4d-22b10415b267",
+    "Category": "Process",
+    "ItemKey": "svchost",
+    "ItemValue": "14132",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "a289180e-0d1f-4a0a-879c-1ed522f95f07",
+    "Category": "Process",
+    "ItemKey": "svchost",
+    "ItemValue": "10224",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "e1628d59-5108-4f87-9af5-230a689a743c",
+    "Category": "Process",
+    "ItemKey": "svchost",
+    "ItemValue": "10208",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "c09804f6-e64a-4891-97c8-1a890c45a032",
+    "Category": "Process",
+    "ItemKey": "svchost",
+    "ItemValue": "5184",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "ebb7eaed-96ec-4848-bd59-92f4f35af755",
+    "Category": "Process",
+    "ItemKey": "svchost",
+    "ItemValue": "2128",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "46c2e452-b663-4c1a-a08c-0e48498d4622",
+    "Category": "Process",
+    "ItemKey": "svchost",
+    "ItemValue": "3696",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "5d2c7ce8-c3f8-4fa0-b7df-e95d14616a24",
+    "Category": "Process",
+    "ItemKey": "svchost",
+    "ItemValue": "16044",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "786b0aad-55a0-4c93-9c82-9e5c61c05a58",
+    "Category": "Process",
+    "ItemKey": "System",
+    "ItemValue": "4",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "c18df152-ad93-4eb7-b99f-001b7d2db236",
+    "Category": "Process",
+    "ItemKey": "SystemSettings",
+    "ItemValue": "1412",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "237ebf95-1b58-4af1-ada7-02e74e011916",
+    "Category": "Process",
+    "ItemKey": "taskhostw",
+    "ItemValue": "14616",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "a075f44d-2572-439a-a400-dd50273b3fcc",
+    "Category": "Process",
+    "ItemKey": "TextInputHost",
+    "ItemValue": "10872",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "5d0a9488-e3aa-4e88-879a-07062ec05fa1",
+    "Category": "Process",
+    "ItemKey": "uhssvc",
+    "ItemValue": "15212",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "50e6f260-b06d-4068-b400-4b9c87d93f3e",
+    "Category": "Process",
+    "ItemKey": "unsecapp",
+    "ItemValue": "4332",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "0fb638a5-1166-4e6f-b7d6-05f8891ffc8b",
+    "Category": "Process",
+    "ItemKey": "Updates",
+    "ItemValue": "12124",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "6f9bed5f-e6e6-4bd0-b246-04a47e19c4da",
+    "Category": "Process",
+    "ItemKey": "usbipd",
+    "ItemValue": "4308",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "da2eea9f-5bb4-476f-a9f8-eafb2b36508b",
+    "Category": "Process",
+    "ItemKey": "UserOOBEBroker",
+    "ItemValue": "14640",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "3df23fb5-7117-4119-a8ee-02e23e65c42b",
+    "Category": "Process",
+    "ItemKey": "vmcompute",
+    "ItemValue": "7196",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "78151d9a-7d1d-429f-b1e6-90419767bc70",
+    "Category": "Process",
+    "ItemKey": "vmms",
+    "ItemValue": "1708",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "21b36d02-ff7d-44a7-be94-6bbe4e016901",
+    "Category": "Process",
+    "ItemKey": "wininit",
+    "ItemValue": "800",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "98b1680a-43fd-4803-8563-79b6ad431ae2",
+    "Category": "Process",
+    "ItemKey": "winlogon",
+    "ItemValue": "14764",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "267e5c19-ae0b-4736-9243-59a679a5acf4",
+    "Category": "Process",
+    "ItemKey": "WmiPrvSE",
+    "ItemValue": "6948",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "786a0741-8cf4-4736-a5e5-d90c9c570c24",
+    "Category": "Process",
+    "ItemKey": "WmiPrvSE",
+    "ItemValue": "8100",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "320b8684-a3f5-4424-a0d3-80b41c130778",
+    "Category": "Process",
+    "ItemKey": "WmiPrvSE",
+    "ItemValue": "11092",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "4d07b503-7a9b-4be2-a77f-9f65e4dd53fe",
+    "Category": "Process",
+    "ItemKey": "wsc-service",
+    "ItemValue": "3084",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "1273fc2a-d5bf-4b35-bc86-96dd98c68e20",
+    "Category": "Process",
+    "ItemKey": "wslservice",
+    "ItemValue": "4076",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "32bfe835-c9be-416f-9692-186531f6bc31",
+    "Category": "Process",
+    "ItemKey": "WUDFHost",
+    "ItemValue": "3028",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "e0b4609b-a4e5-4eb4-9535-7255c9cdc6fe",
+    "Category": "Software",
+    "ItemKey": "\u041F\u0430\u043A\u0435\u0442 \u0434\u0440\u0430\u0439\u0432\u0435\u0440\u043E\u0432 Windows - SAMSUNG Electronics Co., Ltd.  (WinUSB) AndroidUsbDeviceClass  (12/02/2015 2.12.1.0)",
+    "ItemValue": "12/02/2015 2.12.1.0",
+    "Details": "SAMSUNG Electronics Co., Ltd. ",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "fbe8a4b9-e42b-49c0-8f2d-9506454a2334",
+    "Category": "Software",
+    "ItemKey": "\u041F\u0430\u043A\u0435\u0442 \u0434\u0440\u0430\u0439\u0432\u0435\u0440\u043E\u0432 Windows - SAMSUNG Electronics Co., Ltd.  (dg_ssudbus) USB  (12/02/2015 2.12.1.0)",
+    "ItemValue": "12/02/2015 2.12.1.0",
+    "Details": "SAMSUNG Electronics Co., Ltd. ",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "0839fd55-56eb-4922-a115-7ec837a648b0",
+    "Category": "Software",
+    "ItemKey": "\u041F\u0430\u043A\u0435\u0442 \u0434\u0440\u0430\u0439\u0432\u0435\u0440\u043E\u0432 Windows - SAMSUNG Electronics Co., Ltd.  (ssudmdm) Modem  (12/02/2015 2.12.1.0)",
+    "ItemValue": "12/02/2015 2.12.1.0",
+    "Details": "SAMSUNG Electronics Co., Ltd. ",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "a7bdfc09-b18e-4670-91fa-35cfecfe02ae",
+    "Category": "Software",
+    "ItemKey": "ARCHICAD 24 R1 RUS",
+    "ItemValue": "24.0.0.3008",
+    "Details": "GRAPHISOFT SE",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "292dd987-0c45-40bd-815b-6250dead790b",
+    "Category": "Software",
+    "ItemKey": "\u041F\u0430\u043A\u0435\u0442 \u0434\u0440\u0430\u0439\u0432\u0435\u0440\u043E\u0432 Windows - Google, Inc. (WinUSB) AndroidUsbDeviceClass  (08/27/2012 7.0.0000.00004)",
+    "ItemValue": "08/27/2012 7.0.0000.00004",
+    "Details": "Google, Inc.",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "a4e3616e-b539-4b00-9657-9c1db296cc32",
+    "Category": "Software",
+    "ItemKey": "GRAPHISOFT BIMx Desktop Viewer",
+    "ItemValue": "2019.2.2328.0",
+    "Details": "GRAPHISOFT SE",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "1f8067f4-6817-4bcf-8ae8-04a0b56cb7ac",
+    "Category": "Software",
+    "ItemKey": "CCleaner",
+    "ItemValue": "6.41",
+    "Details": "Piriform",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "a8a3fee6-826d-472c-ad1f-d5a5546e5e78",
+    "Category": "Software",
+    "ItemKey": "Docker Desktop",
+    "ItemValue": "4.55.0",
+    "Details": "Docker Inc.",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "8ba7e61c-c8b4-4ef7-84a1-6de8c0cb9a0b",
+    "Category": "Software",
+    "ItemKey": "Git",
+    "ItemValue": "2.45.1",
+    "Details": "The Git Development Community",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "44e67545-6a14-491e-b711-8cde9ab139c0",
+    "Category": "Software",
+    "ItemKey": "iMazing",
+    "ItemValue": "3.4.0.9",
+    "Details": "DigiDNA",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "0456d584-220f-4f1b-b84d-4dcb7c81d85b",
+    "Category": "Software",
+    "ItemKey": "GRAPHISOFT License Manager Tool",
+    "ItemValue": "20.0.0.4800",
+    "Details": "GRAPHISOFT SE",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "980737c0-db74-4459-ab31-67a56ba43169",
+    "Category": "Software",
+    "ItemKey": "PostgreSQL 18 ",
+    "ItemValue": "18.0-2",
+    "Details": "PostgreSQL Global Development Group",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "aea853cd-d1e7-4178-a42b-437355eb1743",
+    "Category": "Software",
+    "ItemKey": "Microsoft Project \u043F\u0440\u043E\u0444\u0435\u0441\u0441\u0438\u043E\u043D\u0430\u043B\u044C\u043D\u044B\u0439 2024 - ru-ru",
+    "ItemValue": "16.0.17932.21140",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "58d43c23-3dfc-422f-8b8c-f2e76ffd9c2c",
+    "Category": "Software",
+    "ItemKey": "Microsoft Office LTSC \u043F\u0440\u043E\u0444\u0435\u0441\u0441\u0438\u043E\u043D\u0430\u043B\u044C\u043D\u044B\u0439 \u043F\u043B\u044E\u0441 2024 - ru-ru",
+    "ItemValue": "16.0.17932.21140",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "8e8bebbb-203d-46e7-838e-9ec0f05d6de5",
+    "Category": "Software",
+    "ItemKey": "Recuva",
+    "ItemValue": "1.53",
+    "Details": "Piriform",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "e7e68f2d-8f25-441f-83ab-e9512b48def3",
+    "Category": "Software",
+    "ItemKey": "Total Commander 64-bit (Remove or Repair)",
+    "ItemValue": "11.03",
+    "Details": "Ghisler Software GmbH",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "2a13968e-79ec-452c-82d2-7c5e1b2afe24",
+    "Category": "Software",
+    "ItemKey": "Microsoft Visio LTSC \u043F\u0440\u043E\u0444\u0435\u0441\u0441\u0438\u043E\u043D\u0430\u043B\u044C\u043D\u044B\u0439 2024 - ru-ru",
+    "ItemValue": "16.0.17932.21140",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "e30d5be3-3a7a-485d-9319-70a8df305aea",
+    "Category": "Software",
+    "ItemKey": "WinRAR 5.70 (64-bit)",
+    "ItemValue": "5.70.0",
+    "Details": "win.rar GmbH",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "29d3a3af-d9c0-4439-b31a-2d4276d6b16b",
+    "Category": "Software",
+    "ItemKey": "WibuKey Setup (WibuKey Remove)",
+    "ItemValue": "Version 6.40 of 2016-Dec-22 (Build 2402) (Setup)",
+    "Details": "WIBU-SYSTEMS AG",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "46944078-385e-4bc7-b7da-1338a2fb53f6",
+    "Category": "Software",
+    "ItemKey": "Microsoft.NET.Workload.Emscripten.net8.Manifest (x64)",
+    "ItemValue": "72.48.34242",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "60607331-3b9d-4620-a530-18b9971645fe",
+    "Category": "Software",
+    "ItemKey": "Windows App Certification Kit Native Components",
+    "ItemValue": "10.1.26100.6901",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "06d70ff3-64ff-4f0b-a235-26e40340e1ff",
+    "Category": "Software",
+    "ItemKey": "Microsoft .NET Host FX Resolver - 6.0.12 (x64)",
+    "ItemValue": "48.51.51943",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "27e15e0c-0638-4633-a3b4-132868faee7f",
+    "Category": "Software",
+    "ItemKey": "Microsoft.NET.Workload.Mono.Toolchain.net8.Manifest (x64)",
+    "ItemValue": "72.0.34381",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "b76ad7cb-b68d-444b-83f7-877c4ca534cd",
+    "Category": "Software",
+    "ItemKey": "Microsoft System CLR Types \u0434\u043B\u044F SQL Server 2019",
+    "ItemValue": "15.0.2000.5",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "d471839c-7d70-4383-b517-9a7a525a110d",
+    "Category": "Software",
+    "ItemKey": "Microsoft Windows Desktop Targeting Pack - 9.0.6 (x64)",
+    "ItemValue": "72.24.34386",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "cdbfca2a-f719-466e-9da3-78b4f7a410f9",
+    "Category": "Software",
+    "ItemKey": "Microsoft .NET SDK 9.0.301 (x64) from Visual Studio",
+    "ItemValue": "9.3.125.26904",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "1ee70f19-ec44-4566-a273-5de739a09103",
+    "Category": "Software",
+    "ItemKey": "Python 3.14.5 Executables (64-bit)",
+    "ItemValue": "3.14.5150.0",
+    "Details": "Python Software Foundation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "4095c09f-3394-47e9-8baf-0efcaaaaecf6",
+    "Category": "Software",
+    "ItemKey": "Microsoft .NET Runtime - 6.0.12 (x64)",
+    "ItemValue": "48.51.51943",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "1a3db0cd-c23c-4993-b469-86f89ba501f3",
+    "Category": "Software",
+    "ItemKey": "Python 3.11.9 pip Bootstrap (64-bit)",
+    "ItemValue": "3.11.9150.0",
+    "Details": "Python Software Foundation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "e9388ae5-ce7a-453a-9646-eaf8636d2383",
+    "Category": "Software",
+    "ItemKey": "Microsoft Visual C\u002B\u002B 2010  x64 Redistributable - 10.0.40219",
+    "ItemValue": "10.0.40219",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "ad1e0dd4-2726-4f54-b27b-a8d74ec7746e",
+    "Category": "Software",
+    "ItemKey": "Microsoft.NET.Workload.Mono.Toolchain.net7.Manifest (x64)",
+    "ItemValue": "72.0.34381",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "1bc5acdd-7780-49b1-955f-2b82c7d0a010",
+    "Category": "Software",
+    "ItemKey": "Microsoft Update Health Tools",
+    "ItemValue": "3.74.0.0",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "e8b001cd-1a2f-459b-b9c0-e996fe96f259",
+    "Category": "Software",
+    "ItemKey": "Microsoft .NET Toolset 9.0.301 (x64)",
+    "ItemValue": "36.9.53464",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "f778fb6f-53c4-4c3e-abfc-fcc525452aba",
+    "Category": "Software",
+    "ItemKey": "\u0421\u043E\u0445\u0440\u0430\u043D\u0438\u0442\u044C \u0432 Autodesk \u0432 \u0438\u043D\u0442\u0435\u0440\u043D\u0435\u0442\u0435 \u0438 \u043D\u0430 \u043C\u043E\u0431\u0438\u043B\u044C\u043D\u044B\u0445 \u0443\u0441\u0442\u0440\u043E\u0439\u0441\u0442\u0432\u0430\u0445",
+    "ItemValue": "3.0.21",
+    "Details": "Autodesk",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "04f97deb-f5cd-41ab-b3b5-10a5c5ea233f",
+    "Category": "Software",
+    "ItemKey": "Git LFS version 3.7.0",
+    "ItemValue": "3.7.0",
+    "Details": "GitHub, Inc.",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "9206611c-9e90-42cb-88bd-8ce78a27dbb8",
+    "Category": "Software",
+    "ItemKey": "ACAD Private",
+    "ItemValue": "23.1.47.0",
+    "Details": "Autodesk",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "e9fbd29a-5790-4c1a-aba6-b5f078cb3af7",
+    "Category": "Software",
+    "ItemKey": "AutoCAD 2020 Language Pack \u2014 \u0420\u0443\u0441\u0441\u043A\u0438\u0439 (Russian)",
+    "ItemValue": "23.1.68.0",
+    "Details": "Autodesk",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "1e5b683d-d695-4fcc-914d-d430c9cbdbfb",
+    "Category": "Software",
+    "ItemKey": "ACA \u0026 MEP 2020 Object Enabler",
+    "ItemValue": "8.2.45.0",
+    "Details": "Autodesk",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "ba83579e-86db-4e41-b64b-7de26a83292e",
+    "Category": "Software",
+    "ItemKey": "Python 3.11.9 Utility Scripts (64-bit)",
+    "ItemValue": "3.11.9150.0",
+    "Details": "Python Software Foundation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "00d0a270-a707-4751-8931-70fb5a18ff04",
+    "Category": "Software",
+    "ItemKey": "Microsoft .NET 9.0 Templates 9.0.301 (x64)",
+    "ItemValue": "36.9.37080",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "5c114643-0c9c-44f0-8e09-2c68dc130656",
+    "Category": "Software",
+    "ItemKey": "Microsoft.NET.Sdk.Aspire.Manifest-8.0.100 (x64)",
+    "ItemValue": "64.136.23253",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "2ff3a028-ef9d-4f51-8ee1-e25fe6d3e2a8",
+    "Category": "Software",
+    "ItemKey": "Microsoft Build of OpenJDK  21.0.10\u002B7 (x64)",
+    "ItemValue": "21.0.10.7",
+    "Details": "Microsoft",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "052caa3e-b999-490f-9b19-63ec1fe340b7",
+    "Category": "Software",
+    "ItemKey": "Microsoft .NET AppHost Pack - 8.0.17 (x64)",
+    "ItemValue": "64.68.34370",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "ed6f5d91-1eb8-4410-a9b4-55fdc5727905",
+    "Category": "Software",
+    "ItemKey": "Microsoft.NET.Sdk.tvOS.Manifest-9.0.100 (x64)",
+    "ItemValue": "18.5.9199",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "4de89ffe-327c-42bd-aabc-62c5a828b641",
+    "Category": "Software",
+    "ItemKey": "Microsoft Visual C\u002B\u002B 2012 x64 Additional Runtime - 11.0.61030",
+    "ItemValue": "11.0.61030",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "905a60d6-49a5-4b60-8f6e-88f198dd7bb3",
+    "Category": "Software",
+    "ItemKey": "vs_communityx64msi",
+    "ItemValue": "17.14.36025",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "599a42ee-0eb2-4ab8-bbc6-b89531457584",
+    "Category": "Software",
+    "ItemKey": "Microsoft Windows Desktop Runtime - 6.0.12 (x64)",
+    "ItemValue": "48.51.52100",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "05d2df58-2da0-4e84-bc1a-9acaf1d850bf",
+    "Category": "Software",
+    "ItemKey": "Python 3.11.9 Documentation (64-bit)",
+    "ItemValue": "3.11.9150.0",
+    "Details": "Python Software Foundation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "db16d020-09f3-4227-9c59-469362e585ba",
+    "Category": "Software",
+    "ItemKey": "Microsoft Visual C\u002B\u002B 2022 X64 Minimum Runtime - 14.44.35211",
+    "ItemValue": "14.44.35211",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "b5d655a0-8c47-4745-b6fa-e7a38e268228",
+    "Category": "Software",
+    "ItemKey": "Application Verifier x64 External Package (DesktopEditions)",
+    "ItemValue": "10.1.26100.6901",
+    "Details": "Microsoft",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "59f42279-e095-4927-adad-030f3e75d115",
+    "Category": "Software",
+    "ItemKey": "Python 3.14.5 Tcl/Tk Support (64-bit)",
+    "ItemValue": "3.14.5150.0",
+    "Details": "Python Software Foundation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "c7153ce6-e90b-484a-8656-0c22c3c8f458",
+    "Category": "Software",
+    "ItemKey": "Microsoft.NET.Workload.Mono.Toolchain.Current.Manifest (x64)",
+    "ItemValue": "72.0.34381",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "2bc63bec-a792-4e1f-ad9c-c5ac4e786a91",
+    "Category": "Software",
+    "ItemKey": "64 Bit HP CIO Components Installer",
+    "ItemValue": "22.2.1",
+    "Details": "HP Inc.",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "44b67905-bcb2-4ef0-9e8f-2c55993ed3d4",
+    "Category": "Software",
+    "ItemKey": "Dr.Web Security Space",
+    "ItemValue": "12.0",
+    "Details": "Doctor Web, Ltd.",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "18a1c7ce-1570-493f-9397-c7001e6b2d11",
+    "Category": "Software",
+    "ItemKey": "Bonjour",
+    "ItemValue": "3.1.0.1",
+    "Details": "Apple Inc.",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "b36e7f0c-c9df-4ab2-961c-028c271a9c2a",
+    "Category": "Software",
+    "ItemKey": "Python 3.11.9 Tcl/Tk Support (64-bit)",
+    "ItemValue": "3.11.9150.0",
+    "Details": "Python Software Foundation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "72ffcb74-275e-4f58-9155-429788ce1432",
+    "Category": "Software",
+    "ItemKey": "Python 3.14.5 Development Libraries (64-bit)",
+    "ItemValue": "3.14.5150.0",
+    "Details": "Python Software Foundation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "be9837f2-7342-4e78-ada9-69926fb51acc",
+    "Category": "Software",
+    "ItemKey": "Node.js",
+    "ItemValue": "24.11.1",
+    "Details": "Node.js Foundation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "3b027a00-ce2e-44b0-8877-4145ea0972e7",
+    "Category": "Software",
+    "ItemKey": "vs_devenx64vmsi",
+    "ItemValue": "17.14.36015",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "8e3ac2fb-89b8-409c-a6d9-f84a7e1528ca",
+    "Category": "Software",
+    "ItemKey": "Microsoft .NET Targeting Pack - 9.0.6 (x64)",
+    "ItemValue": "72.24.34381",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "c6c55c7a-b412-479d-ad17-6fbf4b92633e",
+    "Category": "Software",
+    "ItemKey": "vs_Graphics_Singletonx64",
+    "ItemValue": "17.14.36015",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "b4e899d2-0fb4-461c-9c4c-2f9b3dfbeff0",
+    "Category": "Software",
+    "ItemKey": "\u041F\u043E\u0434\u0434\u0435\u0440\u0436\u043A\u0430 iPod",
+    "ItemValue": "12.11.3.7",
+    "Details": "Apple Inc.",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "1a3b6ced-5fe3-4348-a8c1-8f4ceb52f0e9",
+    "Category": "Software",
+    "ItemKey": "Microsoft.NET.Workload.Emscripten.net7.Manifest (x64)",
+    "ItemValue": "72.48.34242",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "9aa69b20-0e61-4ab1-b891-f197911c26f7",
+    "Category": "Software",
+    "ItemKey": "Universal CRT Tools x64",
+    "ItemValue": "10.1.26100.6901",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "6286ed6a-6eb5-4d8d-b9d2-83fa6d249313",
+    "Category": "Software",
+    "ItemKey": "Microsoft Windows Desktop Runtime - 8.0.17 (x64)",
+    "ItemValue": "64.68.34385",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "f6704cfb-e595-4696-a96f-9edcab6fdf0b",
+    "Category": "Software",
+    "ItemKey": "Microsoft Windows Desktop Runtime - 9.0.6 (x64)",
+    "ItemValue": "72.24.34386",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "bf075cc4-4c06-4aaa-b4d4-e4b539734aed",
+    "Category": "Software",
+    "ItemKey": "RuDesktop",
+    "ItemValue": "2.9.1069",
+    "Details": "Advanced Technologies, LLC",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "a673beab-8813-4841-854d-48ced3f56385",
+    "Category": "Software",
+    "ItemKey": "Microsoft .NET Runtime - 8.0.17 (x64)",
+    "ItemValue": "64.68.34370",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "6ef8ce6a-8f1a-4c2e-91ba-ad0407d15149",
+    "Category": "Software",
+    "ItemKey": "Microsoft.NET.Sdk.macOS.Manifest-9.0.100 (x64)",
+    "ItemValue": "15.5.9199",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "f9d172e6-af33-4421-bfe4-dd7ab233d7c3",
+    "Category": "Software",
+    "ItemKey": "Microsoft.NET.Workload.Emscripten.net6.Manifest (x64)",
+    "ItemValue": "72.48.34242",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "94dd2847-f81b-4bb6-b910-30fafb8b3eb8",
+    "Category": "Software",
+    "ItemKey": "Application Verifier x64 External Package (OnecoreUAP)",
+    "ItemValue": "10.1.26100.6901",
+    "Details": "Microsoft",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "7480237f-5712-4bba-a734-2bfd75b39497",
+    "Category": "Software",
+    "ItemKey": "Google Drive",
+    "ItemValue": "134.0.1.0",
+    "Details": "Google LLC",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "e785df9f-3f4f-43d4-a502-04b70ea65400",
+    "Category": "Software",
+    "ItemKey": "VS JIT Debugger",
+    "ItemValue": "17.0.157.0",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "970e8ef8-2188-4df6-8081-a6604dc9ef5f",
+    "Category": "Software",
+    "ItemKey": "Microsoft.NET.Sdk.Android.Manifest-9.0.100 (x64)",
+    "ItemValue": "35.0.78",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "1b9aef4b-6579-48b5-916c-a7e3d2890ffa",
+    "Category": "Software",
+    "ItemKey": "icecap_collection_x64",
+    "ItemValue": "17.14.36015",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "130773a1-d241-44fb-85ab-988b71a24142",
+    "Category": "Software",
+    "ItemKey": "Microsoft Visual Studio Installer",
+    "ItemValue": "4.0.2153.56108",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "5be5bbf1-3f52-4e86-91ae-6645069aed12",
+    "Category": "Software",
+    "ItemKey": "Microsoft Build of OpenJDK  17.0.18\u002B8 (x64)",
+    "ItemValue": "17.0.18.8",
+    "Details": "Microsoft",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "c356927f-c17b-4dff-916c-209d2f4a7085",
+    "Category": "Software",
+    "ItemKey": "Python 3.14.5 pip Bootstrap (64-bit)",
+    "ItemValue": "3.14.5150.0",
+    "Details": "Python Software Foundation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "aba12f08-4da9-43d0-9641-2cbfde5ec957",
+    "Category": "Software",
+    "ItemKey": "Java 8 Update 481 (64-bit)",
+    "ItemValue": "8.0.4810.10",
+    "Details": "Oracle Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "3a3657b0-de50-4f8b-a953-23f7e4a67dc7",
+    "Category": "Software",
+    "ItemKey": "Eclipse Temurin JDK with Hotspot 11.0.30\u002B7 (x64)",
+    "ItemValue": "11.0.30.7",
+    "Details": "Eclipse Adoptium",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "51e12ad8-e717-4c95-9615-73af1a6f1d79",
+    "Category": "Software",
+    "ItemKey": "\u0414\u0440\u0430\u0439\u0432\u0435\u0440\u044B \u0420\u0443\u0442\u043E\u043A\u0435\u043D",
+    "ItemValue": "4.6.02.0000",
+    "Details": "\u041A\u043E\u043C\u043F\u0430\u043D\u0438\u044F \u0022\u0410\u043A\u0442\u0438\u0432\u0022",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "3278f5f4-02a6-4665-86f3-cd3908ad9bbe",
+    "Category": "Software",
+    "ItemKey": "Microsoft .NET AppHost Pack - 9.0.6 (x64_arm64)",
+    "ItemValue": "72.24.34381",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "2b7242cf-7dc1-45c9-ac84-03c4db3bc966",
+    "Category": "Software",
+    "ItemKey": "Microsoft.NET.Workload.Mono.Toolchain.net6.Manifest (x64)",
+    "ItemValue": "72.0.34381",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "01ae4a53-6805-441e-b685-2658f7fa4ffe",
+    "Category": "Software",
+    "ItemKey": "Microsoft .NET Targeting Pack - 8.0.17 (x64)",
+    "ItemValue": "64.68.34370",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "4675d202-08bf-4a94-815c-6caabc151ebb",
+    "Category": "Software",
+    "ItemKey": "PDF24 Creator 11.10.2",
+    "ItemValue": "11.10.2",
+    "Details": "PDF24.org",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "bb6bcfdb-e267-4d80-9a2b-ee0cc27e5b18",
+    "Category": "Software",
+    "ItemKey": "Update for Windows 10 for x64-based Systems (KB5001716)",
+    "ItemValue": "8.94.0.0",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "2aa10b25-528f-45ba-a7cf-02c14fecdf9c",
+    "Category": "Software",
+    "ItemKey": "Microsoft Visual C\u002B\u002B 2022 X64 Additional Runtime - 14.44.35211",
+    "ItemValue": "14.44.35211",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "12bb1b26-d545-4a8f-827a-876fb015c1e5",
+    "Category": "Software",
+    "ItemKey": "Microsoft ASP.NET Core 9.0.6 Targeting Pack (x64)",
+    "ItemValue": "9.0.6.25267",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "34fd2935-62e0-4699-9bda-90d3627b4592",
+    "Category": "Software",
+    "ItemKey": "vs_minshellx64msi",
+    "ItemValue": "17.14.36015",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "725c3c4f-afaf-44df-9520-98370a129e2c",
+    "Category": "Software",
+    "ItemKey": "iTunes",
+    "ItemValue": "12.13.10.3",
+    "Details": "Apple Inc.",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "f65c6ce9-cde3-4b89-9135-37889a3196b9",
+    "Category": "Software",
+    "ItemKey": "Windows Subsystem for Linux",
+    "ItemValue": "3.0.5.0",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "e5e8c0bc-c912-407f-8f11-ad9ceac260aa",
+    "Category": "Software",
+    "ItemKey": "Windows SDK DirectX x64 Remote",
+    "ItemValue": "10.1.26100.6901",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "54893e45-61d8-4a4d-bf85-a307023a8b02",
+    "Category": "Software",
+    "ItemKey": "Microsoft Visual Basic for Applications 7.1 (x64)",
+    "ItemValue": "7.1.00.00",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "46400235-fb09-406f-9680-98284f7d6f3a",
+    "Category": "Software",
+    "ItemKey": "Office 16 Click-to-Run Licensing Component",
+    "ItemValue": "16.0.17932.21140",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "6f04e4ea-01a2-4de6-8922-e9665d5b105d",
+    "Category": "Software",
+    "ItemKey": "Office 16 Click-to-Run Extensibility Component",
+    "ItemValue": "16.0.17932.20130",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "efffd881-f475-46b8-8c3d-249d93ce38c1",
+    "Category": "Software",
+    "ItemKey": "Office 16 Click-to-Run Localization Component",
+    "ItemValue": "16.0.17932.20130",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "76a12a9e-0e42-42b4-8435-d7df99eec5cf",
+    "Category": "Software",
+    "ItemKey": "CodeMeter Runtime Kit v7.00",
+    "ItemValue": "7.00.3918.500",
+    "Details": "WIBU-SYSTEMS AG",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "b618af6f-5d8c-43b5-8af8-e61f5bb6d6c4",
+    "Category": "Software",
+    "ItemKey": "Microsoft Visual Basic for Applications 7.1 (x64) Chinese (Traditional)",
+    "ItemValue": "7.1.0.0",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "da05c1ac-4153-4093-a71b-0ee49f256642",
+    "Category": "Software",
+    "ItemKey": "Microsoft Visual Basic for Applications 7.1 (x64) German",
+    "ItemValue": "7.1.0.0",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "e1534389-4bfb-443e-9913-f5df8e824988",
+    "Category": "Software",
+    "ItemKey": "Microsoft Visual Basic for Applications 7.1 (x64) English",
+    "ItemValue": "7.1.0.0",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "361aacd3-b56c-473c-8241-3504c1229397",
+    "Category": "Software",
+    "ItemKey": "Microsoft Visual Basic for Applications 7.1 (x64) French",
+    "ItemValue": "7.1.0.0",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "bf725c36-ae29-4b9f-b493-291ebf99f5fb",
+    "Category": "Software",
+    "ItemKey": "Microsoft Visual Basic for Applications 7.1 (x64) Italian",
+    "ItemValue": "7.1.0.0",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "676a5ed8-3d56-4c41-9636-6935bd011b6c",
+    "Category": "Software",
+    "ItemKey": "Microsoft Visual Basic for Applications 7.1 (x64) Japanese",
+    "ItemValue": "7.1.0.0",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "2bb1437d-1858-40e8-be30-c67f451e6bb8",
+    "Category": "Software",
+    "ItemKey": "Microsoft Visual Basic for Applications 7.1 (x64) Korean",
+    "ItemValue": "7.1.0.0",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "bbf85b68-deab-4dda-a3e6-9dea0d4bdf2e",
+    "Category": "Software",
+    "ItemKey": "Microsoft Visual Basic for Applications 7.1 (x64) Dutch",
+    "ItemValue": "7.1.0.0",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "5f428545-549a-422c-b523-e1443f5bd562",
+    "Category": "Software",
+    "ItemKey": "Microsoft Visual Basic for Applications 7.1 (x64) Portuguese (Brazil)",
+    "ItemValue": "7.1.0.0",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "6aabe764-5439-4b31-b307-db8de86149bd",
+    "Category": "Software",
+    "ItemKey": "Microsoft Visual Basic for Applications 7.1 (x64) Swedish",
+    "ItemValue": "7.1.0.0",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "49867315-41ce-42e1-af8f-8031643de15f",
+    "Category": "Software",
+    "ItemKey": "Microsoft Visual Basic for Applications 7.1 (x64) Chinese (Simplified)",
+    "ItemValue": "7.1.0.0",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "68f56b6b-d323-45bf-8460-b91e2262459d",
+    "Category": "Software",
+    "ItemKey": "Microsoft Visual Basic for Applications 7.1 (x64) Spanish",
+    "ItemValue": "7.1.0.0",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "48c8b1ed-d2aa-4c20-895e-e25b934a2858",
+    "Category": "Software",
+    "ItemKey": "Microsoft Visual C\u002B\u002B 2013 x64 Additional Runtime - 12.0.21005",
+    "ItemValue": "12.0.21005",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "953a60ff-e01d-4f67-a5d8-2280a2d0edf6",
+    "Category": "Software",
+    "ItemKey": "Microsoft Windows Desktop Targeting Pack - 8.0.17 (x64)",
+    "ItemValue": "64.68.34385",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "2705beac-c8f8-4470-80b1-4fa9148fb962",
+    "Category": "Software",
+    "ItemKey": "Python 3.11.9 Standard Library (64-bit)",
+    "ItemValue": "3.11.9150.0",
+    "Details": "Python Software Foundation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "d1111636-6c09-43f4-bb02-19300cea1df7",
+    "Category": "Software",
+    "ItemKey": "Python 3.14.5 Standard Library (64-bit)",
+    "ItemValue": "3.14.5150.0",
+    "Details": "Python Software Foundation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "e0686b91-1f05-42f5-8e2b-344fff6f26fb",
+    "Category": "Software",
+    "ItemKey": "Revo Uninstaller 2.1.0",
+    "ItemValue": "2.1.0",
+    "Details": "VS Revo Group, Ltd.",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "78100044-ceb8-493f-8f82-e2767f5a0f7f",
+    "Category": "Software",
+    "ItemKey": "Microsoft .NET AppHost Pack - 8.0.17 (x64_x86)",
+    "ItemValue": "64.68.34370",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "58f9d70c-9b60-47c1-bfc3-d9b3b949440d",
+    "Category": "Software",
+    "ItemKey": "Microsoft .NET Standard Targeting Pack - 2.1.0 (x64)",
+    "ItemValue": "24.0.28113",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "df5af422-2d1a-4ebd-8c6b-6663f5375601",
+    "Category": "Software",
+    "ItemKey": "Microsoft Visual C\u002B\u002B 2013 x64 Minimum Runtime - 12.0.21005",
+    "ItemValue": "12.0.21005",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "740ff5f4-11fd-47e9-a4f3-e1a6455adb67",
+    "Category": "Software",
+    "ItemKey": "Python 3.11.9 Test Suite (64-bit)",
+    "ItemValue": "3.11.9150.0",
+    "Details": "Python Software Foundation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "b37bff1e-6be5-4bf1-b34f-de1c9374ec9d",
+    "Category": "Software",
+    "ItemKey": "Microsoft.NET.Workload.Emscripten.Current.Manifest (x64)",
+    "ItemValue": "72.48.34242",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "be8aaa25-1c86-4e2f-9b48-c41ee849da70",
+    "Category": "Software",
+    "ItemKey": "Adobe Acrobat (64-bit)",
+    "ItemValue": "26.003.22110",
+    "Details": "Adobe",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "37a60752-13b9-4321-b00d-f01fd8108b0f",
+    "Category": "Software",
+    "ItemKey": "Python 3.11.9 Core Interpreter (64-bit)",
+    "ItemValue": "3.11.9150.0",
+    "Details": "Python Software Foundation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "3528d9af-b469-4b5a-aae3-05f7e086f0a9",
+    "Category": "Software",
+    "ItemKey": "vs_minshellinteropx64msi",
+    "ItemValue": "17.14.36015",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "a8b0aacd-1227-44e9-811b-812aab312df0",
+    "Category": "Software",
+    "ItemKey": "Microsoft ASP.NET Core 8.0.17 Shared Framework (x64)",
+    "ItemValue": "8.0.17.25266",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "e53670eb-c466-44c8-be04-5d71d3428159",
+    "Category": "Software",
+    "ItemKey": "\u041F\u0440\u043E\u0432\u0435\u0440\u043A\u0430 \u0440\u0430\u0431\u043E\u0442\u043E\u0441\u043F\u043E\u0441\u043E\u0431\u043D\u043E\u0441\u0442\u0438 \u041F\u041A Windows",
+    "ItemValue": "3.9.2402.14001",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "58b001d9-78a9-47aa-b79a-37a22a7d6f29",
+    "Category": "Software",
+    "ItemKey": "MAX",
+    "ItemValue": "26.29.0",
+    "Details": "Communication Platform LLC",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "f00fc850-5cf6-44c8-b607-7016897392d7",
+    "Category": "Software",
+    "ItemKey": "Python 3.11.9 Executables (64-bit)",
+    "ItemValue": "3.11.9150.0",
+    "Details": "Python Software Foundation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "9b53ae9f-a966-4663-869f-bea0375331a7",
+    "Category": "Software",
+    "ItemKey": "DiagnosticsHub_CollectionService",
+    "ItemValue": "17.14.36412",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "f2026494-fdc4-4903-bc7c-ea247ed88c13",
+    "Category": "Software",
+    "ItemKey": "Microsoft ASP.NET Core 8.0.17 Targeting Pack (x64)",
+    "ItemValue": "8.0.17.25266",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "66eae5d7-c571-439c-b495-28abab9b8209",
+    "Category": "Software",
+    "ItemKey": "GitHub Copilot CLI",
+    "ItemValue": "1.0.114",
+    "Details": "GitHub, Inc.",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "768d98ba-587f-44c2-a4a0-82044fd2c8ed",
+    "Category": "Software",
+    "ItemKey": "Python 3.11.9 Development Libraries (64-bit)",
+    "ItemValue": "3.11.9150.0",
+    "Details": "Python Software Foundation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "d3e2e07e-d3f5-4a5a-9c3f-30e0108a313b",
+    "Category": "Software",
+    "ItemKey": "Microsoft Visual C\u002B\u002B 2012 x64 Minimum Runtime - 11.0.61030",
+    "ItemValue": "11.0.61030",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "b3f11013-5164-44b6-9943-7f761acfdebb",
+    "Category": "Software",
+    "ItemKey": "Microsoft.NET.Sdk.Maui.Manifest-9.0.100 (x64)",
+    "ItemValue": "9.0.51",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "38b306f2-e788-488c-8a5f-b35e3cfd4ce0",
+    "Category": "Software",
+    "ItemKey": "Microsoft .NET AppHost Pack - 9.0.6 (x64_x86)",
+    "ItemValue": "72.24.34381",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "c54f0d70-f040-4597-924b-29181cb9351e",
+    "Category": "Software",
+    "ItemKey": "Microsoft.NET.Sdk.MacCatalyst.Manifest-9.0.100 (x64)",
+    "ItemValue": "18.5.9199",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "78196820-ae58-425b-8730-674c400400ab",
+    "Category": "Software",
+    "ItemKey": "Microsoft .NET AppHost Pack - 8.0.17 (x64_arm64)",
+    "ItemValue": "64.68.34370",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "406bde20-0c56-4329-951a-6e3b2ab0df35",
+    "Category": "Software",
+    "ItemKey": "Oracle VirtualBox 7.2.4",
+    "ItemValue": "7.2.4",
+    "Details": "Oracle and/or its affiliates",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "3c73f508-e8d7-4279-9250-2b4eafb849b0",
+    "Category": "Software",
+    "ItemKey": "Microsoft .NET Host - 6.0.12 (x64)",
+    "ItemValue": "48.51.51943",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "73b93e32-be90-40ce-ae39-d21c6c44066a",
+    "Category": "Software",
+    "ItemKey": "Python 3.14.5 Core Interpreter (64-bit)",
+    "ItemValue": "3.14.5150.0",
+    "Details": "Python Software Foundation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "92b1944c-7b81-4ddd-910f-c1c91872db1d",
+    "Category": "Software",
+    "ItemKey": "Microsoft .NET Host - 9.0.6 (x64)",
+    "ItemValue": "72.24.34381",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "17a5bfb0-da84-4ff2-aa46-3a5c924047d7",
+    "Category": "Software",
+    "ItemKey": "Microsoft .NET Host FX Resolver - 9.0.6 (x64)",
+    "ItemValue": "72.24.34381",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "eb8fbc6b-67ac-4ad1-aea1-02f029cf02f0",
+    "Category": "Software",
+    "ItemKey": "Apple Mobile Device Support",
+    "ItemValue": "19.4.0.10",
+    "Details": "Apple Inc.",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "d5d3650e-fb60-493c-9476-f41245730194",
+    "Category": "Software",
+    "ItemKey": "Python 3.14.5 Documentation (64-bit)",
+    "ItemValue": "3.14.5150.0",
+    "Details": "Python Software Foundation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "e5de5065-21c9-4126-920f-6f33c1ff0ff2",
+    "Category": "Software",
+    "ItemKey": "Microsoft .NET AppHost Pack - 9.0.6 (x64)",
+    "ItemValue": "72.24.34381",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "33905c57-a3d6-4810-9fc1-b9898ccf87c2",
+    "Category": "Software",
+    "ItemKey": "ABBYY FineReader 15",
+    "ItemValue": "15.0.2131",
+    "Details": "ABBYY Production LLC",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "88dc4231-c8d2-4397-9a69-bca2c76630dc",
+    "Category": "Software",
+    "ItemKey": "Microsoft ASP.NET Core 9.0.6 Shared Framework (x64)",
+    "ItemValue": "9.0.6.25267",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "059e8653-a40d-49c6-891e-7c1bed95599f",
+    "Category": "Software",
+    "ItemKey": "Python 3.14.5 Test Suite (64-bit)",
+    "ItemValue": "3.14.5150.0",
+    "Details": "Python Software Foundation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "6b5b47ee-f0f8-438e-97b8-6420b2628607",
+    "Category": "Software",
+    "ItemKey": "VS Script Debugging Common",
+    "ItemValue": "17.0.157.0",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "27c5b6e6-f6ea-4997-ac5e-0ac3fb2e584f",
+    "Category": "Software",
+    "ItemKey": "Microsoft.NET.Sdk.iOS.Manifest-9.0.100 (x64)",
+    "ItemValue": "18.5.9199",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "1c17798a-fd36-40ba-a15c-69bf60f95099",
+    "Category": "Software",
+    "ItemKey": "Python 3.14.5 Add to Path (64-bit)",
+    "ItemValue": "3.14.5150.0",
+    "Details": "Python Software Foundation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "7a6e3b69-2be1-4eee-861f-143b9aaff944",
+    "Category": "Software",
+    "ItemKey": "IntelliTraceProfilerProxy",
+    "ItemValue": "15.0.21225.01",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "f662fc1d-556b-406c-a5d5-0ac89cbb0039",
+    "Category": "Software",
+    "ItemKey": "Microsoft .NET 8.0 Templates 8.0.411 (x64)",
+    "ItemValue": "32.13.53473",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "16598533-61aa-4859-920c-491546bc8876",
+    "Category": "Software",
+    "ItemKey": "Microsoft .NET Runtime - 9.0.6 (x64)",
+    "ItemValue": "72.24.34381",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "6ec0153b-d844-49e4-bd06-59d272a378a5",
+    "Category": "Software",
+    "ItemKey": "Microsoft Visual C\u002B\u002B 2022 X64 Debug Runtime - 14.44.35211",
+    "ItemValue": "14.44.35211",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "61c43a3f-fb23-4bf3-8f8e-2fd414e00239",
+    "Category": "Software",
+    "ItemKey": "AIDA64 Extreme v5.98",
+    "ItemValue": "5.98",
+    "Details": "FinalWire Ltd.",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "8bd81268-2422-45e2-b724-57fdcf6ea1cd",
+    "Category": "Software",
+    "ItemKey": "AnyDesk",
+    "ItemValue": "ad 7.0.16",
+    "Details": "philandro Software GmbH",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "b69a581c-6b65-4594-992d-51e7e9ad231b",
+    "Category": "Software",
+    "ItemKey": "Bandicam",
+    "ItemValue": "4.1.0.1362",
+    "Details": "Bandicam.com",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "99d59655-79cd-496a-a38f-3af4532bb4c5",
+    "Category": "Software",
+    "ItemKey": "Bandicam MPEG-1 Decoder",
+    "ItemValue": "",
+    "Details": "Bandicam.com",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "d415e411-8ca0-41e5-9b38-f1de7ae22a6c",
+    "Category": "Software",
+    "ItemKey": "Clean Master",
+    "ItemValue": "6.0",
+    "Details": "Cheetah Mobile",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "a5c0e1b7-215a-47ea-a2e2-e2d282ee25db",
+    "Category": "Software",
+    "ItemKey": "Visual Studio Build Tools 2022 (2)",
+    "ItemValue": "17.14.20",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "965d3dad-2e51-4b7c-8fd1-f397544017fe",
+    "Category": "Software",
+    "ItemKey": "Visual Studio Community 2022",
+    "ItemValue": "17.14.7",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "08be5fe1-a648-4596-b9c9-ddcf331fe773",
+    "Category": "Software",
+    "ItemKey": "EVEREST Ultimate Edition v5.50",
+    "ItemValue": "5.50",
+    "Details": "Lavalys, Inc.",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "46af8427-3ce1-472b-97cb-19cf18af994e",
+    "Category": "Software",
+    "ItemKey": "FAR file manager",
+    "ItemValue": "",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "96a9e7d9-f849-4ad8-8a02-bd9ab08e1934",
+    "Category": "Software",
+    "ItemKey": "Format Factory 4.4.0",
+    "ItemValue": "4.4.0",
+    "Details": "Free Time, 2008-2016",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "b735623e-a3e7-4fee-a0f1-f9f8101f50d3",
+    "Category": "Software",
+    "ItemKey": "Graphviz",
+    "ItemValue": "12.2.0",
+    "Details": "Graphviz",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "e8e8693f-4a62-4a92-9185-4b33a4851a30",
+    "Category": "Software",
+    "ItemKey": "K-Lite Mega Codec Pack 7.1.0",
+    "ItemValue": "7.1.0",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "0fdc1795-9fdc-4ad3-b475-e0acdbc97a42",
+    "Category": "Software",
+    "ItemKey": "Microsoft Edge",
+    "ItemValue": "158.0.4370.33",
+    "Details": "\u041A\u043E\u0440\u043F\u043E\u0440\u0430\u0446\u0438\u044F \u041C\u0430\u0439\u043A\u0440\u043E\u0441\u043E\u0444\u0442",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "f9f6a028-d5aa-429c-a558-5e960a407bef",
+    "Category": "Software",
+    "ItemKey": "\u0421\u0440\u0435\u0434\u0430 \u0432\u044B\u043F\u043E\u043B\u043D\u0435\u043D\u0438\u044F Microsoft Edge WebView2 Runtime",
+    "ItemValue": "157.0.4341.60",
+    "Details": "\u041A\u043E\u0440\u043F\u043E\u0440\u0430\u0446\u0438\u044F \u041C\u0430\u0439\u043A\u0440\u043E\u0441\u043E\u0444\u0442",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "6060b7bc-1590-41c9-9e59-d11f01a5c70c",
+    "Category": "Software",
+    "ItemKey": "Npcap",
+    "ItemValue": "1.88",
+    "Details": "Nmap Project",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "45019f63-3cdd-4308-ac29-80347505d6a8",
+    "Category": "Software",
+    "ItemKey": "OpenAL",
+    "ItemValue": "",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "089aeb6f-303d-4919-92ca-8adfebac5eda",
+    "Category": "Software",
+    "ItemKey": "PowerPoint 2013 shareware",
+    "ItemValue": "shareware",
+    "Details": "Company",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "854a96e0-804c-449f-b13a-495e2967702c",
+    "Category": "Software",
+    "ItemKey": "PyCharm Community Edition 2024.2.1",
+    "ItemValue": "242.21829.153",
+    "Details": "JetBrains s.r.o.",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "bde52f5a-60c5-45b8-b51b-a4cb4686b4d4",
+    "Category": "Software",
+    "ItemKey": "RaidCall",
+    "ItemValue": "8.2.0-1.0.3231.155",
+    "Details": "raidcall.com.ru",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "ea8ae4d7-1011-4bdf-b61f-c202f8bd454f",
+    "Category": "Software",
+    "ItemKey": "TeamSpeak 3 Client",
+    "ItemValue": "3.1.6",
+    "Details": "TeamSpeak Systems GmbH",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "e4bdcbd1-7177-4c1d-bba2-465d9321e94c",
+    "Category": "Software",
+    "ItemKey": "VSDC Free Video Converter, \u0432\u0435\u0440\u0441\u0438\u044F 2.4.7.339",
+    "ItemValue": "2.4.7.339",
+    "Details": "Flash-Integro LLC",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "8a2e3fe9-0d56-4c8a-92a0-3f70a8bba268",
+    "Category": "Software",
+    "ItemKey": "\u0410\u0440\u0445\u0438\u0432\u0430\u0442\u043E\u0440 WinRAR",
+    "ItemValue": "",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "d4fc7d23-4a1b-4a85-9860-11285ada290a",
+    "Category": "Software",
+    "ItemKey": "x264vfw - H.264/MPEG-4 AVC codec (remove only)",
+    "ItemValue": "",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "bcc197f7-8401-484b-aa2b-b32f4022eab3",
+    "Category": "Software",
+    "ItemKey": "Yandex (All Users)",
+    "ItemValue": "26.10.3.771",
+    "Details": "Yandex",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "79107a22-cce1-42d9-ac87-ff7e06150bd1",
+    "Category": "Software",
+    "ItemKey": "Windows SDK AddOn",
+    "ItemValue": "10.1.0.0",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "a22f5810-6d0e-422d-bd66-e8342b37f3c4",
+    "Category": "Software",
+    "ItemKey": "Universal CRT Redistributable",
+    "ItemValue": "10.0.26624",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "d17b09d9-369a-4187-9ae6-3e7b2845b7bc",
+    "Category": "Software",
+    "ItemKey": "Microsoft Visual C\u002B\u002B 2013 Redistributable (x64) - 12.0.30501",
+    "ItemValue": "12.0.30501.0",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "6249216d-1dcc-43cd-93e8-2aac4c774ee2",
+    "Category": "Software",
+    "ItemKey": "Windows SDK for Windows Store Apps Tools",
+    "ItemValue": "10.1.26100.6901",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "e60826f5-581c-465d-bb90-6eaa9fe159d9",
+    "Category": "Software",
+    "ItemKey": "Windows SDK for Windows Store Apps Contracts",
+    "ItemValue": "10.1.26100.6901",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "80c24a55-0d82-4604-ba00-764b90098f12",
+    "Category": "Software",
+    "ItemKey": "Viber",
+    "ItemValue": "17.2.0.6",
+    "Details": "Viber Media S.a.r.l",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "acdeec8a-1256-4188-a7c9-956822e35788",
+    "Category": "Software",
+    "ItemKey": "Microsoft Visual C\u002B\u002B 2015-2022 Redistributable (x86) - 14.44.35211",
+    "ItemValue": "14.44.35211.0",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "ae8aa94a-ad12-412c-8d4f-e4f05439c373",
+    "Category": "Software",
+    "ItemKey": "Windows SDK for Windows Store Apps",
+    "ItemValue": "10.1.26100.6901",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "83637e4d-3ae0-4e14-aef9-48c27e9f3769",
+    "Category": "Software",
+    "ItemKey": "Microsoft Visual C\u002B\u002B 2013 x86 Minimum Runtime - 12.0.21005",
+    "ItemValue": "12.0.21005",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "a792bde3-61da-4ca7-8db9-5c1f618bcbdb",
+    "Category": "Software",
+    "ItemKey": "Microsoft .NET Host FX Resolver - 9.0.6 (x86)",
+    "ItemValue": "72.24.34381",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "970f2fee-ab70-4c95-b9ac-0dd397de58e4",
+    "Category": "Software",
+    "ItemKey": "Windows Mobile Extension SDK Contracts",
+    "ItemValue": "10.1.26100.6901",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "8b4672bd-82f4-40c0-ba7d-714d30350065",
+    "Category": "Software",
+    "ItemKey": "Windows SDK for Windows Store Apps Headers",
+    "ItemValue": "10.1.26100.6901",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "9474b41d-f7b9-4e76-9a4f-a4ac067a08b8",
+    "Category": "Software",
+    "ItemKey": "Microsoft .NET Framework 4.7.2 Targeting Pack",
+    "ItemValue": "4.7.03062",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "6d76276c-09b6-4a59-bbc2-ca493cc8753b",
+    "Category": "Software",
+    "ItemKey": "vs_CoreEditorFonts",
+    "ItemValue": "17.7.40001",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "3e6aa79d-eb12-4805-829f-8011fc6dbaec",
+    "Category": "Software",
+    "ItemKey": "WinRT Intellisense PPI - en-us",
+    "ItemValue": "10.1.26100.6901",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "e448ff67-67d3-4bcb-97e3-81d4ac1e6550",
+    "Category": "Software",
+    "ItemKey": "vs_clickoncebootstrappermsi",
+    "ItemValue": "17.14.36015",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "6305d2b3-0b00-4ed6-b145-409c54dd731e",
+    "Category": "Software",
+    "ItemKey": "vs_tipsmsi",
+    "ItemValue": "17.14.36015",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "f35744af-cdfd-45d1-8068-e1ed51231262",
+    "Category": "Software",
+    "ItemKey": "Windows SDK Signing Tools",
+    "ItemValue": "10.1.26100.6901",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "3e122bc7-fa77-4fc0-8767-12738e7bb804",
+    "Category": "Software",
+    "ItemKey": "vs_filehandler_amd64",
+    "ItemValue": "17.14.36024",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "c114a998-8d6f-4093-977b-4ddd3248bf2a",
+    "Category": "Software",
+    "ItemKey": "Windows Team Extension SDK Contracts",
+    "ItemValue": "10.1.26100.6901",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "0a7101d6-d7fc-4259-b8ee-efc780d84d43",
+    "Category": "Software",
+    "ItemKey": "Entity Framework 6.5.0 Tools  for Visual Studio 2022",
+    "ItemValue": "6.5.0.0",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "67f49a8c-0fe7-42ad-84da-285d5765dab4",
+    "Category": "Software",
+    "ItemKey": "Microsoft Windows Desktop Runtime - 6.0.12 (x64)",
+    "ItemValue": "6.0.12.31928",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "dbe25a50-82ff-4dea-93b0-9a9c1242b911",
+    "Category": "Software",
+    "ItemKey": "Java 8 Update 121",
+    "ItemValue": "8.0.1210.13",
+    "Details": "Oracle Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "6b2b2e8d-711b-44f1-ac03-dc208592c44e",
+    "Category": "Software",
+    "ItemKey": "Windows SDK Redistributables",
+    "ItemValue": "10.1.26100.6901",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "54eaafa1-fb1e-48e0-8871-98564fe9c269",
+    "Category": "Software",
+    "ItemKey": "vs_githubprotocolhandlermsi",
+    "ItemValue": "17.14.36015",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "5eb78989-896d-4537-a9f4-344e8dd6545e",
+    "Category": "Software",
+    "ItemKey": "Windows SDK OnecoreUap Headers x64",
+    "ItemValue": "10.1.26100.6901",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "7346dadd-eff4-4eda-abad-81fc1fde5b8c",
+    "Category": "Software",
+    "ItemKey": "vs_vswebprotocolselectormsires",
+    "ItemValue": "17.14.36323",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "f7736407-b514-4ca9-9e16-7d2199c5adb0",
+    "Category": "Software",
+    "ItemKey": "\u041F\u0430\u043A\u0435\u0442 \u043D\u0430\u0446\u0435\u043B\u0438\u0432\u0430\u043D\u0438\u044F Microsoft .NET Framework 4.8 (\u0420\u0443\u0441\u0441\u043A\u0438\u0439)",
+    "ItemValue": "4.8.03761",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "363d1c35-727a-4626-8118-93ced8b365af",
+    "Category": "Software",
+    "ItemKey": "Microsoft Visual C\u002B\u002B 2012 Redistributable (x86) - 11.0.61030",
+    "ItemValue": "11.0.61030.0",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "22980f6d-f586-4d53-8342-c8a0bc2203be",
+    "Category": "Software",
+    "ItemKey": "icecap_collectionresourcesx64",
+    "ItemValue": "17.14.36015",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "2a6c11c4-82a6-4541-9686-ac0208f47bbb",
+    "Category": "Software",
+    "ItemKey": "Windows SDK Desktop Headers x86",
+    "ItemValue": "10.1.26100.6901",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "42af1285-35e2-4365-b554-9cbbcd33e366",
+    "Category": "Software",
+    "ItemKey": "Windows SDK Desktop Libs x64",
+    "ItemValue": "10.1.26100.6901",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "3b4a8220-3589-4ea5-a7a8-67f5bbafa507",
+    "Category": "Software",
+    "ItemKey": "SDK ARM64 Additions",
+    "ItemValue": "10.1.26100.6901",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "99ae94cd-672a-484b-95fe-61253eb378d6",
+    "Category": "Software",
+    "ItemKey": "WinRT Intellisense IoT - en-us",
+    "ItemValue": "10.1.26100.6901",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "65edc9d0-1eba-4366-9f4c-f907f1d99599",
+    "Category": "Software",
+    "ItemKey": "Intel(R) C\u002B\u002B Redistributables on Intel(R) 64",
+    "ItemValue": "16.0.246",
+    "Details": "Intel Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "6f229320-bad6-48f5-9077-fb4135db2599",
+    "Category": "Software",
+    "ItemKey": "Windows SDK DirectX x86 Remote",
+    "ItemValue": "10.1.26100.6901",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "b4807b3c-4caa-4cbf-9413-56573d8d06a9",
+    "Category": "Software",
+    "ItemKey": "Windows SDK for Windows Store Apps Metadata",
+    "ItemValue": "10.1.26100.6901",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "7f56ddc3-e01e-46e6-93ce-bc317763edbe",
+    "Category": "Software",
+    "ItemKey": "Universal CRT Headers Libraries and Sources",
+    "ItemValue": "10.1.26100.6901",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "28ea6a72-acd1-4f16-aa78-fadd0d383afc",
+    "Category": "Software",
+    "ItemKey": "Kits Configuration Installer",
+    "ItemValue": "10.1.26100.6901",
+    "Details": "Microsoft",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "abb75910-e1f0-4c7c-b55f-b7b4d99edd5b",
+    "Category": "Software",
+    "ItemKey": "WinRT Intellisense PPI - Other Languages",
+    "ItemValue": "10.1.26100.6901",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "e0724407-2698-43b2-837b-4807dd05e2a5",
+    "Category": "Software",
+    "ItemKey": "Windows SDK Facade Windows WinMD Versioned",
+    "ItemValue": "10.1.26100.6901",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "15bbd2b8-b5b2-4f7d-bb2b-c59e67fc404a",
+    "Category": "Software",
+    "ItemKey": "Microsoft Visual Studio Setup WMI Provider",
+    "ItemValue": "3.12.2140.44225",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "075594b4-f1a2-46a6-80e3-0786f439c4b9",
+    "Category": "Software",
+    "ItemKey": "Java Auto Updater",
+    "ItemValue": "2.8.481.10",
+    "Details": "Oracle Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "c914d4ec-8ae9-49dc-ac82-3be8b3cc4538",
+    "Category": "Software",
+    "ItemKey": "Microsoft .NET Runtime - 9.0.6 (x86)",
+    "ItemValue": "72.24.34381",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "a6732fa7-e150-4f1d-8fae-6184bf16543b",
+    "Category": "Software",
+    "ItemKey": "Windows Desktop Extension SDK",
+    "ItemValue": "10.1.26100.6901",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "7fc2ec43-5e02-4ed4-b916-63b39efbc349",
+    "Category": "Software",
+    "ItemKey": "Universal CRT Redistributable",
+    "ItemValue": "10.1.26100.6901",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "1de7e057-40ae-46d8-8839-cbce8f77e58a",
+    "Category": "Software",
+    "ItemKey": "Windows Software Development Kit - Windows 10.0.26100.3916",
+    "ItemValue": "10.1.26100.3916",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "31bdbae8-3028-4d59-a4ef-6fb76984401d",
+    "Category": "Software",
+    "ItemKey": "vs_clickoncesigntoolmsi",
+    "ItemValue": "17.14.36015",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "b652bcbe-b487-4771-8b1f-1e9a05376216",
+    "Category": "Software",
+    "ItemKey": "vcpp_crt.redist.clickonce",
+    "ItemValue": "14.44.35211",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "3f00ef09-704d-4da7-bfe0-e6d65282cc4d",
+    "Category": "Software",
+    "ItemKey": "Microsoft Windows Desktop Runtime - 9.0.6 (x86)",
+    "ItemValue": "72.24.34386",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "6ae53422-65ec-4fe0-a823-10b5ea64ff3b",
+    "Category": "Software",
+    "ItemKey": "Wondershare Helper Compact 2.5.3",
+    "ItemValue": "2.5.3",
+    "Details": "Wondershare",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "6230fb84-6bde-42fe-a277-81570db2056f",
+    "Category": "Software",
+    "ItemKey": "vs_minshellinteropsharedmsi",
+    "ItemValue": "17.14.36015",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "3f74d956-02c2-4e60-91d8-4d083178f310",
+    "Category": "Software",
+    "ItemKey": "Web Companion",
+    "ItemValue": "7.0.2388.4219",
+    "Details": "Lavasoft",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "a84a4ea2-07ce-41d9-a24a-51770ae2c95f",
+    "Category": "Software",
+    "ItemKey": "Universal CRT Extension SDK",
+    "ItemValue": "10.1.26100.6901",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "3a1e21d6-0848-498f-a662-bd0fec720d3b",
+    "Category": "Software",
+    "ItemKey": "vs_minshellmsires",
+    "ItemValue": "17.14.36015",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "b3b3089a-373a-46c4-92f3-143281a202cc",
+    "Category": "Software",
+    "ItemKey": "Windows SDK for Windows Store Managed Apps Libs",
+    "ItemValue": "10.1.26100.6901",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "9ce1bccf-b2da-4346-bd26-0161ba9b878b",
+    "Category": "Software",
+    "ItemKey": "Windows SDK Modern Versioned Developer Tools",
+    "ItemValue": "10.1.26100.6901",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "9d0a79c2-c74f-404f-92c4-923572b57547",
+    "Category": "Software",
+    "ItemKey": "vs_minshellmsi",
+    "ItemValue": "17.14.36301",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "98db9b92-eed9-4131-ba4e-0a558d6909bf",
+    "Category": "Software",
+    "ItemKey": "Microsoft ASP.NET Core 9.0.6 Targeting Pack (x86)",
+    "ItemValue": "9.0.6.25267",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "51a22709-d389-4ec6-8e1b-68100c0e7f96",
+    "Category": "Software",
+    "ItemKey": "vs_filehandler_x86",
+    "ItemValue": "17.14.36024",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "31debed7-c775-4de8-8c84-21778b3a434a",
+    "Category": "Software",
+    "ItemKey": "ScanOVAL",
+    "ItemValue": "1.5.0.55",
+    "Details": "ALTEX-SOFT",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "b793e59c-4abd-4f59-b7b4-77e82c40002a",
+    "Category": "Software",
+    "ItemKey": "WPTx64 (DesktopEditions)",
+    "ItemValue": "10.1.26100.3916",
+    "Details": "Microsoft",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "17ef3e22-0a93-4621-ba49-e61b5a9e7675",
+    "Category": "Software",
+    "ItemKey": "WinRT Intellisense Mobile - en-us",
+    "ItemValue": "10.1.26100.6901",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "5281ecff-3bea-45ea-af70-454d8c8986de",
+    "Category": "Software",
+    "ItemKey": "WinRT Intellisense UAP - en-us",
+    "ItemValue": "10.1.26100.6901",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "b5463335-2a11-4372-acfe-760238b11dc4",
+    "Category": "Software",
+    "ItemKey": "vs_communitysharedmsi",
+    "ItemValue": "17.14.36025",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "4495dadc-eaf5-4cf2-8cff-fc8eb68582cd",
+    "Category": "Software",
+    "ItemKey": "WPT Redistributables",
+    "ItemValue": "10.1.26100.3916",
+    "Details": "Microsoft",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "eac6fe05-5769-4991-97c4-161e4afbc4b4",
+    "Category": "Software",
+    "ItemKey": "WinAppDeploy",
+    "ItemValue": "10.1.26100.6901",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "51e591d8-e3fb-4d8d-8eb1-1ac7e5837457",
+    "Category": "Software",
+    "ItemKey": "WinRT Intellisense UAP - Other Languages",
+    "ItemValue": "10.1.26100.6901",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "a908b5c7-909f-49c8-9829-6e20ade5377f",
+    "Category": "Software",
+    "ItemKey": "Windows SDK Desktop Libs arm64",
+    "ItemValue": "10.1.26100.6901",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "f7568120-0bbf-42a0-98cd-f579a3fda034",
+    "Category": "Software",
+    "ItemKey": "Windows SDK ARM64 Desktop Tools",
+    "ItemValue": "10.1.26100.6901",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "46124836-56d9-4088-bdb0-c18fc152cca3",
+    "Category": "Software",
+    "ItemKey": "Microsoft .NET Targeting Pack - 8.0.17 (x86)",
+    "ItemValue": "64.68.34370",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "82bc32fb-911a-497e-8087-63ba73a36c40",
+    "Category": "Software",
+    "ItemKey": "Microsoft TestPlatform SDK Local Feed",
+    "ItemValue": "17.10.0.9037153",
+    "Details": "Microsoft",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "e8269161-0e64-465f-a120-5352517b5659",
+    "Category": "Software",
+    "ItemKey": "\u0410\u0441\u0441\u0438\u0441\u0442\u0435\u043D\u0442 6.2",
+    "ItemValue": "6.2.2412.1801",
+    "Details": "\u0421\u0410\u0424\u0418\u0411",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "d61dfbdc-992f-4c91-916a-ff89c084212f",
+    "Category": "Software",
+    "ItemKey": "WinRT Intellisense IoT - Other Languages",
+    "ItemValue": "10.1.26100.6901",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "c8a8ef78-957f-4772-8b01-9a510e6de3f6",
+    "Category": "Software",
+    "ItemKey": "Windows IoT Extension SDK Contracts",
+    "ItemValue": "10.1.26100.6901",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "03823558-42c3-4e73-ba0e-5e4976a22af2",
+    "Category": "Software",
+    "ItemKey": "vs_communitymsires",
+    "ItemValue": "17.14.36015",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "0338981a-64a2-4a18-b28b-ef3cf26eadbf",
+    "Category": "Software",
+    "ItemKey": "Windows SDK OnecoreUap Headers x86",
+    "ItemValue": "10.1.26100.6901",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "ef34cb9a-0c27-4c27-8d21-1f81fef68053",
+    "Category": "Software",
+    "ItemKey": "Microsoft Office File Validation Add-In",
+    "ItemValue": "14.0.5130.5003",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "7040b217-4924-49a6-b191-57008f716102",
+    "Category": "Software",
+    "ItemKey": "Microsoft Visual C\u002B\u002B 2022 X86 Minimum Runtime - 14.44.35211",
+    "ItemValue": "14.44.35211",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "15f958eb-bdc3-4ba9-97c6-88e41d203c97",
+    "Category": "Software",
+    "ItemKey": "\u0421\u041F\u041E \u0022\u0421\u043F\u0440\u0430\u0432\u043A\u0438 \u0411\u041A\u0022",
+    "ItemValue": "2.4.53033.7185",
+    "Details": "\u0424\u0421\u041E",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "413edf55-48fc-49de-bf92-1b94b4f87ff8",
+    "Category": "Software",
+    "ItemKey": "Microsoft .NET Framework 4.8 SDK",
+    "ItemValue": "4.8.03928",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "36f5a6ef-9d4d-4036-bf87-32bc206e8713",
+    "Category": "Software",
+    "ItemKey": "Microsoft Windows Desktop Targeting Pack - 8.0.17 (x86)",
+    "ItemValue": "64.68.34385",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "30cb8343-cb30-47ec-b576-2e33a0e88286",
+    "Category": "Software",
+    "ItemKey": "Windows SDK Desktop Tools arm64",
+    "ItemValue": "10.1.26100.6901",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "a87073d0-6eb9-4fe7-b6fb-1fec1252b310",
+    "Category": "Software",
+    "ItemKey": "vs_BlendMsi",
+    "ItemValue": "17.14.36015",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "576e5186-8826-4673-9220-01026daa3fce",
+    "Category": "Software",
+    "ItemKey": "Windows App Certification Kit x64 (OnecoreUAP)",
+    "ItemValue": "10.1.26100.6901",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "25040bb6-63e4-45b5-bb84-d3932ea6915b",
+    "Category": "Software",
+    "ItemKey": "WPTx64 (OnecoreUAP)",
+    "ItemValue": "10.1.26100.3916",
+    "Details": "Microsoft",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "0c7c4388-d939-4553-9fcd-a7b718ef50b4",
+    "Category": "Software",
+    "ItemKey": "Microsoft Windows Desktop Targeting Pack - 9.0.6 (x86)",
+    "ItemValue": "72.24.34386",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "9f3a6e1f-7a65-48ff-bcd7-8ae4f46b25bf",
+    "Category": "Software",
+    "ItemKey": "vs_clickoncebootstrappermsires",
+    "ItemValue": "17.14.36015",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "1703d689-cb91-43ee-a52f-2711e77c4529",
+    "Category": "Software",
+    "ItemKey": "Windows Mobile Extension SDK",
+    "ItemValue": "10.1.26100.6901",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "950bfc88-14ba-4ef0-a372-6baae339948f",
+    "Category": "Software",
+    "ItemKey": "Python Launcher",
+    "ItemValue": "3.14.5150.0",
+    "Details": "Python Software Foundation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "c155bc48-2685-4f78-b3fe-8762abc71661",
+    "Category": "Software",
+    "ItemKey": "vs_minshellinteropmsi",
+    "ItemValue": "17.14.36015",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "ae225017-a10d-4c84-a3d4-7f7581a60317",
+    "Category": "Software",
+    "ItemKey": "Windows SDK Desktop Tools x64",
+    "ItemValue": "10.1.26100.6901",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "f6f78371-5a2e-49d0-b05d-91f50717c75a",
+    "Category": "Software",
+    "ItemKey": "Windows App Certification Kit SupportedApiList x86",
+    "ItemValue": "10.1.26100.6901",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "e6e6156e-57de-46b4-93f5-814e0841d83b",
+    "Category": "Software",
+    "ItemKey": "\u0414\u0440\u0430\u0439\u0432\u0435\u0440\u044B \u0420\u0443\u0442\u043E\u043A\u0435\u043D",
+    "ItemValue": "4.6.2.0",
+    "Details": "\u041A\u043E\u043C\u043F\u0430\u043D\u0438\u044F \u0022\u0410\u043A\u0442\u0438\u0432\u0022",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "03460d61-926d-4829-a536-b59ec87c0759",
+    "Category": "Software",
+    "ItemKey": "Windows SDK Desktop Libs x86",
+    "ItemValue": "10.1.26100.6901",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "733830e9-fbe9-47a3-8e95-f2b207836568",
+    "Category": "Software",
+    "ItemKey": "Adobe Refresh Manager",
+    "ItemValue": "1.8.0",
+    "Details": "Adobe Systems Incorporated",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "775a10cb-6a4c-4b9d-9653-20442d0e19da",
+    "Category": "Software",
+    "ItemKey": "NVIDIA WDM Drivers",
+    "ItemValue": "",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "a0421b5c-25bf-4389-80dc-ab24487b28b6",
+    "Category": "Software",
+    "ItemKey": "Microsoft Visual C\u002B\u002B 2012 x86 Additional Runtime - 11.0.61030",
+    "ItemValue": "11.0.61030",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "52760a9c-cc2f-4d75-b7f5-89473257b022",
+    "Category": "Software",
+    "ItemKey": "Windows SDK Desktop Headers arm64",
+    "ItemValue": "10.1.26100.6901",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "a6210eec-8adc-49ce-ad5f-5bb5d7555efc",
+    "Category": "Software",
+    "ItemKey": "Apple Software Update",
+    "ItemValue": "2.7.0.3",
+    "Details": "Apple Inc.",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "5316c6c8-ac08-4dca-a132-effd1042aabe",
+    "Category": "Software",
+    "ItemKey": "Windows Team Extension SDK",
+    "ItemValue": "10.1.26100.6901",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "14975907-e542-41e4-9dd7-da21603954bb",
+    "Category": "Software",
+    "ItemKey": "vs_devenvsharedmsi",
+    "ItemValue": "17.14.36015",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "0c5c4c34-3501-4363-b2fd-a98ac505e695",
+    "Category": "Software",
+    "ItemKey": "vs_vswebprotocolselectormsi",
+    "ItemValue": "17.14.36323",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "7177a4f5-b60b-4076-be2e-1d420f1bbf8f",
+    "Category": "Software",
+    "ItemKey": "MSI Development Tools",
+    "ItemValue": "10.1.26100.6901",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "fd90974c-942b-44c5-a518-de69c3f35caf",
+    "Category": "Software",
+    "ItemKey": "Microsoft ASP.NET Core 9.0.6 Shared Framework (x86)",
+    "ItemValue": "9.0.6.25267",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "46be8d6d-63a8-453c-9088-33c4a2b27aba",
+    "Category": "Software",
+    "ItemKey": "Microsoft .NET Framework 4.8 Targeting Pack",
+    "ItemValue": "4.8.03761",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "8a40b56a-57b5-4840-8979-634f800909ea",
+    "Category": "Software",
+    "ItemKey": "Windows SDK",
+    "ItemValue": "10.1.26100.6901",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "ec98dbb5-0cba-4d98-9cc2-be5c50a1fae6",
+    "Category": "Software",
+    "ItemKey": "WinRT Intellisense Desktop - Other Languages",
+    "ItemValue": "10.1.26100.6901",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "36e0eb89-8451-4df8-b67f-892925f3ae41",
+    "Category": "Software",
+    "ItemKey": "Microsoft Visual C\u002B\u002B 2022 X86 Debug Runtime - 14.44.35211",
+    "ItemValue": "14.44.35211",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "bfd8479f-5b28-443a-90a3-d35e60140bfa",
+    "Category": "Software",
+    "ItemKey": "icecap_collection_neutral",
+    "ItemValue": "17.14.36015",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "7c782a87-311b-4746-87c8-52f8dba32fc2",
+    "Category": "Software",
+    "ItemKey": "Microsoft Visual C\u002B\u002B 2012 x86 Minimum Runtime - 11.0.61030",
+    "ItemValue": "11.0.61030",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "f7cef57c-e22b-4979-a9d4-aa687dd8fc9d",
+    "Category": "Software",
+    "ItemKey": "Windows App Certification Kit x64",
+    "ItemValue": "10.1.26100.6901",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "719d61ec-20f7-4f4d-8a6f-788436e48662",
+    "Category": "Software",
+    "ItemKey": "ClickOnce Bootstrapper Package for Microsoft .NET Framework",
+    "ItemValue": "4.8.09256",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "55cf5d9a-5ac1-4791-b039-5a53d22c8ef1",
+    "Category": "Software",
+    "ItemKey": "VS Immersive Activate Helper",
+    "ItemValue": "17.0.157.0",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "f8f737fd-b49b-4c46-8d88-8d4c00cc5108",
+    "Category": "Software",
+    "ItemKey": "icecap_collectionresources",
+    "ItemValue": "17.14.36015",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "76154485-9a1a-4a40-90e5-fc81d1b39af6",
+    "Category": "Software",
+    "ItemKey": "Windows SDK Desktop Headers x64",
+    "ItemValue": "10.1.26100.6901",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "3f3df2cc-eb65-473d-9a5d-1af98ce4ed27",
+    "Category": "Software",
+    "ItemKey": "Microsoft Visual C\u002B\u002B 2022 X86 Additional Runtime - 14.44.35211",
+    "ItemValue": "14.44.35211",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "3629edde-6ce7-4bbc-92cd-98f42566b44e",
+    "Category": "Software",
+    "ItemKey": "Microsoft ASP.NET Core 8.0.17 Shared Framework (x86)",
+    "ItemValue": "8.0.17.25266",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "0cc49143-a0d2-4980-87b9-6071d3202c47",
+    "Category": "Software",
+    "ItemKey": "Windows SDK Desktop Tools x86",
+    "ItemValue": "10.1.26100.6901",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "7d994035-60ba-4cba-94e2-a064f7c6939c",
+    "Category": "Software",
+    "ItemKey": "Windows IoT Extension SDK",
+    "ItemValue": "10.1.26100.6901",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "eea2a397-7666-4cb5-b682-b799b48e7b10",
+    "Category": "Software",
+    "ItemKey": "Google Chrome",
+    "ItemValue": "158.0.8127.38",
+    "Details": "Google LLC",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "9f732fe4-1dc3-49a3-a173-4fc9e035af02",
+    "Category": "Software",
+    "ItemKey": "IntelliTraceProfilerProxy",
+    "ItemValue": "15.0.21225.01",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "d578034b-1c2c-4dfe-9f80-9012a05a7e4b",
+    "Category": "Software",
+    "ItemKey": "Microsoft Windows Desktop Runtime - 8.0.17 (x86)",
+    "ItemValue": "64.68.34385",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "7e666071-00fe-41aa-ad59-979b7508c31a",
+    "Category": "Software",
+    "ItemKey": "Microsoft Visual C\u002B\u002B 2012 Redistributable (x64) - 11.0.61030",
+    "ItemValue": "11.0.61030.0",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "1f1a1538-3b21-4c36-a9a5-36d155187038",
+    "Category": "Software",
+    "ItemKey": "Microsoft .NET Runtime - 8.0.17 (x86)",
+    "ItemValue": "64.68.34370",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "2f1efb2c-2e31-4be8-ad8b-4f885e7b475f",
+    "Category": "Software",
+    "ItemKey": "Microsoft Visual Studio Setup Configuration",
+    "ItemValue": "3.12.2140.44225",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "11fc7bff-c3bc-46a3-964c-35d9b6471dc7",
+    "Category": "Software",
+    "ItemKey": "Universal CRT Tools x86",
+    "ItemValue": "10.1.26100.6901",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "2713bc74-13e1-4a3b-abfd-e1442b55b80a",
+    "Category": "Software",
+    "ItemKey": "vs_SQLClickOnceBootstrappermsi",
+    "ItemValue": "17.14.36015",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "986c6fb8-817a-4a9b-88da-449f0406a36a",
+    "Category": "Software",
+    "ItemKey": "vs_FileTracker_Singleton",
+    "ItemValue": "17.14.36015",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "98024ab2-2649-4f29-950b-4563c1e74388",
+    "Category": "Software",
+    "ItemKey": "Windows SDK Modern Non-Versioned Developer Tools",
+    "ItemValue": "10.1.26100.6901",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "feabd357-5415-4958-a143-3d0af649f6fc",
+    "Category": "Software",
+    "ItemKey": "vs_Graphics_Singletonx86",
+    "ItemValue": "17.14.36015",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "8a6ed31f-b5fb-42ff-a034-49cf4396fb80",
+    "Category": "Software",
+    "ItemKey": "Microsoft Visual C\u002B\u002B 2015-2022 Redistributable (x64) - 14.44.35211",
+    "ItemValue": "14.44.35211.0",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "56536d82-9848-4325-9276-a3fed452dd98",
+    "Category": "Software",
+    "ItemKey": "Windows Desktop Extension SDK Contracts",
+    "ItemValue": "10.1.26100.6901",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "e49d225d-fac4-4873-a5cc-407b4edaf3bc",
+    "Category": "Software",
+    "ItemKey": "Microsoft .NET Targeting Pack - 9.0.6 (x86)",
+    "ItemValue": "72.24.34381",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "a130bdbf-8b04-42a1-9b4a-3eaadc8dcc7a",
+    "Category": "Software",
+    "ItemKey": "Windows SDK for Windows Store Apps Headers OnecoreUap",
+    "ItemValue": "10.1.26100.6901",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "20286ab7-dea3-4bb2-bf60-fe4b3cd9e32c",
+    "Category": "Software",
+    "ItemKey": "Windows SDK for Windows Store Apps DirectX x86 Remote",
+    "ItemValue": "10.1.26100.6901",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "fd175a42-9f5d-4c16-86ea-4e7f4a019f29",
+    "Category": "Software",
+    "ItemKey": "Microsoft .NET Host - 9.0.6 (x86)",
+    "ItemValue": "72.24.34381",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "734c995e-dbad-4d60-ad44-f0930cbd448d",
+    "Category": "Software",
+    "ItemKey": "Windows Software Development Kit - Windows 10.0.26100.6901",
+    "ItemValue": "10.1.26100.6901",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "d528f580-04db-4067-9bce-710aac574521",
+    "Category": "Software",
+    "ItemKey": "SDK ARM64 Redistributables",
+    "ItemValue": "10.1.26100.6901",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "1dda4127-bdad-4a6f-968c-dd9ce8215155",
+    "Category": "Software",
+    "ItemKey": "Microsoft ASP.NET Core 8.0.17 Targeting Pack (x86)",
+    "ItemValue": "8.0.17.25266",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "35a1e378-33e0-4700-8a2b-72ec7303a818",
+    "Category": "Software",
+    "ItemKey": "Windows SDK EULA",
+    "ItemValue": "10.1.26100.6901",
+    "Details": "Microsoft Corporations",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "669365d0-9258-4b8a-b96f-aa1283c59d9f",
+    "Category": "Software",
+    "ItemKey": "\u041F\u0430\u043A\u0435\u0442 SDK \u0434\u043B\u044F Microsoft .NET Framework 4.8 (\u0420\u0443\u0441\u0441\u043A\u0438\u0439)",
+    "ItemValue": "4.8.03761",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "d9af2c9c-c83f-45d7-a8b5-5b070b2784b6",
+    "Category": "Software",
+    "ItemKey": "WinRT Intellisense Desktop - en-us",
+    "ItemValue": "10.1.26100.6901",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "7ba46dc4-d7ef-4ae6-9ad0-446384f35ba1",
+    "Category": "Software",
+    "ItemKey": "Microsoft Visual C\u002B\u002B 2013 Redistributable (x86) - 12.0.30501",
+    "ItemValue": "12.0.30501.0",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "1f194a40-2fd9-4dd0-a160-e91f439356b6",
+    "Category": "Software",
+    "ItemKey": "\u041F\u0430\u043A\u0435\u0442 \u043D\u0430\u0446\u0435\u043B\u0438\u0432\u0430\u043D\u0438\u044F Microsoft .NET Framework 4.7.2 (\u0420\u0443\u0441\u0441\u043A\u0438\u0439)",
+    "ItemValue": "4.7.03062",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "21a6e93f-e1d5-45fe-a67b-26613c8db6cb",
+    "Category": "Software",
+    "ItemKey": "vs_minshellsharedmsi",
+    "ItemValue": "17.14.36024",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "93043c9c-c73b-4ce2-9ad1-98b03924f895",
+    "Category": "Software",
+    "ItemKey": "Windows SDK OnecoreUap Headers arm64",
+    "ItemValue": "10.1.26100.6901",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "5bc135a7-b03f-482c-a001-04e2b7c9e670",
+    "Category": "Software",
+    "ItemKey": "\u041D\u0430\u043A\u043E\u043F\u0438\u0442\u0435\u043B\u044C\u043D\u044B\u0439 \u043F\u0430\u043A\u0435\u0442 \u043E\u0431\u043D\u043E\u0432\u043B\u0435\u043D\u0438\u044F Microsoft .NET Framework Intellisense \u0434\u043B\u044F Visual Studio (\u0420\u0443\u0441\u0441\u043A\u0438\u0439)",
+    "ItemValue": "4.8.09037",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "b7d326b0-669d-4fd6-8e9f-19077aef61ea",
+    "Category": "Software",
+    "ItemKey": "Microsoft Visual C\u002B\u002B 2013 x86 Additional Runtime - 12.0.21005",
+    "ItemValue": "12.0.21005",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "cf190ba8-0c12-434f-ad02-e4d5679e70db",
+    "Category": "Software",
+    "ItemKey": "Windows SDK for Windows Store Apps Libs",
+    "ItemValue": "10.1.26100.6901",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "65f4b534-64c6-46b2-9172-4f3dfff3f468",
+    "Category": "Software",
+    "ItemKey": "Universal General MIDI DLS Extension SDK",
+    "ItemValue": "10.1.26100.6901",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "6c255698-153a-44fd-b6e0-bced4429a8d3",
+    "Category": "Software",
+    "ItemKey": "\u0410\u0441\u0441\u0438\u0441\u0442\u0435\u043D\u0442 6.5",
+    "ItemValue": "6.5.2510.1602",
+    "Details": "\u0421\u0410\u0424\u0418\u0411",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "f9a7fa01-da0d-4d8a-9433-e148ba0d866b",
+    "Category": "Software",
+    "ItemKey": "GEM Desktop 1.0.29",
+    "ItemValue": "1.0.29",
+    "Details": "Gem Space",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "2420cfaa-55f3-431a-9a88-6a3157981c76",
+    "Category": "Software",
+    "ItemKey": "Discord",
+    "ItemValue": "1.0.9163",
+    "Details": "Discord Inc.",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "ea35576a-7e6b-4fb0-bfdd-4b8b65cf27a7",
+    "Category": "Software",
+    "ItemKey": "Figma",
+    "ItemValue": "125.0.8",
+    "Details": "Figma, Inc.",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "db09c410-0059-401b-8e42-dcafed321938",
+    "Category": "Software",
+    "ItemKey": "Figma Agent",
+    "ItemValue": "126.1.2",
+    "Details": "Figma, Inc.",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "cdb83a86-01d0-4ee2-b0a2-3f909f57d078",
+    "Category": "Software",
+    "ItemKey": "MY.GAMES \u0418\u0433\u0440\u043E\u0432\u043E\u0439 \u0446\u0435\u043D\u0442\u0440",
+    "ItemValue": "4.1605",
+    "Details": "MY.COM B.V.",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "1f172d7e-d19c-489e-a1a6-57b0655110b9",
+    "Category": "Software",
+    "ItemKey": "GitHub Desktop",
+    "ItemValue": "3.5.2",
+    "Details": "GitHub, Inc.",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "4cabd3a9-1cee-4c3f-bbc7-d56a87f8e49e",
+    "Category": "Software",
+    "ItemKey": "LOSTARK",
+    "ItemValue": "1.82",
+    "Details": "MY.GAMES",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "259279b0-b666-4c06-ad8a-a9aa034f23d2",
+    "Category": "Software",
+    "ItemKey": "Microsoft OneDrive",
+    "ItemValue": "26.204.1019.0007",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "7ecdc442-b40b-46e4-abb9-0dfce0e1c8f8",
+    "Category": "Software",
+    "ItemKey": "Python 3.14.6",
+    "ItemValue": "3.14-64",
+    "Details": "Python Software Foundation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "0ed433e7-4bec-4a05-88f4-d672f7d0f6f6",
+    "Category": "Software",
+    "ItemKey": "Rustup: the Rust toolchain installer",
+    "ItemValue": "1.28.2",
+    "Details": "",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "159f8d02-af11-44d6-b892-750fa8bbd14b",
+    "Category": "Software",
+    "ItemKey": "Microsoft Teams",
+    "ItemValue": "1.5.00.21668",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "348dfc55-ccc8-4869-b4a8-922a1588969a",
+    "Category": "Software",
+    "ItemKey": "\u00B5Torrent",
+    "ItemValue": "3.6.0.47196",
+    "Details": "BitTorrent Limited",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "2840e879-3cba-4c6c-a379-df9f2d3d1ee2",
+    "Category": "Software",
+    "ItemKey": "Wargaming.net Game Center",
+    "ItemValue": "19.9.1.8579",
+    "Details": "Wargaming.net",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "3f884834-1aec-4a43-a5e3-c00a2971490c",
+    "Category": "Software",
+    "ItemKey": "\u042F\u043D\u0434\u0435\u043A\u0441.\u0414\u0438\u0441\u043A",
+    "ItemValue": "3.2.48.5143",
+    "Details": "\u042F\u043D\u0434\u0435\u043A\u0441",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "710f261b-c643-48dc-9ae4-9c8d898b6b2b",
+    "Category": "Software",
+    "ItemKey": "\u041A\u043D\u043E\u043F\u043A\u0438 \u0441\u0435\u0440\u0432\u0438\u0441\u043E\u0432 \u042F\u043D\u0434\u0435\u043A\u0441\u0430 \u043D\u0430 \u043F\u0430\u043D\u0435\u043B\u0438 \u0437\u0430\u0434\u0430\u0447",
+    "ItemValue": "3.7.9.0",
+    "Details": "\u042F\u043D\u0434\u0435\u043A\u0441",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "451026b6-a610-4d81-9a7a-5992d261215c",
+    "Category": "Software",
+    "ItemKey": "Zoom Workplace",
+    "ItemValue": "7.1.9 (48550)",
+    "Details": "Zoom Communications, Inc.",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "1b06c8e0-d7f9-4c00-9a0f-9fc53882fb69",
+    "Category": "Software",
+    "ItemKey": "Python 3.11.9 (64-bit)",
+    "ItemValue": "3.11.9150.0",
+    "Details": "Python Software Foundation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "fbaff019-c9f5-4ee2-b77f-5116334146c7",
+    "Category": "Software",
+    "ItemKey": "Python 3.14.5 (64-bit)",
+    "ItemValue": "3.14.5150.0",
+    "Details": "Python Software Foundation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "9437d76c-b429-4fab-9d5a-03f15178a1f5",
+    "Category": "Software",
+    "ItemKey": "Telegram Desktop",
+    "ItemValue": "6.6",
+    "Details": "Telegram FZ-LLC",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "e0747f33-ce76-404a-98d5-028c9ada3d21",
+    "Category": "Software",
+    "ItemKey": "Microsoft Visual Studio Code (User)",
+    "ItemValue": "1.147.0",
+    "Details": "Microsoft Corporation",
+    "ScanRunId": "JOB-20261124104305"
+  },
+  {
+    "Id": "c999727d-e233-4c71-adf2-be0272086549",
+    "Category": "Software",
+    "ItemKey": "Viber",
+    "ItemValue": "17.2.0.6",
+    "Details": "2010-2022 Viber Media S.a.r.l",
+    "ScanRunId": "JOB-20261124104305"
   }
 ]

@@ -161,3 +161,4 @@ J:\AegisCore Technologies1\obj\Debug\net8.0\refint\AegisCore.CSharp.dll
 J:\AegisCore Technologies1\obj\Debug\net8.0\AegisCore.CSharp.pdb
 J:\AegisCore Technologies1\obj\Debug\net8.0\AegisCore.CSharp.genruntimeconfig.cache
 J:\AegisCore Technologies1\obj\Debug\net8.0\ref\AegisCore.CSharp.dll
+J:\AegisCore Technologies1\bin\Debug\net8.0\App_Data\AutoScans\scan_20261124_104242.json

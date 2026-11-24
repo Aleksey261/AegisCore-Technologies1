@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "4OevKGmmD4k=",
+  "dgSpecHash": "Wq+Aj/AG9ls=",
   "success": true,
   "projectFilePath": "J:\\AegisCore Technologies1\\AegisCore.CSharp.csproj",
   "expectedPackageFiles": [
@@ -16,6 +16,7 @@
     "C:\\Users\\BeKey261\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512",
     "C:\\Users\\BeKey261\\.nuget\\packages\\system.codedom\\8.0.0\\system.codedom.8.0.0.nupkg.sha512",
     "C:\\Users\\BeKey261\\.nuget\\packages\\system.collections.immutable\\1.5.0\\system.collections.immutable.1.5.0.nupkg.sha512",
+    "C:\\Users\\BeKey261\\.nuget\\packages\\system.diagnostics.performancecounter\\11.0.0\\system.diagnostics.performancecounter.11.0.0.nupkg.sha512",
     "C:\\Users\\BeKey261\\.nuget\\packages\\system.io\\4.3.0\\system.io.4.3.0.nupkg.sha512",
     "C:\\Users\\BeKey261\\.nuget\\packages\\system.management\\8.0.0\\system.management.8.0.0.nupkg.sha512",
     "C:\\Users\\BeKey261\\.nuget\\packages\\system.memory\\4.5.5\\system.memory.4.5.5.nupkg.sha512",

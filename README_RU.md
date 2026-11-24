@@ -69,3 +69,4 @@ scripts\publish-windows.bat
 ```text
 dist\win-x64
 ```
+http://localhost:5000/audit/ml-analysis/dashboard

@@ -322,6 +322,22 @@
           }
         }
       },
+      "System.Diagnostics.PerformanceCounter/11.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/System.Diagnostics.PerformanceCounter.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/System.Diagnostics.PerformanceCounter.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/netcoreapp2.0/System.Diagnostics.PerformanceCounter.targets": {}
+        }
+      },
       "System.IO/4.3.0": {
         "type": "package",
         "dependencies": {
@@ -772,6 +788,37 @@
         "system.collections.immutable.nuspec",
         "useSharedDesignerContext.txt",
         "version.txt"
+      ]
+    },
+    "System.Diagnostics.PerformanceCounter/11.0.0": {
+      "sha512": "QyWQ02Soy64/Eom5szs8IGREfzI9THWuRfPaHdqj0rcHQCTaDJSwM8dQCl7q95loehX0E17CC8clYCTwtw0mhA==",
+      "type": "package",
+      "path": "system.diagnostics.performancecounter/11.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "PACKAGE.md",
+        "THIRD-PARTY-NOTICES.TXT",
+        "buildTransitive/net10.0/_._",
+        "buildTransitive/net461/System.Diagnostics.PerformanceCounter.targets",
+        "buildTransitive/net462/_._",
+        "buildTransitive/netcoreapp2.0/System.Diagnostics.PerformanceCounter.targets",
+        "lib/net10.0/System.Diagnostics.PerformanceCounter.dll",
+        "lib/net10.0/System.Diagnostics.PerformanceCounter.xml",
+        "lib/net11.0/System.Diagnostics.PerformanceCounter.dll",
+        "lib/net11.0/System.Diagnostics.PerformanceCounter.xml",
+        "lib/net462/System.Diagnostics.PerformanceCounter.dll",
+        "lib/net462/System.Diagnostics.PerformanceCounter.xml",
+        "lib/netstandard2.0/System.Diagnostics.PerformanceCounter.dll",
+        "lib/netstandard2.0/System.Diagnostics.PerformanceCounter.xml",
+        "runtimes/win/lib/net10.0/System.Diagnostics.PerformanceCounter.dll",
+        "runtimes/win/lib/net10.0/System.Diagnostics.PerformanceCounter.xml",
+        "runtimes/win/lib/net11.0/System.Diagnostics.PerformanceCounter.dll",
+        "runtimes/win/lib/net11.0/System.Diagnostics.PerformanceCounter.xml",
+        "system.diagnostics.performancecounter.11.0.0.nupkg.sha512",
+        "system.diagnostics.performancecounter.nuspec",
+        "useSharedDesignerContext.txt"
       ]
     },
     "System.IO/4.3.0": {
@@ -1427,6 +1474,7 @@
       "CsvHelper >= 34.1.0",
       "Microsoft.ML >= 3.0.0",
       "Microsoft.ML.LightGbm >= 3.0.0",
+      "System.Diagnostics.PerformanceCounter >= 11.0.0",
       "System.Management >= 8.0.0"
     ]
   },
@@ -1491,6 +1539,10 @@
           "Microsoft.ML.LightGbm": {
             "target": "Package",
             "version": "[3.0.0, )"
+          },
+          "System.Diagnostics.PerformanceCounter": {
+            "target": "Package",
+            "version": "[11.0.0, )"
           },
           "System.Management": {
             "target": "Package",
