@@ -9,10 +9,32 @@ namespace AegisCore.Services;
 
 public class SecurityData
 {
+    // Старые флаги — оставлены для совместимости со сканами и UI
     public float PortOpen { get; set; }
     public float WeakPassword { get; set; }
     public float OutdatedSoftware { get; set; }
     public float UnencryptedTraffic { get; set; }
+
+    // Числовые признаки сетевых потоков (CIC-IDS2017)
+    public float DestinationPort { get; set; }
+    public float FlowDuration { get; set; }
+    public float TotalFwdPackets { get; set; }
+    public float TotalBackwardPackets { get; set; }
+    public float TotalLengthFwdPackets { get; set; }
+    public float TotalLengthBwdPackets { get; set; }
+    public float FwdPacketLengthMean { get; set; }
+    public float BwdPacketLengthMean { get; set; }
+    public float FlowBytesPerSec { get; set; }
+    public float FlowPacketsPerSec { get; set; }
+    public float FlowIatMean { get; set; }
+    public float PacketLengthMean { get; set; }
+    public float PacketLengthStd { get; set; }
+    public float SynFlagCount { get; set; }
+    public float AckFlagCount { get; set; }
+    public float AveragePacketSize { get; set; }
+    public float InitWinBytesForward { get; set; }
+    public float InitWinBytesBackward { get; set; }
+
     public bool Label { get; set; } // Строго bool для бинарной классификации в ML.NET
 }
 

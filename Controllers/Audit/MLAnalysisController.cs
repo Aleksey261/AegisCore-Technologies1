@@ -21,6 +21,8 @@ public class MLAnalysisController : ControllerBase
     private readonly SystemMonitoringBackgroundService _monitoringService;
     private static string _selectedModel = "LightGBM";
 
+    private const string CicDatasetPath = @"J:\CIC-IDS2017\MachineLearningCVE\Friday-WorkingHours-Afternoon-DDos.pcap_ISCX.csv";
+
     public MLAnalysisController(
         ComplianceCalculator calculator, 
         MLPipeline pipeline,
@@ -55,11 +57,11 @@ public class MLAnalysisController : ControllerBase
         try
         {
             var modelName = request?.ModelName ?? "LightGBM";
-            var trainingData = GenerateRealisticTrainingData();
-            
+            var (trainingData, _) = GetTrainingData();
+
             var metrics = _pipeline.TrainModel(modelName, trainingData);
             _selectedModel = modelName;
-            
+
             return Ok(new { 
                 success = true, 
                 message = $"Модель {modelName} успешно обучена",
@@ -85,26 +87,11 @@ public class MLAnalysisController : ControllerBase
         try
         {
             Console.WriteLine("=== ЗАПУСК ПОЛНОГО ЦИКЛА ОБУЧЕНИЯ ===");
-            string cicDatasetPath = @"J:\CIC-IDS2017\MachineLearningCVE\Friday-WorkingHours-Afternoon-DDos.pcap_ISCX.csv";
-            
-            List<SecurityData> trainingData;
-            string dataSourceName = "Synthetic (Fallback)";
-            
-            if (System.IO.File.Exists(cicDatasetPath))
-            {
-                Console.WriteLine("Найден датасет CIC-IDS2017. Начинается загрузка и маппинг...");
-                trainingData = LoadAndMapCicIds2017Data(cicDatasetPath, maxRecords: 150000);
-                dataSourceName = "CIC-IDS2017 (Real Dataset)";
-                Console.WriteLine($"Загружено {trainingData.Count} записей для обучения.");
-            }
-            else
-            {
-                Console.WriteLine("Датасет не найден. Используется синтетическая генерация...");
-                trainingData = GenerateRealisticTrainingData();
-            }
-            
+
+            var (trainingData, dataSourceName) = GetTrainingData();
+
             var allMetrics = _pipeline.TrainAllModels(trainingData);
-            
+
             var results = allMetrics.Select(m => new {
                 modelName = m.Value.ModelName,
                 accuracy = Math.Round(m.Value.Accuracy * 100, 2),
@@ -120,9 +107,9 @@ public class MLAnalysisController : ControllerBase
                 falseNegatives = m.Value.FalseNegatives,
                 totalEvaluated = m.Value.TotalEvaluatedRecords
             });
-            
+
             Console.WriteLine("=== ОБУЧЕНИЕ ЗАВЕРШЕНО УСПЕШНО ===");
-            
+
             return Ok(new { 
                 success = true, 
                 dataSource = dataSourceName,
@@ -146,9 +133,9 @@ public class MLAnalysisController : ControllerBase
             var localData = _localAdapter.ConvertToSecurityData(systemInfo);
             var syntheticData = GenerateRealisticTrainingData();
             var combinedData = localData.Concat(syntheticData).ToList();
-            
+
             var allMetrics = _pipeline.TrainAllModels(combinedData);
-            
+
             var results = allMetrics.Select(m => new {
                 modelName = m.Value.ModelName,
                 accuracy = Math.Round(m.Value.Accuracy * 100, 2),
@@ -157,9 +144,9 @@ public class MLAnalysisController : ControllerBase
                 f1Score = Math.Round(m.Value.F1Score * 100, 2),
                 auc = Math.Round(m.Value.Auc * 100, 2)
             });
-            
+
             var report = _localAdapter.GenerateReport(systemInfo);
-            
+
             return Ok(new { 
                 success = true,
                 systemName = systemInfo.ComputerName,
@@ -186,7 +173,7 @@ public class MLAnalysisController : ControllerBase
         {
             var systemInfo = await _systemCollector.CollectSystemInfoAsync();
             var report = _localAdapter.GenerateReport(systemInfo);
-            
+
             return Ok(new {
                 computerName = systemInfo.ComputerName,
                 osVersion = systemInfo.OSVersion,
@@ -221,13 +208,13 @@ public class MLAnalysisController : ControllerBase
     public IActionResult AssessSystem(string systemId, [FromBody] AssessRequest? request)
     {
         var modelName = request?.ModelName ?? _selectedModel;
-        
+
         try
         {
             var scanResults = GetRealisticScanResults();
             var result = _calculator.CalculateCompliance(scanResults, systemId, modelName);
             var metrics = _pipeline.GetMetrics(modelName);
-            
+
             return Ok(new {
                 systemId = systemId,
                 modelName = modelName,
@@ -258,10 +245,10 @@ public class MLAnalysisController : ControllerBase
     public IActionResult CompareModels()
     {
         var allMetrics = _pipeline.GetAllMetrics();
-        
+
         if (allMetrics.Count == 0)
             return BadRequest(new { error = "Сначала обучите модели" });
-        
+
         var results = allMetrics.Select(m => new {
             modelName = m.Value.ModelName,
             accuracy = Math.Round(m.Value.Accuracy * 100, 2),
@@ -270,7 +257,7 @@ public class MLAnalysisController : ControllerBase
             f1Score = Math.Round(m.Value.F1Score * 100, 2),
             auc = Math.Round(m.Value.Auc * 100, 2)
         });
-        
+
         return Ok(results);
     }
 
@@ -321,7 +308,7 @@ public class MLAnalysisController : ControllerBase
         try
         {
             await _monitoringService.PerformScanAsync();
-            
+
             return Ok(new {
                 success = true,
                 message = "Сканирование завершено",
@@ -365,7 +352,7 @@ public class MLAnalysisController : ControllerBase
     {
         var scansDir = Path.Combine(Directory.GetCurrentDirectory(), "App_Data", "AutoScans");
         var filePath = Path.Combine(scansDir, fileName);
-        
+
         if (!System.IO.File.Exists(filePath))
             return NotFound(new { error = "Файл не найден" });
 
@@ -373,12 +360,28 @@ public class MLAnalysisController : ControllerBase
         return Content(json, "application/json");
     }
 
+    // ====== ИСТОЧНИК ДАННЫХ ДЛЯ ОБУЧЕНИЯ ======
+    private (List<SecurityData> Data, string SourceName) GetTrainingData(int maxRecords = 150000)
+    {
+        if (System.IO.File.Exists(CicDatasetPath))
+        {
+            Console.WriteLine("Найден датасет CIC-IDS2017. Начинается загрузка и маппинг...");
+            var data = LoadAndMapCicIds2017Data(CicDatasetPath, maxRecords);
+            Console.WriteLine($"Загружено {data.Count} записей для обучения.");
+            return (data, "CIC-IDS2017 (Real Dataset)");
+        }
+
+        Console.WriteLine("Датасет не найден. Используется синтетическая генерация...");
+        return (GenerateRealisticTrainingData(), "Synthetic (Fallback)");
+    }
+
     // ====== ЗАГРУЗКА И МАППИНГ CIC-IDS2017 ======
     private List<SecurityData> LoadAndMapCicIds2017Data(string filePath, int maxRecords = 100000)
     {
         var data = new List<SecurityData>();
         var random = new Random(42);
-        
+        int skipped = 0;
+
         var riskyPorts = new HashSet<string> { "21", "22", "23", "135", "445", "3389", "1433", "3306" };
         var unencryptedPorts = new HashSet<string> { "21", "23", "80" };
 
@@ -386,56 +389,108 @@ public class MLAnalysisController : ControllerBase
         {
             var lines = System.IO.File.ReadLines(filePath);
             var headerLine = lines.FirstOrDefault();
-            if (string.IsNullOrEmpty(headerLine)) return GenerateRealisticTrainingData();
-
-            var headers = ParseCsvLine(headerLine);
-            int destPortIdx = headers.IndexOf("Destination Port");
-            int protocolIdx = headers.IndexOf("Protocol");
-            int labelIdx = headers.IndexOf("Label");
-
-            if (destPortIdx == -1 || protocolIdx == -1 || labelIdx == -1)
+            if (string.IsNullOrEmpty(headerLine))
             {
+                Console.WriteLine("[ML] Пустой файл датасета — синтетические данные.");
                 return GenerateRealisticTrainingData();
             }
 
-            int processedCount = 0;
+            // КРИТИЧНО: имена колонок CIC-IDS2017 идут с ведущими пробелами
+            var headers = ParseCsvLine(headerLine).Select(h => h.Trim()).ToList();
+            int ColIdx(string n) => headers.IndexOf(n);
 
+            int destPortIdx = ColIdx("Destination Port");
+            int labelIdx = ColIdx("Label");
+            int flowDurationIdx = ColIdx("Flow Duration");
+            int totalFwdIdx = ColIdx("Total Fwd Packets");
+            int totalBwdIdx = ColIdx("Total Backward Packets");
+            int lenFwdIdx = ColIdx("Total Length of Fwd Packets");
+            int lenBwdIdx = ColIdx("Total Length of Bwd Packets");
+            int fwdMeanIdx = ColIdx("Fwd Packet Length Mean");
+            int bwdMeanIdx = ColIdx("Bwd Packet Length Mean");
+            int flowBytesIdx = ColIdx("Flow Bytes/s");
+            int flowPacketsIdx = ColIdx("Flow Packets/s");
+            int flowIatIdx = ColIdx("Flow IAT Mean");
+            int pktMeanIdx = ColIdx("Packet Length Mean");
+            int pktStdIdx = ColIdx("Packet Length Std");
+            int synIdx = ColIdx("SYN Flag Count");
+            int ackIdx = ColIdx("ACK Flag Count");
+            int avgPktIdx = ColIdx("Average Packet Size");
+            int winFwdIdx = ColIdx("Init_Win_bytes_forward");
+            int winBwdIdx = ColIdx("Init_Win_bytes_backward");
+
+            if (labelIdx == -1 || destPortIdx == -1)
+            {
+                Console.WriteLine("[ML] В шапке CSV нет Label/Destination Port — синтетические данные.");
+                return GenerateRealisticTrainingData();
+            }
+
+            float Num(List<string> f, int idx)
+            {
+                if (idx < 0 || idx >= f.Count) return 0f;
+                return float.TryParse(f[idx].Trim(), NumberStyles.Float,
+                    CultureInfo.InvariantCulture, out var v) ? v : 0f;
+            }
+
+            int processedCount = 0;
             foreach (var line in lines.Skip(1))
             {
                 if (processedCount >= maxRecords) break;
-
-                // Сэмплирование: берем ~10% данных для ускорения и экономии памяти
-                if (random.Next(10) != 0) continue;
+                if (random.Next(10) != 0) continue; // ~10% выборка
 
                 var fields = ParseCsvLine(line);
-                if (fields.Count <= Math.Max(destPortIdx, Math.Max(protocolIdx, labelIdx)))
-                    continue;
+                if (fields.Count <= labelIdx) continue;
 
-                var destPort = fields[destPortIdx]?.Trim() ?? "0";
-                var protocol = fields[protocolIdx]?.Trim() ?? "";
-                var label = fields[labelIdx]?.Trim() ?? "BENIGN";
-
-                float portOpen = riskyPorts.Contains(destPort) ? 1f : 0f;
-                float unencrypted = (protocol.Equals("TCP", StringComparison.OrdinalIgnoreCase) && unencryptedPorts.Contains(destPort)) ? 1f : 0f;
-                float weakPassword = label.Contains("Patator", StringComparison.OrdinalIgnoreCase) || label.Contains("Brute", StringComparison.OrdinalIgnoreCase) ? 1f : 0f;
-                float outdated = label.Contains("Heartbleed", StringComparison.OrdinalIgnoreCase) || label.Contains("Infiltration", StringComparison.OrdinalIgnoreCase) ? 1f : 0f;
-
+                var label = fields[labelIdx].Trim();
                 bool isAttack = !label.Equals("BENIGN", StringComparison.OrdinalIgnoreCase);
+
+                var destPort = destPortIdx < fields.Count ? fields[destPortIdx].Trim() : "0";
+
+                float flowBytes = Num(fields, flowBytesIdx);
+                float flowPackets = Num(fields, flowPacketsIdx);
+                if (float.IsNaN(flowBytes) || float.IsInfinity(flowBytes) ||
+                    float.IsNaN(flowPackets) || float.IsInfinity(flowPackets))
+                {
+                    skipped++;
+                    continue; // ML.NET не принимает NaN/Infinity
+                }
 
                 data.Add(new SecurityData
                 {
-                    PortOpen = portOpen,
-                    WeakPassword = weakPassword,
-                    OutdatedSoftware = outdated,
-                    UnencryptedTraffic = unencrypted,
+                    // Флаги — только из порта, БЕЗ утечки метки
+                    PortOpen = riskyPorts.Contains(destPort) ? 1f : 0f,
+                    UnencryptedTraffic = unencryptedPorts.Contains(destPort) ? 1f : 0f,
+                    WeakPassword = 0f,     // из сетевых потоков неизвестно
+                    OutdatedSoftware = 0f, // из сетевых потоков неизвестно
+
+                    DestinationPort = Num(fields, destPortIdx),
+                    FlowDuration = Num(fields, flowDurationIdx),
+                    TotalFwdPackets = Num(fields, totalFwdIdx),
+                    TotalBackwardPackets = Num(fields, totalBwdIdx),
+                    TotalLengthFwdPackets = Num(fields, lenFwdIdx),
+                    TotalLengthBwdPackets = Num(fields, lenBwdIdx),
+                    FwdPacketLengthMean = Num(fields, fwdMeanIdx),
+                    BwdPacketLengthMean = Num(fields, bwdMeanIdx),
+                    FlowBytesPerSec = flowBytes,
+                    FlowPacketsPerSec = flowPackets,
+                    FlowIatMean = Num(fields, flowIatIdx),
+                    PacketLengthMean = Num(fields, pktMeanIdx),
+                    PacketLengthStd = Num(fields, pktStdIdx),
+                    SynFlagCount = Num(fields, synIdx),
+                    AckFlagCount = Num(fields, ackIdx),
+                    AveragePacketSize = Num(fields, avgPktIdx),
+                    InitWinBytesForward = Num(fields, winFwdIdx),
+                    InitWinBytesBackward = Num(fields, winBwdIdx),
                     Label = isAttack
                 });
-
                 processedCount++;
             }
+
+            Console.WriteLine($"[ML] CIC-IDS2017: загружено {data.Count} РЕАЛЬНЫХ записей (пропущено {skipped} с NaN/Infinity).");
         }
-        catch (Exception)
+        catch (Exception ex)
         {
+            Console.WriteLine($"[ML] Ошибка чтения датасета: {ex.Message}. Синтетические данные.");
             return GenerateRealisticTrainingData();
         }
 
@@ -469,6 +524,7 @@ public class MLAnalysisController : ControllerBase
         return result;
     }
 
+    // Синтетический fallback: используется ТОЛЬКО если датасет недоступен
     private List<SecurityData> GenerateRealisticTrainingData()
     {
         var data = new List<SecurityData>();
@@ -479,40 +535,33 @@ public class MLAnalysisController : ControllerBase
             float portOpen, weakPassword, outdated, unencrypted;
             int scenario = random.Next(100);
 
-            if (scenario < 50) 
+            if (scenario < 50)
             {
                 portOpen = random.NextDouble() > 0.95f ? 1f : 0f;
                 weakPassword = random.NextDouble() > 0.98f ? 1f : 0f;
                 outdated = random.NextDouble() > 0.90f ? 1f : 0f;
-                unencrypted = random.NextDouble() > 0.95f ? 1f : 0f;                             
+                unencrypted = random.NextDouble() > 0.95f ? 1f : 0f;
             }
-            else if (scenario < 75) 
+            else if (scenario < 80)
             {
                 portOpen = random.NextDouble() > 0.60f ? 1f : 0f;
                 weakPassword = random.NextDouble() > 0.70f ? 1f : 0f;
                 outdated = random.NextDouble() > 0.65f ? 1f : 0f;
-                unencrypted = random.NextDouble() > 0.60f ? 1f : 0f;                
+                unencrypted = random.NextDouble() > 0.60f ? 1f : 0f;
             }
-            else if (scenario < 90) 
+            else
             {
                 portOpen = random.NextDouble() > 0.20f ? 1f : 0f;
                 weakPassword = random.NextDouble() > 0.30f ? 1f : 0f;
                 outdated = random.NextDouble() > 0.40f ? 1f : 0f;
-                unencrypted = random.NextDouble() > 0.30f ? 1f : 0f;                
-            }
-            else 
-            {
-                portOpen = (float)random.Next(2);
-                weakPassword = (float)random.Next(2);
-                outdated = (float)random.Next(2);
-                unencrypted = (float)random.Next(2);                
+                unencrypted = random.NextDouble() > 0.30f ? 1f : 0f;
             }
 
-            int riskFactors = (int)(portOpen + weakPassword + outdated + unencrypted);
-            bool isViolation = riskFactors >= 2 || (weakPassword == 1f && unencrypted == 1f);
-        
-            if (random.NextDouble() < 0.1)
-                isViolation = !isViolation;
+            bool isAttack = scenario >= 50
+                ? random.NextDouble() > 0.2
+                : random.NextDouble() > 0.9;
+
+            if (random.NextDouble() < 0.1) isAttack = !isAttack; // 10% шума в метках
 
             data.Add(new SecurityData
             {
@@ -520,11 +569,11 @@ public class MLAnalysisController : ControllerBase
                 WeakPassword = weakPassword,
                 OutdatedSoftware = outdated,
                 UnencryptedTraffic = unencrypted,
-                Label = isViolation
+                Label = isAttack
             });
         }
 
-        return data.OrderBy(x => random.Next()).ToList();
+        return data;
     }
 
     private List<VulnerabilityScanResult> GetRealisticScanResults()
